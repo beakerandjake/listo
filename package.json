@@ -1,0 +1,24 @@
+{
+  "name": "listo",
+  "version": "0.1.0",
+  "description": "It's a grocery list so I don't forget things. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beakerandjake/listo.git"
+  },
+  "keywords": [
+    "list",
+    "shopping",
+    "grocery"
+  ],
+  "author": "jake",
+  "license": "SEE LICENCE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/beakerandjake/listo/issues"
+  },
+  "homepage": "https://github.com/beakerandjake/listo#readme"
+}
