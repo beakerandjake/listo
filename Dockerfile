@@ -1,7 +1,8 @@
 FROM node:16-alpine
-WORKDIR /usr/src/app
+WORKDIR /usr/src/listo
 COPY package*.json ./
+RUN npm install -g nodemon
 RUN npm install
-COPY ./src .
+COPY ./src ./src
 EXPOSE 3000
-CMD ["node","index.js"]
+CMD ["nodemon","./src/index.js"]
