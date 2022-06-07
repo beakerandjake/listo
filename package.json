@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/beakerandjake/listo/issues"
   },
-  "homepage": "https://github.com/beakerandjake/listo#readme"
+  "homepage": "https://github.com/beakerandjake/listo#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
