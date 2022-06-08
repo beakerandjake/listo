@@ -4,7 +4,7 @@ FROM node:16-alpine
 ENV NODE_ENV=production
 WORKDIR /usr/src/listo
 COPY package*.json ./
-RUN npm install --production
+RUN npm ci
 
 COPY ./src ./
 EXPOSE 3000
