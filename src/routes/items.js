@@ -1,5 +1,5 @@
 
-import * as persistence from './persistence/memory.js';
+import * as persistence from '../persistence/memory.js';
 import { v4 as uuid } from 'uuid';
 
 

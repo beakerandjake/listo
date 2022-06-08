@@ -2,7 +2,7 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as items from './items.js';
+import * as items from './routes/items.js';
 
 const app = express();
 app.use(bodyParser.json())
