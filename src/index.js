@@ -2,7 +2,14 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as items from './routes/items.js';
+import * as items from './controllers/items.js';
+
+// TODO
+//  Edit quantity of items with patch
+//  routing, make api/v1 dynamic or from config. 
+//  Real data access layer, with different backing storage (in memory / sql)
+//  SQL docker setup
+// 
 
 const app = express();
 app.use(bodyParser.json())
