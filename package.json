@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "It's a grocery list so I don't forget things. ",
   "type": "module",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --inspect=0.0.0.0:9229 src/index.js"
+    "dev": "nodemon --inspect=0.0.0.0:9229 src/server.js"
   },
   "repository": {
     "type": "git",
