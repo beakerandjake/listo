@@ -2,7 +2,7 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as items from './controllers/items.js';
+import routes from './routes/index.js';
 
 // TODO
 //  Edit quantity of items with patch
@@ -11,15 +11,13 @@ import * as items from './controllers/items.js';
 //  SQL docker setup
 // 
 
+const port = process.env.PORT || 3000;
+
 const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const port = process.env.PORT || 3000;
-
-app.get('/api/v1/items', items.list);
-app.post('/api/v1/items', items.add);
-app.delete('/api/v1/items/:itemId', items.remove);
+app.use('/api', routes);
 
 app.listen(port, () => {
   console.log(`listo running on http://localhost:${port}`);

@@ -11,7 +11,7 @@ export function getAll() {
 }
 
 export function add(item) {
-    if (items.find(x => x.name == item.name)) {
+    if (items.find(x => x.name.toLowerCase() == item.name.toLowerCase())) {
         return false;
     }
 

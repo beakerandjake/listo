@@ -1,13 +1,17 @@
 
+import express from 'express';
 import * as persistence from '../persistence/memory.js';
 import { v4 as uuid } from 'uuid';
 
+const router = express.Router();
 
-export function list(req, res) {
+// Get All Items
+router.get('/', (req, res) => {
     res.send(persistence.getAll());
-}
+});
 
-export function add(req, res) {
+// Add New Item
+router.post('/', (req, res) => {
     const item = {
         id: uuid(),
         name: req.body.name,
@@ -19,13 +23,16 @@ export function add(req, res) {
     }
 
     res.sendStatus(201);
-}
+});
 
-export function remove(req, res) {
+// Delete Item
+router.delete('/:itemId', (req, res) => {
     if (persistence.remove(req.params.itemId)) {
         res.sendStatus(200);
         return;
     }
 
     res.sendStatus(404);
-}
+});
+
+export default router;
