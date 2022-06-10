@@ -15,6 +15,7 @@
             "error",
             "always",
             { "js": "off" }
-        ]
+        ],
+        "no-console": "off",
     }
 }
