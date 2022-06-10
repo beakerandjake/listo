@@ -1,6 +1,6 @@
 import express from 'express';
 import { v4 as uuid } from 'uuid';
-import * as persistence from '../persistence/memory.js';
+import * as persistence from '../persistence/index.js';
 
 const router = express.Router();
 

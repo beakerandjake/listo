@@ -8,6 +8,8 @@ import routes from './routes/index.js';
 //  routing, make api/v1 dynamic or from config.
 //  Real data access layer, with different backing storage (in memory / sql)
 //  SQL docker setup
+//  handle SIGINT / SIGTERM in prod
+
 
 const port = process.env.PORT || 3000;
 
