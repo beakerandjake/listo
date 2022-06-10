@@ -6,6 +6,8 @@ services:
     command: sh -c "npm install && npm run dev"
     ports:
       - 3000:3000
+    environment:
+      - BACKING_STORE=sqlite
     working_dir: /usr/src/listo
     volumes:
       # manually bind folders so we don't share node_modules between host and contianer. 
