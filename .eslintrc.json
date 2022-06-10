@@ -11,6 +11,10 @@
         "sourceType": "module"
     },
     "rules": {
-
+        "import/extensions": [
+            "error",
+            "always",
+            { "js": "off" }
+        ]
     }
 }

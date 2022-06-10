@@ -10,7 +10,6 @@ import routes from './routes/index.js';
 //  SQL docker setup
 //  handle SIGINT / SIGTERM in prod
 
-
 const port = process.env.PORT || 3000;
 
 const app = express();
