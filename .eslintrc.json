@@ -16,6 +16,6 @@
             "always",
             { "js": "off" }
         ],
-        "no-console": "off",
+        "no-console": "off"
     }
 }
