@@ -1,13 +1,13 @@
+import { join, dirname } from 'path';
 import { promises as fs } from 'fs';
-import path from 'path';
+import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-const dbLocation = path.join(process.env.HOME, '.listo/items.db');
-sqlite3.verbose();
+const dbLocation = join(process.env.HOME, '.listo/items.db');
 
 let db;
 
-async function createDbDirectory(dirName) {
+async function ensureDbDirectoryExists(dirName) {
   try {
     await fs.access(dirName);
   } catch (error) {
@@ -16,36 +16,25 @@ async function createDbDirectory(dirName) {
 }
 
 export async function initialize() {
-  await createDbDirectory(path.dirname(dbLocation));
-  return new Promise((resolve, reject) => {
-    db = new sqlite3.Database(dbLocation, (error) => {
-      if (error) {
-        reject(error);
-        return;
-      }
+  await ensureDbDirectoryExists(dirname(dbLocation));
 
-      db.run(
-        `
-        CREATE TABLE IF NOT EXISTS items (
-            id INTEGER PRIMARY KEY, 
-            name TEXT NOT NULL, 
-            quantity INTEGER NOT NULL DEFAULT 1
-        );
-      `,
-        (err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        },
-      );
-    });
+  db = await open({
+    filename: dbLocation,
+    driver: sqlite3.Database,
   });
+
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS items (
+      id INTEGER PRIMARY KEY, 
+      name TEXT NOT NULL, 
+      quantity INTEGER NOT NULL DEFAULT 1
+    );
+  `);
 }
 
 export async function close() {
-  return Promise.reject();
+  
+  await db.close();
 }
 
 export async function getItems() {
