@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import routes from './routes/index.js';
+import persistence from './persistence/index.js';
 
 // TODO
 // Use jsdoc style or similar comments
@@ -17,11 +18,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// register controllers.
 app.use('/api', routes);
 
-app.listen(port, () => {
-  console.log(`listo running on http://localhost:${port}`);
-});
+persistence
+  .initialize()
+  .then(() => {
+    app.listen(port, () => console.log(`listo running on port ${port}`));
+  })
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
 
+// handle shutdown signals
 process.on('SIGINT', process.exit);
 process.on('SIGTERM', process.exit);

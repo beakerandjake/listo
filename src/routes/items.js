@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Get All Items
 router.get('/', async (req, res) => {
-  const items = await persistence.getAll();
+  const items = await persistence.getItems();
   res.send(items);
 });
 
@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
     name: req.body.name,
   };
 
-  if (!persistence.add(item)) {
+  if (!persistence.addItem(item)) {
     res.sendStatus(409);
     return;
   }
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
 
 // Delete Item
 router.delete('/:itemId', (req, res) => {
-  if (persistence.remove(req.params.itemId)) {
+  if (persistence.removeItem(req.params.itemId)) {
     res.sendStatus(200);
     return;
   }
