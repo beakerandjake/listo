@@ -4,11 +4,19 @@ const items = [
   { id: '789', name: 'coyote' },
 ];
 
-export async function getAll() {
+export async function initialize() {
+  return Promise.resolve();
+}
+
+export async function close() {
+  return Promise.resolve();
+}
+
+export async function getItems() {
   return items;
 }
 
-export async function add(item) {
+export async function addItem(item) {
   if (items.find((x) => x.name.toLowerCase() === item.name.toLowerCase())) {
     return false;
   }
@@ -18,7 +26,7 @@ export async function add(item) {
   return true;
 }
 
-export async function remove(id) {
+export async function removeItem(id) {
   const index = items.findIndex((x) => x.id === id);
 
   if (index > -1) {
