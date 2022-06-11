@@ -31,6 +31,12 @@ persistence
     process.exit(1);
   });
 
+const shutdown = async () => {
+  await persistence.close();
+  console.log('bye!');
+  process.exit();
+};
+
 // handle shutdown signals
-process.on('SIGINT', process.exit);
-process.on('SIGTERM', process.exit);
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
