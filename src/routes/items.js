@@ -1,5 +1,4 @@
 import express from 'express';
-import { v4 as uuid } from 'uuid';
 import persistence from '../persistence/index.js';
 
 const router = express.Router();
@@ -7,17 +6,15 @@ const router = express.Router();
 // Get All Items
 router.get('/', async (req, res) => {
   const items = await persistence.getItems();
+  console.log('got items', items);
   res.send(items);
 });
 
 // Add New Item
 router.post('/', (req, res) => {
-  const item = {
-    id: uuid(),
-    name: req.body.name,
-  };
+  const { name } = req.body;
 
-  if (!persistence.addItem(item)) {
+  if (!persistence.addItem(name)) {
     res.sendStatus(409);
     return;
   }
