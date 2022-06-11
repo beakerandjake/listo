@@ -5,6 +5,7 @@ import routes from './routes/index.js';
 // TODO
 // Use jsdoc style or similar comments
 //  Edit quantity of items with patch
+//  dependency injection.
 //  routing, make api/v1 dynamic or from config.
 //  Real data access layer, with different backing storage (in memory / sql)
 //  SQL docker setup
