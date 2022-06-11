@@ -6,7 +6,6 @@ const router = express.Router();
 // Get All Items
 router.get('/', async (req, res) => {
   const items = await persistence.getItems();
-  console.log('got items', items);
   res.send(items);
 });
 
@@ -23,8 +22,8 @@ router.post('/', (req, res) => {
 });
 
 // Delete Item
-router.delete('/:itemId', (req, res) => {
-  if (persistence.removeItem(req.params.itemId)) {
+router.delete('/:itemId', async (req, res) => {
+  if (await persistence.removeItem(req.params.itemId)) {
     res.sendStatus(200);
     return;
   }

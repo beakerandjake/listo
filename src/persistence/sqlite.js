@@ -40,9 +40,11 @@ export async function getItems() {
 }
 
 export async function addItem(name) {
-  await db.run('INSERT INTO items (name) VALUES (?)', name);
+  const result = await db.run('INSERT INTO items (name) VALUES (?)', name);
+  console.log(result);
 }
 
 export async function removeItem(id) {
-  await db.run('DELETE FROM items WHERE id = ?', id);
+  const result = await db.run('DELETE FROM items WHERE id = ?', id);
+  return result.changes > 0;
 }
