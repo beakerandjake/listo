@@ -28,31 +28,21 @@ export async function initialize() {
       id INTEGER PRIMARY KEY, 
       name TEXT NOT NULL, 
       quantity INTEGER NOT NULL DEFAULT 1
-    );
-  `);
+    )`);
 }
 
 export async function close() {
-  
   await db.close();
 }
 
 export async function getItems() {
-  return new Promise((resolve, reject) => {
-    db.all('SELECT id, name, quantity FROM items;', (err, rows) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(rows);
-      }
-    });
-  });
+  return db.all('SELECT id, name, quantity FROM items');
 }
 
-export async function addItem() {
-  console.log('not implemented');
+export async function addItem(name) {
+  await db.run('INSERT INTO items (name) VALUES (?)', name);
 }
 
 export async function removeItem(id) {
-  console.log('not implemented', id);
+  await db.run('DELETE FROM items WHERE id = ?', id);
 }
