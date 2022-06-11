@@ -1,12 +1,13 @@
 import express from 'express';
 import { v4 as uuid } from 'uuid';
-import * as persistence from '../persistence/index.js';
+import persistence from '../persistence/index.js';
 
 const router = express.Router();
 
 // Get All Items
-router.get('/', (req, res) => {
-  res.send(persistence.getAll());
+router.get('/', async (req, res) => {
+  const items = await persistence.getAll();
+  res.send(items);
 });
 
 // Add New Item
