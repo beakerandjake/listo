@@ -23,12 +23,8 @@ router.post('/', (req, res) => {
 
 // Delete Item
 router.delete('/:itemId', async (req, res) => {
-  if (await persistence.removeItem(req.params.itemId)) {
-    res.sendStatus(200);
-    return;
-  }
-
-  res.sendStatus(404);
+  const deleteCount = await persistence.removeItem(req.params.itemId);
+  res.sendStatus(deleteCount > 0 ? 200 : 404);
 });
 
 export default router;

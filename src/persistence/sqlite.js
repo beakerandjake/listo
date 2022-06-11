@@ -46,5 +46,5 @@ export async function addItem(name) {
 
 export async function removeItem(id) {
   const result = await db.run('DELETE FROM items WHERE id = ?', id);
-  return result.changes > 0;
+  return result.changes;
 }
