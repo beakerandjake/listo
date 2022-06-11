@@ -6,6 +6,7 @@ const dbLocation = path.join(process.env.HOME, '.listo/items.db');
 
 // ensure db file exists.
 const dirName = path.dirname(dbLocation);
+console.log('need to create db at', dirName);
 if (!fs.existsSync(dirName)) {
   fs.mkdirSync(dirName, { recursive: true });
 }
@@ -14,17 +15,31 @@ if (!fs.existsSync(dirName)) {
 sqlite3.verbose();
 const db = new sqlite3.Database(dbLocation, (err) => {
   if (err) return;
-  db.run('CREATE TABLE IF NOT EXISTS items (id varchar(36), name TEXT)');
+  db.run(`
+    CREATE TABLE IF NOT EXISTS items (
+        id INTEGER PRIMARY KEY, 
+        name TEXT NOT NULL, 
+        quantity INTEGER NOT NULL DEFAULT 1
+    );
+  `);
 });
 
-export function getAll() {
+export async function getAll() {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT id, name, quantity FROM items;', (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
+  });
+}
+
+export async function add() {
   console.log('not implemented');
 }
 
-export function add() {
-  console.log('not implemented');
-}
-
-export function remove(id) {
+export async function remove(id) {
   console.log('not implemented', id);
 }

@@ -10,5 +10,4 @@ switch (process.env.BACKING_STORE) {
     break;
 }
 
-const toExport = backingStore;
-export default toExport;
+export default { ...backingStore };

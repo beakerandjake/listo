@@ -4,11 +4,11 @@ const items = [
   { id: '789', name: 'coyote' },
 ];
 
-export function getAll() {
+export async function getAll() {
   return items;
 }
 
-export function add(item) {
+export async function add(item) {
   if (items.find((x) => x.name.toLowerCase() === item.name.toLowerCase())) {
     return false;
   }
@@ -18,7 +18,7 @@ export function add(item) {
   return true;
 }
 
-export function remove(id) {
+export async function remove(id) {
   const index = items.findIndex((x) => x.id === id);
 
   if (index > -1) {
