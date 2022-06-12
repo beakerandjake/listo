@@ -11,6 +11,7 @@ import persistence from './persistence/index.js';
 //  routing, make api/v1 dynamic or from config.
 //  Real data access layer, with different backing storage (in memory / sql)
 //  SQL docker setup
+//  error handling, catch body parse errors.
 
 const port = process.env.PORT || 3000;
 
