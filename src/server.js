@@ -15,7 +15,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// register controllers.
 app.use('/api', routes);
 
 persistence
