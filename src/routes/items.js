@@ -24,6 +24,12 @@ router.get('/', async (req, res) => {
   res.send(items);
 });
 
+// Delete All Items
+router.delete('/', async (req, res) => {
+  await persistence.clearItems();
+  res.sendStatus(200);
+});
+
 // Add New Item
 router.post(
   '/',
@@ -51,6 +57,8 @@ router.put(
     const count = quantity < 1
       ? await persistence.removeItem(itemId)
       : await persistence.editItemQuantity(itemId, quantity);
+
+    console.log('result', count);
 
     res.sendStatus(count > 0 ? 200 : 404);
   },

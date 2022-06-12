@@ -39,6 +39,10 @@ export async function getItems() {
   return db.all('SELECT id, name, quantity FROM items');
 }
 
+export async function clearItems() {
+  await db.run('DELETE FROM items');
+}
+
 export async function addItem(name) {
   await db.run('INSERT INTO items (name) VALUES (?)', name);
 }
