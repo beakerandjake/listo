@@ -7,6 +7,7 @@ import persistence from './persistence/index.js';
 //  error handling
 //  SQL docker setup
 //  error handling, catch body parse errors.
+// check await vs return vs return await
 
 const port = process.env.PORT || 3000;
 

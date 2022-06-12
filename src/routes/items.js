@@ -1,5 +1,6 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
+import asyncErrorHandler from 'express-async-handler';
 import persistence from '../persistence/index.js';
 
 const router = express.Router();
@@ -25,38 +26,38 @@ function validateRequest(validations) {
 }
 
 // Get all items.
-router.get('/', async (req, res) => {
+router.get('/', asyncErrorHandler(async (req, res) => {
   const items = await persistence.getItems();
   res.send(items);
-});
+}));
 
 // Delete All Items
-router.delete('/', async (req, res) => {
+router.delete('/', asyncErrorHandler(async (req, res) => {
   await persistence.clearItems();
   res.sendStatus(200);
-});
+}));
 
 // Add New Item
 router.post(
   '/',
   validateRequest([body('name').trim().isLength({ min: 2, max: 128 })]),
-  async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const id = await persistence.addItem(req.body.name);
     res.status(200).send({ id });
-  },
+  }),
 );
 
 // Delete Item
-router.delete('/:itemId', async (req, res) => {
+router.delete('/:itemId', asyncErrorHandler(async (req, res) => {
   const deleted = await persistence.removeItem(req.params.itemId);
   res.sendStatus(deleted ? 200 : 404);
-});
+}));
 
 // Edit item
 router.patch(
   '/:itemId',
   validateRequest([body('quantity').isInt()]),
-  async (req, res) => {
+  asyncErrorHandler(async (req, res) => {
     const { itemId } = req.params;
     const { quantity } = req.body;
 
@@ -65,7 +66,7 @@ router.patch(
       : await persistence.editItemQuantity(itemId, quantity);
 
     res.sendStatus(itemFound ? 200 : 404);
-  },
+  }),
 );
 
 export default router;
