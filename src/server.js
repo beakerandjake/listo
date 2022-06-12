@@ -4,7 +4,6 @@ import routes from './routes/index.js';
 import persistence from './persistence/index.js';
 
 // TODO
-// Use jsdoc style or similar comments
 //  error handling
 //  SQL docker setup
 //  error handling, catch body parse errors.
