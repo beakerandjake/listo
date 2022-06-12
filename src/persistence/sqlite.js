@@ -47,7 +47,7 @@ export async function close() {
 
 /**
  * Returns all of the items.
- * @returns {array}
+ * @returns {Promise<Array>} Items array.
  */
 export async function getItems() {
   return db.all('SELECT id, name, quantity FROM items');
@@ -57,39 +57,39 @@ export async function getItems() {
  * Deletes all of the items.
  */
 export async function clearItems() {
-  await db.run('DELETE FROM items');
+  return db.run('DELETE FROM items');
 }
 
 /**
  * Adds a new item to the database.
  * @param {string} name the name of the item.
- * @returns {int} The id of the new row.
+ * @returns {Promise<int>} The id of the new row.
  */
 export async function addItem(name) {
-  const result = await db.run('INSERT INTO items (name) VALUES (?)', name);
-  return result.lastID;
+  const { lastID } = await db.run('INSERT INTO items (name) VALUES (?)', name);
+  return lastID;
 }
 
 /**
  * Attempts to delete an item with the specified id.
  * @param {int} id
- * @returns {bool} Was the deletion successful?.
+ * @returns {Promise<bool>} Was the deletion successful?.
  */
 export async function removeItem(id) {
-  const result = await db.run('DELETE FROM items WHERE id = ?', id);
-  return result.changes > 0;
+  const { changes } = await db.run('DELETE FROM items WHERE id = ?', id);
+  return changes > 0;
 }
 
 /**
  * Attempts to modify the quantity of the item with the specified id.
  * @param {int} id
  * @param {int} quantity
- * @returns {bool} Was the edit successful?
+ * @returns {Promise<bool>} Was the edit successful?
  */
 export async function editItemQuantity(id, quantity) {
-  const result = await db.run('UPDATE ITEMS SET quantity = $quantity WHERE id = $id', {
+  const { changes } = await db.run('UPDATE ITEMS SET quantity = $quantity WHERE id = $id', {
     $id: id,
     $quantity: quantity,
   });
-  return result.changes > 0;
+  return changes > 0;
 }
