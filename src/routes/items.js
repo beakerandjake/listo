@@ -4,6 +4,12 @@ import persistence from '../persistence/index.js';
 
 const router = express.Router();
 
+/**
+ * Returns a middleware which runs express-validator chains against the request.
+ * If any chain fails then a 400 response will be sent, otherwise the next middleware is invoked.
+ * See: https://express-validator.github.io/docs/running-imperatively.html
+ * @param {ValidationChain} validations
+ */
 function validateRequest(validations) {
   return async (req, res, next) => {
     await Promise.all(validations.map((validation) => validation.run(req)));
@@ -18,7 +24,7 @@ function validateRequest(validations) {
   };
 }
 
-// Get All Items
+// Get all items.
 router.get('/', async (req, res) => {
   const items = await persistence.getItems();
   res.send(items);
@@ -35,32 +41,30 @@ router.post(
   '/',
   validateRequest([body('name').trim().isLength({ min: 2, max: 128 })]),
   async (req, res) => {
-    await persistence.addItem(req.body.name);
-    res.sendStatus(201);
+    const id = await persistence.addItem(req.body.name);
+    res.status(200).send({ id });
   },
 );
 
 // Delete Item
 router.delete('/:itemId', async (req, res) => {
-  const deleteCount = await persistence.removeItem(req.params.itemId);
-  res.sendStatus(deleteCount > 0 ? 200 : 404);
+  const deleted = await persistence.removeItem(req.params.itemId);
+  res.sendStatus(deleted ? 200 : 404);
 });
 
 // Edit item
 router.patch(
   '/:itemId',
-  validateRequest([body('quantity').isNumeric()]),
+  validateRequest([body('quantity').isInt()]),
   async (req, res) => {
     const { itemId } = req.params;
     const { quantity } = req.body;
 
-    const count = quantity < 1
+    const itemFound = quantity < 1
       ? await persistence.removeItem(itemId)
       : await persistence.editItemQuantity(itemId, quantity);
 
-    console.log('result', count);
-
-    res.sendStatus(count > 0 ? 200 : 404);
+    res.sendStatus(itemFound ? 200 : 404);
   },
 );
 
