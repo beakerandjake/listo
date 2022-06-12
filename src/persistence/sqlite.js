@@ -48,3 +48,11 @@ export async function removeItem(id) {
   const result = await db.run('DELETE FROM items WHERE id = ?', id);
   return result.changes;
 }
+
+export async function editItemQuantity(id, quantity) {
+  const result = await db.run('UPDATE ITEMS SET quantity = $quantity WHERE id = $id', {
+    $id: id,
+    $quantity: quantity,
+  });
+  return result.changes;
+}
