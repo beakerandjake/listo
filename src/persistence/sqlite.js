@@ -40,8 +40,7 @@ export async function getItems() {
 }
 
 export async function addItem(name) {
-  const result = await db.run('INSERT INTO items (name) VALUES (?)', name);
-  console.log(result);
+  await db.run('INSERT INTO items (name) VALUES (?)', name);
 }
 
 export async function removeItem(id) {
