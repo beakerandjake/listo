@@ -47,7 +47,7 @@ router.delete('/:itemId', async (req, res) => {
 });
 
 // Edit item
-router.put(
+router.patch(
   '/:itemId',
   validateRequest([body('quantity').isNumeric()]),
   async (req, res) => {

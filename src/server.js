@@ -5,7 +5,6 @@ import persistence from './persistence/index.js';
 
 // TODO
 // Use jsdoc style or similar comments
-//  Edit quantity of items with patch
 //  dependency injection.
 //  error handling
 //  routing, make api/v1 dynamic or from config.
