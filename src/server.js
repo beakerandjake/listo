@@ -5,10 +5,7 @@ import persistence from './persistence/index.js';
 
 // TODO
 // Use jsdoc style or similar comments
-//  dependency injection.
 //  error handling
-//  routing, make api/v1 dynamic or from config.
-//  Real data access layer, with different backing storage (in memory / sql)
 //  SQL docker setup
 //  error handling, catch body parse errors.
 
