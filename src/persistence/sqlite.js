@@ -1,9 +1,9 @@
-import { join, dirname } from 'path';
+import { dirname } from 'path';
 import { promises as fs } from 'fs';
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-const dbLocation = join(process.env.HOME, '.listo/items.db');
+const dbLocation = process.env.SQLITE_LOCATION || '/var/lib/listo/items.db';
 
 let db;
 

@@ -5,22 +5,26 @@ import routes from './routes/index.js';
 import persistence from './persistence/index.js';
 
 // TODO
-//  error handling
-//  SQL docker setup
-//  error handling, catch body parse errors.
 // check await vs return vs return await
+// publish docker image.
 
 const port = process.env.PORT || 3000;
 
 const app = express();
+
+// register middleware
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// register routing
 app.use('/api', routes);
-app.use((req, res) => res.sendStatus(404));
-app.use((err, req, res, next) => res.sendStatus(500));
 
+// register error handling
+app.use((req, res) => res.sendStatus(404));
+app.use((err, req, res, next) => res.sendStatus(err.status || 500));
+
+// ensure database is ready, then start server.
 persistence
   .initialize()
   .then(() => {
