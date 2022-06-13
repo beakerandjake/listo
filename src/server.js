@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import routes from './routes/index.js';
 import persistence from './persistence/index.js';
 
@@ -12,6 +13,7 @@ import persistence from './persistence/index.js';
 const port = process.env.PORT || 3000;
 
 const app = express();
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
