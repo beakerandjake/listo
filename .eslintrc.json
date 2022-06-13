@@ -16,6 +16,7 @@
             "always",
             { "js": "off" }
         ],
-        "no-console": "off"
+        "no-console": "off",
+        "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
     }
 }

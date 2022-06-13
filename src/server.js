@@ -16,6 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', routes);
+app.use((req, res) => res.sendStatus(404));
+app.use((err, req, res, next) => res.sendStatus(500));
 
 persistence
   .initialize()
@@ -29,7 +31,6 @@ persistence
 
 const shutdown = async () => {
   await persistence.close();
-  console.log('bye!');
   process.exit();
 };
 
