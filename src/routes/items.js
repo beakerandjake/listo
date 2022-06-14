@@ -40,7 +40,14 @@ router.delete('/', asyncErrorHandler(async (req, res) => {
 // Add New Item
 router.post(
   '/',
-  validateRequest([body('name').trim().isLength({ min: 2, max: 128 })]),
+  validateRequest([
+    body('name')
+      .exists({ checkFalsy: true })
+      .withMessage('name is required.')
+      .trim()
+      .isLength({ min: 2, max: 128 })
+      .withMessage('name must be between 2 and 128 characters.'),
+  ]),
   asyncErrorHandler(async (req, res) => {
     const id = await persistence.addItem(req.body.name);
     res.status(200).send({ id });
@@ -56,7 +63,13 @@ router.delete('/:itemId', asyncErrorHandler(async (req, res) => {
 // Edit item
 router.patch(
   '/:itemId',
-  validateRequest([body('quantity').isInt()]),
+  validateRequest([
+    body('quantity')
+      .exists({ checkNull: true })
+      .withMessage('quantity is required.')
+      .isInt()
+      .withMessage('quantity must be numeric'),
+  ]),
   asyncErrorHandler(async (req, res) => {
     const { itemId } = req.params;
     const { quantity } = req.body;

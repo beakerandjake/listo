@@ -22,7 +22,9 @@ app.use('/api', routes);
 
 // register error handling
 app.use((req, res) => res.sendStatus(404));
-app.use((err, req, res, next) => res.sendStatus(err.status || 500));
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).send(err.expose && err.message ? err.message : null);
+});
 
 // ensure database is ready, then start server.
 persistence
