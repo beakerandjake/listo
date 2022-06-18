@@ -14,3 +14,6 @@ services:
       - ./src:/usr/src/listo/src
       - ./package.json:/usr/src/listo/package.json
       - ./package-lock.json:/usr/src/listo/package-lock.json
+      - listo-db:/var/lib/listo
+volumes: 
+  listo-db:
