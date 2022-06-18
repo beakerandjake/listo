@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
+import cors from 'cors';
 import routes from './routes/index.js';
 import persistence from './persistence/index.js';
 
@@ -14,6 +15,9 @@ const app = express();
 
 // register middleware
 app.use(helmet());
+app.use(cors());
+app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
