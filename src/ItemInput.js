@@ -23,7 +23,7 @@ export default function ItemInput(props) {
     return (
         <div className="w-full pt-6 mb-4 flex items-center">
             <input
-                className="shadow appearance-none border w-full py-2 px-3 text-gray-700" type="text"
+                className="shadow appearance-none border w-full py-2 px-3 text-gray-700 focus:border-green-700 focus:outline-none" type="text"
                 placeholder='What do we need?'
                 value={name}
                 onChange={e => setName(e.target.value)} onKeyDown={onKeyDown} disabled={props.disabled} 
