@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React from 'react';
-import './App.css';
 import ItemInput from './ItemInput';
 import ItemList from './ItemList';
 import Error from './Error';
 import Loading from './Loading';
+import Logo from './Logo';
 
 const API_URL = 'http://localhost:3001/api/items';
 
@@ -126,14 +126,8 @@ class Parent extends React.Component {
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="font-medium leading-light text-5xl mt-5 select-none">
-        listo
-        <span class="fa-stack text-[.35em] align-middle">
-          <i class="fa-solid fa-square fa-stack-2x text-green-700"></i>
-          <i class="fa-solid fa-check fa-stack-1x fa-inverse"></i>
-        </span>
-      </h1>
+    <div>
+      <Logo />
       <Parent />
     </div>
   );
