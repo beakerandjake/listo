@@ -49,8 +49,9 @@ router.post(
       .withMessage('name must be between 2 and 128 characters.'),
   ]),
   asyncErrorHandler(async (req, res) => {
-    const id = await persistence.addItem(req.body.name);
-    res.status(200).send({ id });
+    const { name } = req.body;
+    const id = await persistence.addItem(name);
+    res.status(200).send({ id, name, quantity: 1 });
   }),
 );
 
