@@ -6,7 +6,7 @@ export default function QuantityButton(props) {
   return (
       <span className="flex divide-x divide-gray-300 border border-gray-300 rounded h-8">
         <button
-          className="text-gray-600 hover:text-white hover:bg-gray-600 w-8 rounded-l cursor-pointer"
+          className="text-gray-600 hover:text-white hover:bg-red-600 w-8 rounded-l cursor-pointer"
           onClick={() => props.onQuantityChange(quantity - 1)} disabled={props.disabled}>
           -
         </button>
@@ -14,7 +14,7 @@ export default function QuantityButton(props) {
           {quantity}
         </span>
         <button
-          className="text-gray-600 hover:text-white hover:bg-gray-600 w-8 rounded-r cursor-pointer"
+          className="text-gray-600 hover:text-white hover:bg-green-700 w-8 rounded-r cursor-pointer"
           onClick={() => props.onQuantityChange(quantity + 1)} disabled={props.disabled}>
           +
         </button>
