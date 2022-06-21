@@ -9,7 +9,8 @@ import persistence from './persistence/index.js';
 // check await vs return vs return await
 // publish docker image.
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const PUBLIC_FOLDER = process.env.PUBLIC_FOLDER || 'public';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static('src/public'));
+app.use(express.static(PUBLIC_FOLDER));
 
 // register routing
 app.use('/api', routes);
@@ -36,7 +37,7 @@ app.use((err, req, res, next) => {
 persistence
   .initialize()
   .then(() => {
-    app.listen(port, () => console.log(`listo running on port ${port}`));
+    app.listen(PORT, () => console.log(`listo running on port ${PORT}`));
   })
   .catch((error) => {
     console.error(error);
