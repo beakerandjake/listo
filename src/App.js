@@ -6,7 +6,7 @@ import Error from './Error';
 import Loading from './Loading';
 import Logo from './Logo';
 
-const API_URL = 'http://localhost:3001/api/items';
+const API_URL = 'http://192.168.0.10:4000/api/items';
 
 class Parent extends React.Component {
   constructor(props) {
@@ -114,7 +114,7 @@ class Parent extends React.Component {
     }
 
     return (
-      <div className="max-w-3xl mx-auto px-2">
+      <div className="max-w-3xl mx-auto px-2 mb-3">
         <ItemInput onAddItem={this.onAddItem} disabled={this.state.disabled} />
         <ItemList items={this.state.items} onDeleteItem={this.onDeleteItem} onItemQuantityChange={this.onItemQuantityChange} disabled={this.state.disabled} />
       </div>
@@ -126,7 +126,7 @@ class Parent extends React.Component {
 
 function App() {
   return (
-    <div>
+    <div className="text-center">
       <Logo />
       <Parent />
     </div>
