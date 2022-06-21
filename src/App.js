@@ -6,7 +6,7 @@ import Error from './Error';
 import Loading from './Loading';
 import Logo from './Logo';
 
-const API_URL = 'http://192.168.0.10:4000/api/items';
+const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 class Parent extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class Parent extends React.Component {
 
   componentDidMount() {
     axios
-      .get(API_URL)
+      .get(`${API_ENDPOINT}/items`)
       .then(
         response => this.setState({ items: response.data }),
         reject => {
@@ -48,7 +48,7 @@ class Parent extends React.Component {
     this.setState({ disabled: true });
 
     axios
-      .post(API_URL, { name: name })
+      .post(`${API_ENDPOINT}/items`, { name: name })
       .then(
         resolve => this.setState(state => ({ items: [...state.items, resolve.data] })),
         reject => {
@@ -67,7 +67,7 @@ class Parent extends React.Component {
     this.setState({ disabled: true });
 
     axios
-      .delete(`${API_URL}/${id}`)
+      .delete(`${API_ENDPOINT}/items/${id}`)
       .then(
         resolve => this.setState(state => ({ items: state.items.filter(x => x.id !== id) })),
         reject => {
@@ -93,7 +93,7 @@ class Parent extends React.Component {
     this.setState({ disabled: true });
 
     axios
-      .patch(`${API_URL}/${id}`, { quantity: quantity })
+      .patch(`${API_ENDPOINT}/items/${id}`, { quantity: quantity })
       .then(
         resolve => this.setState(state => ({ items: state.items.map(item => item.id === id ? { ...item, quantity: quantity } : item) })),
         reject => {
