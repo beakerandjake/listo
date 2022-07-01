@@ -75,15 +75,9 @@ class Parent extends React.Component {
   doChangeQuantity = (id, quantity) => {
     this.setState({ disabled: true });
 
-    axios
-      .patch(`${API_ENDPOINT}/items/${id}`, { quantity: quantity })
-      .then(
-        resolve => this.setState(state => ({ items: state.items.map(item => item.id === id ? { ...item, quantity: quantity } : item) })),
-        reject => {
-          console.error(reject);
-          this.setState({ error: 'Failed to edit item quantity! Please try again.' });
-        }
-      )
+    itemService.editItem(id, quantity)
+      .then(() => this.setState(state => ({ items: state.items.map(item => item.id === id ? { ...item, quantity: quantity } : item) })))
+      .catch(() => this.setState({ error: 'Failed to edit item! Please try again.' }))
       .finally(() => this.setState({ disabled: false }));
   }
 
