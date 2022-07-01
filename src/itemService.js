@@ -7,7 +7,7 @@ const getItems = async () => {
         const response = await axios.get(`${API_ENDPOINT}/items`);
         return response.data;
     } catch (error) {
-        console.error('error!', error);
+        console.error('get items failed:', error);
         throw new Error('Failed to load items.');
     }
 }
@@ -15,17 +15,26 @@ const getItems = async () => {
 const addItem = async (name) => {
     try {
         const { data: newItem } = await axios.post(`${API_ENDPOINT}/items`, { name: name });
-        console.log('got a new item', newItem);
         return newItem;
     } catch (error) {
-        console.error('error!', error);
+        console.error('add item failed:', error);
         throw new Error('Failed to add item.');
+    }
+}
+
+const deleteItem = async (id) => {
+    try {
+        await axios.delete(`${API_ENDPOINT}/items/${id}`)
+    } catch (error) {
+        console.error('delete failed:', error);
+        throw new Error('Failed to delete item.');
     }
 }
 
 const itemService = {
     getItems,
-    addItem
+    addItem,
+    deleteItem
 };
 
 export default itemService;

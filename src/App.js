@@ -55,15 +55,9 @@ class Parent extends React.Component {
 
     this.setState({ disabled: true });
 
-    axios
-      .delete(`${API_ENDPOINT}/items/${id}`)
-      .then(
-        resolve => this.setState(state => ({ items: state.items.filter(x => x.id !== id) })),
-        reject => {
-          console.error(reject);
-          this.setState({ error: 'Failed to delete item! Please try again.' });
-        }
-      )
+    itemService.deleteItem(id)
+      .then(() => this.setState(state => ({ items: state.items.filter(x => x.id !== id) })))
+      .catch(() => this.setState({ error: 'Failed to delete item! Please try again.' }))
       .finally(() => this.setState({ disabled: false }));
   }
 
