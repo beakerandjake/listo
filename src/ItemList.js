@@ -1,12 +1,7 @@
 import React from 'react';
-import EmptyList from './EmptyList';
 import Item from './Item';
 
 export default function ItemList(props) {
-    if (!props.items.length) {
-        return <EmptyList />
-    }
-
     const items = props.items.map(item =>
         <Item
             {...item}
