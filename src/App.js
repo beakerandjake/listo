@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import itemService from './itemService';
 import ItemInput from './ItemInput';
 import ItemList from './ItemList';
 import Error from './Error';
@@ -20,15 +21,9 @@ class Parent extends React.Component {
   }
 
   componentDidMount() {
-    axios
-      .get(`${API_ENDPOINT}/items`)
-      .then(
-        response => this.setState({ items: response.data }),
-        reject => {
-          console.error(reject);
-          this.setState({ error: 'Failed to load items! Please try again.' });
-        }
-      )
+    itemService.getItems()
+      .then(items => this.setState({ items: items }))
+      .catch(() => this.setState({ error: 'Failed to load items! Please try again.' }))
       .finally(() => this.setState({ initialized: true }));
   }
 
