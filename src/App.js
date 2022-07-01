@@ -42,15 +42,9 @@ class Parent extends React.Component {
   doAddItem(name) {
     this.setState({ disabled: true });
 
-    axios
-      .post(`${API_ENDPOINT}/items`, { name: name })
-      .then(
-        resolve => this.setState(state => ({ items: [...state.items, resolve.data] })),
-        reject => {
-          console.error(reject);
-          this.setState({ error: 'Failed to add item! Please try again.' });
-        }
-      )
+    itemService.addItem(name)
+      .then(newItem => this.setState(state => ({ items: [...state.items, newItem] })))
+      .catch(() => this.setState({ error: 'Failed to add item! Please try again.' }))
       .finally(() => this.setState({ disabled: false }));
   }
 

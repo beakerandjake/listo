@@ -12,8 +12,20 @@ const getItems = async () => {
     }
 }
 
+const addItem = async (name) => {
+    try {
+        const { data: newItem } = await axios.post(`${API_ENDPOINT}/items`, { name: name });
+        console.log('got a new item', newItem);
+        return newItem;
+    } catch (error) {
+        console.error('error!', error);
+        throw new Error('Failed to add item.');
+    }
+}
+
 const itemService = {
-    getItems
+    getItems,
+    addItem
 };
 
 export default itemService;
