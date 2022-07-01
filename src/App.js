@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import itemService from './itemService';
 import ItemInput from './ItemInput';
@@ -6,8 +5,6 @@ import ItemList from './ItemList';
 import Error from './Error';
 import Loading from './Loading';
 import Logo from './Logo';
-
-const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 class Parent extends React.Component {
   constructor(props) {
