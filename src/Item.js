@@ -5,7 +5,7 @@ import DeleteButton from './DeleteButton';
 function Item(props) {
     console.log('render', props.name);
     return (
-        <li className="flex justify-between items-baseline px-4 py-3 sm:px-0">
+        <li className="flex justify-between items-baseline px-4 py-3 md:px-0">
             {props.name}
             <span className="flex justify-between items-baseline divide-x">
                 <span className="px-3">
