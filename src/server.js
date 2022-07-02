@@ -15,7 +15,7 @@ const PUBLIC_FOLDER = process.env.PUBLIC_FOLDER || 'public';
 const app = express();
 
 // register middleware
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.options('*', cors());
 
