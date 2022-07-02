@@ -9,7 +9,7 @@ export default function DeleteNotification(props) {
                     <div className="w-0 flex-1 flex justify-between">
                         {/* Message */}
                         <p className="w-0 flex-1 text-sm text-gray-900">
-                            Deleted <span className="font-medium">{props.name}</span>
+                            Deleted <span className="font-semibold">{props.name}</span>
                         </p>
                         {/* Undo Button */}
                         <button
