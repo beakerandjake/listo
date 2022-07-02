@@ -8,6 +8,7 @@ export default function ItemList(props) {
             key={item.id}
             onDelete={props.onDeleteItem}
             onQuantityChange={props.onItemQuantityChange}
+            onToggleCompleted={props.onToggleCompleted}
             disabled={props.disabled}
         />
     );

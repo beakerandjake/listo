@@ -4,8 +4,9 @@ const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 const getItems = async () => {
     try {
-        const response = await axios.get(`${API_ENDPOINT}/items`);
-        return response.data;
+        let { data: items } = await axios.get(`${API_ENDPOINT}/items`);
+        items = items.map(x => ({ ...x, completed: false }));
+        return items;
     } catch (error) {
         console.error('get items failed:', error);
         throw new Error('Failed to load items.');
@@ -24,7 +25,8 @@ const addItem = async (name) => {
 
 const deleteItem = async (id) => {
     try {
-        await axios.delete(`${API_ENDPOINT}/items/${id}`)
+        // await axios.delete(`${API_ENDPOINT}/items/${id}`)
+        return Promise.resolve();
     } catch (error) {
         console.error('delete failed:', error);
         throw new Error('Failed to delete item.');

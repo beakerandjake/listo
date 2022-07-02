@@ -56,7 +56,7 @@ class Parent extends React.Component {
 
     itemService.deleteItem(id)
       .then(() => this.setState(state => {
-        
+
 
         const index = state.items.findIndex(x => x.id === id);
 
@@ -89,6 +89,11 @@ class Parent extends React.Component {
       .finally(() => this.setState({ disabled: false }));
   }
 
+  toggleItemCompleted = (id, completed) => {
+    console.log('set', id, completed);
+    this.setState(state => ({ items: state.items.map(item => item.id === id ? { ...item, completed } : item) }));
+  }
+
   render() {
     if (this.state.error) {
       return <Error details={this.state.error} />
@@ -101,7 +106,7 @@ class Parent extends React.Component {
     return (
       <div className="max-w-3xl mx-auto  mb-3">
         <ItemInput onAddItem={this.onAddItem} disabled={this.state.disabled} />
-        <ItemList items={this.state.items} onDeleteItem={this.onDeleteItem} onItemQuantityChange={this.onItemQuantityChange} disabled={this.state.disabled} />
+        <ItemList items={this.state.items} onDeleteItem={this.onDeleteItem} onItemQuantityChange={this.onItemQuantityChange} onToggleCompleted={this.toggleItemCompleted} disabled={this.state.disabled} />
         <DeleteNotificationPanel lastDeleted={this.state.lastDeleted} />
       </div>
     );
