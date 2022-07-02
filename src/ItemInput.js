@@ -21,7 +21,7 @@ export default function ItemInput(props) {
     return (
         <form className="w-full pt-6 px-2 flex items-center md:px-0" onSubmit={handleSubmit}>
             <input
-                className="shadow appearance-none border w-full py-2 px-3 text-gray-700 focus:outline-none"
+                className="shadow appearance-none border-gray-200 w-full py-2 px-3 text-gray-700 focus:outline-none focus:ring-0 focus:border-inherit"
                 type="text"
                 placeholder='What do we need?'
                 value={itemName}
