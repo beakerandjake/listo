@@ -10,7 +10,6 @@ import persistence from './persistence/index.js';
 // publish docker image.
 
 const PORT = process.env.PORT || 3000;
-const PUBLIC_FOLDER = process.env.PUBLIC_FOLDER || 'public';
 
 const app = express();
 
@@ -21,8 +20,6 @@ app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(express.static(PUBLIC_FOLDER));
 
 // register routing
 app.use('/api', routes);
