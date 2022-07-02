@@ -12,5 +12,5 @@ export default function ItemList(props) {
         />
     );
 
-    return <ul className="list-disc divide-y">{items}</ul>
+    return <ul className="divide-y divide-gray-200">{items}</ul>
 }

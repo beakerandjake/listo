@@ -5,12 +5,14 @@ import ItemList from './ItemList';
 import Error from './Error';
 import Loading from './Loading';
 import Logo from './Logo';
+import DeleteNotificationPanel from './DeleteNotificationPanel';
 
 class Parent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
+      lastDeleted: null,
       initialized: false,
       disabled: false,
       error: false
@@ -53,7 +55,16 @@ class Parent extends React.Component {
     this.setState({ disabled: true });
 
     itemService.deleteItem(id)
-      .then(() => this.setState(state => ({ items: state.items.filter(x => x.id !== id) })))
+      .then(() => this.setState(state => {
+        
+
+        const index = state.items.findIndex(x => x.id === id);
+
+        return {
+          items: [...state.items.slice(0, index), ...state.items.slice(index + 1)],
+          lastDeleted: state.items[index]
+        };
+      }))
       .catch(() => this.setState({ error: 'Failed to delete item! Please try again.' }))
       .finally(() => this.setState({ disabled: false }));
   }
@@ -88,9 +99,10 @@ class Parent extends React.Component {
     }
 
     return (
-      <div className="max-w-3xl mx-auto px-2 mb-3">
+      <div className="max-w-3xl mx-auto  mb-3">
         <ItemInput onAddItem={this.onAddItem} disabled={this.state.disabled} />
         <ItemList items={this.state.items} onDeleteItem={this.onDeleteItem} onItemQuantityChange={this.onItemQuantityChange} disabled={this.state.disabled} />
+        <DeleteNotificationPanel lastDeleted={this.state.lastDeleted} />
       </div>
     );
   }
@@ -100,7 +112,7 @@ class Parent extends React.Component {
 
 function App() {
   return (
-    <div className="text-center">
+    <div>
       <Logo />
       <Parent />
     </div>
