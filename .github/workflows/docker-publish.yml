@@ -30,3 +30,6 @@ jobs:
         
       - name: Echo Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
+        
+      - name: Build Image
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t beakerandjake/listo .
