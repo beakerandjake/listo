@@ -1,8 +1,5 @@
 import React from 'react';
-import Logo from './Logo';
-import ListSelection from './NewComponents/ListSelection';
-import Parent from './Parent';
-import Layout from './NewComponents/Layout';
+import Layout from './Old/Layout';
 
 function App() {
   return (

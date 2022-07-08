@@ -19,8 +19,8 @@ import {
     UsersIcon,
     XIcon,
 } from '@heroicons/react/outline'
-import Parent from '../Parent'
-import Logo from '../Logo'
+import Parent from './Parent'
+import Logo from './Logo'
 
 const navigation = [
 
