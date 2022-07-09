@@ -8,6 +8,6 @@ const lists = [
 ];
 
 export async function getLists() {
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 0));
     return lists;
 }
