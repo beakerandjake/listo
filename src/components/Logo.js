@@ -1,10 +1,11 @@
-import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function Logo(props) {
     return (
         <span className="select-none flex-shrink-0 font-medium text-4xl md:text-4xl text-gray-600 whitespace-nowrap">
             listo
-            <i className="fa-solid fa-square-check text-3xl text-green-700 pl-1"></i>
+            <FontAwesomeIcon icon={faSquareCheck} className="text-3xl text-green-700 pl-1" />
         </span>
     );
 }
