@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import Layout from './Old/Layout';
 import { getLists } from './services/listService';
 
 function App() {
   const [lists, setLists] = useState([]);
+  const handleError = useErrorHandler();
 
-  useEffect(() => {
+  useEffect(handle => {
     async function fetchLists() {
-      let response = await getLists();
-      setLists(response);
+      try {
+        let response = await getLists();
+        setLists(response);
+      } catch (error) {
+        handleError(error);
+      }
     }
 
     fetchLists();
-  }, []);
+  }, [setLists, handleError]);
 
   return (
     <div>
