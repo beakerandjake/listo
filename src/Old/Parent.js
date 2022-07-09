@@ -3,7 +3,6 @@ import itemService from './itemService';
 import ItemInput from './ItemInput';
 import ItemList from './ItemList';
 import Error from './Error';
-import Loading from './Loading';
 import Logo from '../components/Logo';
 import DeleteNotificationPanel from './DeleteNotificationPanel';
 
@@ -98,11 +97,7 @@ export default class Parent extends React.Component {
       if (this.state.error) {
         return <Error details={this.state.error} />
       }
-  
-      if (!this.state.initialized) {
-        return <Loading />;
-      }
-  
+    
       return (
         <div className="mx-auto mb-3">
           <ItemInput onAddItem={this.onAddItem} disabled={this.state.disabled} />

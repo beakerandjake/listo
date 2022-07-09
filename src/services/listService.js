@@ -1,11 +1,10 @@
 
-import { ClipboardListIcon, CurrencyDollarIcon, GlobeIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 
 const lists = [
-    { name: 'Grocery', id: '1', icon: ShoppingCartIcon, current: true },
-    { name: 'Todo', id: '2', icon: ClipboardListIcon, current: false },
-    { name: 'Trips', id: '3', icon: GlobeIcon, current: false },
-    { name: 'Purchases', id: '4', icon: CurrencyDollarIcon, current: false }
+    { name: 'Grocery', id: '1', current: true },
+    { name: 'Todo', id: '2', current: false },
+    { name: 'Trips', id: '3', current: false },
+    { name: 'Purchases', id: '4', current: false }
 ];
 
 export async function getLists() {

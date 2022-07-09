@@ -1,34 +1,15 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import {
-    CalendarIcon,
-    ChartBarIcon,
-    ChevronDownIcon,
-    ClipboardListIcon,
-    CurrencyDollarIcon,
-    DotsHorizontalIcon,
-    DotsVerticalIcon,
-    FolderIcon,
-    GlobeIcon,
-    HomeIcon,
-    InboxIcon,
-    MenuIcon,
-    PlusCircleIcon,
-    SelectorIcon,
-    ShoppingCartIcon,
-    UsersIcon,
-    XIcon,
-} from '@heroicons/react/outline'
 import Parent from './Parent'
 import Logo from '../components/Logo'
 
 const navigation = [
 
 
-    { name: 'Grocery', href: '#', icon: ShoppingCartIcon, current: true },
-    { name: 'Todo', href: '#', icon: ClipboardListIcon, current: false },
-    { name: 'Trips', href: '#', icon: GlobeIcon, current: false },
-    { name: 'Purchases', href: '#', icon: CurrencyDollarIcon, current: false }
+    { name: 'Grocery', href: '#', current: true },
+    { name: 'Todo', href: '#', current: false },
+    { name: 'Trips', href: '#', current: false },
+    { name: 'Purchases', href: '#', current: false }
 ]
 
 function classNames(...classes) {
@@ -90,7 +71,6 @@ export default function Example() {
                                                 onClick={() => setSidebarOpen(false)}
                                             >
                                                 <span className="sr-only">Close sidebar</span>
-                                                <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
                                             </button>
                                         </div>
                                     </Transition.Child>
@@ -123,7 +103,6 @@ export default function Example() {
                                         </nav>
                                     </div>
                                     <div className="flex-shrink-0 flex border-t items-center gap-2 border-gray-200 p-4">
-                                        <PlusCircleIcon className="w-5 h-5 text-green-700" />
                                         <span className="font-medium text-gray-700 group-hover:text-gray-900">
                                             Add New List
                                         </span>
@@ -166,7 +145,6 @@ export default function Example() {
                             </nav>
                         </div>
                         <div className="flex-shrink-0 flex border-t items-center gap-2 border-gray-200 p-4">
-                            <PlusCircleIcon className="w-5 h-5 text-green-700" />
                             <span className="font-medium text-gray-700 group-hover:text-gray-900">
                                 Add New List
                             </span>
@@ -200,7 +178,6 @@ export default function Example() {
                             {/* <h2 className="text-sm font-medium text-gray-500">Viewing List</h2> */}
                             <div className="px-2 flex items-center gap-2">
                                 {/* <h2 className="text-sm font-medium text-gray-500">Edit List</h2> */}
-                                <ShoppingCartIcon className="w-7 h-7" />
                                 {/* <span className="text-3xl text-gray-700">Lists / </span> */}
                                 <span className="text-3xl font-medium text-gray-900">Grocery</span>
                             </div>
@@ -211,7 +188,6 @@ export default function Example() {
                                 onClick={() => setSidebarOpen(true)}
                             >
                                 <span className="sr-only">Open sidebar</span>
-                                <DotsVerticalIcon className="h-6 w-6" aria-hidden="true" />
                             </button>
                         </div>
                         <div className="py-2">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { XIcon } from '@heroicons/react/solid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export default function DeleteNotification(props) {
     return (
@@ -27,7 +27,7 @@ export default function DeleteNotification(props) {
                             className="inline-flex text-gray-400 hover:text-gray-500 focus:outline-none"
                             onClick={props.onDismiss}
                         >
-                            <XIcon className="h-5 w-5" aria-hidden="true" />
+                            <FontAwesomeIcon icon={faTimes} aria-hidden="true" />
                         </button>
                     </div>
                 </div>
