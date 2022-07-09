@@ -19,12 +19,12 @@ export default class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
-
             return <Error />
             // if (React.isValidElement(this.props.fallback)) {
             //     return this.props.fallback;
             // }
 
+            
             // throw new Error('Error boundary requires a fallback!');
         }
 
