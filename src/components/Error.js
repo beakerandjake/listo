@@ -2,7 +2,7 @@ import Logo from "./Logo";
 
 export default function Error() {
     return (
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col justify-center items-center gap-2">
+        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col justify-center items-center text-center gap-2">
             <div className="mt-5 mb-10">
                 <Logo />
             </div>
