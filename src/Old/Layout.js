@@ -20,7 +20,7 @@ import {
     XIcon,
 } from '@heroicons/react/outline'
 import Parent from './Parent'
-import Logo from './Logo'
+import Logo from '../components/Logo'
 
 const navigation = [
 

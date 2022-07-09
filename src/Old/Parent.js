@@ -4,7 +4,7 @@ import ItemInput from './ItemInput';
 import ItemList from './ItemList';
 import Error from './Error';
 import Loading from './Loading';
-import Logo from './Logo';
+import Logo from '../components/Logo';
 import DeleteNotificationPanel from './DeleteNotificationPanel';
 
 export default class Parent extends React.Component {
