@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
-import Layout from './Old/Layout';
 import { getLists } from './services/listService';
+import Sidebar from './components/Sidebar';
 
 function App() {
+  const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
   const handleError = useErrorHandler();
 
@@ -12,6 +13,7 @@ function App() {
       try {
         let response = await getLists();
         setLists(response);
+        setInitialized(true);
       } catch (error) {
         handleError(error);
       }
@@ -20,11 +22,16 @@ function App() {
     fetchLists();
   }, [setLists, handleError]);
 
+  if (!initialized) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
-      Lists: {lists.map(x => <p>{x.name}</p>)}
+      <Sidebar items={lists} />
     </div>
-    // <Layout />
+
+
     // <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     //   <div className="max-w-3xl mx-auto">
     //     <div class="flex justify-center mt-2 border-b-2 py-2 mb-2">
