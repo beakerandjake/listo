@@ -1,14 +1,11 @@
-import Logo from "./Logo";
+import Logo from "../Logo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import SidebarNavItem from "./SidebarNavItem";
+
 
 export default function Sidebar(props) {
-    const lists = props.items.map(item => (
-        <a key={item.id} href="/" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-base font-medium rounded-md">
-            <FontAwesomeIcon icon={faCirclePlus} className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0"/>
-            {item.name}
-        </a>
-    ));
+    const navItems = props.items.map(item => (<SidebarNavItem key={item.id} {...item} />));
 
     return (
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
@@ -18,7 +15,7 @@ export default function Sidebar(props) {
                 </div>
                 <div className="flex-grow mt-5 flex flex-col ">
                     <nav className="flex-1 px-2 pb-4 space-y-1 ">
-                        {lists}
+                        {navItems}
                     </nav>
                 </div>
                 <div className="flex-shrink-0 flex border-t border-gray-200 p-4">

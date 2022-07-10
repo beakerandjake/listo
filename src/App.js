@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
 
 function App() {
   const [initialized, setInitialized] = useState(false);
