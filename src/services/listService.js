@@ -1,8 +1,8 @@
 const lists = [
-    { name: 'Grocery', id: '1', iconName: 'cart-shopping', current: true },
-    { name: 'Todo', id: '2', iconName: 'list-check', current: false },
-    { name: 'Trips', id: '3', iconName: 'plane', current: false },
-    { name: 'Purchases', id: '4', iconName: 'dollar-sign', current: false }
+    { name: 'Grocery', id: '1', iconName: 'cart-shopping' },
+    { name: 'Todo', id: '2', iconName: 'list-check' },
+    { name: 'Trips', id: '3', iconName: 'plane' },
+    { name: 'Purchases', id: '4', iconName: 'dollar-sign' }
 ];
 
 export async function getLists() {
