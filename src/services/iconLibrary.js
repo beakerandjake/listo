@@ -2,8 +2,10 @@ import {
     faCheck,
     faDollar,
     faGift,
+    faHome,
     faListCheck,
     faPlane,
+    faPlus,
     faShoppingCart,
     faStore
 } from '@fortawesome/free-solid-svg-icons';
@@ -11,10 +13,12 @@ import {
 const icons = [
     faCheck,
     faDollar,
+    faHome,
     faShoppingCart,
     faStore,
     faListCheck,
     faPlane,
+    faPlus,
     faGift,
 ];
 

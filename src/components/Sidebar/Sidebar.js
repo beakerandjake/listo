@@ -1,11 +1,16 @@
-import Logo from "../Logo";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { Link, useLocation } from 'react-router-dom';
+import Logo from "../Logo";
 import SidebarNavItem from "./SidebarNavItem";
 
 
 export default function Sidebar(props) {
-    const navItems = props.items.map(item => (<SidebarNavItem key={item.id} {...item} />));
+    const location = useLocation();
+
+    const navItems = props.items.map(item => (
+        <SidebarNavItem key={item.id} to={`/lists/${item.id}`} name={item.name} iconName={item.iconName} />
+    ));
 
     return (
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
@@ -18,12 +23,14 @@ export default function Sidebar(props) {
                         {navItems}
                     </nav>
                 </div>
-                <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
-                    <div className="flex-shrink-0 w-full block">
-                        <FontAwesomeIcon icon={faCirclePlus} className="text-green-700 mr-3" />
-                        Add New List
+                {location.pathname !== '/lists/create' &&
+                    <div className="flex-shrink-0 flex border-t border-gray-200 p-4 transition-opacity">
+                        <Link to="lists/create" className="flex-shrink-0 w-full block">
+                            <FontAwesomeIcon icon={faCirclePlus} className="text-green-700 mr-3" />
+                            Add New List
+                        </Link>
                     </div>
-                </div>
+                }
             </div>
         </div >
     )

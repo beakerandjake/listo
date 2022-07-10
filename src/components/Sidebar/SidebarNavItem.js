@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getIcon } from 'services/listIconService';
+import { getIcon } from 'services/iconLibrary';
 
 function activeNavStyle(isActive) {
     return isActive
@@ -13,7 +13,7 @@ export default function SidebarNavItem(props) {
 
     return (
         <NavLink
-            to={`/lists/${props.id}`}
+            to={props.to}
             className={({ isActive }) => activeNavStyle(isActive) + ' group flex items-center px-2 py-2 text-base font-medium rounded-md'}
         >
             <FontAwesomeIcon icon={icon} fixedWidth className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0" />
