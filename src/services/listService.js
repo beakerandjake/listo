@@ -1,7 +1,7 @@
 const lists = [
     { name: 'Grocery', id: '1', iconName: 'cart-shopping' },
     { name: 'Todo', id: '2', iconName: 'list-check' },
-    { name: 'Trips', id: '3', iconName: 'fa-plane' },
+    { name: 'Trips', id: '3', iconName: 'plane' },
     { name: 'Purchases', id: '4', iconName: 'dollar-sign' }
 ];
 
