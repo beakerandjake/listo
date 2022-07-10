@@ -7,7 +7,7 @@ export default function SidebarNav(props) {
     ));
 
     return (
-        <nav className="flex-1 px-2 pb-4">
+        <nav className="flex-1">
             <div className='space-y-3'>
                 <SidebarNavItem key='home' to="" name="Dashboard" iconName="house" />
                 <div className="space-y-1">
