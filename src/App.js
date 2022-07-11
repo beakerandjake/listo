@@ -32,6 +32,9 @@ function App() {
     <div>
       {/* <Sidebar items={lists} /> */}
       <Navbar items={lists} />
+      <div>
+        HELLO WORLD ITS LISTO
+      </div>
     </div>
 
 
