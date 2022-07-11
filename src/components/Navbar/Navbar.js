@@ -9,8 +9,8 @@ export default function Navbar(props) {
     const getNavItems = (closeFn) => props.items.map(item => (
         <NavbarNavItem
             key={item.id}
+            onClick={closeFn}
             to={`/lists/${item.id}`}
-            closeFn={closeFn}
             {...item}
         />
     ));
@@ -34,7 +34,9 @@ export default function Navbar(props) {
                     </div>
                     <Disclosure.Panel>
                         <div className="pt-2 pb-3 space-y-1">
+                            <NavbarNavItem key="home" to="" name="Dashboard" iconName="house" onClick={closeFn} />
                             {getNavItems(closeFn)}
+                            <NavbarNavItem key="create" to="/lists/create" name="Create New List" iconName="plus" onClick={closeFn} />
                         </div>
                     </Disclosure.Panel>
                 </>
