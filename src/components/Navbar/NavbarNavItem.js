@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { Disclosure } from '@headlessui/react';
 import SidebarBadge from "components/Sidebar/SidebarBadge";
 import { getIcon } from 'services/iconLibrary';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
