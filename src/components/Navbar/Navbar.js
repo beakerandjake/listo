@@ -39,6 +39,7 @@ export default function Navbar(props) {
                             <NavbarNavItem key="create" to="/lists/create" name="Create New List" iconName="plus" onClick={closeFn} />
                         </div>
                     </Disclosure.Panel>
+                    {open && <div className="z-10 w-full h-full absolute bg-black opacity-30" onClick={closeFn} />}
                 </>
             )}
         </Disclosure>
