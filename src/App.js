@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
 import Sidebar from './components/Sidebar/Sidebar';
+import PreviousMap from 'postcss/lib/previous-map';
+import Navbar from 'components/Navbar/Navbar';
 
 function App() {
   const [initialized, setInitialized] = useState(false);
@@ -28,7 +30,8 @@ function App() {
 
   return (
     <div>
-      <Sidebar items={lists} />
+      {/* <Sidebar items={lists} /> */}
+      <Navbar items={lists} />
     </div>
 
 

@@ -1,4 +1,4 @@
-import Logo from "../Logo";
+import Logo from '../Logo';
 import SidebarNavItem from './SidebarNavItem';
 import SidebarNav from './SidebarNav';
 
@@ -13,7 +13,7 @@ export default function Sidebar(props) {
                     {/* When no lists exit, only render a nav item for the "create list" page. */}
                     {props.items?.length
                         ? <SidebarNav items={props.items} />
-                        : <SidebarNavItem key='create' to='lists/create' name='Create New List' iconName='plus' />
+                        : <SidebarNavItem key="create" to="lists/create" name="Create New List" iconName="plus" />
                     }
                 </div>
             </div>
