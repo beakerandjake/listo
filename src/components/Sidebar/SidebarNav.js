@@ -3,7 +3,7 @@ import SidebarHeader from './SidebarHeader';
 
 export default function SidebarNav(props) {
     const lists = props.items.map(item => (
-        <SidebarNavItem key={item.id} to={`/lists/${item.id}`} name={item.name} iconName={item.iconName} />
+        <SidebarNavItem key={item.id} to={`/lists/${item.id}`} {...item} />
     ));
 
     return (
