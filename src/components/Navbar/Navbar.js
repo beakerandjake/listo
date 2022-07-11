@@ -17,15 +17,13 @@ export default function Navbar(props) {
 
     return (
         <Disclosure as="nav" className="bg-white shadow">
-            {({ open, close }) => (
+            {({ open, close: closeFn }) => (
                 <>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between items-center h-16">
-                            <Disclosure.Button className="outline-none select-none">
-                                <div onClick={() => close(null)}>
-                                    <Logo />
-                                </div>
-                            </Disclosure.Button>
+                            <div className="outline-none select-none" onClick={closeFn}>
+                                <Logo />
+                            </div>
                             <div className="-mr-2 flex items-center">
                                 {/* Mobile menu button */}
                                 <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -36,9 +34,8 @@ export default function Navbar(props) {
                     </div>
                     <Disclosure.Panel>
                         <div className="pt-2 pb-3 space-y-1">
-                            {getNavItems(close)}
+                            {getNavItems(closeFn)}
                         </div>
-
                     </Disclosure.Panel>
                 </>
             )}
