@@ -9,7 +9,7 @@ export function Navigation(props) {
     return (
         <>
             <CollapsibleSidebarContainer open={menuOpen} onSetClose={() => setMenuOpen(false)}>
-                <Sidebar />
+                <Sidebar items={props.items} />
             </CollapsibleSidebarContainer>
             <Navbar onClickOpenMenuButton={() => setMenuOpen(true)} />
 
