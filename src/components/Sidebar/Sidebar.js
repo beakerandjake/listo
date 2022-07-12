@@ -2,11 +2,11 @@ import Logo from '../Logo';
 import SidebarNavItem from './SidebarNavItem';
 import SidebarNav from './SidebarNav';
 
-export default function Sidebar(props) {
+export function Sidebar(props) {
     return (
-        <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
+        // <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
             <div className="border-r border-gray-200 pt-5 flex flex-col flex-grow bg-white">
-                <div className="flex-shrink-0 px-4 flex items-center justify-center">
+                <div className="flex-shrink-0 px-4 flex items-center">
                     <Logo />
                 </div>
                 <div className="flex-shrink-0 mt-5 flex flex-col px-2">
@@ -17,7 +17,7 @@ export default function Sidebar(props) {
                     }
                 </div>
             </div>
-        </div >
+        // </div >
     )
 }
 

@@ -1,4 +1,4 @@
-import { Disclosure } from '@headlessui/react';
+import { Disclosure, Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faBars } from '@fortawesome/free-solid-svg-icons';
 import Logo from 'components/Logo';
@@ -32,14 +32,23 @@ export default function Navbar(props) {
                             </div>
                         </div>
                     </div>
-                    <Disclosure.Panel>
-                        <div className="pt-2 pb-3 space-y-1">
-                            <NavbarNavItem key="home" to="" name="Dashboard" iconName="house" onClick={closeFn} />
-                            {getNavItems(closeFn)}
-                            <NavbarNavItem key="create" to="/lists/create" name="Create New List" iconName="plus" onClick={closeFn} />
-                        </div>
-                    </Disclosure.Panel>
-                    {open && <div className="z-10 w-full h-full absolute bg-black opacity-30" onClick={closeFn} />}
+                    <Transition
+                        enter="transition duration-50 ease-out"
+                        enterFrom="transform scale-95 opacity-0"
+                        enterTo="transform scale-100 opacity-100"
+                        leave="transition duration-10 ease-out"
+                        leaveFrom="transform scale-100 opacity-100"
+                        leaveTo="transform scale-95 opacity-0"
+                    >
+                        <Disclosure.Panel>
+                            <div className="pt-2 pb-3 space-y-1">
+                                <NavbarNavItem key="home" to="" name="Dashboard" iconName="house" onClick={closeFn} />
+                                {getNavItems(closeFn)}
+                                <NavbarNavItem key="create" to="/lists/create" name="Create New List" iconName="plus" onClick={closeFn} />
+                            </div>
+                        </Disclosure.Panel>
+                    </Transition>
+                    {open && <div className="z-10 w-full h-full absolute" onClick={closeFn} />}
                 </>
             )}
         </Disclosure>

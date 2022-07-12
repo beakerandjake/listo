@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
-import Sidebar from './components/Sidebar/Sidebar';
-import PreviousMap from 'postcss/lib/previous-map';
-import Navbar from 'components/Navbar/Navbar';
-
+import { TestNavbar } from 'components/TestNavbar/TestNavbar';
+import { Navigation } from 'components/Navigation/Navigation';
 function App() {
   const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
@@ -30,11 +28,14 @@ function App() {
 
   return (
     <div>
+      <Navigation items={lists} />
+      {/* <TestNavbar /> */}
+
       {/* <Sidebar items={lists} /> */}
-      <Navbar items={lists} />
-      <div>
+      {/* <Navbar items={lists} /> */}
+      {/* <div>
         HELLO WORLD ITS LISTO
-      </div>
+      </div> */}
     </div>
 
 
