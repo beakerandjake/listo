@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
-export function CollapsibleSidebar(props) {
+export function CollapsibleSidebarContainer(props) {
     return (
         <Transition.Root show={props.open} as={Fragment}>
             <Dialog as="div" className="relative z-40" onClose={props.onSetClose}>
@@ -55,7 +55,7 @@ export function CollapsibleSidebar(props) {
                             </Transition.Child>
                             
                             {/* Sidebar Main Content */}
-                            <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                            <div className="flex-1 h-0 overflow-y-auto">
                                 {props.children}
                             </div>
                         </Dialog.Panel>
