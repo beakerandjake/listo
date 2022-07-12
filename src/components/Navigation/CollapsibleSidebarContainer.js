@@ -45,10 +45,9 @@ export function CollapsibleSidebarContainer(props) {
                                 <div className="absolute top-0 right-0 -mr-12 pt-2">
                                     <button
                                         type="button"
-                                        className="ml-1 flex items-center justify-center h-10 w-10"
+                                        className="ml-1 flex items-center justify-center h-10 w-10 outline-none rounded-full "
                                         onClick={props.onSetClose}
                                     >
-                                        <span className="sr-only">Close sidebar</span>
                                         <FontAwesomeIcon icon={faTimes} size="xl" className="text-white font-thin" />
                                     </button>
                                 </div>
