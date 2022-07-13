@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
 import { ResponsiveLayout } from 'components/Layout/ResponsiveLayout';
+import { Sidebar } from 'components/Navigation/Sidebar';
+import PreviousMap from 'postcss/lib/previous-map';
 function App() {
   const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
@@ -28,7 +30,7 @@ function App() {
   return (
     <div>
       {/* <MobileLayout items={lists} /> */}
-      <ResponsiveLayout items={lists}>
+      <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
         <div className="py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>

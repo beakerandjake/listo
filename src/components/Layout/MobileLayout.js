@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Sidebar } from '../Navigation/Sidebar';
 import { Navbar } from '../Navigation/Navbar';
 import { CollapsibleSidebarContainer } from '../Navigation/CollapsibleSidebarContainer';
 import { useLocation } from 'react-router-dom';
@@ -17,7 +16,7 @@ export function MobileLayout(props) {
         <>
             <Navbar onClickOpenMenuButton={() => setMenuOpen(true)} />
             <CollapsibleSidebarContainer open={menuOpen} onSetClose={() => setMenuOpen(false)}>
-                <Sidebar items={props.items} />
+                {props.sidebar}
             </CollapsibleSidebarContainer>
             <main>
                 {props.children}
