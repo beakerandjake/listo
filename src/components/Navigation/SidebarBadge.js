@@ -6,7 +6,8 @@ export function SidebarBadge(props) {
     }
 
     return (
-        <span className={(props.active ? 'bg-white' : 'bg-gray-100 group-hover:bg-gray-200') + ' ml-3 inline-block py-0.5 px-3 text-xs font-medium rounded-full'}
+        <span
+            className={(props.active ? 'bg-green-700 text-white' : 'bg-gray-400 group-hover:bg-gray-500 text-white') + ' inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium'}
         >
             {props.count}
         </span>
