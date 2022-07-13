@@ -18,9 +18,7 @@ export function MobileLayout(props) {
             <CollapsibleSidebarContainer open={menuOpen} onSetClose={() => setMenuOpen(false)}>
                 {props.sidebar}
             </CollapsibleSidebarContainer>
-            <main>
-                {props.children}
-            </main>
+            {props.children}
         </>
     )
 }
