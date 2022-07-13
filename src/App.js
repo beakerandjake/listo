@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
-import { TestNavbar } from 'components/TestNavbar/TestNavbar';
-import { Navigation } from 'components/Navigation/Navigation';
-import { MobileLayout } from 'components/Navigation/MobileLayout';
-import { DesktopLayout } from 'components/Navigation/DesktopLayout';
+import { ResponsiveLayout } from 'components/Layout/ResponsiveLayout';
 function App() {
   const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
@@ -31,7 +28,7 @@ function App() {
   return (
     <div>
       {/* <MobileLayout items={lists} /> */}
-      <MobileLayout items={lists}>
+      <ResponsiveLayout items={lists}>
         <div className="py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
@@ -44,7 +41,7 @@ function App() {
             {/* /End replace */}
           </div>
         </div>
-      </MobileLayout>
+      </ResponsiveLayout>
       {/* <TestNavbar /> */}
 
       {/* <Sidebar items={lists} /> */}
