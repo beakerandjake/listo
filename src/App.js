@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useErrorHandler } from 'react-error-boundary';
-import { getLists } from './services/listService';
+import { Routes, Route } from 'react-router-dom';
+import { NotFound } from 'routes/NotFound';
 import { ResponsiveLayout } from 'components/Layout/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
-import PreviousMap from 'postcss/lib/previous-map';
-import { PageHeader } from 'components/PageHeader';
+import { useErrorHandler } from 'react-error-boundary';
+import { getLists } from './services/listService';
+import { CreateNewList } from 'routes/CreateNewList';
+import { List } from 'routes/List';
+import { Dashboard } from 'routes/Dashboard';
+
 function App() {
   const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
@@ -29,37 +33,16 @@ function App() {
   }
 
   return (
-    <div>
-      {/* <MobileLayout items={lists} /> */}
-      <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
-        <PageHeader name="Dashboard" />
-        <div className="py-4">
-          <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-        </div>
-      </ResponsiveLayout>
-      {/* <TestNavbar /> */}
-
-      {/* <Sidebar items={lists} /> */}
-      {/* <Navbar items={lists} /> */}
-      {/* <div>
-        HELLO WORLD ITS LISTO
-      </div> */}
-    </div>
-
-
-    // <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    //   <div className="max-w-3xl mx-auto">
-    //     <div class="flex justify-center mt-2 border-b-2 py-2 mb-2">
-    //       <Logo />
-    //     </div>
-    //     <div>
-    //       <ListSelection />
-    //     </div>
-    //     <div>
-    //       <Parent />
-    //     </div>
-    //   </div>
-    // </div>
+    <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="lists">
+          <Route path=":id" element={<List />} />
+          <Route path="create" element={<CreateNewList />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </ResponsiveLayout>
   );
 }
 
