@@ -4,6 +4,7 @@ import { getLists } from './services/listService';
 import { ResponsiveLayout } from 'components/Layout/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
 import PreviousMap from 'postcss/lib/previous-map';
+import { PageHeader } from 'components/PageHeader';
 function App() {
   const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
@@ -31,7 +32,7 @@ function App() {
     <div>
       {/* <MobileLayout items={lists} /> */}
       <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
-        <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+        <PageHeader name="Dashboard" />
         <div className="py-4">
           <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
         </div>
