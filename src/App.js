@@ -3,6 +3,7 @@ import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
 import { TestNavbar } from 'components/TestNavbar/TestNavbar';
 import { Navigation } from 'components/Navigation/Navigation';
+import { MobileLayout } from 'components/Navigation/MobileLayout';
 function App() {
   const [initialized, setInitialized] = useState(false);
   const [lists, setLists] = useState([]);
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div>
-      <Navigation items={lists} />
+      <MobileLayout items={lists} />
       {/* <TestNavbar /> */}
 
       {/* <Sidebar items={lists} /> */}

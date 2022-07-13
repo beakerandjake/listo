@@ -3,7 +3,6 @@ import { Transition, Dialog } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-
 export function CollapsibleSidebarContainer(props) {
     return (
         <Transition.Root show={props.open} as={Fragment}>
@@ -52,7 +51,7 @@ export function CollapsibleSidebarContainer(props) {
                                     </button>
                                 </div>
                             </Transition.Child>
-                            
+
                             {/* Sidebar Main Content */}
                             <div className="flex-1 h-0 overflow-y-auto">
                                 {props.children}
