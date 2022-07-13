@@ -19,6 +19,9 @@ export function MobileLayout(props) {
                 <Sidebar items={props.items} />
             </CollapsibleSidebarContainer>
             <Navbar onClickOpenMenuButton={() => setMenuOpen(true)} />
+            <main>
+                {props.children}
+            </main>
         </>
     )
 }
