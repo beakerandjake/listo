@@ -1,7 +1,7 @@
 
 export function Skeleton() {
-    const items = [...Array(3)].map(_ => (
-        <div className="flex justify-between items-center px-4 gap-2">
+    const items = [...Array(3)].map((_, index) => (
+        <div key={index} className="flex justify-between items-center px-4 gap-2">
             <div className="bg-slate-200 rounded-full w-6 h-6"></div>
             <div className="bg-slate-200 flex-grow h-6 rounded-lg"></div>
         </div>
