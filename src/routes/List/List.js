@@ -16,10 +16,11 @@ export function List(props) {
             skeletonMinDisplayTimerId = setTimeout(resolve, 500);
         });
 
-        getList(id)
-            .then(list => setList(list))
-            .then(() => skeletonMinDisplayTimer)
-            .then(() => setInitialized(true));
+        Promise.all([getList(id), skeletonMinDisplayTimer])
+            .then((values) => {
+                setList(values[0]);
+                setInitialized(true);
+            });
 
         return () => {
             clearTimeout(skeletonMinDisplayTimerId);
@@ -36,7 +37,7 @@ export function List(props) {
 
     return (
         <>
-            <PageHeader name={'List: ' + id} />
+            <PageHeader name={list.name} />
             <div className="py-4">
                 <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
             </div>
