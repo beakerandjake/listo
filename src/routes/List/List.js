@@ -3,6 +3,7 @@ import { PageHeader } from "components/PageHeader";
 import { useEffect, useState } from 'react';
 import { Skeleton } from './Skeleton';
 import { getList } from 'services/listService';
+import { AddItem } from './AddItem';
 
 export function List(props) {
     const { id } = useParams();
@@ -39,7 +40,8 @@ export function List(props) {
         <>
             <PageHeader name={list.name} />
             <div className="py-4">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+                <AddItem />
+                <div className="border-4 my-4 border-dashed border-gray-200 rounded-lg h-96" />
             </div>
         </>
     )
