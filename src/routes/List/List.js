@@ -8,12 +8,11 @@ import { AddItem } from './AddItem';
 
 
 export function List(props) {
-    const { id } = useParams();
     const [initialized, setInitialized] = useState(false);
     const [list, setList] = useState(null);
+    const { id } = useParams();
     const handleError = useErrorHandler();
 
-    // todo set error....
     useEffect(() => {
         let skeletonMinDisplayTimerId;
 
@@ -38,7 +37,6 @@ export function List(props) {
     const onAddItem = itemName => {
         console.log('add', itemName);
     };
-
 
 
     if (!initialized) {
