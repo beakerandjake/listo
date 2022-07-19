@@ -34,7 +34,7 @@ export function AddItem(props) {
                         value={input}
                         onInput={e => setInput(e.target.value)}
                         className="block w-full pl-8 sm:text-sm border-gray-300 shadow focus:outline-none focus:ring-0 focus:border-inherit"
-                        placeholder={props.placeholder || 'Add Items...'}
+                        placeholder={props.placeholder || 'Add Item'}
                         autoComplete="off"
                         autoFocus
                         enterKeyHint="done"

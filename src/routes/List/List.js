@@ -6,6 +6,7 @@ import { PageHeader } from "components/PageHeader";
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { ItemList } from './ItemList';
+import { EmptyItemList } from './EmptyItemList';
 
 
 export function List(props) {
@@ -49,7 +50,10 @@ export function List(props) {
             <PageHeader name={list.name} />
             <div className="py-4 space-y-4">
                 <AddItem onAddItem={onAddItem} />
-                <ItemList items={list.items} />
+                {list.itemz
+                    ? <ItemList items={list.items} />
+                    : <EmptyItemList />
+                }
             </div>
         </>
     )
