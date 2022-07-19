@@ -1,6 +1,6 @@
-import Logo from "components/Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { NavLogo } from "components/NavLogo";
 
 export function Navbar(props) {
     return (
@@ -12,7 +12,7 @@ export function Navbar(props) {
                 <FontAwesomeIcon icon={faBars} />
             </button>
             <div className="self-center">
-                <Logo />
+                <NavLogo />
             </div>
         </div>
     )
