@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
+import { getList } from 'services/listService';
 import { PageHeader } from "components/PageHeader";
 import { Skeleton } from './Skeleton';
-import { getList } from 'services/listService';
 import { AddItem } from './AddItem';
+import { ItemList } from './ItemList';
 
 
 export function List(props) {
@@ -46,9 +47,9 @@ export function List(props) {
     return (
         <>
             <PageHeader name={list.name} />
-            <div className="py-4">
+            <div className="py-4 space-y-4">
                 <AddItem onAddItem={onAddItem} />
-                <div className="border-4 my-4 border-dashed border-gray-200 rounded-lg h-96" />
+                <ItemList items={list.items} />
             </div>
         </>
     )
