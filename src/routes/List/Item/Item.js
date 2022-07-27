@@ -7,7 +7,7 @@ export function Item(props) {
     }
 
     return (
-        <li className="flex items-center py-2">
+        <li className="flex items-center py-2 gap-2">
             {/* Completed Checkbox */}
             <span className="flex items-center h-5 grow-0">
                 <input
@@ -22,7 +22,7 @@ export function Item(props) {
                 {props.name}
             </p>
             <span className="grow-0 flex justify-between items-center gap-3">
-                <DeleteButton onClick={props.onDelete} disabled={props.disabled} />
+                <DeleteButton onClick={() => props.onDelete(props.id)} disabled={props.disabled} />
             </span>
         </li>
     )

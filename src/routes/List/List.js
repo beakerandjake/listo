@@ -53,7 +53,7 @@ export function List(props) {
     const onDeleteItem = async (itemId) => {
         try {
             console.log('on delete item', itemId);
-            // setList({ ...list, items: list.items.map(x => x.id === itemId ? { ...x, completed } : x) });
+            setList({ ...list, items: list.items.filter(x => x.id !== itemId) });
             // await setItemCompleted(id, itemId, completed);
         } catch (error) {
             handleError(error);
