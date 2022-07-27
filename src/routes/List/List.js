@@ -43,7 +43,7 @@ export function List(props) {
 
     const onSetItemCompleted = async (itemId, completed) => {
         try {
-            console.log('set item', itemId, 'completed', completed);
+            setList({ ...list, items: list.items.map(x => x.id === itemId ? { ...x, completed } : x) });
             await setItemCompleted(id, itemId, completed);
         } catch (error) {
             handleError(error);

@@ -21,7 +21,7 @@ export function Item(props) {
                 className={classNames({ 'line-through opacity-50': props.completed }, 'px-2 w-full cursor-pointer')}
                 onClick={toggleCompleted}
             >
-                {props.name} - {props.completed ? 'true' : 'false'}
+                {props.name}
             </p>
         </li>
     )
