@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { DeleteButton } from './DeleteButton';
 
 export function Item(props) {
     const toggleCompleted = () => {
@@ -17,12 +18,13 @@ export function Item(props) {
                 />
             </span>
             {/* Item Label */}
-            <p
-                className={classNames({ 'line-through opacity-50': props.completed }, 'px-2 w-full cursor-pointer')}
-                onClick={toggleCompleted}
-            >
+            <p className={classNames('px-2 w-full cursor-pointer', { 'line-through opacity-50': props.completed })} onClick={toggleCompleted}>
                 {props.name}
             </p>
+            <span className="grow-0 flex justify-between items-center gap-3">
+                {/* <DeleteButton /> */}
+                <DeleteButton />
+            </span>
         </li>
     )
 }

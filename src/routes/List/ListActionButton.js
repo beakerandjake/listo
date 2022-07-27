@@ -8,8 +8,8 @@ import classNames from 'classnames';
 export default function ListActionButton() {
     return (
         <Menu as="div" className="relative inline-block text-left z-10">
-            <Menu.Button className="rounded-full flex items-center p-2 text-gray-400 focus:outline-none">
-                <FontAwesomeIcon icon={faEllipsisV} />
+            <Menu.Button className="rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                <FontAwesomeIcon icon={faEllipsisV} className="h-5 w-5" />
             </Menu.Button>
 
             <Transition
@@ -21,7 +21,7 @@ export default function ListActionButton() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="origin-top-right absolute right-0 w-56 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                <Menu.Items className="origin-top-right absolute right-0 w-56 mt-2 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
                     <div className="py-1">
                         <Menu.Item>
                             {({ active }) => (
@@ -40,7 +40,7 @@ export default function ListActionButton() {
                         <Menu.Item>
                             {({ active }) => (
                                 <span className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer')}>
-                                    Delete All Items
+                                    Clear All Items
                                 </span>
                             )}
                         </Menu.Item>
