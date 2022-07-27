@@ -52,7 +52,7 @@ export function List(props) {
                 <PageHeader name={list.name} />
                 <ListActionButton />
             </div>
-            <div className="py-4 space-y-4">
+            <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
                     ? <ItemList items={list.items} />
