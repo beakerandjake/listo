@@ -1,30 +1,28 @@
-
+import classNames from 'classnames';
 
 export function Item(props) {
-    const toggleCompleted = () => { }
+    const toggleCompleted = () => {
+        props.onSetItemCompleted(props.id, !props.completed);
+    }
 
     return (
-        <li className="flex gap-1 items-center py-2">
-            <span className="grow-0">
+        <li className="flex items-center py-2">
+            {/* Completed Checkbox */}
+            <span className="flex items-center h-5 grow-0">
                 <input
                     type="checkbox"
-                    className="focus:ring-green-500  text-green-700 border-gray-300 rounded-full cursor-pointer"
+                    className="focus:ring-green-500 w-4 h-4 text-green-700 border-gray-300 rounded cursor-pointer"
                     checked={props.completed}
                     onChange={toggleCompleted}
                 />
             </span>
+            {/* Item Label */}
             <p
-                className={'px-2 w-full cursor-pointer  ' + (props.completed ? 'line-through opacity-50' : '')}
+                className={classNames({ 'line-through opacity-50': props.completed }, 'px-2 w-full cursor-pointer')}
                 onClick={toggleCompleted}
             >
-                {props.name}
+                {props.name} - {props.completed ? 'true' : 'false'}
             </p>
-            <span className="grow-0 flex justify-between items-center gap-3">
-                <span>Quantity</span>
-                <span>Delete</span>
-                {/* <QuantityButton quantity={props.quantity} onQuantityChange={quantity => props.onQuantityChange(props.id, quantity)} disabled={props.disabled || props.completed} />
-        <DeleteButton onClick={() => props.onDelete(props.id)} disabled={props.disabled} /> */}
-            </span>
         </li>
     )
 }

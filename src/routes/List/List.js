@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
-import { getList } from 'services/listService';
+import { getList, setItemCompleted } from 'services/listService';
 import { PageHeader } from "components/PageHeader";
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
@@ -41,6 +41,15 @@ export function List(props) {
         console.log('add', itemName);
     };
 
+    const onSetItemCompleted = async (itemId, completed) => {
+        try {
+            console.log('set item', itemId, 'completed', completed);
+            await setItemCompleted(id, itemId, completed);
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
 
     if (!initialized) {
         return <Skeleton />;
@@ -55,7 +64,7 @@ export function List(props) {
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
-                    ? <ItemList items={list.items} />
+                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} />
                     : <EmptyItemList />
                 }
             </div>

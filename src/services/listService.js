@@ -77,3 +77,7 @@ export async function getList(id) {
 
     return toReturn;
 }
+
+export async function setItemCompleted(listId, itemId, completed) {
+    await new Promise(resolve => setTimeout(resolve, 250));
+}
