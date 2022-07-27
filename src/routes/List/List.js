@@ -50,6 +50,16 @@ export function List(props) {
         }
     }
 
+    const onDeleteItem = async (itemId) => {
+        try {
+            console.log('on delete item', itemId);
+            // setList({ ...list, items: list.items.map(x => x.id === itemId ? { ...x, completed } : x) });
+            // await setItemCompleted(id, itemId, completed);
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
 
     if (!initialized) {
         return <Skeleton />;
@@ -64,7 +74,7 @@ export function List(props) {
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
-                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} />
+                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} onDeleteItem={onDeleteItem} />
                     : <EmptyItemList />
                 }
             </div>

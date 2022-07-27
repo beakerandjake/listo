@@ -22,8 +22,7 @@ export function Item(props) {
                 {props.name}
             </p>
             <span className="grow-0 flex justify-between items-center gap-3">
-                {/* <DeleteButton /> */}
-                <DeleteButton />
+                <DeleteButton onClick={props.onDelete} disabled={props.disabled} />
             </span>
         </li>
     )
