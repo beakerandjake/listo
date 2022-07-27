@@ -26,7 +26,21 @@ export default function ListActionButton() {
                         <Menu.Item>
                             {({ active }) => (
                                 <span className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer')}>
-                                    Clear All Items
+                                    Mark All Complete
+                                </span>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item>
+                            {({ active }) => (
+                                <span className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer')}>
+                                    Mark All Incomplete
+                                </span>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item>
+                            {({ active }) => (
+                                <span className={classNames(active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm cursor-pointer')}>
+                                    Delete All Items
                                 </span>
                             )}
                         </Menu.Item>
