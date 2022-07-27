@@ -23,11 +23,7 @@ const lists = [
         name: 'Todo',
         iconName: 'list-check',
         items: [
-            { id: 1, name: 'Bananas', quantity: 1 },
-            { id: 2, name: 'Apples', quantity: 4 },
-            { id: 3, name: 'Oranges', quantity: 5 },
-            { id: 4, name: 'Pears', quantity: 2 },
-            { id: 5, name: 'Peaches', quantity: 3 },
+            { id: 1, name: 'Get Groceries', quantity: 1 }
         ]
     },
     {
@@ -35,24 +31,15 @@ const lists = [
         name: 'Trips',
         iconName: 'plane',
         items: [
-            { id: 1, name: 'Bananas', quantity: 1 },
-            { id: 2, name: 'Apples', quantity: 4 },
-            { id: 3, name: 'Oranges', quantity: 5 },
-            { id: 4, name: 'Pears', quantity: 2 },
-            { id: 5, name: 'Peaches', quantity: 3 },
+            { id: 1, name: 'Grand Canyon', quantity: 1 },
+            { id: 2, name: 'Death Valley', quantity: 1 }
         ]
     },
     {
         id: 4,
         name: 'Purchases',
         iconName: 'dollar-sign',
-        items: [
-            { id: 1, name: 'Bananas', quantity: 1 },
-            { id: 2, name: 'Apples', quantity: 4 },
-            { id: 3, name: 'Oranges', quantity: 5 },
-            { id: 4, name: 'Pears', quantity: 2 },
-            { id: 5, name: 'Peaches', quantity: 3 },
-        ]
+        items: []
     }
 ];
 

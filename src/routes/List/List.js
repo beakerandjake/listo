@@ -54,7 +54,7 @@ export function List(props) {
             </div>
             <div className="py-4 space-y-4">
                 <AddItem onAddItem={onAddItem} />
-                {list.itemz
+                {list.items?.length
                     ? <ItemList items={list.items} />
                     : <EmptyItemList />
                 }
