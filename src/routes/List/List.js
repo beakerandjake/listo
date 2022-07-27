@@ -7,6 +7,7 @@ import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { ItemList } from './ItemList';
 import { EmptyItemList } from './EmptyItemList';
+import ListActionButton from './ListActionButton';
 
 
 export function List(props) {
@@ -47,7 +48,10 @@ export function List(props) {
 
     return (
         <>
-            <PageHeader name={list.name} />
+            <div className="flex justify-between items-center">
+                <PageHeader name={list.name} />
+                <ListActionButton />
+            </div>
             <div className="py-4 space-y-4">
                 <AddItem onAddItem={onAddItem} />
                 {list.itemz
