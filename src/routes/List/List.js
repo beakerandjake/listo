@@ -8,7 +8,6 @@ import { AddItem } from './AddItem';
 import { ItemList } from './ItemList';
 import { EmptyItemList } from './EmptyItemList';
 import ListActionButton from './ListActionButton';
-import { AddItemNew } from './AddItemNew';
 
 
 export function List(props) {
@@ -83,8 +82,7 @@ export function List(props) {
                 <ListActionButton />
             </div>
             <div className="py-4 space-y-2">
-                {/* <AddItem onAddItem={onAddItem} /> */}
-                <AddItemNew />
+                <AddItem onAddItem={onAddItem} />
                 {list.items?.length
                     ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} onDeleteItem={onDeleteItem} />
                     : <EmptyItemList />
