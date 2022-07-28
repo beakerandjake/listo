@@ -10,8 +10,9 @@ export function DueDateBadge(props) {
         return null;
     }
 
-    const overdue = parsedDate < Date.now();
     const formattedDate = format(parsedDate);
+    
+    const overdue = parsedDate < Date.now();
     const dynamicStyle = overdue ? 'bg-red-100 text-red-800' : 'bg-gray-200 text-gray-800';
     const dynamicIcon = overdue ? faExclamationTriangle : faClock;
 
