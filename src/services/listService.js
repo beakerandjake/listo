@@ -3,6 +3,8 @@ const lists = [
         id: 1,
         name: 'Grocery',
         iconName: 'cart-shopping',
+        hasQuantity: true,
+        hasDueDate: false,
         items: [
             { id: 1, name: 'Bananas', quantity: 1, completed: false },
             { id: 2, name: 'Apples', quantity: 4, completed: false },
@@ -16,6 +18,8 @@ const lists = [
         id: 2,
         name: 'Todo',
         iconName: 'list-check',
+        hasQuantity: false,
+        hasDueDate: true,
         items: [
             { id: 1, name: 'Get Groceries', quantity: 1, completed: true }
         ]
@@ -24,6 +28,8 @@ const lists = [
         id: 3,
         name: 'Trips',
         iconName: 'plane',
+        hasQuantity: false,
+        hasDueDate: false,
         items: [
             { id: 1, name: 'Grand Canyon', quantity: 1, completed: false },
             { id: 2, name: 'Death Valley', quantity: 1, completed: false }

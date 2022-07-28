@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { DeleteButton } from './DeleteButton';
-import { EditButton } from './EditButton';
+import { faPencil, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { IconButton } from 'components/IconButton';
 import { QuantityBadge } from './QuantityBadge';
 
 export function Item(props) {
@@ -25,8 +25,8 @@ export function Item(props) {
                 <QuantityBadge quantity={props.quantity} />
             </span>
             <span className="grow-0 flex justify-between items-center gap-3">
-                <EditButton disabled={props.disabled} />
-                <DeleteButton onClick={() => props.onDelete(props.id)} disabled={props.disabled} />
+                <IconButton disabled={props.disabled} icon={faPencil} title="Edit Item" />
+                <IconButton onClick={() => props.onDelete(props.id)} disabled={props.disabled} icon={faTrashAlt} title="Delete Item" />
             </span>
         </li>
     )
