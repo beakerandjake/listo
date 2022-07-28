@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { faPencil, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IconButton } from 'components/IconButton';
 import { QuantityBadge } from './QuantityBadge';
+import { DueDateBadge } from './DueDateBadge';
 
 export function Item(props) {
     const toggleCompleted = () => {
@@ -23,6 +24,7 @@ export function Item(props) {
             <span className={classNames('w-full cursor-pointer flex items-center gap-2', { 'opacity-50': props.completed })} onClick={toggleCompleted}>
                 <p className={classNames({ 'line-through': props.completed })}>{props.name}</p>
                 <QuantityBadge quantity={props.quantity} />
+                <DueDateBadge dueDate={props.dueDate} />
             </span>
             <span className="grow-0 flex justify-between items-center gap-3">
                 <IconButton disabled={props.disabled} icon={faPencil} title="Edit Item" />

@@ -21,7 +21,9 @@ const lists = [
         hasQuantity: false,
         hasDueDate: true,
         items: [
-            { id: 1, name: 'Get Groceries', quantity: 1, completed: true }
+            { id: 1, name: 'Get Groceries', quantity: 1, completed: true },
+            { id: 2, name: 'Pay Car Insurance', quantity: 1, completed: false, dueDate: new Date(2022, 6, 15).toISOString() },
+            { id: 3, name: 'Pull Weeds', quantity: 1, completed: false, dueDate: new Date(2022, 8,15).toISOString() }
         ]
     },
     {
