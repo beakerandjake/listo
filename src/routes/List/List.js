@@ -37,8 +37,18 @@ export function List(props) {
         }
     }, [id, handleError]);
 
-    const onAddItem = itemName => {
-        console.log('add', itemName);
+    const onAddItem = async itemName => {
+        try {
+            const newItem = {
+                id: Math.max(...list.items.map(x => x.id)) + 1,
+                name: itemName,
+                quantity: 1,
+                completed: false
+            };
+            setList({ ...list, items: [...list.items, newItem] });
+        } catch (error) {
+            handleError(error);
+        }
     };
 
     const onSetItemCompleted = async (itemId, completed) => {

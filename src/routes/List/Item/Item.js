@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import { DeleteButton } from './DeleteButton';
+import { EditButton } from './EditButton';
+import { QuantityBadge } from './QuantityBadge';
 
 export function Item(props) {
     const toggleCompleted = () => {
@@ -18,10 +20,12 @@ export function Item(props) {
                 />
             </span>
             {/* Item Label */}
-            <p className={classNames('px-2 w-full cursor-pointer', { 'line-through opacity-50': props.completed })} onClick={toggleCompleted}>
-                {props.name}
-            </p>
+            <span className={classNames('w-full cursor-pointer flex items-center gap-2', { 'opacity-50': props.completed })} onClick={toggleCompleted}>
+                <p className={classNames({ 'line-through': props.completed })}>{props.name}</p>
+                <QuantityBadge quantity={props.quantity} />
+            </span>
             <span className="grow-0 flex justify-between items-center gap-3">
+                <EditButton disabled={props.disabled} />
                 <DeleteButton onClick={() => props.onDelete(props.id)} disabled={props.disabled} />
             </span>
         </li>
