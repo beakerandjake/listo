@@ -10,7 +10,7 @@ export function Item(props) {
     }
 
     return (
-        <li className="flex items-center py-2 gap-2">
+        <li className="flex items-center py-2 px-3 bg-white shadow h-[50px] rounded cursor-pointer">
             {/* Completed Checkbox */}
             <span className="flex items-center h-5 grow-0">
                 <input
@@ -21,14 +21,10 @@ export function Item(props) {
                 />
             </span>
             {/* Item Label */}
-            <span className={classNames('w-full cursor-pointer flex items-center gap-2', { 'opacity-50': props.completed })} onClick={toggleCompleted}>
+            <span className={classNames('pl-3 w-full  flex items-center gap-2', { 'opacity-50': props.completed })}>
                 <p className={classNames({ 'line-through': props.completed })}>{props.name}</p>
                 <QuantityBadge quantity={props.quantity} />
                 <DueDateBadge dueDate={props.dueDate} />
-            </span>
-            <span className="grow-0 flex justify-between items-center gap-3">
-                <IconButton disabled={props.disabled} icon={faPencil} title="Edit Item" />
-                <IconButton onClick={() => props.onDelete(props.id)} disabled={props.disabled} icon={faTrashAlt} title="Delete Item" />
             </span>
         </li>
     )

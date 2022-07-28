@@ -12,5 +12,5 @@ export function ItemList(props) {
         />
     );
 
-    return <ul className="w-full divide-y divide-gray-200">{items}</ul>
+    return <ul className="w-full space-y-2">{items}</ul>
 }

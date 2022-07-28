@@ -24,7 +24,7 @@ export function AddItem(props) {
 
     return (
         <form className="w-full" onSubmit={onAddItem}>
-            <div className="mt-1 flex">
+            <div className="mt-1 flex h-[50px]">
                 <div className="relative flex items-stretch flex-grow">
                     <div className="text-gray-400 absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FontAwesomeIcon icon={faPlus} />
