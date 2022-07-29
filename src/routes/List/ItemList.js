@@ -6,7 +6,7 @@ export function ItemList(props) {
             {...item}
             key={item.id}
             onDelete={props.onDeleteItem}
-            onSetItemCompleted={props.onSetItemCompleted}
+            onSetItemCompleted={(completed) => props.onSetItemCompleted(item.id, completed)}
             // onQuantityChange={props.onItemQuantityChange}
             // disabled={props.disabled}
         />
