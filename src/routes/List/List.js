@@ -8,11 +8,13 @@ import { AddItem } from './AddItem';
 import { ItemList } from './ItemList';
 import { EmptyItemList } from './EmptyItemList';
 import ListActionButton from './ListActionButton';
+import { EditItem } from './EditItem/EditItem';
 
 
 export function List(props) {
     const [initialized, setInitialized] = useState(false);
     const [list, setList] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null);
     const { id } = useParams();
     const handleError = useErrorHandler();
 
@@ -70,6 +72,11 @@ export function List(props) {
         }
     }
 
+    const onClickItem = (itemId) => {
+        console.log('click item', itemId);
+        setSelectedItem(itemId);
+    }
+
 
     if (!initialized) {
         return <Skeleton />;
@@ -84,7 +91,7 @@ export function List(props) {
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
-                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} onDeleteItem={onDeleteItem} />
+                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} onClickItem={onClickItem} />
                     : <EmptyItemList />
                 }
             </div>

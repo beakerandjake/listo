@@ -5,10 +5,8 @@ export function ItemList(props) {
         <Item
             {...item}
             key={item.id}
-            onDelete={props.onDeleteItem}
-            onSetItemCompleted={(completed) => props.onSetItemCompleted(item.id, completed)}
-            // onQuantityChange={props.onItemQuantityChange}
-            // disabled={props.disabled}
+            onSetItemCompleted={props.onSetItemCompleted}
+            onClickItem={props.onClickItem}
         />
     );
 
