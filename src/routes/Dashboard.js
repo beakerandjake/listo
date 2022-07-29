@@ -2,11 +2,9 @@ import { PageHeader } from "components/PageHeader";
 
 export function Dashboard(props) {
     return (
-        <>
+        <div className="flex-1 flex flex-col gap-2">
             <PageHeader name="Dashboard" />
-            <div className="py-4">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-            </div>
-        </>
+            <div className="border-4 border-dashed border-gray-200 rounded-lg flex-1" />
+        </div>
     )
 }

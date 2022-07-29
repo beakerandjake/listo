@@ -6,16 +6,12 @@ const MOBILE_BREAKPOINT = 768;
 
 export function ResponsiveLayout(props) {
     const main = (
-        <main>
-            <div className="py-4">
-                <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8">
-                    {props.children}
-                </div>
-            </div>
+        <main className="flex flex-col flex-1 m-4 sm:m-6 md:m-8">
+            {props.children}
         </main>
     )
     return (
-        <>
+        <div className="flex flex-col h-full">
             {/* Desktop / Larger screens */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
                 <DesktopLayout sidebar={props.sidebar}>
@@ -29,6 +25,6 @@ export function ResponsiveLayout(props) {
                     {main}
                 </MobileLayout>
             </MediaQuery>
-        </>
+        </div>
     )
 }
