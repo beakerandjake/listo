@@ -8,7 +8,6 @@ import { AddItem } from './AddItem';
 import { ItemList } from './ItemList';
 import { EmptyItemList } from './EmptyItemList';
 import ListActionButton from './ListActionButton';
-import { EditItem } from './EditItem/EditItem';
 
 
 export function List(props) {
