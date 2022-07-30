@@ -6,12 +6,12 @@ const lists = [
         hasQuantity: true,
         hasDueDate: false,
         items: [
-            { id: 1, name: 'Bananas', quantity: 1, completed: false },
-            { id: 2, name: 'Apples', quantity: 4, completed: false },
-            { id: 3, name: 'Oranges', quantity: 5, completed: false },
-            { id: 4, name: 'Pears', quantity: 2, completed: false },
-            { id: 5, name: 'Bread Flour', quantity: 3, completed: false },
-            { id: 6, name: 'Scrubbing Bubbles Bathroom Cleaner', quantity: 1, completed: false },
+            { id: 1, name: 'Bananas', quantity: 1, completed: false, created: new Date(2022, 6, 15).toISOString() },
+            { id: 2, name: 'Apples', quantity: 4, completed: false, created: new Date(2022, 5, 22).toISOString() },
+            { id: 3, name: 'Oranges', quantity: 5, completed: false, created: new Date(2022, 6, 29).toISOString() },
+            { id: 4, name: 'Pears', quantity: 2, completed: false, created: new Date(2022, 6, 3).toISOString() },
+            { id: 5, name: 'Bread Flour', quantity: 3, completed: false, created: new Date(2022, 1, 11).toISOString() },
+            { id: 6, name: 'Scrubbing Bubbles Bathroom Cleaner', quantity: 1, completed: false, created: new Date(2022, 6, 15).toISOString() },
         ]
     },
     {
@@ -21,9 +21,9 @@ const lists = [
         hasQuantity: false,
         hasDueDate: true,
         items: [
-            { id: 1, name: 'Get Groceries', quantity: 1, completed: true },
-            { id: 2, name: 'Pay Car Insurance', quantity: 1, completed: false, dueDate: new Date(2022, 6, 15).toISOString() },
-            { id: 3, name: 'Pull Weeds', quantity: 1, completed: false, dueDate: new Date(2022, 8,15).toISOString() }
+            { id: 1, name: 'Get Groceries', quantity: 1, completed: true, created: new Date(2022, 1, 11).toISOString()},
+            { id: 2, name: 'Pay Car Insurance', quantity: 1, completed: false, dueDate: new Date(2022, 6, 15).toISOString(), created: new Date(2022, 1, 11).toISOString() },
+            { id: 3, name: 'Pull Weeds', quantity: 1, completed: false, dueDate: new Date(2022, 8, 15).toISOString(), created: new Date(2022, 1, 11).toISOString() }
         ]
     },
     {
@@ -33,8 +33,8 @@ const lists = [
         hasQuantity: false,
         hasDueDate: false,
         items: [
-            { id: 1, name: 'Grand Canyon', quantity: 1, completed: false },
-            { id: 2, name: 'Death Valley', quantity: 1, completed: false }
+            { id: 1, name: 'Grand Canyon', quantity: 1, completed: false, created: new Date(2022, 2, 14).toISOString() },
+            { id: 2, name: 'Death Valley', quantity: 1, completed: false, created: new Date(2022, 3, 6).toISOString() }
         ]
     },
     {

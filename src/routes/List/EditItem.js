@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from 'components/IconButton';
 import { ConfirmDelete } from './ConfirmDelete';
+import { CompletedCheckbox } from './Item/CompletedCheckbox';
+import { format } from 'timeago.js'
 
 export function EditItem(props) {
     const [open, setOpen] = useState(false);
@@ -25,10 +27,10 @@ export function EditItem(props) {
                 {/* Overlay */}
                 <Transition.Child
                     as={Fragment}
-                    enter="ease-in-out duration-500"
+                    enter="ease-in-out duration-300"
                     enterFrom="opacity-0"
                     enterTo="opacity-100"
-                    leave="ease-in-out duration-500"
+                    leave="ease-in-out duration-300"
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
@@ -40,10 +42,10 @@ export function EditItem(props) {
                         <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
                             <Transition.Child
                                 as={Fragment}
-                                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                                enter="transform transition ease-in-out duration-300"
                                 enterFrom="translate-x-full"
                                 enterTo="translate-x-0"
-                                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                                leave="transform transition ease-in-out duration-300"
                                 leaveFrom="translate-x-0"
                                 leaveTo="translate-x-full"
                             >
@@ -56,7 +58,10 @@ export function EditItem(props) {
                                         </div>
                                         {/* Body */}
                                         <div className="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap bg-gray-50">
-                                            <h2 className="text-lg font-medium text-gray-900">{cachedItem.name}</h2>
+                                            <div className="flex items-center">
+                                                <CompletedCheckbox />
+                                                <h2 className="text-lg font-medium text-gray-900">{cachedItem.name}</h2>
+                                            </div>
                                             <div className="relative mt-6 flex-1">
                                                 {/* Replace with your content */}
                                                 <div className="h-full border-2 border-dashed border-gray-200" aria-hidden="true" />
@@ -66,7 +71,9 @@ export function EditItem(props) {
                                         {/* Footer */}
                                         <div className="flex flex-shrink-0 justify-between items-center px-4 py-4">
                                             <IconButton icon={faArrowRightFromBracket} title="Close Details" onClick={props.onClose} />
-                                            <h3 className="text-sm font-semibold text-gray-500 select-none">Created last week</h3>
+                                            <h3 className="text-sm font-semibold text-gray-500 select-none">
+                                                Created {format(cachedItem.created)}
+                                            </h3>
                                             <ConfirmDelete onConfirmDelete={props.onDeleteItem} />
                                         </div>
                                     </div>
