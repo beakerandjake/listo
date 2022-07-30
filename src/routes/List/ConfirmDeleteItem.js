@@ -4,7 +4,7 @@ import { IconButton } from "components/IconButton";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "components/Button";
 
-export function ConfirmDelete(props) {
+export function ConfirmDeleteItem(props) {
     const [confirming, setConfirming] = useState(false);
 
     const onConfirmDelete = () => {

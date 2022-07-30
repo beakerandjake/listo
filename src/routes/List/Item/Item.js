@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { QuantityBadge } from './QuantityBadge';
 import { DueDateBadge } from './DueDateBadge';
 import { CompletedCheckbox } from './CompletedCheckbox';
+import { NameLabel } from './NameLabel';
 
 export function Item(props) {
     return (
@@ -14,7 +15,7 @@ export function Item(props) {
                 onChange={completed => props.onSetItemCompleted(props.id, completed)}
             />
             <span className={classNames('pl-3 w-full  flex items-center gap-2', { 'opacity-50': props.completed })}>
-                <p className={classNames({ 'line-through': props.completed })}>{props.name}</p>
+                <NameLabel completed={props.completed} name={props.name} />
                 <QuantityBadge quantity={props.quantity} />
                 <DueDateBadge dueDate={props.dueDate} />
             </span>

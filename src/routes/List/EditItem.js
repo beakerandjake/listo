@@ -3,9 +3,10 @@ import { Dialog, Transition } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { IconButton } from 'components/IconButton';
-import { ConfirmDelete } from './ConfirmDelete';
+import { ConfirmDeleteItem } from './ConfirmDeleteItem';
 import { CompletedCheckbox } from './Item/CompletedCheckbox';
 import { format } from 'timeago.js'
+import { NameLabel } from './Item/NameLabel';
 
 export function EditItem(props) {
     const [open, setOpen] = useState(false);
@@ -59,8 +60,15 @@ export function EditItem(props) {
                                         {/* Body */}
                                         <div className="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap bg-gray-50">
                                             <div className="flex items-center">
-                                                <CompletedCheckbox />
-                                                <h2 className="text-lg font-medium text-gray-900">{cachedItem.name}</h2>
+                                                <div className="-ml-2">
+                                                    <CompletedCheckbox
+                                                        checked={cachedItem.completed}
+                                                        onChange={completed => props.onSetItemCompleted(props.id, completed)}
+                                                    />
+                                                </div>
+                                                <span className="text-lg font-medium text-gray-900">
+                                                    <NameLabel completed={cachedItem.completed} name={cachedItem.name} />
+                                                </span>
                                             </div>
                                             <div className="relative mt-6 flex-1">
                                                 {/* Replace with your content */}
@@ -74,7 +82,7 @@ export function EditItem(props) {
                                             <h3 className="text-sm font-semibold text-gray-500 select-none">
                                                 Created {format(cachedItem.created)}
                                             </h3>
-                                            <ConfirmDelete onConfirmDelete={props.onDeleteItem} />
+                                            <ConfirmDeleteItem onConfirmDelete={props.onDeleteItem} />
                                         </div>
                                     </div>
                                 </Dialog.Panel>
