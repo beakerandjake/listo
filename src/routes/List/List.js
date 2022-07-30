@@ -14,7 +14,7 @@ import { EditItem } from './EditItem';
 export function List(props) {
     const [initialized, setInitialized] = useState(false);
     const [list, setList] = useState(null);
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedItemId, setSelectedItemId] = useState(null);
     const { id } = useParams();
     const handleError = useErrorHandler();
 
@@ -65,7 +65,7 @@ export function List(props) {
     const onDeleteItem = async (itemId) => {
         try {
             console.log('on delete item', itemId);
-            setSelectedItem(null);
+            setSelectedItemId(null);
             setList({ ...list, items: list.items.filter(x => x.id !== itemId) });
             // await setItemCompleted(id, itemId, completed);
         } catch (error) {
@@ -73,20 +73,26 @@ export function List(props) {
         }
     }
 
-    const onClickItem = (itemId) => {
-        const item = list.items.find(x => x.id === itemId);
 
-        if (!item) {
-            return;
+    const onEditItem = (itemId, changes) => {
+        try {
+            setList({
+                ...list, items: list.items.map(x => x.id === itemId ? { ...x, ...changes } : x)
+            });
+        } catch (error) {
+            handleError(error);
         }
+    }
 
-        setSelectedItem(item);
+    const getSelectedItem = itemId => {
+        return list.items.find(x => x.id === itemId);
     }
 
 
     if (!initialized) {
         return <Skeleton />;
     }
+
 
     return (
         <>
@@ -97,11 +103,15 @@ export function List(props) {
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
-                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} onClickItem={onClickItem} />
+                    ? <ItemList items={list.items} onSetItemCompleted={onSetItemCompleted} onClickItem={itemId => setSelectedItemId(itemId)} />
                     : <EmptyItemList />
                 }
             </div>
-            <EditItem item={selectedItem} onClose={() => setSelectedItem(null)} onDeleteItem={() => onDeleteItem(selectedItem.id)} />
+            <EditItem
+                item={getSelectedItem(selectedItemId)}
+                onClose={() => setSelectedItemId(null)}
+                onDeleteItem={() => onDeleteItem(selectedItemId)}
+                onEditItem={onEditItem} />
         </>
     )
 }

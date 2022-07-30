@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Dialog } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRightFromBracket, faCalendar, faCalendarAlt, faPlusMinus } from '@fortawesome/free-solid-svg-icons'
 import { format } from 'timeago.js'
 import { IconButton } from 'components/IconButton';
 import { ConfirmDeleteItem } from './ConfirmDeleteItem';
 import { CompletedCheckbox } from './Item/CompletedCheckbox';
 import { NameLabel } from './Item/NameLabel';
 import { Drawer } from 'components/Drawer';
+import QuantityButton2 from 'Old/QuantityButton';
+
 
 export function EditItem(props) {
     const [open, setOpen] = useState(false);
@@ -40,7 +42,7 @@ export function EditItem(props) {
                     <div className="-ml-2">
                         <CompletedCheckbox
                             checked={cachedItem.completed}
-                            onChange={completed => props.onSetItemCompleted(props.id, completed)}
+                            onChange={completed => props.onEditItem(cachedItem.id, { completed })}
                         />
                     </div>
                     <span className="text-lg font-medium text-gray-900">
@@ -49,61 +51,38 @@ export function EditItem(props) {
                 </div>
                 <div className="relative mt-6 flex-1">
                     <form className="space-y-6 sm:space-y-5">
-                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-t border-gray-200 pt-5">
-                            <label htmlFor="first-name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                Quantity
-                            </label>
-                            <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                <input
-                                    type="text"
-                                    name="first-name"
-                                    id="first-name"
-                                    autoComplete="given-name"
-                                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                                />
+                        <div className="flex flex-col items-start gap-2 border-t border-gray-200 pt-5">
+                            <label className="text-sm font-medium text-gray-700">Quantity</label>
+                            <div className="flex-grow-0">
+                                <QuantityButton2 quantity={cachedItem.quantity} />
                             </div>
                         </div>
-
-                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-t border-gray-200 pt-5">
-                            <label htmlFor="last-name" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                Due Date
-                            </label>
-                            <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                <input
-                                    type="text"
-                                    name="last-name"
-                                    id="last-name"
-                                    autoComplete="family-name"
-                                    className="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-                                />
-                            </div>
+                        <div className="flex flex-col items-stretch justify-stretch gap-2 border-t border-gray-200 pt-5">
+                            <label className="text-sm font-medium text-gray-700">Due Date</label>
+                            <input type="date" className="flex-1" />
                         </div>
-
-                        <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start border-t border-gray-200 pt-5">
-                            <label htmlFor="about" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                Note
-                            </label>
-                            <div className="mt-1 sm:mt-0 sm:col-span-2">
-                                <textarea
-                                    id="about"
-                                    name="about"
-                                    rows={3}
-                                    className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-                                    defaultValue={''}
-                                />
-                            </div>
+                        <div className="border-t border-gray-200 pt-5">
+                            <textarea
+                                id="about"
+                                name="about"
+                                rows={3}
+                                className="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                                defaultValue={''}
+                                placeholder="Note"
+                            />
                         </div>
                     </form>
+
                 </div>
-            </div>
+            </div >
             {/* Footer */}
-            <div className="flex flex-shrink-0 justify-between items-center px-4 py-4">
+            < div className="flex flex-shrink-0 justify-between items-center px-4 py-4" >
                 <IconButton icon={faArrowRightFromBracket} title="Close Details" onClick={props.onClose} />
                 <h3 className="text-sm font-semibold text-gray-500 select-none">
                     Created {format(cachedItem.created)}
                 </h3>
                 <ConfirmDeleteItem onConfirmDelete={props.onDeleteItem} />
-            </div>
+            </div >
         </Drawer >
     )
 }
