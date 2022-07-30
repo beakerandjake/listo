@@ -8,6 +8,7 @@ import { AddItem } from './AddItem';
 import { ItemList } from './ItemList';
 import { EmptyItemList } from './EmptyItemList';
 import ListActionButton from './ListActionButton';
+import { EditItem } from './EditItem';
 
 
 export function List(props) {
@@ -64,6 +65,7 @@ export function List(props) {
     const onDeleteItem = async (itemId) => {
         try {
             console.log('on delete item', itemId);
+            setSelectedItem(null);
             setList({ ...list, items: list.items.filter(x => x.id !== itemId) });
             // await setItemCompleted(id, itemId, completed);
         } catch (error) {
@@ -72,8 +74,13 @@ export function List(props) {
     }
 
     const onClickItem = (itemId) => {
-        console.log('click item', itemId);
-        setSelectedItem(itemId);
+        const item = list.items.find(x => x.id === itemId);
+
+        if (!item) {
+            return;
+        }
+
+        setSelectedItem(item);
     }
 
 
@@ -94,6 +101,7 @@ export function List(props) {
                     : <EmptyItemList />
                 }
             </div>
+            <EditItem item={selectedItem} onClose={() => setSelectedItem(null)} onDeleteItem={() => onDeleteItem(selectedItem.id)} />
         </>
     )
 }
