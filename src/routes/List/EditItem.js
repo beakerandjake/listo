@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Dialog } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faArrowRightFromBracket, faCalendar, faCalendarAlt, faPlusMinus } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRightFromBracket, } from '@fortawesome/free-solid-svg-icons'
 import { format } from 'timeago.js'
 import { IconButton } from 'components/IconButton';
 import { ConfirmDeleteItem } from './ConfirmDeleteItem';
 import { CompletedCheckbox } from './Item/CompletedCheckbox';
 import { NameLabel } from './Item/NameLabel';
 import { Drawer } from 'components/Drawer';
-import QuantityButton2 from 'Old/QuantityButton';
+import { QuantityButton } from './Item/QuantityButton';
 
 
 export function EditItem(props) {
@@ -50,11 +50,11 @@ export function EditItem(props) {
                     </span>
                 </div>
                 <div className="relative mt-6 flex-1">
-                    <form className="space-y-6 sm:space-y-5">
+                    <div className="space-y-6 sm:space-y-5">
                         <div className="flex flex-col items-start gap-2 border-t border-gray-200 pt-5">
                             <label className="text-sm font-medium text-gray-700">Quantity</label>
                             <div className="flex-grow-0">
-                                <QuantityButton2 quantity={cachedItem.quantity} />
+                                <QuantityButton quantity={cachedItem.quantity} onQuantityChange={quantity => props.onEditItem(cachedItem.id, { quantity })}/>
                             </div>
                         </div>
                         <div className="flex flex-col items-stretch justify-stretch gap-2 border-t border-gray-200 pt-5">
@@ -71,7 +71,7 @@ export function EditItem(props) {
                                 placeholder="Note"
                             />
                         </div>
-                    </form>
+                    </div>
 
                 </div>
             </div >
