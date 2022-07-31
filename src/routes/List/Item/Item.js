@@ -14,7 +14,7 @@ export function Item(props) {
                 checked={props.completed}
                 onChange={completed => props.onSetItemCompleted(props.id, completed)}
             />
-            <span className={classNames('pl-3 w-full flex items-center gap-1 sm:gap-2', { 'opacity-50': props.completed })}>
+            <span className={classNames('pl-3 w-full flex items-center gap-2', { 'opacity-50': props.completed })}>
                 <NameLabel completed={props.completed} name={props.name} className="text-sm md:text-base"/>
                 <QuantityBadge quantity={props.quantity} />
                 <DueDateBadge dueDate={props.dueDate} />
