@@ -10,12 +10,19 @@ export function DueDateStatus(props) {
         return null;
     }
 
-    const formattedDate = format(parsedDate);
+    // change the message based on if due in the past or in the future, with special handling for due today.
+    const dueToday = new Date(parsedDate).toDateString() === new Date().toDateString()
+    const overdue = !dueToday && parsedDate < Date.now();
 
-    const overdue = parsedDate < Date.now();
-    const prefix = overdue ? 'Overdue, ' : 'Due ';
+    const message = dueToday
+        ? 'Due Today'
+        : (overdue ? 'Overdue, ' : 'Due ') + format(parsedDate);
 
     return (
-        <Status icon={faCalendarAlt} text={prefix + formattedDate} className={classNames({ 'text-red-800': !props.completed && overdue })} />
+        <Status
+            icon={faCalendarAlt}
+            text={message}
+            className={classNames({ 'text-blue-700': !props.completed && dueToday, 'text-red-800': !props.completed && overdue })}
+        />
     )
 }
