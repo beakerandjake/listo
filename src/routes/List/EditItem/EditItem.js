@@ -61,11 +61,11 @@ export function EditItem(props) {
                     </EditItemField>
 
                     <EditItemField label="Due Date">
-                        <DueDateStatus dueDate={cachedItem.dueDate} />
                         <DueDatePicker
                             date={cachedItem.dueDate}
                             onChange={date => props.onEditItem(cachedItem.id, { dueDate: date })}
                         />
+                        <DueDateStatus dueDate={cachedItem.dueDate} />
                     </EditItemField>
 
                     <EditItemField>
