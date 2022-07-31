@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Dialog } from '@headlessui/react'
-import { faArrowLeft, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect } from 'react';
+import { Dialog } from '@headlessui/react';
+import { faArrowLeft, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'timeago.js';
 import { IconButton } from 'components/IconButton';
 import { ConfirmDeleteItem } from '../ConfirmDeleteItem';
 import { CompletedCheckbox } from '../Item/CompletedCheckbox';
@@ -9,7 +10,6 @@ import { Drawer } from 'components/Drawer';
 import { QuantityButton } from '../Item/QuantityButton';
 import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
-import { FormattedDate } from "components/FormattedDate";
 import { DueDateStatus } from '../Item/DueDateStatus';
 import { DueDatePicker } from './DueDatePicker';
 
@@ -85,7 +85,9 @@ export function EditItem(props) {
             {/* Footer */}
             < div className="flex flex-shrink-0 justify-between items-center px-4 py-4" >
                 <IconButton icon={faArrowRightFromBracket} title="Close Details" onClick={props.onClose} />
-                <FormattedDate date={cachedItem.created} className="text-sm font-semibold text-gray-500 select-none" prefix="Created" />
+                <span className="text-sm font-semibold text-gray-500 select-none">
+                    Created {format(cachedItem.created)}
+                </span>
                 <ConfirmDeleteItem onConfirmDelete={props.onDeleteItem} />
             </div >
         </Drawer >
