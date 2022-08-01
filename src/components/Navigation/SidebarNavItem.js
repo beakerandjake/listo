@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getIcon } from 'services/iconLibrary';
-import { SidebarBadge } from './SidebarBadge';
 import classNames from 'classnames';
+import { getIcon } from 'services/iconLibrary';
+import { Badge } from 'components/Badge';
 
 export function SidebarNavItem(props) {
     const icon = getIcon(props.iconName);
@@ -20,7 +20,7 @@ export function SidebarNavItem(props) {
                 <>
                     <FontAwesomeIcon icon={icon} fixedWidth size="lg" className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0" />
                     <span className="flex-1">{props.name}</span>
-                    <SidebarBadge count={props.count} active={isActive} />
+                    {props.count > 1 && <Badge content={props.count} size="lg" variant={isActive ? 'success' : null} />}
                 </>
             )}
         />

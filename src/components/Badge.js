@@ -12,7 +12,7 @@ const variants = {
 
 export function Badge(props) {
 
-    const sizeClasses = variants[props.size] || sizes.default;
+    const sizeClasses = sizes[props.size] || sizes.default;
     const colorClasses = variants[props.variant] || variants.default;
 
     return (
