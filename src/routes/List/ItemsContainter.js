@@ -6,19 +6,10 @@ export function ItemsContainer(props) {
     const [pendingItems, setPendingItems] = useState([]);
     const [completedItems, setCompletedItems] = useState([]);
 
+    // Any time our items list changes, divide the items into completed / pending
     useEffect(() => {
-        const result = props.items.reduce((acc, current) => {
-            if (!current.completed) {
-                acc[0].push(current);
-            } else {
-                acc[1].push(current);
-            }
-
-            return acc;
-        }, [[], []]);
-
-        setPendingItems(result[0]);
-        setCompletedItems(result[1]);
+        setPendingItems(props.items.filter(x => !x.completed));
+        setCompletedItems(props.items.filter(x => x.completed));
     }, [props.items]);
 
     return (
