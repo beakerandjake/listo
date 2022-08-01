@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import { faNoteSticky } from '@fortawesome/free-solid-svg-icons';
-import { QuantityBadge } from './QuantityBadge';
 import { DueDateStatus } from './DueDateStatus';
 import { CompletedCheckbox } from './CompletedCheckbox';
 import { NameLabel } from './NameLabel';
 import { Status } from './Status';
+import { Badge } from 'components/Badge';
 
 export function Item(props) {
     return (
@@ -19,7 +19,7 @@ export function Item(props) {
             <span className={classNames({ 'opacity-50': props.completed }, 'pl-3 w-full flex flex-col gap-1 items-start')}>
                 <span className="w-full flex items-center gap-2">
                     <NameLabel completed={props.completed} name={props.name} className="text-sm md:text-base" />
-                    <QuantityBadge quantity={props.quantity} />
+                    {props.quantity > 1 && <Badge content={props.quantity} />}
                 </span>
                 <span className="flex items-center gap-2 w-full">
                     <DueDateStatus dueDate={props.dueDate} completed={props.completed} />
