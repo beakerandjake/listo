@@ -10,6 +10,7 @@ import { EmptyItemList } from './EmptyItemList';
 import ListActionButton from './ListActionButton';
 import { EditItem } from './EditItem/EditItem';
 import { CompletedItemsContainer } from './CompletedItemsContainer';
+import { ItemsContainer } from './ItemsContainter';
 
 
 export function List(props) {
@@ -102,10 +103,9 @@ export function List(props) {
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
-                    ? <ItemList items={list.items.filter(x => !x.completed)} onSetItemCompleted={onSetItemCompleted} onClickItem={itemId => setSelectedItemId(itemId)} />
+                    ? <ItemsContainer items={list.items} onSetItemCompleted={onSetItemCompleted} onClickItem={itemId => setSelectedItemId(itemId)} />
                     : <EmptyItemList />
                 }
-                <CompletedItemsContainer items={list.items.filter(x => x.completed)} />
             </div>
             <EditItem
                 item={getSelectedItem(selectedItemId)}
