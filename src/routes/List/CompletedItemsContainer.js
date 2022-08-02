@@ -8,17 +8,9 @@ import { Dropdown, DropdownMenuItem } from "components/Dropdown";
 
 export function CompletedItemsContainer(props) {
 
-    const onMarkAllIncomplete = () => {
-        console.log('mark all incomplete');
-    }
-
-    const onDeleteAll = () => {
-        console.log('delete all completed');
-    }
-
     const dropdownActions = [
-        <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={onMarkAllIncomplete} />,
-        <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={onDeleteAll} />
+        <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />,
+        <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
     ]
 
     return (

@@ -75,6 +75,26 @@ export function List(props) {
         }
     }
 
+    // todo, can probably merge with onSetItemComplete and just take array. 
+    const onSetItemsCompleted = async (itemIds, completed) => {
+        try {
+            const updatedItems = list.items.map(x => itemIds.includes(x.id) ? { ...x, completed } : x);
+            setList({ ...list, items: updatedItems });
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
+    // todo, can probably merge with onDeleteItem and just take array. 
+    const onDeleteItems = async (itemIds) => {
+        try {
+            const updatedItems = list.items.filter(x => !itemIds.includes(x.id));
+            setList({ ...list, items: updatedItems });
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
 
     const onEditItem = (itemId, changes) => {
         try {
@@ -103,7 +123,13 @@ export function List(props) {
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length
-                    ? <ItemsContainer items={list.items} onSetItemCompleted={onSetItemCompleted} onClickItem={itemId => setSelectedItemId(itemId)} />
+                    ? <ItemsContainer
+                        items={list.items}
+                        onSetItemCompleted={onSetItemCompleted}
+                        onClickItem={setSelectedItemId}
+                        onSetItemsCompleted={onSetItemsCompleted}
+                        onDeleteItems={onDeleteItems}
+                    />
                     : <EmptyItemList />
                 }
             </div>
