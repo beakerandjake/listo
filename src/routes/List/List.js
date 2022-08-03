@@ -114,11 +114,12 @@ export function List(props) {
 
     return (
         <>
-            {/* <div className="flex justify-between items-center">
-                <PageHeader name={list.name} />
-                <ListActionButton />
-            </div> */}
-            <ListPageHeader name={list.name} />
+            <ListPageHeader
+                name={list.name}
+                onSetItemsCompleted={() => onSetItemsCompleted(list.items.map(x => x.id), true)}
+                onDeleteItems={onDeleteItems}
+                items={list.items}
+            />
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length

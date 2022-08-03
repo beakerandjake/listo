@@ -7,8 +7,18 @@ export function ListPageHeader(props) {
     const dropdownActions = (
         <>
             <div className="py-1">
-                <DropdownMenuButton icon={faCheck} text="Mark Items Complete" onClick={props.onSetAllItemsCompleted} key="complete" />
-                <DropdownMenuButton icon={faTrashAlt} text="Delete All Items" onClick={props.onDeleteAllItems} key="delete" />
+                <DropdownMenuButton
+                    icon={faCheck}
+                    text="Mark Items Complete"
+                    onClick={props.onSetItemsCompleted}
+                    disabled={props.items.every(x => x.completed)}
+                />
+                <DropdownMenuButton
+                    icon={faTrashAlt}
+                    text="Delete All Items"
+                    onClick={props.onDeleteItems}
+                    disabled={props.items.length < 1}
+                />
             </div>
             <div className="py-1">
                 <DropdownMenuNav icon={faGear} text="Settings" to="edit" key="settings" />
@@ -22,9 +32,7 @@ export function ListPageHeader(props) {
                 <PageHeader name={props.name} />
             </div>
             <div className="flex-grow-0 flex items-center">
-                <Dropdown>
-                    {dropdownActions}
-                </Dropdown>
+                <Dropdown>{dropdownActions}</Dropdown>
             </div>
         </div>
     )
