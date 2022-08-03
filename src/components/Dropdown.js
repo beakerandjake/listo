@@ -2,12 +2,13 @@ import { Popover } from '@headlessui/react';
 import { Float } from '@headlessui-float/react'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 
-export function DropdownMenuItem(props) {
+export function DropdownMenuButton(props) {
     return (
         <Popover.Button
-            className="group flex items-center gap-1 p-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+            className="group flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
             onClick={props.onClick}
         >
             <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
@@ -15,6 +16,19 @@ export function DropdownMenuItem(props) {
         </Popover.Button>
     )
 }
+
+export function DropdownMenuNav(props) {
+    return (
+        <Link
+            className="group flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+            to={props.to}
+        >
+            <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
+            <p className="text-sm">{props.text}</p>
+        </Link>
+    )
+}
+
 
 export function Dropdown(props) {
 
@@ -36,7 +50,7 @@ export function Dropdown(props) {
                     <FontAwesomeIcon icon={faEllipsis} size="lg" />
                 </Popover.Button>
                 <Popover.Panel className="w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="flex flex-col gap-2 overflow-hidden py-2">
+                    <div className="flex flex-col overflow-hidden divide-y divide-gray-100">
                         {props.children}
                     </div>
                 </Popover.Panel>
