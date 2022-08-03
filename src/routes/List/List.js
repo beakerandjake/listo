@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
-import { PageHeader } from "components/PageHeader";
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { EmptyItemList } from './EmptyItemList';
-import ListActionButton from './ListActionButton';
 import { EditItem } from './EditItem/EditItem';
 import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
+import { ConfirmModal } from 'components/ConfirmModal';
 
 
 export function List(props) {
     const [initialized, setInitialized] = useState(false);
     const [list, setList] = useState(null);
     const [selectedItemId, setSelectedItemId] = useState(null);
+    const [confirmModalData, setConfirmModalData] = useState({ open: false });
     const { id } = useParams();
     const handleError = useErrorHandler();
 
@@ -63,22 +63,35 @@ export function List(props) {
         }
     }
 
-    const onDeleteItem = async (itemId) => {
-        try {
-            console.log('on delete item', itemId);
-            setSelectedItemId(null);
-            setList({ ...list, items: list.items.filter(x => x.id !== itemId) });
-            // await setItemCompleted(id, itemId, completed);
-        } catch (error) {
-            handleError(error);
-        }
-    }
-
     // todo, can probably merge with onSetItemComplete and just take array. 
     const onSetItemsCompleted = async (itemIds, completed) => {
         try {
             const updatedItems = list.items.map(x => itemIds.includes(x.id) ? { ...x, completed } : x);
             setList({ ...list, items: updatedItems });
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
+    const confirmDeleteItem = (itemId) => {
+        setConfirmModalData({
+            open: true,
+            onConfirm: async () => await deleteItem(itemId),
+            props: {
+                variant: 'danger',
+                title: 'Delete Item?',
+                message: 'This item will be permanently deleted.',
+                confirmButtonText: 'Delete'
+            }
+        });
+    }
+
+    const deleteItem = async (itemId) => {
+        try {
+            console.log('on delete item', itemId);
+            setSelectedItemId(null);
+            setList({ ...list, items: list.items.filter(x => x.id !== itemId) });
+            // await setItemCompleted(id, itemId, completed);
         } catch (error) {
             handleError(error);
         }
@@ -136,8 +149,18 @@ export function List(props) {
             <EditItem
                 item={getSelectedItem(selectedItemId)}
                 onClose={() => setSelectedItemId(null)}
-                onDeleteItem={() => onDeleteItem(selectedItemId)}
-                onEditItem={onEditItem} />
+                onDeleteItem={() => confirmDeleteItem(selectedItemId)}
+                onEditItem={onEditItem}
+            />
+            <ConfirmModal
+                open={confirmModalData?.open || false}
+                onDismiss={() => setConfirmModalData({ ...confirmModalData, open: false })}
+                onConfirm={async () => {
+                    setConfirmModalData({ ...confirmModalData, open: false });
+                    await confirmModalData.onConfirm();
+                }}
+                {...confirmModalData?.props}
+            />
         </>
     )
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Dialog } from '@headlessui/react';
-import { faArrowLeft, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'timeago.js';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item/CompletedCheckbox';
@@ -11,7 +11,6 @@ import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
 import { DueDateStatus } from '../Item/DueDateStatus';
 import { DueDatePicker } from './DueDatePicker';
-import { ConfirmDeleteButton } from './ConfirmDeleteButton';
 
 
 export function EditItem(props) {
@@ -88,7 +87,7 @@ export function EditItem(props) {
                 <span className="text-sm font-semibold text-gray-500 select-none">
                     Created {format(cachedItem.created)}
                 </span>
-                <ConfirmDeleteButton onConfirmDelete={props.onDeleteItem} />
+                <IconButton icon={faTrashAlt} title="Delete Item" onClick={props.onDeleteItem} />
             </div >
         </Drawer >
     )
