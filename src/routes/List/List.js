@@ -5,12 +5,11 @@ import { getList, setItemCompleted } from 'services/listService';
 import { PageHeader } from "components/PageHeader";
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
-import { ItemList } from './ItemList';
 import { EmptyItemList } from './EmptyItemList';
 import ListActionButton from './ListActionButton';
 import { EditItem } from './EditItem/EditItem';
-import { CompletedItemsContainer } from './CompletedItemsContainer';
 import { ItemsContainer } from './ItemsContainter';
+import { ListPageHeader } from './ListPageHeader';
 
 
 export function List(props) {
@@ -95,7 +94,6 @@ export function List(props) {
         }
     }
 
-
     const onEditItem = (itemId, changes) => {
         try {
             setList({
@@ -116,10 +114,11 @@ export function List(props) {
 
     return (
         <>
-            <div className="flex justify-between items-center">
+            {/* <div className="flex justify-between items-center">
                 <PageHeader name={list.name} />
                 <ListActionButton />
-            </div>
+            </div> */}
+            <ListPageHeader name={list.name} />
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
                 {list.items?.length

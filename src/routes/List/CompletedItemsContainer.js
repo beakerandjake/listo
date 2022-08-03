@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Badge } from "components/Badge";
-import { Dropdown, DropdownMenuItem } from "components/Dropdown";
+import { Dropdown, DropdownMenuButton } from "components/Dropdown";
 import { ConfirmModal } from "components/ConfirmModal";
 
 export function CompletedItemsContainer(props) {
@@ -15,10 +15,12 @@ export function CompletedItemsContainer(props) {
         props.onDeleteAllItems();
     }
 
-    const dropdownActions = [
-        <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} key="incomplete" />,
-        <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={() => setConfirmIsShowing(true)} key="delete" />
-    ]
+    const dropdownActions = (
+        <div className="py-1">
+            <DropdownMenuButton icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
+            <DropdownMenuButton icon={faTrashAlt} text="Delete Completed Items" onClick={() => setConfirmIsShowing(true)} />
+        </div>
+    );
 
     const container = (
         <Disclosure>
