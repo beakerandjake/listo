@@ -43,7 +43,7 @@ export function Dropdown(props) {
                 enter="transition duration-200 ease-out"
                 enterFrom="scale-95 opacity-0"
                 enterTo="scale-100 opacity-100"
-                leave="transition duration-150 ease-in"
+                leave="transition duration-75 ease-out"
                 leaveFrom="scale-100 opacity-100"
                 leaveTo="scale-95 opacity-0"
             >
