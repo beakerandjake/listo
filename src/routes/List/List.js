@@ -107,7 +107,7 @@ export function List(props) {
         }
     }
 
-    const onEditItem = (itemId, changes) => {
+    const editItem = (itemId, changes) => {
         try {
             setList({
                 ...list, items: list.items.map(x => x.id === itemId ? { ...x, ...changes } : x)
@@ -150,7 +150,7 @@ export function List(props) {
                 item={getSelectedItem(selectedItemId)}
                 onClose={() => setSelectedItemId(null)}
                 onDeleteItem={() => confirmDeleteItem(selectedItemId)}
-                onEditItem={onEditItem}
+                onEditItem={editItem}
             />
             <ConfirmModal
                 open={confirmModalData?.open || false}
