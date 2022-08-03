@@ -64,8 +64,9 @@ export function List(props) {
     }
 
     // todo, can probably merge with onSetItemComplete and just take array. 
-    const onSetItemsCompleted = async (itemIds, completed) => {
+    const setItemsCompleted = async (itemIds, completed) => {
         try {
+            console.log('set items completed', itemIds, completed);
             const updatedItems = list.items.map(x => itemIds.includes(x.id) ? { ...x, completed } : x);
             setList({ ...list, items: updatedItems });
         } catch (error) {
@@ -88,7 +89,6 @@ export function List(props) {
 
     const deleteItem = async (itemId) => {
         try {
-            console.log('on delete item', itemId);
             setSelectedItemId(null);
             setList({ ...list, items: list.items.filter(x => x.id !== itemId) });
             // await setItemCompleted(id, itemId, completed);
@@ -97,8 +97,22 @@ export function List(props) {
         }
     }
 
+    const confirmDeleteItems = (itemIds = []) => {
+        console.log('on delete items', itemIds);
+        setConfirmModalData({
+            open: true,
+            onConfirm: async () => await deleteItems(itemIds),
+            props: {
+                variant: "danger",
+                title: "Delete Completed Items?",
+                message: "All Items marked as completed will be permanently deleted.",
+                confirmButtonText: "Delete"
+            }
+        });
+    }
+
     // todo, can probably merge with onDeleteItem and just take array. 
-    const onDeleteItems = async (itemIds) => {
+    const deleteItems = async (itemIds) => {
         try {
             const updatedItems = list.items.filter(x => !itemIds.includes(x.id));
             setList({ ...list, items: updatedItems });
@@ -129,8 +143,8 @@ export function List(props) {
         <>
             <ListPageHeader
                 name={list.name}
-                onSetItemsCompleted={() => onSetItemsCompleted(list.items.map(x => x.id), true)}
-                onDeleteItems={onDeleteItems}
+                onSetItemsCompleted={setItemsCompleted}
+                onDeleteItems={confirmDeleteItems}
                 items={list.items}
             />
             <div className="py-4 space-y-2">
@@ -140,8 +154,8 @@ export function List(props) {
                         items={list.items}
                         onSetItemCompleted={onSetItemCompleted}
                         onClickItem={setSelectedItemId}
-                        onSetItemsCompleted={onSetItemsCompleted}
-                        onDeleteItems={onDeleteItems}
+                        onSetItemsCompleted={setItemsCompleted}
+                        onDeleteItems={confirmDeleteItems}
                     />
                     : <EmptyItemList />
                 }

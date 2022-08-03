@@ -10,13 +10,13 @@ export function ListPageHeader(props) {
                 <DropdownMenuButton
                     icon={faCheck}
                     text="Mark Items Complete"
-                    onClick={props.onSetItemsCompleted}
+                    onClick={() => props.onSetItemsCompleted(props.items.filter(x => !x.completed).map(x => x.id), true)}
                     disabled={props.items.every(x => x.completed)}
                 />
                 <DropdownMenuButton
                     icon={faTrashAlt}
                     text="Delete All Items"
-                    onClick={props.onDeleteItems}
+                    onClick={() => props.onDeleteItems(props.items.map(x => x.id))}
                     disabled={props.items.length < 1}
                 />
             </div>

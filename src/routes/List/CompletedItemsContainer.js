@@ -1,24 +1,16 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Badge } from "components/Badge";
 import { Dropdown, DropdownMenuButton } from "components/Dropdown";
-import { ConfirmModal } from "components/ConfirmModal";
 
 export function CompletedItemsContainer(props) {
-    const [confirmIsShowing, setConfirmIsShowing] = useState(false);
-
-    const onConfirmDelete = () => {
-        setConfirmIsShowing(false);
-        props.onDeleteAllItems();
-    }
-
     const dropdownActions = (
         <div className="py-1">
             <DropdownMenuButton icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
-            <DropdownMenuButton icon={faTrashAlt} text="Delete Completed Items" onClick={() => setConfirmIsShowing(true)} />
+            <DropdownMenuButton icon={faTrashAlt} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
         </div>
     );
 
@@ -67,18 +59,8 @@ export function CompletedItemsContainer(props) {
 
     return (
         <>
+            {/* todo animate fade in / out */}
             {props.count > 0 && container}
-
-            <ConfirmModal
-                open={confirmIsShowing}
-                onDismiss={() => setConfirmIsShowing(false)}
-                onConfirm={onConfirmDelete}
-                variant="danger"
-                title="Delete Completed Items?"
-                message="All Items marked as completed will be permanently deleted."
-                confirmButtonText="Delete"
-            />
-
         </>
     )
 }
