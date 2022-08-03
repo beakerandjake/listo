@@ -5,7 +5,6 @@ import { Button } from "components/Button";
 export function ConfirmModal(props) {
     const cancelButtonRef = useRef(null);
 
-
     return (
         <Transition.Root show={props.open} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={props.onDismiss} initialFocus={cancelButtonRef}>
