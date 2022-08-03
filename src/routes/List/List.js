@@ -66,7 +66,6 @@ export function List(props) {
     // todo, can probably merge with onSetItemComplete and just take array. 
     const setItemsCompleted = async (itemIds, completed) => {
         try {
-            console.log('set items completed', itemIds, completed);
             const updatedItems = list.items.map(x => itemIds.includes(x.id) ? { ...x, completed } : x);
             setList({ ...list, items: updatedItems });
         } catch (error) {
