@@ -1,19 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Badge } from "components/Badge";
 import { Dropdown, DropdownMenuItem } from "components/Dropdown";
+import { ConfirmModal } from "components/ConfirmModal";
 
 export function CompletedItemsContainer(props) {
+    const [confirmIsShowing, setConfirmIsShowing] = useState(false);
+
+    const onConfirmDelete = () => {
+        setConfirmIsShowing(false);
+        props.onDeleteAllItems();
+    }
 
     const dropdownActions = [
-        <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />,
-        <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
+        <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} key="incomplete" />,
+        <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={() => setConfirmIsShowing(true)} key="delete" />
     ]
 
-    return (
+    const container = (
         <Disclosure>
             {({ open }) => (
                 <>
@@ -54,5 +61,22 @@ export function CompletedItemsContainer(props) {
                 </>
             )}
         </Disclosure>
+    );
+
+    return (
+        <>
+            {props.count > 0 && container}
+
+            <ConfirmModal
+                open={confirmIsShowing}
+                onDismiss={() => setConfirmIsShowing(false)}
+                onConfirm={onConfirmDelete}
+                variant="danger"
+                title="Delete Completed Items?"
+                message="All Items marked as completed will be permanently deleted."
+                confirmButtonText="Delete"
+            />
+
+        </>
     )
 }
