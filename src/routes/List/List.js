@@ -97,17 +97,16 @@ export function List(props) {
         }
     }
 
-    const confirmDeleteItems = (itemIds = []) => {
-        console.log('on delete items', itemIds);
+    const confirmDeleteItems = (itemIds = [], props) => {
+        const defaultProps = {
+            variant: 'danger',
+            confirmButtonText: 'Delete'
+        };
+
         setConfirmModalData({
             open: true,
             onConfirm: async () => await deleteItems(itemIds),
-            props: {
-                variant: "danger",
-                title: "Delete Completed Items?",
-                message: "All Items marked as completed will be permanently deleted.",
-                confirmButtonText: "Delete"
-            }
+            props: { ...defaultProps, ...props }
         });
     }
 
@@ -144,7 +143,10 @@ export function List(props) {
             <ListPageHeader
                 name={list.name}
                 onSetItemsCompleted={setItemsCompleted}
-                onDeleteItems={confirmDeleteItems}
+                onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                    title:'Delete All Items?',
+                    message:'All Items in this list will be permanently deleted.'
+                })}
                 items={list.items}
             />
             <div className="py-4 space-y-2">
@@ -155,7 +157,10 @@ export function List(props) {
                         onSetItemCompleted={onSetItemCompleted}
                         onClickItem={setSelectedItemId}
                         onSetItemsCompleted={setItemsCompleted}
-                        onDeleteItems={confirmDeleteItems}
+                        onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                            title:'Delete Completed Items?',
+                            message:'All Items marked as completed will be permanently deleted.'
+                        })}
                     />
                     : <EmptyItemList />
                 }
