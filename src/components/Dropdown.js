@@ -8,8 +8,9 @@ import { Link } from 'react-router-dom';
 export function DropdownMenuButton(props) {
     return (
         <Popover.Button
-            className="group flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer"
+            className="group flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
             onClick={props.onClick}
+            disabled={props.disabled}
         >
             <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
             <p className="text-sm">{props.text}</p>
