@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import classNames from 'classnames';
 
 const variants = {
@@ -6,16 +7,17 @@ const variants = {
     default: 'text-gray-700 bg-white enabled:hover:bg-gray-50'
 }
 
-export function Button(props) {
+export const Button = forwardRef((props, ref) => {
     const variantStyle = variants[props.variant] || variants.default;
 
     return (
         <button
-            className={classNames(variantStyle, 'disabled:cursor-not-allowed disabled:opacity-50 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-0')}
+            ref={ref}
+            className={classNames(variantStyle, 'disabled:cursor-not-allowed disabled:opacity-50 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md')}
             onClick={props.onClick}
             disabled={props.disabled}
         >
             {props.text}
         </button>
     )
-}
+});
