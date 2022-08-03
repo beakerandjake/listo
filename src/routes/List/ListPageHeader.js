@@ -1,5 +1,5 @@
 import { faCheck, faGear, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { Dropdown, DropdownDivider, DropdownMenuButton, DropdownMenuNav } from "components/Dropdown";
+import { Dropdown, DropdownMenuButton, DropdownMenuNav } from "components/Dropdown";
 import { PageHeader } from "components/PageHeader";
 
 export function ListPageHeader(props) {
