@@ -21,10 +21,10 @@ export function CompletedItemsContainer(props) {
                     "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none"
                 )}
             >
-                <Trigger className="py-5 flex items-center flex-1 gap-2 group focus:outline-none">
+                <Trigger className="py-5 flex items-center flex-1 gap-2 group focus:outline-none" tabIndex={-1}>
                     <FontAwesomeIcon
                         icon={faChevronRight}
-                        className={classNames({ 'rotate-90': open }, "transition-transform", "group-focus:ring-2 group-focus:ring-offset-2 group-focus:ring-indigo-500")}
+                        className={classNames({ 'rotate-90': open }, "transition-transform")}
                         fixedWidth
                     />
                     <h3 className="text-md leading-6 font-medium text-gray-700">
