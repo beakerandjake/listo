@@ -16,7 +16,7 @@ export function Drawer(props) {
     return (
         <Dialog.Root open={props.open} onOpenChange={open => !open && props.onClose()}>
             <Dialog.Portal className="z-10">
-                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30 transition-opacity" />
+                <Dialog.Overlay className="z-10 fixed inset-0 bg-black bg-opacity-30 transition-opacity" />
                 <Dialog.Content className="z-10 fixed inset-y-0 right-0 w-screen max-w-md shadow-xl bg-white" onOpenAutoFocus={e => e.preventDefault()}>
                     {props.children}
                 </Dialog.Content>
