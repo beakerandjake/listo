@@ -35,7 +35,7 @@ export function DropdownMenuNav(props) {
     return (
         <RadixDropdownMenu.Item
             disabled={props.disabled}
-            className=" text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50"
+            className=" text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
         >
             {contentWrapper}
         </RadixDropdownMenu.Item>
