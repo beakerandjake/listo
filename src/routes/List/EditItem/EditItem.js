@@ -35,7 +35,7 @@ export function EditItem(props) {
     }, [props.item]);
 
     return (
-        <Drawer open={open} onClose={props.onClose} >
+        <Drawer open={open} onClose={props.onClose}>
             <div className="flex flex-col h-full divide-y divide-gray-200">
                 {/* Header */}
                 <div className="bg-white p-4 flex items-center gap-3">
