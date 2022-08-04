@@ -63,7 +63,7 @@ export function DropdownMenuContent(props) {
 
 export function EllipsisDropdownMenuTrigger(props) {
     return (
-        <DropdownMenuTrigger className="bg-gray-100 p-1 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none">
+        <DropdownMenuTrigger className="bg-gray-100 h-5 w-5 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
             <FontAwesomeIcon icon={faEllipsisH} size="lg" />
         </DropdownMenuTrigger>
     )
