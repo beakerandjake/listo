@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Dialog } from '@headlessui/react';
 import { faArrowLeft, faArrowRightFromBracket, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'timeago.js';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item/CompletedCheckbox';
 import { NameLabel } from '../Item/NameLabel';
-import { Drawer } from 'components/Drawer';
 import { QuantityButton } from '../Item/QuantityButton';
 import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
 import { DueDateStatus } from '../Item/DueDateStatus';
 import { DueDatePicker } from './DueDatePicker';
+import {
+    Drawer,
+    DrawerTitle,
+    DrawerCloseIconButton
+} from 'components/Drawer';
 
 
 export function EditItem(props) {
@@ -33,62 +36,64 @@ export function EditItem(props) {
 
     return (
         <Drawer open={open} onClose={props.onClose} >
-            {/* Header */}
-            <div className="bg-white p-4 flex items-center gap-3">
-                <IconButton icon={faArrowLeft} className="text-gray-500 hover:text-gray-700" onClick={props.onClose} />
-                <Dialog.Title className="text-lg font-medium">Item Details</Dialog.Title>
-            </div>
-            {/* Body */}
-            <div className="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
-                {/* Name Label */}
-                <div className="flex items-center">
-                    <div className="-ml-2">
-                        <CompletedCheckbox
-                            checked={cachedItem.completed}
-                            onChange={completed => props.onEditItem(cachedItem.id, { completed })}
-                        />
+            <div className="flex flex-col h-full divide-y divide-gray-200">
+                {/* Header */}
+                <div className="bg-white p-4 flex items-center gap-3">
+                    <DrawerCloseIconButton icon={faArrowLeft} title="Close Item Details" />
+                    <DrawerTitle className="text-md font-semibold text-gray-500 select-none">Item Details</DrawerTitle>
+                </div>
+                {/* Body */}
+                <div className="flex flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
+                    {/* Name Label */}
+                    <div className="flex items-center">
+                        <div className="-ml-2">
+                            <CompletedCheckbox
+                                checked={cachedItem.completed}
+                                onChange={completed => props.onEditItem(cachedItem.id, { completed })}
+                            />
+                        </div>
+                        <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
                     </div>
-                    <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-md sm:text-lg font-medium text-gray-900" />
-                </div>
-                {/* Item form */}
-                <div className="flex flex-col space-y-6">
-                    <EditItemField label="Quantity">
-                        <QuantityButton
-                            quantity={cachedItem.quantity}
-                            onQuantityChange={quantity => props.onEditItem(cachedItem.id, { quantity })}
-                        />
-                    </EditItemField>
+                    {/* Item form */}
+                    <div className="flex flex-col space-y-6">
+                        <EditItemField label="Quantity">
+                            <QuantityButton
+                                quantity={cachedItem.quantity}
+                                onQuantityChange={quantity => props.onEditItem(cachedItem.id, { quantity })}
+                            />
+                        </EditItemField>
 
-                    <EditItemField label="Due Date">
-                        <DueDatePicker
-                            date={cachedItem.dueDate}
-                            onChange={date => props.onEditItem(cachedItem.id, { dueDate: date })}
-                        />
-                        <DueDateStatus dueDate={cachedItem.dueDate} />
-                    </EditItemField>
+                        <EditItemField label="Due Date">
+                            <DueDatePicker
+                                date={cachedItem.dueDate}
+                                onChange={date => props.onEditItem(cachedItem.id, { dueDate: date })}
+                            />
+                            <DueDateStatus dueDate={cachedItem.dueDate} />
+                        </EditItemField>
 
-                    <EditItemField>
-                        <DebounceInput
-                            element="textarea"
-                            value={cachedItem.note}
-                            onChange={event => props.onEditItem(cachedItem.id, { note: event.target.value })}
-                            debounceTimeout={800}
-                            forceNotifyByEnter={false}
-                            placeholder="Add Note"
-                            className="border-gray-200 self-stretch"
-                            rows={3}
-                        />
-                    </EditItemField>
-                </div>
-            </div >
-            {/* Footer */}
-            < div className="flex flex-shrink-0 justify-between items-center px-4 py-4" >
-                <IconButton icon={faArrowRightFromBracket} title="Close Details" onClick={props.onClose} />
-                <span className="text-sm font-semibold text-gray-500 select-none">
-                    Created {format(cachedItem.created)}
-                </span>
-                <IconButton icon={faTrashAlt} title="Delete Item" onClick={props.onDeleteItem} />
-            </div >
+                        <EditItemField>
+                            <DebounceInput
+                                element="textarea"
+                                value={cachedItem.note}
+                                onChange={event => props.onEditItem(cachedItem.id, { note: event.target.value })}
+                                debounceTimeout={800}
+                                forceNotifyByEnter={false}
+                                placeholder="Add Note"
+                                className="border-gray-200 self-stretch"
+                                rows={3}
+                            />
+                        </EditItemField>
+                    </div>
+                </div >
+                {/* Footer */}
+                < div className="flex flex-grow-0 flex-shrink-0 justify-between items-center px-4 py-4" >
+                    <DrawerCloseIconButton icon={faArrowRightFromBracket} title="Close Item Details" />
+                    <span className="text-sm font-semibold text-gray-500 select-none">
+                        Created {format(cachedItem.created)}
+                    </span>
+                    <IconButton icon={faTrashAlt} title="Delete Item" onClick={props.onDeleteItem} />
+                </div >
+            </div>
         </Drawer >
     )
 }

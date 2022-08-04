@@ -1,45 +1,26 @@
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Dialog from '@radix-ui/react-dialog';
+
+export const DrawerTitle = Dialog.Title;
+export const DrawerClose = Dialog.Close;
+
+export function DrawerCloseIconButton(props) {
+    return (
+        <DrawerClose title={props.title}>
+            <FontAwesomeIcon icon={props.icon} className="text-gray-500 hover:text-gray-700" />
+        </DrawerClose>
+    )
+}
 
 export function Drawer(props) {
     return (
-        <Transition.Root show={props.open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={props.onClose}>
-                {/* Overlay */}
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-300"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                </Transition.Child>
-                {/* Main content */}
-                <div className="fixed inset-0 overflow-hidden">
-                    <div className="absolute inset-0 overflow-hidden">
-                        <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="transform transition ease-in-out duration-300"
-                                enterFrom="translate-x-full"
-                                enterTo="translate-x-0"
-                                leave="transform transition ease-in-out duration-300"
-                                leaveFrom="translate-x-0"
-                                leaveTo="translate-x-full"
-                            >
-                                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                                    <div className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
-                                        {props.children}
-                                    </div>
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
-                    </div>
-                </div>
-            </Dialog>
-        </Transition.Root>
-    )
+        <Dialog.Root open={props.open} onOpenChange={open => !open && props.onClose()}>
+            <Dialog.Portal className="z-10">
+                <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30 transition-opacity" />
+                <Dialog.Content className="z-10 fixed inset-y-0 right-0 w-screen max-w-md shadow-xl bg-white" onOpenAutoFocus={e => e.preventDefault()}>
+                    {props.children}
+                </Dialog.Content>
+            </Dialog.Portal>
+        </Dialog.Root>
+    );
 }
