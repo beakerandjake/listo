@@ -4,15 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Badge } from "components/Badge";
-import { Dropdown, DropdownMenuButton } from "components/Dropdown";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    EllipsisDropdownMenuTrigger
+} from "components/DropdownMenu";
 
 export function CompletedItemsContainer(props) {
-    const dropdownActions = (
-        <div className="py-1">
-            <DropdownMenuButton icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
-            <DropdownMenuButton icon={faTrashAlt} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
-        </div>
-    );
 
     const container = (
         <Disclosure>
@@ -35,9 +34,13 @@ export function CompletedItemsContainer(props) {
                             </h3>
                         </Disclosure.Button>
                         <div className="flex-grow-0 flex items-center">
-                            <Dropdown>
-                                {dropdownActions}
-                            </Dropdown>
+                            <DropdownMenu>
+                                <EllipsisDropdownMenuTrigger />
+                                <DropdownMenuContent>
+                                    <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
+                                    <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
                     </div>
                     <Transition
