@@ -2,6 +2,7 @@ import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 
 
 export const DropdownMenu = RadixDropdownMenu.Root;
@@ -63,7 +64,7 @@ export function DropdownMenuContent(props) {
 
 export function EllipsisDropdownMenuTrigger(props) {
     return (
-        <DropdownMenuTrigger className="bg-gray-100 h-5 w-5 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+        <DropdownMenuTrigger className={classNames("bg-gray-100 h-5 w-5 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500", props.className)}>
             <FontAwesomeIcon icon={faEllipsisH} size="lg" />
         </DropdownMenuTrigger>
     )
