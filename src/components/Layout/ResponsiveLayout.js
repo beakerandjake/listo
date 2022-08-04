@@ -11,7 +11,7 @@ export function ResponsiveLayout(props) {
         </main>
     )
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full overflow-auto">
             {/* Desktop / Larger screens */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
                 <DesktopLayout sidebar={props.sidebar}>
