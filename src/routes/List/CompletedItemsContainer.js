@@ -34,7 +34,7 @@ export function CompletedItemsContainer(props) {
                             </h3>
                         </Disclosure.Button>
                         <div className="flex-grow-0 flex items-center">
-                            <DropdownMenu>
+                            <DropdownMenu modal={false}>
                                 <EllipsisDropdownMenuTrigger />
                                 <DropdownMenuContent>
                                     <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />

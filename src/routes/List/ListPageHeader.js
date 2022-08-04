@@ -16,7 +16,7 @@ export function ListPageHeader(props) {
                 <PageHeader name={props.name} />
             </div>
             <div className="flex-grow-0 flex items-center">
-                <DropdownMenu>
+                <DropdownMenu modal={false}>
                     <EllipsisDropdownMenuTrigger />
                     <DropdownMenuContent>
                         <DropdownMenuItem
