@@ -5,7 +5,7 @@ import { getList, setItemCompleted } from 'services/listService';
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { EmptyItemList } from './EmptyItemList';
-import { EditItem } from './EditItem/EditItem';
+import { EditItem } from './EditItem';
 import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmModal } from 'components/ConfirmModal';

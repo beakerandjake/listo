@@ -2,6 +2,8 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { AddItemInput } from './AddItemInput';
+import { AddItemToolbar } from './AddItemToolbar';
 
 export function AddItem(props) {
     const [input, setInput] = useState('');
@@ -22,7 +24,7 @@ export function AddItem(props) {
         setInput('');
     };
 
-    return (
+    const orig = (
         <form className="w-full" onSubmit={onAddItem}>
             <div className="mt-1 flex h-[50px]">
                 <div className="relative flex items-stretch flex-grow">
@@ -50,5 +52,12 @@ export function AddItem(props) {
                 </div>
             </div>
         </form >
+    );
+
+    return (
+        <div className="bg-blue-50 shadow divide-y divide-gray-300">
+            <AddItemInput value={input} onChange={setInput} />
+            <AddItemToolbar />
+        </div>
     )
 }
