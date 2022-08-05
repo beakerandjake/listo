@@ -5,15 +5,11 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
-    DropdownMenuPortal,
-    DropdownMenuSubContent,
     DropdownMenuHeading
 } from 'components/DropdownMenu';
 import { faCalendarCheck, faCalendarPlus, faCalendarWeek, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import ReactDatePicker from 'react-datepicker';
+import { CustomDateDropdown } from './CustomDateDropdown';
 
 
 function tomorrow() {
@@ -53,23 +49,7 @@ export function DueDateDropdown(props) {
                 <DropdownMenuHeading title="Due Date" />
                 {calculatedDueDates}
                 <DropdownMenuSeparator />
-                <DropdownMenuSub>
-                    <DropdownMenuSubTrigger className="flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50">
-                        <p className="text-sm flex-1">Custom Date</p>
-                        <FontAwesomeIcon icon={faChevronRight} className="text-gray-400" />
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                        <DropdownMenuSubContent className="bg-white shadow">
-                            <DropdownMenuHeading title="Custom Date" />
-                            <div className="flex p-2">
-                                <ReactDatePicker
-                                    inline
-                                    wrapperClassName="border-none"
-                                />
-                            </div>
-                        </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                </DropdownMenuSub>
+                <CustomDateDropdown />
             </DropdownMenuContent>
         </DropdownMenu >
     )
