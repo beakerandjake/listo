@@ -4,7 +4,7 @@ import { PageHeader } from "components/PageHeader";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
+    DropdownMenuButton,
     DropdownMenuNav,
     DropdownMenuSeparator,
     EllipsisDropdownMenuTrigger
@@ -20,13 +20,13 @@ export function ListPageHeader(props) {
                 <DropdownMenu modal={false}>
                     <EllipsisDropdownMenuTrigger />
                     <DropdownMenuContent>
-                        <DropdownMenuItem
+                        <DropdownMenuButton
                             icon={faCheck}
                             text="Mark Items Complete"
                             disabled={props.items.every(x => x.completed)}
                             onClick={() => props.onSetItemsCompleted(props.items.filter(x => !x.completed).map(x => x.id), true)}
                         />
-                        <DropdownMenuItem
+                        <DropdownMenuButton
                             icon={faTrashCan}
                             text="Delete All Items"
                             disabled={props.items.length < 1}

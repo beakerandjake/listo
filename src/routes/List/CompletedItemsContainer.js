@@ -8,7 +8,7 @@ import { Badge } from "components/Badge";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
+    DropdownMenuButton,
     EllipsisDropdownMenuTrigger
 } from "components/DropdownMenu";
 
@@ -37,8 +37,8 @@ export function CompletedItemsContainer(props) {
                     <DropdownMenu modal={false}>
                         <EllipsisDropdownMenuTrigger />
                         <DropdownMenuContent>
-                            <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
-                            <DropdownMenuItem icon={faTrashCan} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
+                            <DropdownMenuButton icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
+                            <DropdownMenuButton icon={faTrashCan} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

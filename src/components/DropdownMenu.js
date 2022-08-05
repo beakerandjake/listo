@@ -8,7 +8,7 @@ import classNames from 'classnames';
 export const DropdownMenu = RadixDropdownMenu.Root;
 export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 
-export function DropdownMenuItem(props) {
+export function DropdownMenuButton(props) {
     return (
         <RadixDropdownMenu.Item
             disabled={props.disabled}
