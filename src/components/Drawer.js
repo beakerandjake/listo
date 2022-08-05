@@ -32,7 +32,7 @@ export function Drawer(props) {
     return (
         <Dialog.Root open={props.open} onOpenChange={open => !open && props.onClose()}>
             <Dialog.Portal className="z-10">
-                <Dialog.Overlay className="z-10 fixed inset-0 bg-black bg-opacity-30 transition-opacity" />
+                <Dialog.Overlay className="z-10 fixed inset-0 bg-black bg-opacity-50 transition-opacity" />
                 <Dialog.Content
                     className={cx(size, side, "z-10 fixed w-screen shadow-xl bg-white")}
                     onOpenAutoFocus={e => e.preventDefault()}
