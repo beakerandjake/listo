@@ -8,14 +8,15 @@ const variants = {
 }
 
 export const Button = forwardRef((props, ref) => {
-    const variantStyle = variants[props.variant] || variants.default;
+    const { className, variant, ...leftOverProps } = props;
+
+    const variantStyle = variants[variant] || variants.default;
 
     return (
         <button
             ref={ref}
-            className={classNames(variantStyle, 'disabled:cursor-not-allowed disabled:opacity-50 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2', props.className)}
-            onClick={props.onClick}
-            disabled={props.disabled}
+            className={classNames(variantStyle, 'disabled:cursor-not-allowed disabled:opacity-50 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2', className)}
+            {...leftOverProps}
         >
             {props.text}
         </button>
