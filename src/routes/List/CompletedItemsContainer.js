@@ -14,7 +14,7 @@ import {
 export function CompletedItemsContainer(props) {
     const [open, setOpen] = useState(false);
 
-    return (
+    const container = (
         <Root open={open} onOpenChange={setOpen}>
             <div
                 className={classNames({ "border-b border-gray-200": !open },
@@ -46,5 +46,12 @@ export function CompletedItemsContainer(props) {
                 {props.children}
             </Content>
         </Root>
+    );
+
+    return (
+        <>
+            {/* todo animate fade in / out */}
+            {props.count > 0 && container}
+        </>
     )
 }

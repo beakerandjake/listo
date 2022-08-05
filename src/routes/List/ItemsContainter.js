@@ -15,7 +15,6 @@ export function ItemsContainer(props) {
     return (
         <div>
             <ItemList items={pendingItems} onSetItemCompleted={props.onSetItemCompleted} onClickItem={props.onClickItem} />
-
             <CompletedItemsContainer
                 count={completedItems.length}
                 onSetAllItemsCompleted={() => props.onSetItemsCompleted(completedItems.map(x => x.id), false)}
