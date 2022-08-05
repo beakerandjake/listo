@@ -11,6 +11,7 @@
     "@radix-ui/react-collapsible": "^1.0.0",
     "@radix-ui/react-dialog": "^1.0.0",
     "@radix-ui/react-dropdown-menu": "^1.0.0",
+    "@radix-ui/react-toolbar": "^1.0.0",
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "react": "^18.1.0",
