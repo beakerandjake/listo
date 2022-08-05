@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faRotateLeft, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import classNames from "classnames";
 import { Root, Trigger, Content } from '@radix-ui/react-collapsible';
 import { Badge } from "components/Badge";
@@ -37,7 +38,7 @@ export function CompletedItemsContainer(props) {
                         <EllipsisDropdownMenuTrigger />
                         <DropdownMenuContent>
                             <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
-                            <DropdownMenuItem icon={faTrashAlt} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
+                            <DropdownMenuItem icon={faTrashCan} text="Delete Completed Items" onClick={props.onDeleteAllItems} />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

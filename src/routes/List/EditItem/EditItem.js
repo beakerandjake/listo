@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { faArrowLeft, faArrowRightFromBracket, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { format } from 'timeago.js';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item/CompletedCheckbox';
@@ -91,7 +92,7 @@ export function EditItem(props) {
                     <span className="text-sm font-semibold text-gray-500 select-none">
                         Created {format(cachedItem.created)}
                     </span>
-                    <IconButton icon={faTrashAlt} title="Delete Item" onClick={props.onDeleteItem} />
+                    <IconButton icon={faTrashCan} title="Delete Item" onClick={props.onDeleteItem} />
                 </div >
             </div>
         </Drawer >

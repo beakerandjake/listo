@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { format } from 'timeago.js';
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faCalendarCheck } from '@fortawesome/free-regular-svg-icons';
 import { Status } from './Status';
 
 export function DueDateStatus(props) {
@@ -20,7 +20,7 @@ export function DueDateStatus(props) {
 
     return (
         <Status
-            icon={faCalendarAlt}
+            icon={faCalendarCheck}
             text={message}
             className={classNames({ 'text-blue-700': !props.completed && dueToday, 'text-red-800': !props.completed && overdue })}
         />

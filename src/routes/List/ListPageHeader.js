@@ -1,4 +1,5 @@
-import { faCheck, faGear, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { PageHeader } from "components/PageHeader";
 import {
     DropdownMenu,
@@ -26,7 +27,7 @@ export function ListPageHeader(props) {
                             onClick={() => props.onSetItemsCompleted(props.items.filter(x => !x.completed).map(x => x.id), true)}
                         />
                         <DropdownMenuItem
-                            icon={faTrashAlt}
+                            icon={faTrashCan}
                             text="Delete All Items"
                             disabled={props.items.length < 1}
                             onClick={() => props.onDeleteItems(props.items.map(x => x.id))}
