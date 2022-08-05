@@ -8,16 +8,24 @@ import classNames from 'classnames';
 export const DropdownMenu = RadixDropdownMenu.Root;
 export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 
-export function DropdownMenuButton(props) {
+export function DropdownMenuItem(props) {
     return (
         <RadixDropdownMenu.Item
             disabled={props.disabled}
             onSelect={props.onClick}
             className="group flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50"
         >
+            {props.children}
+        </RadixDropdownMenu.Item>
+    )
+}
+
+export function DropdownMenuButton(props) {
+    return (
+        <DropdownMenuItem>
             <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
             <p className="text-sm">{props.text}</p>
-        </RadixDropdownMenu.Item>
+        </DropdownMenuItem>
     )
 }
 
@@ -51,9 +59,9 @@ export function DropdownMenuContent(props) {
     return (
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.Content
-                side="bottom"
-                align="end"
-                sideOffset={5}
+                side={props.side || "bottom"}
+                align={props.align || "end"}
+                sideOffset={props.sideOffset || 5}
                 className="py-1 flex flex-col w-56 rounded-md shadow-lg bg-white ring-1 ring-gray-200 focus:outline-none"
             >
                 {props.children}
