@@ -7,6 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export function CompletedCheckbox(props) {
     const [hover, setHover] = useState(false);
 
+    const onKeyDown = e => {
+        if (e.keyCode === 32 || e.key === "Enter") {
+            props.onChange(!props.checked);
+        }
+    }
+
     const toggleValue = e => {
         e.stopPropagation();
         props.onChange(!props.checked);
@@ -24,6 +30,7 @@ export function CompletedCheckbox(props) {
             onMouseLeave={() => setHover(false)}
             className={"flex items-center justify-center w-8 h-8 rounded cursor-pointer group focus:outline-none"}
             onClick={toggleValue}
+            onKeyDown={onKeyDown}
             tabIndex={0}
         >
             <FontAwesomeIcon
