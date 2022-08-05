@@ -12,17 +12,6 @@ export function CompletedCheckbox(props) {
         props.onChange(!props.checked);
     }
 
-    const orig = (
-        <div className="flex items-center p-2 cursor-pointer" onClick={e => toggleValue(e)}>
-            <input
-                type="checkbox"
-                className="focus:ring-green-500 text-green-700 border-gray-300 rounded cursor-pointer"
-                checked={props.checked}
-                onChange={toggleValue}
-            />
-        </div>
-    );
-
     const style = props.checked ? 'text-green-700' : 'text-gray-400'
 
     let icon = props.checked
@@ -33,7 +22,7 @@ export function CompletedCheckbox(props) {
         <div
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            className={"flex items-center justify-center p-1 cursor-pointer rounded group focus:outline-none"}
+            className={"flex items-center justify-center w-8 h-8 rounded cursor-pointer group focus:outline-none"}
             onClick={toggleValue}
             tabIndex={0}
         >
