@@ -2,9 +2,10 @@ import * as RadixDropdownMenu from '@radix-ui/react-dropdown-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
-import classNames from 'classnames';
+import cx from 'classnames';
 
 
+export const DropdownMenuPortal = RadixDropdownMenu.Portal;
 export const DropdownMenu = RadixDropdownMenu.Root;
 export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 
@@ -51,6 +52,18 @@ export function DropdownMenuNav(props) {
     )
 }
 
+export function DropdownMenuHeading(props) {
+    return (
+        <div>
+            <div className="py-2 -mb-1 flex items-center justify-center font-medium text-md">
+                {props.title}
+            </div>
+            <DropdownMenuSeparator />
+        </div>
+
+    )
+}
+
 export function DropdownMenuSeparator(props) {
     return <RadixDropdownMenu.Separator className="border-t border-gray-100 my-1" />
 }
@@ -72,8 +85,25 @@ export function DropdownMenuContent(props) {
 
 export function EllipsisDropdownMenuTrigger(props) {
     return (
-        <DropdownMenuTrigger className={classNames("bg-gray-100 h-5 w-5 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500", props.className)}>
+        <DropdownMenuTrigger className={cx("bg-gray-100 h-5 w-5 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500", props.className)}>
             <FontAwesomeIcon icon={faEllipsisH} size="lg" />
         </DropdownMenuTrigger>
     )
+}
+
+export const DropdownMenuSub = RadixDropdownMenu.Sub;
+export const DropdownMenuSubTrigger = RadixDropdownMenu.SubTrigger;
+
+export function DropdownMenuSubContent(props) {
+    const { children, className, ...rest } = props;
+    return (
+        <RadixDropdownMenu.Portal>
+            <RadixDropdownMenu.SubContent
+                className={cx("py-1 flex flex-col min-w-56 rounded-md shadow-lg bg-white ring-1 ring-gray-200 focus:outline-none", className)}
+                {...rest}
+            >
+                {children}
+            </RadixDropdownMenu.SubContent>
+        </RadixDropdownMenu.Portal>
+    );
 }
