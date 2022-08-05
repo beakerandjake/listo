@@ -13,9 +13,7 @@ export function AddItem(props) {
         return input && input.length > 1;
     };
 
-    const onAddItem = e => {
-        e.preventDefault();
-
+    const onAddItem = () => {
         if (!inputValid() || props.disabled) {
             return;
         }
@@ -55,9 +53,12 @@ export function AddItem(props) {
     );
 
     return (
-        <div className="bg-blue-50 shadow divide-y divide-gray-300">
-            <AddItemInput value={input} onChange={setInput} />
-            <AddItemToolbar />
+        <div className="bg-blue-50 shadow divide-y divide-gray-200">
+            <AddItemInput value={input} onChange={setInput} onSubmit={onAddItem} />
+            <AddItemToolbar
+                onClickAddButton={onAddItem}
+                disabled={props.disabled || !inputValid()}
+            />
         </div>
     )
 }
