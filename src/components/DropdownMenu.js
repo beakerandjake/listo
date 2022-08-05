@@ -22,8 +22,9 @@ export function DropdownMenuItem(props) {
 }
 
 export function DropdownMenuButton(props) {
+    const { icon, text, ...rest } = props;
     return (
-        <DropdownMenuItem>
+        <DropdownMenuItem {...rest}>
             <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
             <p className="text-sm">{props.text}</p>
         </DropdownMenuItem>
@@ -54,8 +55,8 @@ export function DropdownMenuNav(props) {
 
 export function DropdownMenuHeading(props) {
     return (
-        <div>
-            <div className="py-2 -mb-1 flex items-center justify-center font-medium text-md">
+        <div className="-my-1">
+            <div className={cx("rounded-md py-2 -mb-1 flex items-center justify-center font-medium text-md bg-gray-50", props.className)}>
                 {props.title}
             </div>
             <DropdownMenuSeparator />
