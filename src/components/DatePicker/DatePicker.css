@@ -1,0 +1,23 @@
+.listo-datepicker.react-datepicker {
+    @apply border-none rounded-none bg-white rounded-none
+}
+
+.listo-datepicker .react-datepicker__header {
+    @apply border-none bg-white pb-1
+}
+
+.listo-datepicker .react-datepicker__day--outside-month {
+    @apply text-gray-400
+}
+
+.listo-datepicker .react-datepicker__day-name {
+    @apply font-semibold text-gray-500
+}
+
+.listo-datepicker .react-datepicker__day {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500
+}
+
+.listo-datepicker .react-datepicker__day--selected, .listo-datepicker .react-datepicker__day--keyboard-selected {
+    @apply bg-green-700 hover:bg-green-800
+}
