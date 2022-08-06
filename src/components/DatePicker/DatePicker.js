@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { forwardRef } from 'react';
 import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
 import { DatePickerHeader } from './DatePickerHeader';
+
 
 export function DatePicker(props) {
     const Container = ({ className, children }) => {
@@ -12,6 +13,10 @@ export function DatePicker(props) {
             </div>
         );
     };
+
+    // The only way I could figure out how to prevent the input from opening
+    // the keyboard on mobile. Inspired by https://github.com/Hacker0x01/react-datepicker/issues/1640 
+    const Input = forwardRef((props, ref) => <input {...props} type="text" ref={ref} />);
 
     return (
         <div>
@@ -25,8 +30,7 @@ export function DatePicker(props) {
                 renderCustomHeader={DatePickerHeader}
                 showPopperArrow={false}
                 calendarContainer={Container}
-                onFocus={(e) => e.target.readOnly = true}
-                onBlur={e => e.target.readOnly = false}
+                customInput={<Input />}
             />
         </div>
     )
