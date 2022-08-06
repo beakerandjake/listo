@@ -1,52 +1,33 @@
-
-import { format } from 'date-fns';
-import ReactDatePicker from 'react-datepicker';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
-import 'react-datepicker/dist/react-datepicker.css';
-import './DatePicker.css';
+import { useState } from 'react';
+import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
+import { DatePickerHeader } from './DatePickerHeader';
 
 export function DatePicker(props) {
+    const Container = ({ className, children }) => {
+        return (
+            <div className="p-1 rounded-md shadow-lg bg-white ring-1 ring-gray-200 focus:outline-none">
+                <CalendarContainer className={className}>
+                    {children}
+                </CalendarContainer>
+            </div>
+        );
+    };
+
     return (
-        <ReactDatePicker
-            inline
-            calendarClassName="listo-datepicker"
-            selected={props.date}
-            onChange={props.onChange}
-            renderCustomHeader={({
-                date,
-                decreaseMonth,
-                increaseMonth,
-                prevMonthButtonDisabled,
-                nextMonthButtonDisabled
-            }) => (
-                <div className="flex items center justify-between px-3.5 py-2">
-
-                    {/* <div className="flex items-center gap-3"> */}
-                    <button
-                        onClick={decreaseMonth}
-                        disabled={prevMonthButtonDisabled}
-                        type="button"
-                        className="p-1 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <FontAwesomeIcon icon={faChevronLeft} />
-                    </button>
-                    <div className="text-lg">
-                        {format(date, 'MMMM yyyy')}
-                    </div>
-                    <button
-                        onClick={increaseMonth}
-                        disabled={nextMonthButtonDisabled}
-                        type="button"
-                        className="p-1 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        <FontAwesomeIcon icon={faChevronRight} />
-                    </button>
-                    {/* </div> */}
-                </div>
-            )}
-
-        />
-    );
+        <div>
+            <ReactDatePicker
+                popperPlacement='bottom'
+                className={props.className}
+                calendarClassName="listo-datepicker"
+                placeholderText={props.placeholder}
+                selected={props.date}
+                onChange={props.onChange}
+                renderCustomHeader={DatePickerHeader}
+                showPopperArrow={false}
+                calendarContainer={Container}
+                onFocus={(e) => e.target.readOnly = true}
+                onBlur={e => e.target.readOnly = false}
+            />
+        </div>
+    )
 }
