@@ -17,7 +17,7 @@ const lists = [
                 quantity: 1,
                 completed: false,
                 created: new Date(2022, 6, 15).toISOString(),
-                dueDate: new Date(2022, 8, 15).toString(),
+                dueDate: new Date(2022, 8, 15).toISOString(),
                 note: 'one cool note!'
             },
         ]
