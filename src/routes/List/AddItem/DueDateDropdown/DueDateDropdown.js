@@ -30,6 +30,10 @@ function CalculatedDueDate(props) {
 
 export function DueDateDropdown(props) {
 
+    const onChooseDate = date => {
+        console.log('choose em', date);
+    }
+
     const calculatedDueDates = (
         <>
             <CalculatedDueDate text="Today" icon={faCalendarCheck} day="Fri" date={new Date()} />
@@ -49,7 +53,7 @@ export function DueDateDropdown(props) {
                 <DropdownMenuHeading title="Due Date" />
                 {calculatedDueDates}
                 <DropdownMenuSeparator />
-                <CustomDateDropdown />
+                <CustomDateDropdown onChooseDate={onChooseDate} />
             </DropdownMenuContent>
         </DropdownMenu >
     )
