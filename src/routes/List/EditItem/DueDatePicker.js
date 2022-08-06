@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from "react";
-import ReactDatePicker from "react-datepicker";
-
+import { DatePicker } from "components/DatePicker";
+import { isDate, parseISO } from "date-fns";
 
 export function DueDatePicker(props) {
-    const [date, setDate] = useState(null);
-    const [datePickerOpen, setDatePickerOpen] = useState(false);
+    let parsed = isDate(props.date) ? props.date : parseISO(props.date);
 
-    // Ensure the date passed in is always turned into a date. 
-    useEffect(() => {
-        const parsedDate = Date.parse(props.date);
-
-        if (!parsedDate || isNaN(parsedDate)) {
-            setDate(null);
-        } else {
-            setDate(parsedDate);
-        }
-
-    }, [props.date]);
+    if (isNaN(parsed)) {
+        parsed = null;
+    }
 
     return (
-
         <div className="flex w-full">
-            <div className="w-full" onClick={() => setDatePickerOpen(!datePickerOpen)}>
-                <ReactDatePicker
-                    selected={date}
-                    onChange={date => {
-                        setDatePickerOpen(false);
-                        props.onChange(date);
-                    }}
-                    placeholderText="Add Due Date"
-                    className="block w-full text-gray-900 border-gray-300 focus:outline-none focus:ring-0"
-                    readOnly={true}
-                    onClickOutside={() => setDatePickerOpen(false)}
-                    open={datePickerOpen}
+            <div className="w-full">
+                <DatePicker
+                    placeholder="Add Due Date"
+                    className="w-full text-gray-900 border-gray-300 focus:outline-none focus:ring-0"
+                    date={parsed}
+                    onChange={props.onChange}
                 />
             </div>
             <button
