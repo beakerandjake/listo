@@ -70,13 +70,15 @@ export function DropdownMenuSeparator(props) {
 }
 
 export function DropdownMenuContent(props) {
+    const { children, ...rest } = props;
     return (
         <RadixDropdownMenu.Portal>
-            <RadixDropdownMenu.Content
-                side={props.side || "bottom"}
-                align={props.align || "end"}
-                sideOffset={props.sideOffset || 5}
+            <RadixDropdownMenu.Content 
+                side={"bottom"}
+                align={"end"}
+                sideOffset={5}
                 className="py-1 flex flex-col w-56 rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
+                {...rest}
             >
                 {props.children}
             </RadixDropdownMenu.Content>
