@@ -52,7 +52,7 @@ export function AddItem(props) {
     // );
 
     return (
-        <div className="bg-blue-50 shadow divide-y divide-gray-200">
+        <div className="rounded shadow-md mb-3">
             <AddItemInput value={name} onChange={setName} onSubmit={onAddItem} />
             <AddItemToolbar
                 onClickAddButton={onAddItem}

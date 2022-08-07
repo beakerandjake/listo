@@ -6,7 +6,7 @@ export const AddItemToolbarButton = Toolbar.Button;
 
 export function AddItemToolbar(props) {
     return (
-        <Toolbar.Root className="px-3 py-1 bg-gray-200 rounded-b flex items-center justify-between">
+        <Toolbar.Root className="px-3 py-1 bg-gray-100 rounded-b flex items-center justify-between">
             <DueDateButton dueDate={props.dueDate} onDueDateChange={props.onDueDateChange} />
 
             <Toolbar.Button asChild>

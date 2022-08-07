@@ -15,7 +15,7 @@ export function AddItemInput(props) {
     }
 
     return (
-        <div className="relative">
+        <div className="relative border-b border-gray-300">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                 <FontAwesomeIcon icon={hasFocus ? faSquare : faPlus} className="text-gray-400 font-thin" />
             </div>
