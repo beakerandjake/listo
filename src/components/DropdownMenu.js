@@ -27,12 +27,34 @@ export function DropdownMenuItem(props) {
     )
 }
 
+const buttonVariants = {
+    icon: {
+        danger: 'text-red-600 group-hover:text-red-700',
+        success: 'text-green-700 enabled:hover:text-green-800',
+        default: 'text-gray-400 group-hover:text-gray-500'
+    },
+    label: {
+        danger: 'text-red-600',
+        success: 'text-green-700',
+        default: 'text-inherit'
+    }
+
+}
+
 export function DropdownMenuButton(props) {
-    const { icon, text, ...rest } = props;
+    const { icon, text, variant, ...rest } = props;
+
     return (
         <DropdownMenuItem {...rest}>
-            <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
-            <p className="text-sm">{props.text}</p>
+            <FontAwesomeIcon
+                icon={props.icon}
+                className={buttonVariants.icon[variant] || buttonVariants.icon.default}
+                fixedWidth
+            />
+            <span className={cx("text-sm flex-1", buttonVariants.label[variant] || buttonVariants.label.default)}>
+                {props.text}
+            </span>
+            {props.children}
         </DropdownMenuItem>
     )
 }
