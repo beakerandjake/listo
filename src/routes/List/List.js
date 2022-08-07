@@ -143,6 +143,7 @@ export function List(props) {
     return (
         <>
             <ListPageHeader
+                iconName={list.iconName}
                 name={list.name}
                 onSetItemsCompleted={setItemsCompleted}
                 onDeleteItems={itemIds => confirmDeleteItems(itemIds, {

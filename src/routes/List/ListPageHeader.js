@@ -1,6 +1,8 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faGear } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { PageHeader } from "components/PageHeader";
+import { getIcon } from "services/iconLibrary";
 import {
     DropdownMenu,
     DropdownMenuItem,
@@ -10,12 +12,13 @@ import {
     EllipsisDropdownMenuTrigger,
     DropdownMenuHeading
 } from 'components/DropdownMenu';
-import { Button } from "components/Button";
+
 
 export function ListPageHeader(props) {
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between border-b-2 pb-3 border-gray-200 sm:border-none sm:pb-0">
             <div className="flex items-center gap-3 flex-1 min-w-0">
+                {!!props.iconName && <FontAwesomeIcon icon={getIcon(props.iconName)} size="xl" className="text-gray-500 hidden sm:block" />}
                 <PageHeader name={props.name} />
                 <DropdownMenu modal={false}>
                     <EllipsisDropdownMenuTrigger />
@@ -41,7 +44,7 @@ export function ListPageHeader(props) {
             </div>
             <div className="flex-grow-0 flex items-center">
                 {/* TODO sorting*/}
-                
+
             </div>
         </div>
     )

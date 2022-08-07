@@ -81,6 +81,7 @@ export async function getList(id) {
     }
 
     const toReturn = {
+        iconName: list.iconName,
         name: list.name,
         items: list.items
     };
