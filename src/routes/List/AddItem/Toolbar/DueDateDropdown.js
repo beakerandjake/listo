@@ -1,5 +1,7 @@
-import { faCalendar, faCalendarCheck, faCalendarDay, faCalendarPlus, faCalendarWeek, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faCalendarCheck, faCalendarDay, faCalendarPlus, faCalendarWeek, faChevronRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from 'components/Button';
+import { InlineDatePicker } from 'components/DatePicker';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,9 +11,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuSub,
     DropdownMenuSubTrigger,
+    DropdownMenuSubContent,
+    DropdownMenuItemContent,
 
 } from 'components/DropdownMenu';
 import { format, nextMonday, startOfToday, startOfTomorrow } from 'date-fns';
+import { useState } from 'react';
 
 function StaticDueDateButton(props) {
     const dayOfWeek = format(props.date, 'E');
@@ -20,6 +25,19 @@ function StaticDueDateButton(props) {
         <DropdownMenuItem text={props.text} icon={props.icon} onClick={() => props.onClick(props.date)}>
             <span className="text-sm text-gray-400">{dayOfWeek}</span>
         </DropdownMenuItem>
+    )
+}
+
+function CustomDueDatePicker(props) {
+    const [chosenDate, setChosenDate] = useState(startOfToday());
+
+    return (
+        <div>
+            <InlineDatePicker date={chosenDate} onChange={setChosenDate} />
+            <div className="flex items-center justify-end px-4 pb-2">
+                <Button text="Save" disabled={!chosenDate} onClick={() => props.onDateChosen(chosenDate)} />
+            </div>
+        </div>
     )
 }
 
@@ -42,23 +60,18 @@ export function DueDateDropdown(props) {
                 <DropdownMenuHeading title="Add Due Date" />
                 {staticDueDateButtons}
 
-                {/* <DropdownMenu.Sub>
-                    <DropdownMenu.SubTrigger>Sub menu →</DropdownMenu.SubTrigger>
-                    <DropdownMenu.Portal>
-                        <DropdownMenu.SubContent>
-                            <DropdownMenu.Item>Sub menu item</DropdownMenu.Item>
-                            <DropdownMenu.Item>Sub menu item</DropdownMenu.Item>
-                            <DropdownMenu.Arrow />
-                        </DropdownMenu.SubContent>
-                    </DropdownMenu.Portal>
-                </DropdownMenu.Sub> */}
-
                 <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                        Custom Date Range
+                    <DropdownMenuSubTrigger className="focus:outline-none group">
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItemContent text="Custom Date" icon={faCalendarCheck}>
+                            <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 group-hover:text-gray-500 group-focus-visible:text-gray-500" />
+                        </DropdownMenuItemContent>
                     </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent collisionPadding={10} sideOffset={5} alignOffset={8}>
+                        <DropdownMenuHeading title="Set Custom Date" />
+                        <CustomDueDatePicker onDateChosen={props.onDateChosen} />
+                    </DropdownMenuSubContent>
                 </DropdownMenuSub>
-
 
                 {props.showClearButton && (
                     <>
