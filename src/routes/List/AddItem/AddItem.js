@@ -3,19 +3,22 @@ import { AddItemInput } from './AddItemInput';
 import { AddItemToolbar } from './Toolbar/AddItemToolbar';
 
 export function AddItem(props) {
-    const [input, setInput] = useState('');
+    const [name, setName] = useState('');
     const [dueDate, setDueDate] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
     // is the current input a valid length to be submitted?
-    const inputValid = input && input.length > 1;
+    const nameValid = name && name.length > 1;
 
     const onAddItem = () => {
-        if (!inputValid || props.disabled) {
+        if (!nameValid || props.disabled) {
             return;
         }
 
-        props.onAddItem(input);
-        setInput('');
+        props.onAddItem({ name, dueDate, quantity });
+        setName('');
+        setQuantity(1);
+        setDueDate(null);
     };
 
     // const orig = (
@@ -50,10 +53,10 @@ export function AddItem(props) {
 
     return (
         <div className="bg-blue-50 shadow divide-y divide-gray-200">
-            <AddItemInput value={input} onChange={setInput} onSubmit={onAddItem} />
+            <AddItemInput value={name} onChange={setName} onSubmit={onAddItem} />
             <AddItemToolbar
                 onClickAddButton={onAddItem}
-                inputValid={inputValid}
+                inputValid={nameValid}
                 dueDate={dueDate}
                 onDueDateChange={setDueDate}
             />

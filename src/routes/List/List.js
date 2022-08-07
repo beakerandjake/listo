@@ -40,14 +40,17 @@ export function List(props) {
         }
     }, [id, handleError]);
 
-    const onAddItem = async itemName => {
+    const onAddItem = async item => {
         try {
-            const newItem = {
+            const defaultValues = {
                 id: Math.max(...list.items.map(x => x.id)) + 1,
-                name: itemName,
-                quantity: 1,
-                completed: false
+                completed: false,
+                created: new Date().toISOString(),
+                note: null,
             };
+
+            const newItem = { ...defaultValues, ...item };
+            console.log('new item', newItem);
             setList({ ...list, items: [...list.items, newItem] });
         } catch (error) {
             handleError(error);
@@ -143,8 +146,8 @@ export function List(props) {
                 name={list.name}
                 onSetItemsCompleted={setItemsCompleted}
                 onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                    title:'Delete All Items?',
-                    message:'All Items in this list will be permanently deleted.'
+                    title: 'Delete All Items?',
+                    message: 'All Items in this list will be permanently deleted.'
                 })}
                 items={list.items}
             />
@@ -157,8 +160,8 @@ export function List(props) {
                         onClickItem={setSelectedItemId}
                         onSetItemsCompleted={setItemsCompleted}
                         onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                            title:'Delete Completed Items?',
-                            message:'All Items marked as completed will be permanently deleted.'
+                            title: 'Delete Completed Items?',
+                            message: 'All Items marked as completed will be permanently deleted.'
                         })}
                     />
                     : <EmptyItemList />
