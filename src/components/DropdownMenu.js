@@ -66,10 +66,9 @@ export function DropdownMenuNav(props) {
 export function DropdownMenuHeading(props) {
     return (
         <div className="-my-1">
-            <div className={cx("rounded-md py-2 -mb-1 flex items-center justify-center font-medium text-md bg-gray-50", props.className)}>
+            <div className={cx("rounded-t-md mb-2 py-2 flex items-center justify-center font-medium text-md bg-gray-50 border-b border-gray-300", props.className)}>
                 {props.title}
             </div>
-            <DropdownMenuSeparator />
         </div>
 
     )
