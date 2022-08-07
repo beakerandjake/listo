@@ -34,6 +34,7 @@ export function DueDateButton(props) {
                 open={menuOpen}
                 onOpenChange={setMenuOpen}
                 onDateChosen={onDateChosen}
+                showClearButton={!!date}
             />
         </div>
     )
