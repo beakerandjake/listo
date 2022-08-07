@@ -8,8 +8,8 @@ import { Badge } from "components/Badge";
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuButton,
-    EllipsisDropdownMenuTrigger
+    EllipsisDropdownMenuTrigger,
+    DropdownMenuItem
 } from "components/DropdownMenu";
 
 export function CompletedItemsContainer(props) {
@@ -36,9 +36,9 @@ export function CompletedItemsContainer(props) {
                 <div className="flex-grow-0 flex items-center">
                     <DropdownMenu modal={false}>
                         <EllipsisDropdownMenuTrigger />
-                        <DropdownMenuContent>
-                            <DropdownMenuButton icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
-                            <DropdownMenuButton icon={faTrashCan} variant="danger" text="Delete Completed Items" onClick={props.onDeleteAllItems} />
+                        <DropdownMenuContent loop={true}>
+                            <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
+                            <DropdownMenuItem icon={faTrashCan} variant="danger" text="Delete Completed Items" onClick={props.onDeleteAllItems} />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

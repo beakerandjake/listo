@@ -9,25 +9,7 @@ export const DropdownMenuPortal = RadixDropdownMenu.Portal;
 export const DropdownMenu = RadixDropdownMenu.Root;
 export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 
-export function DropdownMenuItem(props) {
-    const { className, onClick, children, ...rest } = props;
-    return (
-        <RadixDropdownMenu.Item
-            onSelect={props.onClick}
-            className={cx(
-                "group flex items-center w-full gap-1 p-2 cursor-pointer",
-                "focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50",
-                "text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus-visible:bg-gray-100 focus-visible:text-gray-900",
-                className
-            )}
-            {...rest}
-        >
-            {props.children}
-        </RadixDropdownMenu.Item>
-    )
-}
-
-const buttonVariants = {
+const CONTENT_VARIANTS = {
     icon: {
         danger: 'text-red-600 group-hover:text-red-700',
         success: 'text-green-700 enabled:hover:text-green-800',
@@ -39,49 +21,64 @@ const buttonVariants = {
         default: 'text-inherit'
     }
 
-}
+};
 
-export function DropdownMenuButton(props) {
-    const { icon, text, variant, ...rest } = props;
+// Helper container for consistent styling of Menu Items. 
+// Must be wrapped in a DropdownMenuItem or DropdownMenuItemNav
+export function DropdownMenuItemContent(props) {
+    const { icon, text, variant, className, ...rest } = props;
 
     return (
-        <DropdownMenuItem {...rest}>
-            <FontAwesomeIcon
-                icon={props.icon}
-                className={buttonVariants.icon[variant] || buttonVariants.icon.default}
-                fixedWidth
-            />
-            <span className={cx("text-sm flex-1", buttonVariants.label[variant] || buttonVariants.label.default)}>
-                {props.text}
-            </span>
+        <div
+            {...rest}
+            className={cx(
+                "group flex items-center w-full gap-1 p-2 cursor-pointer",
+                "focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50",
+                "text-gray-700 group-hover:bg-gray-100 group-hover:text-gray-900  group-focus-visible:bg-gray-100  group-focus-visible:text-gray-900",
+                className
+            )}
+        >
+            {!!icon && (
+                <FontAwesomeIcon
+                    icon={props.icon}
+                    className={CONTENT_VARIANTS.icon[variant] || CONTENT_VARIANTS.icon.default}
+                    fixedWidth
+                />
+            )}
+            {!!text && (
+                <span className={cx("text-sm flex-1", CONTENT_VARIANTS.label[variant] || CONTENT_VARIANTS.label.default)}>
+                    {props.text}
+                </span>
+            )}
             {props.children}
-        </DropdownMenuItem>
+        </div>
+    );
+}
+
+export function DropdownMenuItem(props) {
+    const { onClick, children, ...rest } = props;
+    return (
+        <RadixDropdownMenu.Item onSelect={props.onClick} className="group focus:outline-none">
+            <DropdownMenuItemContent {...rest}>
+                {children}
+            </DropdownMenuItemContent>
+        </RadixDropdownMenu.Item>
     )
 }
 
 export function DropdownMenuNav(props) {
-    const content = (
-        <>
-            <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
-            <p className="text-sm">{props.text}</p>
-        </>
-    );
-
-
-    if (props.disabled) {
+   if (props.disabled) {
         return (
-            <DropdownMenuItem {...props}>
-                {content}
-            </DropdownMenuItem>
+            <DropdownMenuItem {...props} />
         )
     }
 
     return (
-        <DropdownMenuItem asChild disabled={props.disabled}>
+        <RadixDropdownMenu.Item asChild className="group focus:outline-none">
             <Link to={props.to}>
-                {content}
+                <DropdownMenuItemContent {...props} />
             </Link>
-        </DropdownMenuItem>
+        </RadixDropdownMenu.Item>
     )
 }
 

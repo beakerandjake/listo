@@ -7,7 +7,9 @@ import {
     DropdownMenuHeading,
     DropdownMenuItem,
     DropdownMenuSeparator,
-    DropdownMenuButton,
+    DropdownMenuSub,
+    DropdownMenuSubTrigger,
+
 } from 'components/DropdownMenu';
 import { format, nextMonday, startOfToday, startOfTomorrow } from 'date-fns';
 
@@ -15,9 +17,9 @@ function StaticDueDateButton(props) {
     const dayOfWeek = format(props.date, 'E');
 
     return (
-        <DropdownMenuButton text={props.text} icon={props.icon} onClick={() => props.onClick(props.date)}>
+        <DropdownMenuItem text={props.text} icon={props.icon} onClick={() => props.onClick(props.date)}>
             <span className="text-sm text-gray-400">{dayOfWeek}</span>
-        </DropdownMenuButton>
+        </DropdownMenuItem>
     )
 }
 
@@ -40,11 +42,28 @@ export function DueDateDropdown(props) {
                 <DropdownMenuHeading title="Add Due Date" />
                 {staticDueDateButtons}
 
+                {/* <DropdownMenu.Sub>
+                    <DropdownMenu.SubTrigger>Sub menu →</DropdownMenu.SubTrigger>
+                    <DropdownMenu.Portal>
+                        <DropdownMenu.SubContent>
+                            <DropdownMenu.Item>Sub menu item</DropdownMenu.Item>
+                            <DropdownMenu.Item>Sub menu item</DropdownMenu.Item>
+                            <DropdownMenu.Arrow />
+                        </DropdownMenu.SubContent>
+                    </DropdownMenu.Portal>
+                </DropdownMenu.Sub> */}
+
+                <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                        Custom Date Range
+                    </DropdownMenuSubTrigger>
+                </DropdownMenuSub>
+
 
                 {props.showClearButton && (
                     <>
                         <DropdownMenuSeparator />
-                        <DropdownMenuButton
+                        <DropdownMenuItem
                             icon={faTrashAlt}
                             variant="danger"
                             text="Remove Due Date"

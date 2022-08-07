@@ -3,8 +3,8 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { PageHeader } from "components/PageHeader";
 import {
     DropdownMenu,
+    DropdownMenuItem,
     DropdownMenuContent,
-    DropdownMenuButton,
     DropdownMenuNav,
     DropdownMenuSeparator,
     EllipsisDropdownMenuTrigger
@@ -19,14 +19,14 @@ export function ListPageHeader(props) {
             <div className="flex-grow-0 flex items-center">
                 <DropdownMenu modal={false}>
                     <EllipsisDropdownMenuTrigger />
-                    <DropdownMenuContent>
-                        <DropdownMenuButton
+                    <DropdownMenuContent loop={true}>
+                        <DropdownMenuItem
                             icon={faCheck}
                             text="Mark Items Complete"
                             disabled={props.items.every(x => x.completed)}
                             onClick={() => props.onSetItemsCompleted(props.items.filter(x => !x.completed).map(x => x.id), true)}
                         />
-                        <DropdownMenuButton
+                        <DropdownMenuItem
                             icon={faTrashCan}
                             variant="danger"
                             text="Delete All Items"
