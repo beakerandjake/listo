@@ -1,28 +1,22 @@
 import classNames from 'classnames';
-import { format } from 'timeago.js';
 import { faCalendar, faCalendarCheck } from '@fortawesome/free-regular-svg-icons';
 import { Status } from './Status';
+import { formatDueDate } from 'services/formatDueDate';
 
 export function DueDateStatus(props) {
-    const parsedDate = Date.parse(props.dueDate);
-
-    if (!parsedDate || isNaN(parsedDate)) {
+    if (!props.dueDate) {
         return null;
     }
 
-    // change the message based on if due in the past or in the future, with special handling for due today.
-    const dueToday = new Date(parsedDate).toDateString() === new Date().toDateString()
-    const overdue = !dueToday && parsedDate < Date.now();
-
-    const message = dueToday
-        ? 'Due Today'
-        : (overdue ? 'Overdue, ' : 'Due ') + format(parsedDate);
+    const formattedDueDate = formatDueDate(props.dueDate);
+    const today = formattedDueDate.includes('Today');
+    const overdue = formattedDueDate.includes('Overdue');
 
     return (
         <Status
             icon={faCalendarCheck}
-            text={message}
-            className={classNames({ 'text-blue-700': !props.completed && dueToday, 'text-red-800': !props.completed && overdue })}
+            text={formattedDueDate}
+            className={classNames({ 'text-blue-700': !props.completed && today, 'text-red-800': !props.completed && overdue })}
         />
     )
 }
