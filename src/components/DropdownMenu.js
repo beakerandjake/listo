@@ -76,7 +76,7 @@ export function DropdownMenuContent(props) {
                 side={props.side || "bottom"}
                 align={props.align || "end"}
                 sideOffset={props.sideOffset || 5}
-                className="py-1 flex flex-col w-56 rounded-md shadow-lg bg-white ring-1 ring-gray-200 focus:outline-none"
+                className="py-1 flex flex-col w-56 rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
             >
                 {props.children}
             </RadixDropdownMenu.Content>
@@ -100,7 +100,7 @@ export function DropdownMenuSubContent(props) {
     return (
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.SubContent
-                className={cx("py-1 flex flex-col min-w-56 rounded-md shadow-lg bg-white ring-1 ring-gray-200 focus:outline-none", className)}
+                className={cx("py-1 flex flex-col min-w-56 rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none", className)}
                 {...rest}
             >
                 {children}
