@@ -32,8 +32,8 @@ export function CustomDateDropdown(props) {
                 <p className="text-sm flex-1">Custom Date</p>
                 <FontAwesomeIcon icon={faChevronRight} className="text-gray-400" />
             </DropdownMenuSubTrigger>
-            <DropdownMenuSubContent className="bg-white shadow">
-                <DropdownMenuHeading title="Set Custom Date" className="bg-gray-50 -my-1" />
+            <DropdownMenuSubContent collisionPadding={10} sideOffset={3}>
+                <DropdownMenuHeading title="Set Custom Date" className="bg-gray-50 " />
                 <InlineDatePicker date={date} onChange={setDate} />
                 <div className="flex items-center justify-end px-4 pb-2">
                     <Button text="Save" disabled={!date} onClick={onClickSave} />

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AddItemInput } from './AddItemInput';
-import { AddItemToolbar } from './AddItemToolbar';
+import { AddItemToolbar } from './Toolbar/AddItemToolbar';
 
 export function AddItem(props) {
     const [input, setInput] = useState('');

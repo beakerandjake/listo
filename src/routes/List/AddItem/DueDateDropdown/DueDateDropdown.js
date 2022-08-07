@@ -1,4 +1,4 @@
-import { AddItemToolbarButton } from '../AddItemToolbar';
+import { AddItemToolbarButton } from '../Toolbar/AddItemToolbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     DropdownMenu,
