@@ -9,7 +9,8 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     EllipsisDropdownMenuTrigger,
-    DropdownMenuItem
+    DropdownMenuItem,
+    DropdownMenuHeading
 } from "components/DropdownMenu";
 
 export function CompletedItemsContainer(props) {
@@ -37,6 +38,7 @@ export function CompletedItemsContainer(props) {
                     <DropdownMenu modal={false}>
                         <EllipsisDropdownMenuTrigger />
                         <DropdownMenuContent loop={true}>
+                            <DropdownMenuHeading title="Completed Item Actions" />
                             <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
                             <DropdownMenuItem icon={faTrashCan} variant="danger" text="Delete Completed Items" onClick={props.onDeleteAllItems} />
                         </DropdownMenuContent>

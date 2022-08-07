@@ -7,19 +7,20 @@ import {
     DropdownMenuContent,
     DropdownMenuNav,
     DropdownMenuSeparator,
-    EllipsisDropdownMenuTrigger
+    EllipsisDropdownMenuTrigger,
+    DropdownMenuHeading
 } from 'components/DropdownMenu';
+import { Button } from "components/Button";
 
 export function ListPageHeader(props) {
     return (
         <div className="flex items-center justify-between">
-            <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
                 <PageHeader name={props.name} />
-            </div>
-            <div className="flex-grow-0 flex items-center">
                 <DropdownMenu modal={false}>
                     <EllipsisDropdownMenuTrigger />
-                    <DropdownMenuContent loop={true}>
+                    <DropdownMenuContent loop={true} align="start">
+                        <DropdownMenuHeading title="List Actions" />
                         <DropdownMenuItem
                             icon={faCheck}
                             text="Mark Items Complete"
@@ -37,6 +38,10 @@ export function ListPageHeader(props) {
                         <DropdownMenuNav icon={faGear} text="Settings" to="edit" />
                     </DropdownMenuContent>
                 </DropdownMenu>
+            </div>
+            <div className="flex-grow-0 flex items-center">
+                {/* TODO sorting*/}
+                
             </div>
         </div>
     )
