@@ -67,7 +67,7 @@ export function DropdownMenuItem(props) {
 }
 
 export function DropdownMenuNav(props) {
-   if (props.disabled) {
+    if (props.disabled) {
         return (
             <DropdownMenuItem {...props} />
         )
@@ -105,6 +105,7 @@ export function DropdownMenuContent(props) {
                 side={"bottom"}
                 align={"end"}
                 sideOffset={5}
+                collisionBoundary={10}
                 className="py-1 flex flex-col w-56 rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
                 {...rest}
             >
