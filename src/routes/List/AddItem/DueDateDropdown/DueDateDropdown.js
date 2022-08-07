@@ -20,7 +20,7 @@ function tomorrow() {
 
 function CalculatedDueDate(props) {
     return (
-        <DropdownMenuItem className="flex justify-between items-center">
+        <DropdownMenuItem className="flex justify-between items-center bg-">
             {/* <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth /> */}
             <p className="text-sm flex-1">{props.text}</p>
             <p className="text-sm text-gray-400">{props.day}</p>
