@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const VARIANTS = {
     danger: 'text-white bg-red-600 enabled:hover:bg-red-700 focus:ring-red-500',
@@ -25,11 +26,12 @@ export const Button = forwardRef((props, ref) => {
             className={classNames(
                 variantStyle,
                 sizeStyle,
-                'inline-flex items-center border border-gray-300 shadow-sm font-medium rounded-md',
+                'flex items-center justify-between gap-2 border border-gray-300 shadow-sm font-medium rounded-md',
                 'disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2',
                 className
             )}
         >
+            {!!props.icon && <FontAwesomeIcon icon={props.icon} />}
             {props.text}
         </button>
     )
