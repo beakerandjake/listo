@@ -1,4 +1,4 @@
-import { faCalendar, faCalendarCheck, faCalendarDay, faCalendarPlus, faCalendarWeek, faChevronRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faCalendarCheck, faCalendarDay, faCalendarDays, faCalendarPlus, faCalendarWeek, faChevronRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'components/Button';
 import { InlineDatePicker } from 'components/DatePicker';
@@ -63,7 +63,7 @@ export function DueDateDropdown(props) {
                 <DropdownMenuSub>
                     <DropdownMenuSubTrigger className="focus:outline-none group">
                         <DropdownMenuSeparator />
-                        <DropdownMenuItemContent text="Custom Date" icon={faCalendarCheck}>
+                        <DropdownMenuItemContent text="Custom Date" icon={faCalendarDays}>
                             <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 group-hover:text-gray-500 group-focus-visible:text-gray-500" />
                         </DropdownMenuItemContent>
                     </DropdownMenuSubTrigger>
