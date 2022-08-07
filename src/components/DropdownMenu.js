@@ -12,7 +12,7 @@ export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 const CONTENT_VARIANTS = {
     icon: {
         danger: 'text-red-600 group-hover:text-red-700',
-        success: 'text-green-700 enabled:hover:text-green-800',
+        success: 'text-green-700 group-hover:text-green-800',
         default: 'text-gray-400 group-hover:text-gray-500'
     },
     label: {
@@ -130,7 +130,7 @@ export function DropdownMenuSubContent(props) {
     return (
         <RadixDropdownMenu.Portal>
             <RadixDropdownMenu.SubContent
-                className={cx("py-1 flex flex-col min-w-56 rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none", className)}
+                className={cx("py-1 flex flex-col min-w-[14rem] rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none", className)}
                 {...rest}
             >
                 {children}
