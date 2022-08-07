@@ -1,19 +1,21 @@
 
-import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
-import { ToolbarButton } from "./ToolbarButton";
+import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import cx from 'classnames';
+import { formatDueDate } from "services/formatDueDate";
+import { ToolbarButton } from "./ToolbarButton";
+
 
 export function DueDateButton(props) {
     const [date, setDate] = useState(new Date());
+
 
     return (
         <div>
             <ToolbarButton
                 icon={faCalendarPlus}
-                className='bg-white border-gray-300 border shadow-sm'
                 title="Add Due Date"
-                text="Overdue, Sun, Jul 21"
+                text={date && formatDueDate(date)}
             />
 
         </div>
