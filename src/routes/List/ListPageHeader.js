@@ -28,6 +28,7 @@ export function ListPageHeader(props) {
                         />
                         <DropdownMenuButton
                             icon={faTrashCan}
+                            variant="danger"
                             text="Delete All Items"
                             disabled={props.items.length < 1}
                             onClick={() => props.onDeleteItems(props.items.map(x => x.id))}
