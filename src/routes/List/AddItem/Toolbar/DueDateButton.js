@@ -7,34 +7,31 @@ import { DueDateDropdown } from "./DueDateDropdown";
 
 
 export function DueDateButton(props) {
-    const [date, setDate] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
 
-    const onDateChosen = date => {
-        console.log('on date chosen', date);
+    const onDateChange = date => {
         setMenuOpen(false);
-        setDate(date);
+        props.onDueDateChange(date);
     }
 
     const button = (
         <ToolbarButton
             icon={faCalendarPlus}
             title="Add Due Date"
-            text={date && formatDueDate(date)}
+            text={props.dueDate && formatDueDate(props.dueDate)}
             onClick={() => setMenuOpen(!menuOpen)}
         />
     );
 
     return (
         <div>
-
-
             <DueDateDropdown
                 trigger={button}
                 open={menuOpen}
                 onOpenChange={setMenuOpen}
-                onDateChosen={onDateChosen}
-                showClearButton={!!date}
+                dueDate={props.dueDate}
+                onDateChange={onDateChange}
+                showClearButton={!!props.dueDate}
             />
         </div>
     )

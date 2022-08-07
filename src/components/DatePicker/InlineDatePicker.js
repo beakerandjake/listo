@@ -9,6 +9,7 @@ export function InlineDatePicker(props) {
             selected={props.date}
             onChange={props.onChange}
             renderCustomHeader={DatePickerHeader}
+            startDate
         />
     );
 }

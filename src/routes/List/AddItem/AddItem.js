@@ -4,6 +4,7 @@ import { AddItemToolbar } from './Toolbar/AddItemToolbar';
 
 export function AddItem(props) {
     const [input, setInput] = useState('');
+    const [dueDate, setDueDate] = useState(null);
 
     // is the current input a valid length to be submitted?
     const inputValid = input && input.length > 1;
@@ -53,6 +54,8 @@ export function AddItem(props) {
             <AddItemToolbar
                 onClickAddButton={onAddItem}
                 inputValid={inputValid}
+                dueDate={dueDate}
+                onDueDateChange={setDueDate}
             />
         </div>
     )
