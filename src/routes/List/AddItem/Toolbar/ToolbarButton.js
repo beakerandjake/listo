@@ -1,12 +1,13 @@
 import { forwardRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
+import * as RadixToolbar from '@radix-ui/react-toolbar';
 
 export const ToolbarButton = forwardRef((props, ref) => {
     const { icon, text, className, ...rest } = props;
 
     return (
-        <button
+        <RadixToolbar.Button
             {...rest}
             ref={ref}
             className={cx(
@@ -19,6 +20,6 @@ export const ToolbarButton = forwardRef((props, ref) => {
         >
             <FontAwesomeIcon icon={icon} fixedWidth />
             {text && <span className="text-sm">{text}</span>}
-        </button>
+        </RadixToolbar.Button>
     )
 });
