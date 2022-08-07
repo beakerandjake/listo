@@ -12,6 +12,7 @@ import {
     EllipsisDropdownMenuTrigger,
     DropdownMenuHeading
 } from 'components/DropdownMenu';
+import { SortingDropdown } from "./SortingDropdown";
 
 
 export function ListPageHeader(props) {
@@ -43,8 +44,7 @@ export function ListPageHeader(props) {
                 </DropdownMenu>
             </div>
             <div className="flex-grow-0 flex items-center">
-                {/* TODO sorting*/}
-
+                <SortingDropdown onChooseSort={props.onChooseSort} />
             </div>
         </div>
     )

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
+import { sortItems } from 'services/sorting';
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { EmptyItemList } from './EmptyItemList';
@@ -132,6 +133,10 @@ export function List(props) {
         }
     }
 
+    const setItemsSort = (sortKey, direction) => {
+        setList({ ...list, items: sortItems(list.items, sortKey, direction) });
+    }
+
     const getSelectedItem = itemId => {
         return list.items.find(x => x.id === itemId);
     }
@@ -150,6 +155,7 @@ export function List(props) {
                     title: 'Delete All Items?',
                     message: 'All Items in this list will be permanently deleted.'
                 })}
+                onChooseSort={setItemsSort}
                 items={list.items}
             />
             <div className="py-4 space-y-2">
