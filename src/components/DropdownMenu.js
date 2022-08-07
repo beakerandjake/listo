@@ -10,11 +10,17 @@ export const DropdownMenu = RadixDropdownMenu.Root;
 export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 
 export function DropdownMenuItem(props) {
+    const { className, onClick, children, ...rest } = props;
     return (
         <RadixDropdownMenu.Item
-            disabled={props.disabled}
             onSelect={props.onClick}
-            className="group flex items-center w-full gap-1 p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50"
+            className={cx(
+                "group flex items-center w-full gap-1 p-2 cursor-pointer",
+                "focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50",
+                "text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus-visible:bg-gray-100 focus-visible:text-gray-900",
+                className
+            )}
+            {...rest}
         >
             {props.children}
         </RadixDropdownMenu.Item>
@@ -33,23 +39,27 @@ export function DropdownMenuButton(props) {
 
 export function DropdownMenuNav(props) {
     const content = (
-        <div className="p-2 flex items-center gap-1">
+        <>
             <FontAwesomeIcon icon={props.icon} className="text-gray-400 group-hover:text-gray-500" fixedWidth />
             <p className="text-sm">{props.text}</p>
-        </div>
+        </>
     );
 
-    const contentWrapper = props.disabled
-        ? <span>{content}</span>
-        : <Link to={props.to}>{content}</Link>
+
+    if (props.disabled) {
+        return (
+            <DropdownMenuItem {...props}>
+                {content}
+            </DropdownMenuItem>
+        )
+    }
 
     return (
-        <RadixDropdownMenu.Item
-            disabled={props.disabled}
-            className=" text-gray-700 hover:bg-gray-100 hover:text-gray-900 cursor-pointer focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-        >
-            {contentWrapper}
-        </RadixDropdownMenu.Item>
+        <DropdownMenuItem asChild disabled={props.disabled}>
+            <Link to={props.to}>
+                {content}
+            </Link>
+        </DropdownMenuItem>
     )
 }
 
@@ -73,7 +83,7 @@ export function DropdownMenuContent(props) {
     const { children, ...rest } = props;
     return (
         <RadixDropdownMenu.Portal>
-            <RadixDropdownMenu.Content 
+            <RadixDropdownMenu.Content
                 side={"bottom"}
                 align={"end"}
                 sideOffset={5}
