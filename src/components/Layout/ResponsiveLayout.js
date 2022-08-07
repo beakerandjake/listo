@@ -1,8 +1,9 @@
 import MediaQuery from 'react-responsive';
+import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
 import { DesktopLayout } from "./DesktopLayout";
 import { MobileLayout } from "./MobileLayout";
 
-const MOBILE_BREAKPOINT = 768;
+
 
 export function ResponsiveLayout(props) {
     const main = (
