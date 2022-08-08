@@ -1,4 +1,10 @@
+import { faArrowDown91, faArrowUpAZ, faCalendarCheck, faCalendarPlus } from "@fortawesome/free-solid-svg-icons";
 import { compareAsc, isDate, parseISO } from "date-fns";
+
+export const sortingDirections = {
+    asc: 'asc',
+    desc: 'desc'
+};
 
 const sortDate = (lhs, rhs) => {
     const lhsDate = isDate(lhs) ? lhs : parseISO(lhs);
@@ -9,6 +15,8 @@ const sortDate = (lhs, rhs) => {
 const sorting = [
     {
         itemKey: 'name',
+        displayName: 'Name',
+        icon: faArrowUpAZ,
         sortingFn: (lhs, rhs) => {
             if (typeof rhs !== 'string' || typeof rhs !== 'string') {
                 throw new Error('lhs and rhs must be strings');
@@ -19,14 +27,21 @@ const sorting = [
     },
     {
         itemKey: 'dueDate',
+        displayName: 'Due Date',
+        icon: faCalendarCheck,
         sortingFn: sortDate
     },
     {
         itemKey: 'created',
+        displayName: 'Creation Date',
+        icon: faCalendarPlus,
         sortingFn: sortDate
     },
     {
         itemKey: 'quantity',
+        displayName: 'Quantity',
+        icon: faArrowDown91,
+        defaultSortingDirection: sortingDirections.desc,
         sortingFn: null
     }
 ];
@@ -89,12 +104,21 @@ export function sortItems(items, sortingKey, direction) {
     return toReturn;
 }
 
-export const sortingKeys = sorting.reduce((acc, elem) => {
-    acc[elem.itemKey] = elem.itemKey;
+export const itemSortingFields = sorting.map(({ itemKey, displayName, icon, defaultSortingDirection }) => ({
+    itemKey,
+    displayName,
+    icon,
+    defaultSortingDirection: defaultSortingDirection || sortingDirections.asc
+}));
+
+const test = sorting.reduce((acc, elem) => {
+    acc[elem.itemKey] = {
+        itemKey: elem.itemKey,
+        displayName: elem.displayName,
+        icon: elem.icon,
+        defaultSortingDirection: elem.defaultSortingDirection || sortingDirections.asc
+    };
     return acc;
 }, {});
 
-export const sortingDirections = {
-    asc: 'asc',
-    desc: 'desc'
-};
+console.log(test);
