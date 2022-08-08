@@ -41,8 +41,8 @@ const sortNullLast = (desc) => {
     }
 }
 
-const testSortField = (displayName, itemKey, direction) => {
-    test(`sort - ${displayName} - ${direction}`, () => {
+const testSortField = (itemKey, direction) => {
+    test(`sort - ${itemKey} - ${direction}`, () => {
         const items = getRandomItems(ARRAY_LENGTH);
 
         const sorted = sortItems(items, itemKey, direction)
@@ -56,7 +56,7 @@ const testSortField = (displayName, itemKey, direction) => {
     });
 };
 
-itemSortingFields.forEach(x => {
-    testSortField(x.displayName, x.itemKey, sortingDirections.asc);
-    testSortField(x.displayName, x.itemKey, sortingDirections.desc);
+Object.values(itemSortingFields).forEach(itemKey => {
+    testSortField(itemKey, sortingDirections.asc);
+    testSortField(itemKey, sortingDirections.desc);
 });

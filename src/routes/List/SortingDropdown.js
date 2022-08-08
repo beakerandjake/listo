@@ -8,6 +8,8 @@ import {
     DropdownMenuHeading
 } from 'components/DropdownMenu';
 import { itemSortingFields } from 'services/sorting';
+import { faArrowDown91, faArrowUpAZ, faCalendarCheck, faCalendarPlus, faNoteSticky } from "@fortawesome/free-solid-svg-icons";
+
 
 export function SortingDropdown(props) {
     const sortingButtons = itemSortingFields.map(x => (
