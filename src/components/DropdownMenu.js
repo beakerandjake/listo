@@ -32,7 +32,7 @@ export function DropdownMenuItemContent(props) {
         <div
             {...rest}
             className={cx(
-                "group flex items-center w-full gap-1 p-2 cursor-pointer",
+                "group flex items-center w-full gap-1 p-2 cursor-pointer select-none",
                 "focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50",
                 "text-gray-700 group-hover:bg-gray-100 group-hover:text-gray-900  group-focus-visible:bg-gray-100  group-focus-visible:text-gray-900",
                 className
@@ -85,7 +85,7 @@ export function DropdownMenuNav(props) {
 export function DropdownMenuHeading(props) {
     return (
         <div className="-my-1">
-            <div className={cx("rounded-t-md mb-2 py-2 flex items-center justify-center font-medium text-md bg-gray-50 border-b border-gray-300", props.className)}>
+            <div className={cx("rounded-t-md mb-2 py-2 flex items-center justify-center font-medium text-sm bg-gray-50 border-b text-gray-700 border-gray-300 select-none", props.className)}>
                 {props.title}
             </div>
         </div>
