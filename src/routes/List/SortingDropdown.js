@@ -7,7 +7,7 @@ import {
     DropdownMenuContent,
     DropdownMenuHeading
 } from 'components/DropdownMenu';
-import { itemSortingFields, sortingDirections } from 'services/sorting';
+import { itemSortingFields } from 'services/sorting';
 
 export function SortingDropdown(props) {
     const sortingButtons = itemSortingFields.map(x => (
@@ -15,7 +15,7 @@ export function SortingDropdown(props) {
             key={x.itemKey}
             icon={x.icon}
             text={x.displayName}
-            onClick={() => props.onChooseSort(x.itemKey, x.defaultSortingDirection)}
+            onClick={() => props.onChooseSort({ itemKey: x.itemKey, sortingDirection: x.defaultSortingDirection })}
         />
     ));
 
@@ -25,6 +25,7 @@ export function SortingDropdown(props) {
                 <Button icon={faSort} text="Sort" />
             </DropdownMenuTrigger>
             <DropdownMenuContent loop={true}>
+                <DropdownMenuHeading title="Sort Items By" />
                 {sortingButtons}
             </DropdownMenuContent>
         </DropdownMenu>

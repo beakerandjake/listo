@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
-import { sortItems } from 'services/sorting';
+import { sortItems, defaultItemSortingField } from 'services/sorting';
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { EmptyItemList } from './EmptyItemList';
@@ -11,15 +11,16 @@ import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmModal } from 'components/ConfirmModal';
 
-
 export function List(props) {
     const [initialized, setInitialized] = useState(false);
     const [list, setList] = useState(null);
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [confirmModalData, setConfirmModalData] = useState({ open: false });
+    const [activeSort, setActiveSort] = useState(defaultItemSortingField);
     const { id } = useParams();
     const handleError = useErrorHandler();
 
+    // whenever the id changes, load the list.
     useEffect(() => {
         let skeletonMinDisplayTimerId;
 
@@ -40,6 +41,14 @@ export function List(props) {
             setList(null);
         }
     }, [id, handleError]);
+
+    // whenever the list items or the active sort changes, update the sortedItems list.
+    const sortedItems = useMemo(() => {
+        if (!list?.items) {
+            return [];
+        }
+        return sortItems(list.items, activeSort.itemKey, activeSort.sortingDirection);
+    }, [list, activeSort])
 
     const onAddItem = async item => {
         try {
@@ -133,10 +142,6 @@ export function List(props) {
         }
     }
 
-    const setItemsSort = (sortKey, direction) => {
-        setList({ ...list, items: sortItems(list.items, sortKey, direction) });
-    }
-
     const getSelectedItem = itemId => {
         return list.items.find(x => x.id === itemId);
     }
@@ -155,14 +160,14 @@ export function List(props) {
                     title: 'Delete All Items?',
                     message: 'All Items in this list will be permanently deleted.'
                 })}
-                onChooseSort={setItemsSort}
-                items={list.items}
+                onChooseSort={setActiveSort}
+                items={sortedItems}
             />
             <div className="py-4 space-y-2">
                 <AddItem onAddItem={onAddItem} />
-                {list.items?.length
+                {sortedItems?.length
                     ? <ItemsContainer
-                        items={list.items}
+                        items={sortedItems}
                         onSetItemCompleted={onSetItemCompleted}
                         onClickItem={setSelectedItemId}
                         onSetItemsCompleted={setItemsCompleted}
