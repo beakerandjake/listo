@@ -1,7 +1,7 @@
 import { sortItems, sortingKeys, sortingDirections } from './sorting';
 import { faker } from '@faker-js/faker';
 
-const ARRAY_LENGTH = 10000;
+const ARRAY_LENGTH = 50;
 
 const createRandomItem = () => {
     return {
