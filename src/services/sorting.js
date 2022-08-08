@@ -110,15 +110,3 @@ export const itemSortingFields = sorting.map(({ itemKey, displayName, icon, defa
     icon,
     defaultSortingDirection: defaultSortingDirection || sortingDirections.asc
 }));
-
-const test = sorting.reduce((acc, elem) => {
-    acc[elem.itemKey] = {
-        itemKey: elem.itemKey,
-        displayName: elem.displayName,
-        icon: elem.icon,
-        defaultSortingDirection: elem.defaultSortingDirection || sortingDirections.asc
-    };
-    return acc;
-}, {});
-
-console.log(test);
