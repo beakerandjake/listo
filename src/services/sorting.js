@@ -1,7 +1,9 @@
-import { compareAsc, parseISO } from "date-fns";
+import { compareAsc, isDate, parseISO } from "date-fns";
 
 const sortDate = (lhs, rhs) => {
-    return compareAsc(parseISO(lhs), parseISO(rhs));
+    const lhsDate = isDate(lhs) ? lhs : parseISO(lhs);
+    const rhsDate = isDate(rhs) ? rhs : parseISO(rhs);
+    return compareAsc(lhsDate, rhsDate);
 }
 
 const sorting = [
@@ -17,17 +19,15 @@ const sorting = [
     },
     {
         itemKey: 'dueDate',
-        compareFn: sortDate
+        sortingFn: sortDate
     },
     {
         itemKey: 'created',
-        compareFn: sortDate
+        sortingFn: sortDate
     },
     {
         itemKey: 'quantity',
-        sortingFn: (lhs, rhs) => {
-            return lhs - rhs;
-        }
+        sortingFn: null
     }
 ];
 
@@ -43,7 +43,17 @@ const defaultSortFn = (lhs, rhs) => {
     return 0;
 };
 
-const nullOrUndefined = x => x === null || x === undefined;
+// returns a function that can invert the result of an ascending sort function if set to descending.
+const descendingWrapper = (fn, desc) => {
+    return (...args) => {
+        const result = fn(...args);
+        return desc ? result * -1 : result;
+    };
+}
+
+const nullOrUndefined = value => {
+    return value === null || value === undefined;
+}
 
 export function sortItems(items, sortingKey, direction) {
     const sortInfo = sorting.find(x => x.itemKey === sortingKey);
@@ -57,17 +67,13 @@ export function sortItems(items, sortingKey, direction) {
     const nullItems = items.filter(x => nullOrUndefined(x[sortInfo.itemKey]));
     const nonNullItems = items.filter(x => !nullItems.includes(x));
 
-    const sortFn = sortInfo.sortingFn || defaultSortFn;
+    const sortFn = descendingWrapper(sortInfo.sortingFn || defaultSortFn, direction === sortingDirections.desc);
+
     nonNullItems.sort((lhs, rhs) => {
         const lhsValue = lhs[sortInfo.itemKey];
         const rhsValue = rhs[sortInfo.itemKey];
         return sortFn(lhsValue, rhsValue);
     });
-
-    if (direction === sortingDirections.desc) {
-        nonNullItems.reverse();
-    }
-
 
     return [...nonNullItems, ...nullItems];
 }

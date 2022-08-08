@@ -1,4 +1,4 @@
-import { faArrowUp19, faArrowUpAZ, faCalendarCheck, faCalendarDay, faCalendarPlus, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp19, faArrowUpAZ, faCalendarCheck, faCalendarPlus, faSort } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Button } from 'components/Button';
 import {
@@ -7,7 +7,7 @@ import {
     DropdownMenuContent,
     DropdownMenuHeading
 } from 'components/DropdownMenu';
-import { sortingKeys } from 'services/sorting';
+import { sortingKeys, sortingDirections } from 'services/sorting';
 
 export function SortingDropdown(props) {
     return (
@@ -18,9 +18,9 @@ export function SortingDropdown(props) {
             <DropdownMenuContent loop={true}>
                 <DropdownMenuHeading title="Sort Items By" />
                 <DropdownMenuItem icon={faArrowUpAZ} text="Name" onClick={() => props.onChooseSort(sortingKeys.name)} />
-                <DropdownMenuItem icon={faCalendarCheck} text="Due Date" onClick={() => props.onChooseSort(sortingKeys.dueDate, 'desc')} />
+                <DropdownMenuItem icon={faCalendarCheck} text="Due Date" onClick={() => props.onChooseSort(sortingKeys.dueDate)} />
                 <DropdownMenuItem icon={faCalendarPlus} text="Creation Date" onClick={() => props.onChooseSort(sortingKeys.created)} />
-                <DropdownMenuItem icon={faArrowUp19} text="Quantity" onClick={() => props.onChooseSort(sortingKeys.quantity, 'desc')} />
+                <DropdownMenuItem icon={faArrowUp19} text="Quantity" onClick={() => props.onChooseSort(sortingKeys.quantity, sortingDirections.desc)} />
             </DropdownMenuContent>
         </DropdownMenu>
     )
