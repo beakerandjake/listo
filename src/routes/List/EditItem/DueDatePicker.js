@@ -1,5 +1,5 @@
 import { DatePicker } from "components/DatePicker";
-import { isDate, parseISO } from "date-fns";
+import { isDate, parseISO, formatISO } from "date-fns";
 
 export function DueDatePicker(props) {
     let parsed = isDate(props.date) ? props.date : parseISO(props.date);
@@ -15,7 +15,7 @@ export function DueDatePicker(props) {
                     placeholder="Add Due Date"
                     className="w-full text-gray-900 border-gray-300 focus:outline-none focus:ring-0"
                     date={parsed}
-                    onChange={props.onChange}
+                    onChange={date => props.onChange(formatISO(date))}
                 />
             </div>
             <button
