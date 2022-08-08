@@ -9,7 +9,7 @@ import { Badge } from 'components/Badge';
 export function Item(props) {
     return (
         <li
-            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 shadow min-h-[50px] rounded cursor-pointer"
+            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 shadow min-h-[50px] rounded cursor-pointer select-none"
             onClick={() => props.onClickItem(props.id)}
         >
             <CompletedCheckbox
