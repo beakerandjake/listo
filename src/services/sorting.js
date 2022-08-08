@@ -43,17 +43,32 @@ const defaultSortFn = (lhs, rhs) => {
     return 0;
 };
 
-// returns a function that can invert the result of an ascending sort function if set to descending.
-const descendingWrapper = (fn, desc) => {
-    return (...args) => {
-        const result = fn(...args);
+const nullOrUndefined = value => {
+    return value === null || value === undefined;
+}
+
+// returns a function that wraps a sort fn that sorts ascending. 
+// ensures that null / undefined items always sort last. 
+// can invert the result of an ascending sort function if set to descending.
+const nullAwareDescendingWrapper = (fn, desc) => {
+    return (a, b) => {
+        if (a === b) {
+            return 0;
+        }
+
+        // ensure null always sort last.
+        if (nullOrUndefined(a)) {
+            return 1;
+        }
+        if (nullOrUndefined(b)) {
+            return -1;
+        }
+
+        const result = fn(a, b);
         return desc ? result * -1 : result;
     };
 }
 
-const nullOrUndefined = value => {
-    return value === null || value === undefined;
-}
 
 export function sortItems(items, sortingKey, direction) {
     const sortInfo = sorting.find(x => x.itemKey === sortingKey);
@@ -61,21 +76,17 @@ export function sortItems(items, sortingKey, direction) {
     if (!sortInfo) {
         throw new Error(`Unknown Sort Key - ${sortingKey}`);
     }
+    const toReturn = [...items];
 
-    // some keys might be null on an item, so we don't want to sort those. 
-    // divide the items into those which have a value for the key and those that don't. 
-    const nullItems = items.filter(x => nullOrUndefined(x[sortInfo.itemKey]));
-    const nonNullItems = items.filter(x => !nullItems.includes(x));
+    const sortFn = nullAwareDescendingWrapper(sortInfo.sortingFn || defaultSortFn, direction === sortingDirections.desc);
 
-    const sortFn = descendingWrapper(sortInfo.sortingFn || defaultSortFn, direction === sortingDirections.desc);
-
-    nonNullItems.sort((lhs, rhs) => {
+    toReturn.sort((lhs, rhs) => {
         const lhsValue = lhs[sortInfo.itemKey];
         const rhsValue = rhs[sortInfo.itemKey];
         return sortFn(lhsValue, rhsValue);
     });
 
-    return [...nonNullItems, ...nullItems];
+    return toReturn;
 }
 
 export const sortingKeys = sorting.reduce((acc, elem) => {
