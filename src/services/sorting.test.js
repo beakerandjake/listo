@@ -52,7 +52,7 @@ const testSortField = (displayName, itemKey, direction) => {
             .map(x => x[itemKey])
             .sort(sortNullLast(direction === sortingDirections.desc));
 
-            expect(sorted).toEqual(correct);
+        expect(sorted).toEqual(correct);
     });
 };
 
