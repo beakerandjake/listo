@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
+
+
+@layer utilities {
+    .keyboard-only-ring:focus:not(:focus-visible) {
+        @apply focus:outline-none focus:ring-0 focus:ring-offset-0;
+    }
+
+    .keyboard-only-ring:focus-visible {
+        @apply outline-none ring-2 ring-offset-2;
+    }
+}
