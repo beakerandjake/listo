@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
-import { sortItems, defaultItemSortingField } from 'services/sorting';
+import { sortItems, itemSortingFields, sortingDirections } from 'services/sorting';
 import { Skeleton } from './Skeleton';
 import { AddItem } from './AddItem';
 import { EmptyItemList } from './EmptyItemList';
@@ -16,7 +16,10 @@ export function List(props) {
     const [list, setList] = useState(null);
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [confirmModalData, setConfirmModalData] = useState({ open: false });
-    const [activeSort, setActiveSort] = useState(defaultItemSortingField);
+    const [activeSort, setActiveSort] = useState({
+        itemKey: itemSortingFields.created,
+        direction: sortingDirections.asc
+    });
     const { id } = useParams();
     const handleError = useErrorHandler();
 
@@ -160,7 +163,11 @@ export function List(props) {
                     title: 'Delete All Items?',
                     message: 'All Items in this list will be permanently deleted.'
                 })}
-                onChooseSort={setActiveSort}
+                onChooseSort={(...args) => {
+                    console.log('set active sort', ...args);
+                    setActiveSort(...args);
+                }}
+                activeSort={activeSort}
                 items={sortedItems}
             />
             <div className="py-4 space-y-2">
