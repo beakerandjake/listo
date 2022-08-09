@@ -14,7 +14,7 @@ export function SidebarNavItem(props) {
                 ({ isActive }) => classNames({
                     'bg-green-50 border-green-700 text-gray-900': isActive,
                     'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900': !isActive
-                }, 'group flex items-center px-3 py-3 md:py-2 text-md font-medium border-l-4')
+                }, 'group flex items-center px-3 py-3 md:py-2 text-md font-medium border-l-4 keyboard-only-focus-ring')
             }
             children={({ isActive }) => (
                 <>

@@ -27,7 +27,7 @@ export const Button = forwardRef((props, ref) => {
                 variantStyle,
                 sizeStyle,
                 'flex items-center justify-between gap-2 border border-gray-300 shadow-sm font-medium rounded-md',
-                'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-ring',
+                'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-focus-ring',
                 className
             )}
         >

@@ -26,7 +26,7 @@ export function AddItemInput(props) {
                 onFocus={() => setHasFocus(true)}
                 onBlur={() => setHasFocus(false)}
                 onKeyDown={onKeyDown}
-                className="focus:outline-none focus:ring-1 w-full pl-14 sm:text-sm border-none rounded-t min-h-[50px]"
+                className="keyboard-only-focus-ring w-full pl-14 sm:text-sm border-none rounded-t min-h-[50px]"
                 placeholder="Add Item"
                 autoComplete="off"
                 enterKeyHint="done"

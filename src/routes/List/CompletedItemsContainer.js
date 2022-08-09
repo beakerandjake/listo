@@ -20,13 +20,13 @@ export function CompletedItemsContainer(props) {
         <Root open={open} onOpenChange={setOpen}>
             <div
                 className={classNames({ "border-b border-gray-200": !open },
-                    "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none"
+                    "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none "
                 )}
             >
-                <Trigger className="py-5 flex items-center flex-1 gap-2 group focus:outline-none" tabIndex={-1}>
+                <Trigger className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
                     <FontAwesomeIcon
                         icon={faChevronRight}
-                        className={classNames({ 'rotate-90': open }, "transition-transform")}
+                        className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
                         fixedWidth
                     />
                     <h3 className="text-md leading-6 font-medium text-gray-700">
