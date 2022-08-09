@@ -50,7 +50,7 @@ export function List(props) {
         if (!list?.items) {
             return [];
         }
-        return sortItems(list.items, activeSort.itemKey, activeSort.sortingDirection);
+        return sortItems(list.items, activeSort.itemKey, activeSort.direction);
     }, [list, activeSort])
 
     const onAddItem = async item => {
