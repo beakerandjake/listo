@@ -17,7 +17,7 @@ import { SortingDropdown } from "./SortingDropdown";
 
 export function ListPageHeader(props) {
     return (
-        <div className="flex items-center justify-between border-b-2 pb-3 border-gray-200 sm:border-none sm:pb-0">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 flex-1 min-w-0">
                 {!!props.iconName && <FontAwesomeIcon icon={getIcon(props.iconName)} size="xl" className="text-gray-500 hidden sm:block" />}
                 <PageHeader name={props.name} />
