@@ -27,17 +27,6 @@ export const Button = forwardRef((props, ref) => {
     const sizeStyle = SIZES[size] || SIZES.default;
     const borderStyle = BORDERS[border] || BORDERS.default;
 
-    console.log('size', size, 'style', sizeStyle, 'raw', SIZES[size]);
-
-    console.log(classNames(
-        variantStyle,
-        sizeStyle,
-        borderStyle,
-        'flex items-center justify-between gap-2 shadow-sm font-medium rounded-md',
-        'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-focus-ring',
-        className
-    ));
-
     return (
         <button
             {...leftOverProps}

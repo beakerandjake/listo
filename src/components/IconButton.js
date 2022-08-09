@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { Button } from "./Button";
 
+// Styled button which just displays an icon with small amount of padding.
 export const IconButton = forwardRef((props, ref) => {
     const { className, ...rest } = props;
 
