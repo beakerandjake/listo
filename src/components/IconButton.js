@@ -1,11 +1,16 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { forwardRef } from "react";
+import { Button } from "./Button";
 
-export function IconButton(props) {
-    const className = props.className || 'text-gray-500 hover:text-gray-700';
+export const IconButton = forwardRef((props, ref) => {
+    const { className, ...rest } = props;
 
     return (
-        <button onClick={props.onClick} disabled={props.disabled} title={props.title} className="focus:outline-none">
-            <FontAwesomeIcon icon={props.icon} className={className} />
-        </button>
+        <Button
+            {...rest}
+            ref={ref}
+            className="bg-inherit shadow-none text-gray-500 enabled:hover:text-gray-700 enabled:hover:bg-inherit text-base p-1"
+            border="none"
+            size="custom"
+        />
     )
-}
+});
