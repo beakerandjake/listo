@@ -26,7 +26,7 @@ export function AddItem(props) {
     };
 
     return (
-        <div className="rounded shadow-md mb-3 border">
+        <div className="rounded border border-gray-200">
             <AddItemInput value={item.name} onChange={name => onItemChange({ name })} onSubmit={onAddItem} />
             <AddItemToolbar
                 item={item}

@@ -170,8 +170,10 @@ export function List(props) {
                 activeSort={activeSort}
                 items={sortedItems}
             />
-            <div className="py-4 space-y-2">
-                <AddItem onAddItem={onAddItem} />
+            <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
+                <div className="rounded shadow-lg mb-3 z-[2]">
+                    <AddItem onAddItem={onAddItem} />
+                </div>
                 {sortedItems?.length
                     ? <ItemsContainer
                         items={sortedItems}
