@@ -14,8 +14,8 @@ export function ItemsContainer(props) {
 
     return (
         <div className="flex-grow flex-col relative -mt-3">
-            <div className="absolute inset-0 overflow-y-auto pt-3 -mx-4 px-4 -mb-4 pb-2 sm:-mx-6 sm:px-6 md:-mx-8 md:px-8">
-                    <ItemList items={pendingItems} onSetItemCompleted={props.onSetItemCompleted} onClickItem={props.onClickItem} />
+            <div className="absolute inset-0 overflow-y-auto pt-3 -mx-3 -mb-3 px-3 pb-3 sm:-mx-6 sm:-mb-6 sm:px-6 sm:pb-6 md:-mx-8 md:-mb-8 md:px-8 md:pb-8">
+                <ItemList items={pendingItems} onSetItemCompleted={props.onSetItemCompleted} onClickItem={props.onClickItem} />
                 <CompletedItemsContainer
                     count={completedItems.length}
                     onSetAllItemsCompleted={() => props.onSetItemsCompleted(completedItems.map(x => x.id), false)}

@@ -7,7 +7,7 @@ import { MobileLayout } from "./MobileLayout";
 
 export function ResponsiveLayout(props) {
     const main = (
-        <main className="flex flex-col flex-1 m-4 sm:m-6 md:m-8">
+        <main className="flex flex-col flex-1 m-3 sm:m-6 md:m-8">
             {props.children}
         </main>
     )

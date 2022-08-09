@@ -171,7 +171,7 @@ export function List(props) {
                 items={sortedItems}
             />
             <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
-                <div className="rounded shadow-lg mb-3 z-[2]">
+                <div className="rounded shadow-md mb-3 z-[2]">
                     <AddItem onAddItem={onAddItem} />
                 </div>
                 {sortedItems?.length
