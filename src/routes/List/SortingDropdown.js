@@ -1,5 +1,7 @@
-import { faArrowDownAZ, faCalendar, faCalendarDays, faCheck, faClock, faSort, faTriangleCircleSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
+import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { Button } from 'components/Button';
 import {
     DropdownMenu,
@@ -7,11 +9,6 @@ import {
     DropdownMenuContent,
     DropdownMenuHeading
 } from 'components/DropdownMenu';
-import { itemSortingFields, sortingDirections } from 'services/sorting';
-import { faArrowDown91, faArrowUpAZ, faCalendarCheck, faCalendarPlus, faNoteSticky } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRef } from 'react';
-
 
 export function SortingDropdown(props) {
     const sortingFields = [
