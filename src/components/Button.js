@@ -26,6 +26,7 @@ export const Button = forwardRef((props, ref) => {
     const variantStyle = VARIANTS[variant] || VARIANTS.default;
     const sizeStyle = SIZES[size] || SIZES.default;
     const borderStyle = BORDERS[border] || BORDERS.default;
+    const flexJustifyStyle = !!props.icon ? 'justify-between' : 'justify-center'
 
     return (
         <button
@@ -35,7 +36,8 @@ export const Button = forwardRef((props, ref) => {
                 variantStyle,
                 sizeStyle,
                 borderStyle,
-                'flex items-center justify-between gap-2 shadow-sm font-medium rounded-md',
+                flexJustifyStyle,
+                'flex items-center gap-2 shadow-sm font-medium rounded-md',
                 'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-focus-ring',
                 className
             )}

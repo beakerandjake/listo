@@ -28,13 +28,13 @@ export function ConfirmModal(props) {
                             <div className="bg-gray-50 px-4 py-3 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:gap-2">
                                 <Button
                                     text={props.cancelButtonText || "Cancel"}
-                                    className="w-full sm:w-auto justify-center text-base font-medium sm:text-sm"
+                                    className="w-full sm:w-auto text-base font-medium sm:text-sm"
                                     onClick={props.onDismiss}
                                 />
                                 <Button
                                     text={props.confirmButtonText}
                                     variant={props.variant}
-                                    className="w-full sm:w-auto justify-center text-base font-medium sm:text-sm"
+                                    className="w-full sm:w-auto text-base font-medium sm:text-sm"
                                     onClick={props.onConfirm}
                                 />
                             </div>
