@@ -9,15 +9,34 @@ const VARIANTS = {
 };
 
 const SIZES = {
+    custom: ' ',
     sm: 'px-2 py-1 text-xs',
     default: 'px-3 py-2 text-sm'
 };
 
+
+const BORDERS = {
+    none: 'border-none',
+    default: 'border border-gray-300'
+};
+
 export const Button = forwardRef((props, ref) => {
-    const { className, variant, size, ...leftOverProps } = props;
+    const { className, variant, size, border, ...leftOverProps } = props;
 
     const variantStyle = VARIANTS[variant] || VARIANTS.default;
     const sizeStyle = SIZES[size] || SIZES.default;
+    const borderStyle = BORDERS[border] || BORDERS.default;
+
+    console.log('size', size, 'style', sizeStyle, 'raw', SIZES[size]);
+
+    console.log(classNames(
+        variantStyle,
+        sizeStyle,
+        borderStyle,
+        'flex items-center justify-between gap-2 shadow-sm font-medium rounded-md',
+        'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-focus-ring',
+        className
+    ));
 
     return (
         <button
@@ -26,7 +45,8 @@ export const Button = forwardRef((props, ref) => {
             className={classNames(
                 variantStyle,
                 sizeStyle,
-                'flex items-center justify-between gap-2 border border-gray-300 shadow-sm font-medium rounded-md',
+                borderStyle,
+                'flex items-center justify-between gap-2 shadow-sm font-medium rounded-md',
                 'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-focus-ring',
                 className
             )}

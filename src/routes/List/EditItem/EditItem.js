@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { faArrowLeft, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item/CompletedCheckbox';
 import { NameLabel } from '../Item/NameLabel';
@@ -13,7 +12,7 @@ import { DueDatePicker } from './DueDatePicker';
 import {
     Drawer,
     DrawerTitle,
-    DrawerCloseIconButton
+    DrawerClose
 } from 'components/Drawer';
 
 
@@ -40,7 +39,9 @@ export function EditItem(props) {
             <div className="flex flex-col h-full divide-y divide-gray-200">
                 {/* Header */}
                 <div className="bg-white p-4 flex items-center gap-3">
-                    <DrawerCloseIconButton icon={faArrowLeft} title="Close Item Details" />
+                    <DrawerClose asChild>
+                        <IconButton icon={faArrowLeft} title="Close Item Details"/>
+                    </DrawerClose>
                     <DrawerTitle className="text-md font-semibold text-gray-500 select-none">Item Details</DrawerTitle>
                 </div>
                 {/* Body */}
@@ -88,7 +89,9 @@ export function EditItem(props) {
                 </div >
                 {/* Footer */}
                 < div className="flex flex-grow-0 flex-shrink-0 justify-between items-center px-4 py-4" >
-                    <DrawerCloseIconButton icon={faArrowRightFromBracket} title="Close Item Details" />
+                    <DrawerClose asChild>
+                        <IconButton icon={faArrowRightFromBracket} title="Close Item Details" />
+                    </DrawerClose>
                     {cachedItem.created && (
                         <span className="text-sm font-semibold text-gray-500 select-none">
                             Created {formatDistanceToNow(parseISO(cachedItem.created), { addSuffix: true })}

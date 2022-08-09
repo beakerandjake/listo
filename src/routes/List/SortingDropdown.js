@@ -80,7 +80,8 @@ export function SortingDropdown(props) {
                 <Button
                     icon={faSort}
                     text={!!activeSortingField ? triggerText : null}
-                    className="border-none bg-inherit shadow-none enabled:hover:bg-white without-ring"
+                    border="none"
+                    className="bg-inherit shadow-none enabled:hover:bg-white"
                 />
             </DropdownMenuTrigger>
             <DropdownMenuContent loop={true} onCloseAutoFocus={e => e.preventDefault()}>
