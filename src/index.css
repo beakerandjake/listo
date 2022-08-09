@@ -11,4 +11,12 @@
     .keyboard-only-focus-ring:focus-visible {
         @apply outline-none ring-2 ring-offset-2 ring-indigo-500;
     }
+
+    .focus-none {
+        @apply focus:outline-none focus:ring-0 focus:ring-offset-0
+    }
+
+    .group-focus-none {
+        @apply focus-none
+    }
 }
