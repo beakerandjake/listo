@@ -9,8 +9,11 @@ export function Skeleton() {
 
     return (
         <div className="flex flex-col gap-2 animate-pulse">
-            <div className="bg-slate-200 w-1/5 h-10 rounded-lg"></div>
-            <div className="bg-slate-200 w-full h-[50px] rounded-lg"></div>
+            <div className="flex flex-1 items-center justify-between">
+                <div className="bg-slate-200 w-1/5 h-10 rounded-lg"></div>
+                <div className="bg-slate-200 w-1/6 h-10 rounded-lg"></div>
+            </div>
+            <div className="bg-slate-200 w-full h-[100px] rounded-lg"></div>
             {items}
         </div>
     )
