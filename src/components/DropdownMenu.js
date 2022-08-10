@@ -5,7 +5,6 @@ import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
 import classNames from 'classnames';
 
-
 export const DropdownMenuPortal = RadixDropdownMenu.Portal;
 export const DropdownMenu = RadixDropdownMenu.Root;
 export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
@@ -49,37 +48,6 @@ const ItemLabel = ({ text, variant }) => {
     )
 }
 
-// Helper container for consistent styling of Menu Items. 
-// Must be wrapped in a DropdownMenuItem or DropdownMenuItemNav
-export function DropdownMenuItemContent(props) {
-    const { icon, text, variant, className, ...rest } = props;
-
-    return (
-        <div
-            {...rest}
-            className={cx(
-                "group flex items-center w-full gap-1 p-2 cursor-pointer select-none",
-                "focus:outline-none radix-disabled:cursor-not-allowed radix-disabled:opacity-50",
-                "text-gray-700 group-hover:bg-gray-100 group-hover:text-gray-900  group-focus-visible:bg-gray-100  group-focus-visible:text-gray-900",
-                className
-            )}
-        >
-            {!!icon && (
-                <FontAwesomeIcon
-                    icon={props.icon}
-                    className={CONTENT_VARIANTS.icon[variant] || CONTENT_VARIANTS.icon.default}
-                    fixedWidth
-                />
-            )}
-            {!!text && (
-                <span className={cx("text-sm flex-1", CONTENT_VARIANTS.label[variant] || CONTENT_VARIANTS.label.default)}>
-                    {props.text}
-                </span>
-            )}
-            {props.children}
-        </div>
-    );
-}
 const DEFAULT_ITEM_STYLE = classNames(
     "group flex items-center w-full gap-1 p-2 cursor-pointer select-none",
     "focus:outline-none radix-disabled:pointer-events-none radix-disabled:opacity-50",
@@ -111,10 +79,13 @@ export function DropdownMenuNav(props) {
         )
     }
 
+    const { variant, icon, label, className, to, ...rest } = props;
+
     return (
-        <RadixDropdownMenu.Item asChild className="group focus:outline-none">
-            <Link to={props.to}>
-                <DropdownMenuItemContent {...props} />
+        <RadixDropdownMenu.Item asChild {...rest}>
+            <Link to={props.to} className={cx(DEFAULT_ITEM_STYLE, className)}>
+                <ItemIcon icon={icon} variant={variant} />
+                <ItemLabel text={label} variant={variant} />
             </Link>
         </RadixDropdownMenu.Item>
     )
@@ -162,7 +133,18 @@ export function EllipsisDropdownMenuTrigger(props) {
 }
 
 export const DropdownMenuSub = RadixDropdownMenu.Sub;
-export const DropdownMenuSubTrigger = RadixDropdownMenu.SubTrigger;
+
+export function DropdownMenuSubTrigger(props) {
+    const { icon, label, variant, children, className, ...rest } = props;
+
+    return (
+        <RadixDropdownMenu.SubTrigger {...rest} className={cx(DEFAULT_ITEM_STYLE, className)}>
+            <ItemIcon icon={icon} variant={variant} />
+            <ItemLabel text={label} variant={variant} />
+            {children}
+        </RadixDropdownMenu.SubTrigger>
+    )
+}
 
 export function DropdownMenuSubContent(props) {
     const { children, className, ...rest } = props;

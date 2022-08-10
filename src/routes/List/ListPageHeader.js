@@ -39,7 +39,7 @@ export function ListPageHeader(props) {
                             onClick={() => props.onDeleteItems(props.items.map(x => x.id))}
                         />
                         <DropdownMenuSeparator />
-                        <DropdownMenuNav icon={faGear} text="Settings" to="edit" />
+                        <DropdownMenuNav icon={faGear} label="Settings" to="edit" />
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

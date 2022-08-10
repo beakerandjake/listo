@@ -60,12 +60,10 @@ export function DueDateDropdown(props) {
                 <DropdownMenuHeading title="Add Due Date" />
                 {staticDueDateButtons}
 
+                <DropdownMenuSeparator />
                 <DropdownMenuSub>
-                    <DropdownMenuSubTrigger className="focus:outline-none group">
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItemContent text="Custom Date" icon={faCalendarDays}>
-                            <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 group-hover:text-gray-500 group-focus-visible:text-gray-500" />
-                        </DropdownMenuItemContent>
+                    <DropdownMenuSubTrigger icon={faCalendarDays} label="Custom Date">
+                        <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 group-hover:text-gray-500 group-focus-visible:text-gray-500" />
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent collisionPadding={10} sideOffset={5} alignOffset={8}>
                         <DropdownMenuHeading title="Set Custom Date" />
