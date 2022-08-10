@@ -10,6 +10,8 @@ import { EditItem } from './EditItem';
 import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmModal } from 'components/ConfirmModal';
+import { ListActionsDropdown } from './ListActionsDropdown';
+import { SortingDropdown } from './SortingDropdown';
 
 export function List(props) {
     const [initialized, setInitialized] = useState(false);
@@ -158,15 +160,20 @@ export function List(props) {
             <ListPageHeader
                 iconName={list.iconName}
                 name={list.name}
-                onSetItemsCompleted={setItemsCompleted}
-                onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                    title: 'Delete All Items?',
-                    message: 'All Items in this list will be permanently deleted.'
-                })}
-                onChooseSort={setActiveSort}
-                activeSort={activeSort}
-                items={sortedItems}
-            />
+            >
+                <ListActionsDropdown
+                    items={sortedItems}
+                    onSetItemsCompleted={setItemsCompleted}
+                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                        title: 'Delete All Items?',
+                        message: 'All Items in this list will be permanently deleted.'
+                    })} />
+                {sortedItems.length > 0 && (
+                    <div className="flex-shrink-0 ml-auto">
+                        <SortingDropdown onChooseSort={setActiveSort} activeSort={activeSort} />
+                    </div>
+                )}
+            </ListPageHeader>
             <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
                 <div className="rounded shadow-md shadow-gray-300 mb-3 z-[2]">
                     <AddItem onAddItem={onAddItem} />
