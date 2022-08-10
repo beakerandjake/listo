@@ -43,9 +43,11 @@ export function ListPageHeader(props) {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="flex-grow-0 flex items-center">
-                <SortingDropdown onChooseSort={props.onChooseSort} activeSort={props.activeSort} />
-            </div>
+            {!!props.items?.length && (
+                <div className="flex-grow-0 flex items-center">
+                    <SortingDropdown onChooseSort={props.onChooseSort} activeSort={props.activeSort} />
+                </div>
+            )}
         </div>
     )
 }
