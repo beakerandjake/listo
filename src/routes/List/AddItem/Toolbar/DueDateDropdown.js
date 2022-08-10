@@ -1,4 +1,4 @@
-import { faCalendar, faCalendarCheck, faCalendarDay, faCalendarDays, faCalendarPlus, faCalendarWeek, faChevronRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCalendarDay, faCalendarDays, faCalendarWeek, faChevronRight, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'components/Button';
 import { InlineDatePicker } from 'components/DatePicker';
