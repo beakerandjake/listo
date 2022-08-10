@@ -163,15 +163,12 @@ export function List(props) {
                     title: 'Delete All Items?',
                     message: 'All Items in this list will be permanently deleted.'
                 })}
-                onChooseSort={(...args) => {
-                    console.log('set active sort', ...args);
-                    setActiveSort(...args);
-                }}
+                onChooseSort={setActiveSort}
                 activeSort={activeSort}
                 items={sortedItems}
             />
             <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
-                <div className="rounded shadow-md mb-3 z-[2]">
+                <div className="rounded shadow-md shadow-gray-300 mb-3 z-[2]">
                     <AddItem onAddItem={onAddItem} />
                 </div>
                 {sortedItems?.length
