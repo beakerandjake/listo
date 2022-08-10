@@ -39,8 +39,8 @@ export function CompletedItemsContainer(props) {
                         <EllipsisDropdownMenuTrigger />
                         <DropdownMenuContent loop={true}>
                             <DropdownMenuHeading title="Completed Item Actions" />
-                            <DropdownMenuItem icon={faRotateLeft} text="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
-                            <DropdownMenuItem icon={faTrashCan} variant="danger" text="Delete Completed Items" onClick={props.onDeleteAllItems} />
+                            <DropdownMenuItem icon={faRotateLeft} label="Mark Items Incomplete" onClick={props.onSetAllItemsCompleted} />
+                            <DropdownMenuItem icon={faTrashCan} variant="danger" label="Delete Completed Items" onClick={props.onDeleteAllItems} />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

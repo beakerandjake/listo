@@ -27,14 +27,14 @@ export function ListPageHeader(props) {
                         <DropdownMenuHeading title="List Actions" />
                         <DropdownMenuItem
                             icon={faCheck}
-                            text="Mark Items Complete"
+                            label="Mark Items Complete"
                             disabled={props.items.every(x => x.completed)}
                             onClick={() => props.onSetItemsCompleted(props.items.filter(x => !x.completed).map(x => x.id), true)}
                         />
                         <DropdownMenuItem
                             icon={faTrashCan}
                             variant="danger"
-                            text="Delete All Items"
+                            label="Delete All Items"
                             disabled={props.items.length < 1}
                             onClick={() => props.onDeleteItems(props.items.map(x => x.id))}
                         />

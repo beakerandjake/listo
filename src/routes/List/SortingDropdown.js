@@ -14,32 +14,32 @@ export function SortingDropdown(props) {
     const sortingFields = [
         {
             itemKey: itemSortingFields.name,
-            text: "Name",
+            label: "Name",
             sortingDirection: sortingDirections.asc
         },
         {
             itemKey: itemSortingFields.dueDate,
-            text: "Due Soonest",
+            label: "Due Soonest",
             sortingDirection: sortingDirections.asc
         },
         {
             itemKey: itemSortingFields.dueDate,
-            text: "Due Latest",
+            label: "Due Latest",
             sortingDirection: sortingDirections.desc
         },
         {
             itemKey: itemSortingFields.created,
-            text: "Oldest",
+            label: "Oldest",
             sortingDirection: sortingDirections.asc
         },
         {
             itemKey: itemSortingFields.created,
-            text: "Newest",
+            label: "Newest",
             sortingDirection: sortingDirections.desc
         },
         {
             itemKey: itemSortingFields.quantity,
-            text: "Quantity",
+            label: "Quantity",
             sortingDirection: sortingDirections.desc
         }
     ];
@@ -69,7 +69,7 @@ export function SortingDropdown(props) {
         <span>
             <span className="inline sm:hidden">Sort Items</span>
             <span className="hidden sm:inline">
-                Sorted by <span className="font-semibold">{activeSortingField.text}</span>
+                Sorted by <span className="font-semibold">{activeSortingField.label}</span>
             </span>
         </span>
     );

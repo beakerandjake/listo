@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
+import classNames from 'classnames';
 
 
 export const DropdownMenuPortal = RadixDropdownMenu.Portal;
@@ -11,7 +12,7 @@ export const DropdownMenuTrigger = RadixDropdownMenu.Trigger;
 
 const CONTENT_VARIANTS = {
     icon: {
-        danger: 'text-red-600 group-hover:text-red-700',
+        danger: 'text-red-600 group-enabled:group-hover:text-red-700',
         success: 'text-green-700 group-hover:text-green-800',
         default: 'text-gray-400 group-hover:text-gray-500'
     },
@@ -20,8 +21,33 @@ const CONTENT_VARIANTS = {
         success: 'text-green-700',
         default: 'text-inherit'
     }
-
 };
+
+const ItemIcon = ({ icon, variant }) => {
+    if (!icon) {
+        return null;
+    }
+
+    return (
+        <FontAwesomeIcon
+            icon={icon}
+            className={CONTENT_VARIANTS.icon[variant] || CONTENT_VARIANTS.icon.default}
+            fixedWidth
+        />
+    )
+};
+
+const ItemLabel = ({ text, variant }) => {
+    if (!text) {
+        return null;
+    }
+
+    return (
+        <span className={cx("text-sm flex-1", CONTENT_VARIANTS.label[variant] || CONTENT_VARIANTS.label.default)}>
+            {text}
+        </span>
+    )
+}
 
 // Helper container for consistent styling of Menu Items. 
 // Must be wrapped in a DropdownMenuItem or DropdownMenuItemNav
@@ -54,17 +80,29 @@ export function DropdownMenuItemContent(props) {
         </div>
     );
 }
+const DEFAULT_ITEM_STYLE = classNames(
+    "group flex items-center w-full gap-1 p-2 cursor-pointer select-none",
+    "focus:outline-none radix-disabled:pointer-events-none radix-disabled:opacity-50",
+    "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+    "focus-visible:bg-gray-100 focus-visible:text-gray-900",
+);
 
 export function DropdownMenuItem(props) {
-    const { onClick, children, ...rest } = props;
+    const { onClick, className, children, label, icon, variant, ...rest } = props;
+
     return (
-        <RadixDropdownMenu.Item onSelect={props.onClick} className="group focus:outline-none">
-            <DropdownMenuItemContent {...rest}>
-                {children}
-            </DropdownMenuItemContent>
+        <RadixDropdownMenu.Item
+            {...rest}
+            onSelect={onClick}
+            className={cx(DEFAULT_ITEM_STYLE, className)}
+        >
+            <ItemIcon icon={icon} variant={variant} />
+            <ItemLabel text={label} variant={variant} />
+            {props.children}
         </RadixDropdownMenu.Item>
     )
 }
+
 
 export function DropdownMenuNav(props) {
     if (props.disabled) {

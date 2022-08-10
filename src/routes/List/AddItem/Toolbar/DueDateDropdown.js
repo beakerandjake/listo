@@ -22,7 +22,7 @@ function StaticDueDateButton(props) {
     const dayOfWeek = format(props.date, 'E');
 
     return (
-        <DropdownMenuItem text={props.text} icon={props.icon} onClick={() => props.onClick(props.date)}>
+        <DropdownMenuItem label={props.text} icon={props.icon} onClick={() => props.onClick(props.date)}>
             <span className="text-sm text-gray-400">{dayOfWeek}</span>
         </DropdownMenuItem>
     )
@@ -79,7 +79,7 @@ export function DueDateDropdown(props) {
                         <DropdownMenuItem
                             icon={faTrashAlt}
                             variant="danger"
-                            text="Remove Due Date"
+                            label="Remove Due Date"
                             onClick={() => props.onDateChange(null)}
                         />
                     </>
