@@ -13,15 +13,17 @@ import { ConfirmModal } from 'components/ConfirmModal';
 import { ListActionsDropdown } from './ListActionsDropdown';
 import { SortingDropdown } from './SortingDropdown';
 
+const defaultSorting = {
+    itemKey: itemSortingFields.created,
+    direction: sortingDirections.asc
+};
+
 export function List(props) {
     const [initialized, setInitialized] = useState(false);
     const [list, setList] = useState(null);
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [confirmModalData, setConfirmModalData] = useState({ open: false });
-    const [activeSort, setActiveSort] = useState({
-        itemKey: itemSortingFields.created,
-        direction: sortingDirections.asc
-    });
+    const [activeSort, setActiveSort] = useState(defaultSorting);
     const { id } = useParams();
     const handleError = useErrorHandler();
 
@@ -36,6 +38,7 @@ export function List(props) {
         Promise.all([getList(id), skeletonMinDisplayTimer])
             .then((values) => {
                 setList(values[0]);
+                setActiveSort(defaultSorting);
                 setInitialized(true);
             })
             .catch(error => handleError(error));
