@@ -12,7 +12,8 @@ import { DueDatePicker } from './DueDatePicker';
 import {
     Drawer,
     DrawerTitle,
-    DrawerClose
+    DrawerClose,
+    DrawerHeader
 } from 'components/Drawer';
 
 
@@ -36,14 +37,14 @@ export function EditItem(props) {
 
     return (
         <Drawer open={open} onClose={props.onClose}>
-            <div className="flex flex-col h-full divide-y divide-gray-200">
+            <div className="flex flex-col h-full">
                 {/* Header */}
-                <div className="bg-white p-4 flex items-center gap-3">
+                <DrawerHeader className="flex items-center gap-3">
                     <DrawerClose asChild>
                         <IconButton icon={faArrowLeft} title="Close Item Details"/>
                     </DrawerClose>
                     <DrawerTitle className="text-md font-semibold text-gray-500 select-none">Item Details</DrawerTitle>
-                </div>
+                </DrawerHeader>
                 {/* Body */}
                 <div className="flex flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
                     {/* Name Label */}
