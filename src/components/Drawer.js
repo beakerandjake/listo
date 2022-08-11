@@ -126,7 +126,7 @@ function DefaultCloseButton({ anchor, icon, title }) {
         <DrawerClose
             className={cx(
                 'absolute w-5 h-5 rounded-full flex items-center justify-center',
-                'text-gray-400 hover:text-gray-500 keyboard-only-focus-ring',
+                'text-gray-500 enabled:hover:text-gray-700 keyboard-only-focus-ring',
                 anchorStyle
             )}
             title={title}
@@ -181,4 +181,12 @@ export function Drawer({
             </Dialog.Portal>
         </Dialog.Root >
     );
+}
+
+export function DrawerHeader({ className, children }) {
+    return (
+        <div className={cx('p-4 bg-white drop-shadow border-b border-gray-300', className)}>
+            {children}
+        </div>
+    )
 }
