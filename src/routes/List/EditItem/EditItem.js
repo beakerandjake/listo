@@ -41,9 +41,9 @@ export function EditItem(props) {
                 {/* Header */}
                 <DrawerHeader className="flex items-center gap-3">
                     <DrawerClose asChild>
-                        <IconButton icon={faArrowLeft} title="Close Item Details"/>
+                        <IconButton icon={faArrowLeft} title="Close Item Details" />
                     </DrawerClose>
-                    <DrawerTitle className="text-md font-semibold text-gray-500 select-none">Item Details</DrawerTitle>
+                    <DrawerTitle title="Item Details" />
                 </DrawerHeader>
                 {/* Body */}
                 <div className="flex flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">

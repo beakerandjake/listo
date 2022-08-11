@@ -4,7 +4,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-export const DrawerTitle = Dialog.Title;
 export const DrawerClose = Dialog.Close;
 
 const SIZES = {
@@ -181,6 +180,14 @@ export function Drawer({
             </Dialog.Portal>
         </Dialog.Root >
     );
+}
+
+export function DrawerTitle({ title, className }) {
+    return (
+        <Dialog.Title className={cx('text-md font-semibold text-gray-500 select-none truncate', className)}>
+            {title}
+        </Dialog.Title>
+    )
 }
 
 export function DrawerHeader({ className, children }) {
