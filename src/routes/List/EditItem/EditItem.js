@@ -38,7 +38,7 @@ export function EditItem(props) {
 
     return (
         <Drawer open={open} onClose={props.onClose}>
-            <div className="h-full flex flex-col justify-between bg-pink-500">
+            <div className="h-full flex flex-col justify-between">
                 {/* Header */}
                 <DrawerHeader className="flex items-center gap-3">
                     <DrawerClose asChild>
