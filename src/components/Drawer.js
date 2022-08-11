@@ -167,7 +167,7 @@ export function Drawer({
             <Dialog.Portal className="z-10">
                 <Dialog.Overlay className="z-10 fixed inset-0 bg-black bg-opacity-50 transition-opacity" tabIndex={-1} />
                 <Dialog.Content
-                    className={cx(sizeStyle, anchorStyle, " z-10 fixed shadow-xl bg-white focus:outline-none")}
+                    className={cx(sizeStyle, anchorStyle, "z-10 fixed shadow-xl bg-white focus:outline-none")}
                     onOpenAutoFocus={e => {
                         e.preventDefault();
                         drawerRef.current.focus();
@@ -182,6 +182,12 @@ export function Drawer({
     );
 }
 
+/**
+ * Styled Title for the Drawer.
+ * @param {Object} props
+ * @param {string} props.title - The title to display.
+ * @param {string} props.className - Additional styles to apply to the footer. 
+ */
 export function DrawerTitle({ title, className }) {
     return (
         <Dialog.Title className={cx('text-md font-semibold text-gray-500 select-none truncate', className)}>
@@ -190,17 +196,29 @@ export function DrawerTitle({ title, className }) {
     )
 }
 
+/**
+ * Styled container for a Drawer Header.
+ * @param {Object} props
+ * @param {string} props.className - Additional styles to apply to the header. 
+ * @param {React.ReactNode} props.children - The content of the header.
+ */
 export function DrawerHeader({ className, children }) {
     return (
-        <div className={cx('p-4 absolute inset-x-0 top-0 bg-white drop-shadow border-b border-gray-300', className)}>
+        <div className={cx('shrink-0 p-4 bg-white drop-shadow border-b border-gray-300', className)}>
             {children}
         </div>
     )
 }
 
+/**
+ * Styled container for a Drawer Footer.
+ * @param {Object} props
+ * @param {string} props.className - Additional styles to apply to the footer. 
+ * @param {React.ReactNode} props.children - The content of the footer.
+ */
 export function DrawerFooter({ className, children }) {
     return (
-        <div className={cx('p-4 absolute inset-x-0 bottom-0 bg-white border-t border-gray-300', className)}>
+        <div className={cx('shrink-0 p-4 bg-white border-t border-gray-300', className)}>
             {children}
         </div>
     )

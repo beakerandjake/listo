@@ -38,16 +38,16 @@ export function EditItem(props) {
 
     return (
         <Drawer open={open} onClose={props.onClose}>
-            <DrawerHeader className="flex items-center gap-3">
-                <DrawerClose asChild>
-                    <IconButton icon={faArrowLeft} title="Close Item Details" />
-                </DrawerClose>
-                <DrawerTitle title="Item Details" />
-            </DrawerHeader>
-            <div className="flex flex-col h-full">
-                {/* Body */}
-                <div className="flex flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
-                    {/* Name Label */}
+            <div className="h-full flex flex-col justify-between bg-pink-500">
+                {/* Header */}
+                <DrawerHeader className="flex items-center gap-3">
+                    <DrawerClose asChild>
+                        <IconButton icon={faArrowLeft} title="Close Item Details" />
+                    </DrawerClose>
+                    <DrawerTitle title="Item Details" />
+                </DrawerHeader>
+                {/* Main Content */}
+                <div className="flex-1 flex flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
                     <div className="flex items-center">
                         <div className="-ml-2">
                             <CompletedCheckbox
@@ -57,7 +57,6 @@ export function EditItem(props) {
                         </div>
                         <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
                     </div>
-                    {/* Item form */}
                     <div className="flex flex-col space-y-6">
                         <EditItemField label="Quantity">
                             <QuantityButton
@@ -87,7 +86,7 @@ export function EditItem(props) {
                             />
                         </EditItemField>
                     </div>
-                </div >
+                </div>
                 {/* Footer */}
                 <DrawerFooter className="flex items-center justify-between">
                     <DrawerClose asChild>
