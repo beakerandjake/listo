@@ -186,7 +186,7 @@ export function Drawer({
  * Styled Title for the Drawer.
  * @param {Object} props
  * @param {string} props.title - The title to display.
- * @param {string} props.className - Additional styles to apply to the footer. 
+ * @param {string} props.className - Additional styles to apply to the title. 
  */
 export function DrawerTitle({ title, className }) {
     return (
