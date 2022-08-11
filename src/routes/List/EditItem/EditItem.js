@@ -13,7 +13,8 @@ import {
     Drawer,
     DrawerTitle,
     DrawerClose,
-    DrawerHeader
+    DrawerHeader,
+    DrawerFooter
 } from 'components/Drawer';
 
 
@@ -37,14 +38,13 @@ export function EditItem(props) {
 
     return (
         <Drawer open={open} onClose={props.onClose}>
+            <DrawerHeader className="flex items-center gap-3">
+                <DrawerClose asChild>
+                    <IconButton icon={faArrowLeft} title="Close Item Details" />
+                </DrawerClose>
+                <DrawerTitle title="Item Details" />
+            </DrawerHeader>
             <div className="flex flex-col h-full">
-                {/* Header */}
-                <DrawerHeader className="flex items-center gap-3">
-                    <DrawerClose asChild>
-                        <IconButton icon={faArrowLeft} title="Close Item Details" />
-                    </DrawerClose>
-                    <DrawerTitle title="Item Details" />
-                </DrawerHeader>
                 {/* Body */}
                 <div className="flex flex-1 flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
                     {/* Name Label */}
@@ -89,7 +89,7 @@ export function EditItem(props) {
                     </div>
                 </div >
                 {/* Footer */}
-                < div className="flex flex-grow-0 flex-shrink-0 justify-between items-center px-4 py-4" >
+                <DrawerFooter className="flex items-center justify-between">
                     <DrawerClose asChild>
                         <IconButton icon={faArrowRightFromBracket} title="Close Item Details" />
                     </DrawerClose>
@@ -99,7 +99,7 @@ export function EditItem(props) {
                         </span>
                     )}
                     <IconButton icon={faTrashCan} title="Delete Item" onClick={props.onDeleteItem} />
-                </div >
+                </DrawerFooter>
             </div>
         </Drawer >
     )

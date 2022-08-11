@@ -192,7 +192,15 @@ export function DrawerTitle({ title, className }) {
 
 export function DrawerHeader({ className, children }) {
     return (
-        <div className={cx('p-4 bg-white drop-shadow border-b border-gray-300', className)}>
+        <div className={cx('p-4 absolute inset-x-0 top-0 bg-white drop-shadow border-b border-gray-300', className)}>
+            {children}
+        </div>
+    )
+}
+
+export function DrawerFooter({ className, children }) {
+    return (
+        <div className={cx('p-4 absolute inset-x-0 bottom-0 bg-white border-t border-gray-300', className)}>
             {children}
         </div>
     )
