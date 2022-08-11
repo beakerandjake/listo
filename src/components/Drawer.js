@@ -6,25 +6,39 @@ import { forwardRef, useRef } from 'react';
 export const DrawerTitle = Dialog.Title;
 export const DrawerClose = Dialog.Close;
 
-
+const orientations = {
+    v: 'vertical',
+    h: 'horizontal'
+};
 
 const sizes = {
-    md: 'max-w-md',
-    sm: 'max-w-sm',
-    lg: 'max-w-lg',
-    xs: 'max-w-xs'
+    vertical: {
+        md: 'max-w-md',
+        sm: 'max-w-sm',
+        lg: 'max-w-lg',
+        xs: 'max-w-xs'
+    },
+    horizontal: {
+        sm: 'h-1/3',
+        md: 'h-1/2',
+        lg: 'h-2/3',
+        xs: 'h-1/4',
+        full: 'h-full',
+    }
 }
 
 const sides = {
     left: 'inset-y-0 left-0',
-    right: 'inset-y-0 right-0'
+    right: 'inset-y-0 right-0',
+    bottom: 'inset-x-0 bottom-0'
 }
 
 export function Drawer(props) {
     const drawerRef = useRef(null);
 
-    const size = sizes[props.size] || sizes.md;
     const side = sides[props.side] || sides.right;
+    const orientation = [sides.left, sides.right].includes(side) ? orientations.v : orientations.h;
+    const size = sizes[orientation][props.size] || sizes[orientation].md;
 
     return (
         <Dialog.Root open={props.open} onOpenChange={open => !open && props.onClose()}>
