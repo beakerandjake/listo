@@ -57,27 +57,27 @@ const SIZE_STYLES = [
     {
         size: SIZES.xs,
         anchors: [ANCHORS.bottom],
-        className: 'h-1/6'
+        className: 'min-h-[5vh] max-h-[16vh]'
     },
     {
         size: SIZES.sm,
         anchors: [ANCHORS.bottom],
-        className: 'h-2/6'
+        className: 'min-h-[5vh] max-h-[33vh]'
     },
     {
         size: SIZES.md,
         anchors: [ANCHORS.bottom],
-        className: 'h-3/6'
+        className: 'min-h-[5vh] max-h-[50vh]'
     },
     {
         size: SIZES.lg,
         anchors: [ANCHORS.bottom],
-        className: 'h-4/6'
+        className: 'min-h-[20vh] max-h-[66vh]'
     },
     {
         size: SIZES.xl,
         anchors: [ANCHORS.bottom],
-        className: 'h-5/6'
+        className: 'min-h-[5vh] max-h-[83vh]'
     },
     {
         size: SIZES.full,
@@ -167,7 +167,7 @@ export function Drawer({
             <Dialog.Portal className="z-10">
                 <Dialog.Overlay className="z-10 fixed inset-0 bg-black bg-opacity-50 transition-opacity" tabIndex={-1} />
                 <Dialog.Content
-                    className={cx(sizeStyle, anchorStyle, "z-10 fixed shadow-xl bg-white focus:outline-none")}
+                    className={cx(sizeStyle, anchorStyle, "z-10 fixed shadow-xl bg-white focus:outline-none flex flex-col")}
                     onOpenAutoFocus={e => {
                         e.preventDefault();
                         drawerRef.current.focus();
@@ -219,6 +219,20 @@ export function DrawerHeader({ className, children }) {
 export function DrawerFooter({ className, children }) {
     return (
         <div className={cx('shrink-0 p-4 bg-white border-t border-gray-300', className)}>
+            {children}
+        </div>
+    )
+}
+
+/**
+ * Container which provides scrollable overflow for content..
+ * @param {Object} props
+ * @param {string} props.className - Additional styles to apply to the container. 
+ * @param {React.ReactNode} props.children - The content of the container.
+ */
+export function ScrollableDrawerContent({ className, children }) {
+    return (
+        <div className={cx('flex-1 overflow-y-auto py-2', className)}>
             {children}
         </div>
     )
