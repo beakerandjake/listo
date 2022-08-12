@@ -26,16 +26,17 @@ export function ResponsiveMenu({
     mobileSize = 'xl',
     mobileShowCloseButton = true,
     mobileCloseButtonIcon = null,
-    mobileCloseButtonTitle = null
+    mobileCloseButtonTitle = null,
+    trigger = null
 }) {
 
     return (
         <div>
             {/* On larger screens, render a floating dropdown menu */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-                <DropdownMenu>
-                    <DropdownMenuTrigger>
-                        ASDF
+                <DropdownMenu open={open} onOpenChange={value => !value && onClose()}>
+                    <DropdownMenuTrigger asChild>
+                        {trigger}
                     </DropdownMenuTrigger>
                     <DropdownMenuPortal>
                         <DropdownMenuContent>
@@ -46,6 +47,7 @@ export function ResponsiveMenu({
             </MediaQuery>
             {/* On smaller screens, render a drawer menu */}
             <MediaQuery maxWidth={MOBILE_BREAKPOINT}>
+                {trigger}
                 <Drawer
                     open={open}
                     onClose={onClose}
