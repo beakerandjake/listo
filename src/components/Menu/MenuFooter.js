@@ -1,7 +1,7 @@
 import cx from 'classnames';
 
 /**
- * Styled container for a Drawer Footer.
+ * Styled container for a Menu Footer section.
  * @param {Object} props
  * @param {string} props.className - Additional styles to apply to the footer. 
  * @param {React.ReactNode} props.children - The content of the footer.

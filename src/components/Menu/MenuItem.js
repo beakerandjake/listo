@@ -33,7 +33,7 @@ const MenuItemIcon = ({ icon, variant }) => {
 };
 
 /**
- * Wrapper which applies consistent styles to text which should appear in a label.
+ * Wrapper which applies consistent styles to labels in a Menu Item.
  * @param {Object} props
  * @param {string} props.children - The contents of the label.
  * @param {string} props.variant - Variant styling to apply to the text. 
