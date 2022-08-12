@@ -57,27 +57,27 @@ const SIZE_STYLES = [
     {
         size: SIZES.xs,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5vh] max-h-[16vh]'
+        className: 'min-h-[5%] max-h-[16%]'
     },
     {
         size: SIZES.sm,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5vh] max-h-[33vh]'
+        className: 'min-h-[5%] max-h-[33%]'
     },
     {
         size: SIZES.md,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5vh] max-h-[50vh]'
+        className: 'min-h-[5%] max-h-[50%]'
     },
     {
         size: SIZES.lg,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[20vh] max-h-[66vh]'
+        className: 'min-h-[20%] max-h-[66%]'
     },
     {
         size: SIZES.xl,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5vh] max-h-[83vh]'
+        className: 'min-h-[5%] max-h-[83%]'
     },
     {
         size: SIZES.full,
@@ -108,7 +108,7 @@ const CLOSE_BUTTON_ANCHOR_STYLES = [
     },
     {
         anchor: ANCHORS.left,
-        className: 'top-3 left-3'
+        className: 'top-[17px] left-4'
     }
 ];
 
