@@ -5,6 +5,12 @@ import ReactCalendar from 'react-calendar';
 
 import './Calendar.css';
 
+/**
+ * A Calendar which allows the user to select a Date.
+ * @param {Object} props
+ * @param {Date} props.value - The currently selected Date. 
+ * @param {Function} props.onChange - The callback invoked when the user selects a Date.
+ */
 export function Calendar({ value, onChange }) {
     return <ReactCalendar
         calendarType='US'
