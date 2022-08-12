@@ -11,7 +11,7 @@ export function Calendar({ value, onChange }) {
         calendarType='US'
         value={value}
         onChange={onChange}
-        formatShortWeekday={(locale, date) => format(date, 'EEEEEE')}
+        formatShortWeekday={(locale, date) => format(date, 'E')}
         prevLabel={<FontAwesomeIcon icon={faChevronLeft} />}
         prev2Label={null}
         nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
