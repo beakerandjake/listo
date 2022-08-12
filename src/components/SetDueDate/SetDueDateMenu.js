@@ -54,7 +54,7 @@ export function SetDueDateMenu({ dueDate, onDueDateChange, onOpenCustomDueDate }
                 {!!dueDate && (
                     <>
                         <MenuSeparator />
-                        <MenuItem icon={faTrashAlt} label="Remove Due Date" variant="danger" />
+                        <MenuItem icon={faTrashAlt} label="Remove Due Date" variant="danger" onClick={() => onDueDateChange(null)}/>
                     </>
                 )}
 
@@ -70,7 +70,6 @@ export function SetDueDateMenu({ dueDate, onDueDateChange, onOpenCustomDueDate }
                 closeButtonIcon={faArrowLeft}
             >
                 <MenuHeader className="flex items-center justify-center">
-                    {/* <IconButton icon={faArrowLeft} title="Back" className="fixed left-3" onClick={() => setSubMenuOpen(false)} /> */}
                     <MenuTitle className="">Custom Due Date</MenuTitle>
                 </MenuHeader>
                 <ScrollableMenuContent className="mb-2">
