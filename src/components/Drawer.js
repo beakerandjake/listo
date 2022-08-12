@@ -104,7 +104,7 @@ const ANCHOR_STYLES = [
 const CLOSE_BUTTON_ANCHOR_STYLES = [
     {
         anchor: ANCHORS.right,
-        className: 'top-3 right-3'
+        className: 'top-[17px] right-4'
     },
     {
         anchor: ANCHORS.left,
