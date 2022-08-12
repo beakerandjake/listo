@@ -54,9 +54,14 @@
     @apply font-extrabold
 }
 
-.react-calendar__tile--active {
+.react-calendar__tile--active, .react-calendar__tile--hasActive {
     @apply bg-green-700 text-white enabled:hover:bg-green-800
 }
+
+.react-calendar__tile:disabled {
+    @apply bg-gray-300 opacity-50 cursor-not-allowed;
+}
+
 
 
 .react-calendar,
@@ -81,22 +86,4 @@
 .react-calendar__decade-view .react-calendar__tile,
 .react-calendar__century-view .react-calendar__tile {
     padding: 2em 0.5em;
-}
-
-
-.react-calendar__tile:disabled {
-    background-color: #f0f0f0;
-}
-
-.react-calendar__tile--hasActive {
-    background: #76baff;
-}
-
-.react-calendar__tile--hasActive:enabled:hover,
-.react-calendar__tile--hasActive:enabled:focus {
-    background: #a9d4ff;
-}
-
-.react-calendar--selectRange .react-calendar__tile--hover {
-    background-color: #e6e6e6;
 }
