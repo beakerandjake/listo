@@ -1,5 +1,12 @@
-import { MenuItem } from './MenuItem';
+import { MenuFooter } from './MenuFooter';
+import { MenuHeader } from './MenuHeader';
+import { MenuItem, MenuItemLabel } from './MenuItem';
+import { ScrollableMenuContent } from './ScrollableMenuContent';
 
 export {
-    MenuItem
+    MenuFooter,
+    MenuHeader,
+    MenuItem,
+    MenuItemLabel,
+    ScrollableMenuContent
 };
