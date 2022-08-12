@@ -8,7 +8,7 @@ import cx from 'classnames';
  */
 export function ScrollableMenuContent({ className, children }) {
     return (
-        <div className={cx('flex-1 overflow-y-auto py-2', className)}>
+        <div className={cx('flex-1 overflow-y-auto', className)}>
             {children}
         </div>
     )
