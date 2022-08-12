@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const VARIANT_STYLES = {
     icon: {
@@ -56,15 +56,6 @@ export function MenuItemLabel({ children, variant, className }) {
         </span>
     )
 }
-
-
-
-// const DEFAULT_ITEM_STYLE = classNames(
-//     "group flex items-center w-full gap-1 p-2 cursor-pointer select-none",
-//     "focus:outline-none radix-disabled:pointer-events-none radix-disabled:opacity-50",
-//     "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
-//     "focus-visible:bg-gray-100 focus-visible:text-gray-900",
-// );
 
 /**
  * Container component which contains common styles / behaviors for items in a Menu.
