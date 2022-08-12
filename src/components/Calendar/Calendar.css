@@ -27,11 +27,11 @@
 
 /* WEEK DAYS SECTION */
 .react-calendar__month-view__weekdays {
-    @apply text-center uppercase font-semibold text-gray-500 text-[.75em] select-none my-2
+    @apply flex items-center uppercase font-semibold text-gray-500 text-sm select-none my-2
 }
 
 .react-calendar__month-view__weekdays__weekday {
-    /* @apply p-[.5em] */
+    @apply flex items-center justify-center
 }
 
 .react-calendar__month-view__weekdays abbr {
@@ -40,24 +40,21 @@
 
 
 /* DAYS VIEW */
-
-/* // Override react-calendar display flex styling. The library uses the
-// `style` attribute, so we need to use `!important` to override it. */
-/* display: grid !important; */
-/* grid-template-columns: repeat(7, 1fr); */
-/* grid-template-columns: 60px 60px; */
-/* .react-calendar__month-view__days {
+.react-calendar__month-view__days {
     @apply !grid grid-cols-7 gap-2
-} */
+}
+
+.react-calendar__month-view__days__day {
+    @apply p-2
+}
 
 
 .react-calendar__month-view__days__day--neighboringMonth {
     @apply text-gray-400 no-underline
 }
 
-/* py-[10px] px-[6.6667px] */
 .react-calendar__tile {
-    @apply enabled:hover:bg-gray-200 rounded max-w-full py-[10px] px-[6.6667px] text-center leading-4
+    @apply enabled:hover:bg-gray-200 rounded max-w-full text-center leading-4
 }
 
 .react-calendar__tile--now {
@@ -76,24 +73,4 @@
 /* YEAR VIEW */
 .react-calendar__year-view .react-calendar__tile {
     @apply py-8 px-2;
-}
-
-
-
-.react-calendar,
-.react-calendar *,
-.react-calendar *:before,
-.react-calendar *:after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-
-.react-calendar__month-view__weekNumbers .react-calendar__tile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75em;
-    font-weight: bold;
 }

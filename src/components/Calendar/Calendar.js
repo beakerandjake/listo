@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import ReactCalendar from 'react-calendar';
 
-// import 'react-calendar/dist/Calendar.css';
 import './Calendar.css';
 
 export function Calendar({ value, onChange }) {
@@ -17,5 +16,6 @@ export function Calendar({ value, onChange }) {
         nextLabel={<FontAwesomeIcon icon={faChevronRight} />}
         next2Label={null}
         minDetail="year"
+        showFixedNumberOfWeeks={true}
     />
 }
