@@ -10,7 +10,7 @@ const VARIANT_STYLES = {
     label: {
         danger: 'text-red-600',
         success: 'text-green-700',
-        default: 'text-inherit'
+        default: 'text-gray-700'
     }
 };
 
@@ -87,7 +87,7 @@ export function MenuItem({ icon, label, children, variant, className, disabled, 
             onClick={handleClick}
             className={
                 cx(
-                    'group flex items-center justify-end w-full cursor-pointer select-none',
+                    'group flex items-center w-full cursor-pointer select-none',
                     'p-4 gap-4 sm:p-3 sm:gap-3 md:p-2 md:gap-2',
                     'select-none keyboard-only-focus-ring',
                     'text-gray-700 hover:bg-gray-100 hover:text-gray-900 keyboard-only-focus-ring',
