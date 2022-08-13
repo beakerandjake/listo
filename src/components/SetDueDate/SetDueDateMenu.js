@@ -49,12 +49,12 @@ export function SetDueDateMenu({ dueDate, onDueDateChange, onOpenCustomDueDate }
                 {staticDates}
                 <MenuSeparator />
                 <MenuItem icon={faCalendarDays} label="Custom Due Date" onClick={() => setSubMenuOpen(true)}>
-                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronRight} className="text-gray-500 group-hover:text-gray-700" />
                 </MenuItem>
                 {!!dueDate && (
                     <>
                         <MenuSeparator />
-                        <MenuItem icon={faTrashAlt} label="Remove Due Date" variant="danger" onClick={() => onDueDateChange(null)}/>
+                        <MenuItem icon={faTrashAlt} label="Remove Due Date" variant="danger" onClick={() => onDueDateChange(null)} />
                     </>
                 )}
 
