@@ -8,16 +8,6 @@ import {
     DropdownMenuTrigger
 } from './TempDropdown';
 
-// open = false,
-// onClose,
-// anchor = ANCHORS.right,
-// size = SIZES.md,
-// showCloseButton = false,
-// closeButtonAnchor = ANCHORS.right,
-// closeButtonIcon = CLOSE_BUTTON_DEFAULT_ICON,
-// closeButtonTitle = 'Close',
-// children
-
 export function ResponsiveMenu({
     open,
     onClose,
