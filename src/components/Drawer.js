@@ -104,11 +104,11 @@ const ANCHOR_STYLES = [
 const CLOSE_BUTTON_ANCHOR_STYLES = [
     {
         anchor: ANCHORS.right,
-        className: 'top-[17px] right-4'
+        className: 'top-4 sm:top-3 md:top-2 right-2'
     },
     {
         anchor: ANCHORS.left,
-        className: 'top-[17px] left-4'
+        className: 'top-4 sm:top-3 md:top-2 left-2'
     }
 ];
 
@@ -124,7 +124,7 @@ function DefaultCloseButton({ anchor, icon, title }) {
     return (
         <DrawerClose
             className={cx(
-                'absolute w-5 h-5 rounded-full flex items-center justify-center',
+                'absolute h-6 w-6 rounded-full flex items-center justify-center',
                 'text-gray-500 enabled:hover:text-gray-700 keyboard-only-focus-ring',
                 anchorStyle
             )}

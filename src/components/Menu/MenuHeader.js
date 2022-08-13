@@ -9,7 +9,7 @@ import React from 'react';
  */
 export function MenuHeader({ className, children }) {
     return (
-        <div className={cx('shrink-0 p-4 bg-white drop-shadow border-b border-gray-300', className)}>
+        <div className={cx('shrink-0 p-4 sm:p-3 md:p-2 bg-white drop-shadow border-b border-gray-300', className)}>
             {children}
         </div>
     )
