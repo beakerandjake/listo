@@ -83,6 +83,7 @@ export function MenuItem({ icon, label, children, variant, className, disabled, 
     return (
         <div
             {...rest}
+            role="menuitem"
             tabIndex={disabled ? -1 : 0}
             onClick={handleClick}
             className={
