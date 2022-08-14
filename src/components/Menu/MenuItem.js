@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { forwardRef } from 'react';
 
 const VARIANT_STYLES = {
     icon: {
@@ -69,37 +70,27 @@ export function MenuItemLabel({ children, variant, className }) {
  * @param {function=} props.onClick - Callback function invoked when the item is clicked on. 
  * 
  */
-export function MenuItem({ icon, label, children, variant, className, disabled, onClick, ...rest }) {
-
-    const handleClick = e => {
-        if (disabled) {
-            e.preventDefault();
-            return;
-        }
-
-        onClick();
-    };
+export const MenuItem = forwardRef(({ icon, label, children, variant, className, disabled, ...props }, ref) => {
 
     return (
-        <div
-            {...rest}
+        <button
+            {...props}
             role="menuitem"
-            tabIndex={disabled ? -1 : 0}
-            onClick={handleClick}
+            disabled={disabled}
             className={
                 cx(
                     'group flex items-center w-full cursor-pointer select-none',
                     'p-4 gap-4 sm:p-3 sm:gap-3 md:p-2 md:gap-2',
-                    'select-none keyboard-only-focus-ring',
-                    'text-gray-700 hover:bg-gray-100 hover:text-gray-900 keyboard-only-focus-ring',
-                    { 'pointer-events-none opacity-50': disabled },
+                    'select-none keyboard-only-focus-ring disabled:pointer-events-none disabled:opacity-50',
+                    'text-gray-700 hover:bg-gray-100 hover:text-gray-900 keyboard-only-focus-ring text-left',
                     className
                 )
             }
+            ref={ref}
         >
             <MenuItemIcon icon={icon} variant={variant} />
             <MenuItemLabel className="flex-1" variant={variant}>{label}</MenuItemLabel>
             {children}
-        </div >
+        </button >
     )
-}
+});
