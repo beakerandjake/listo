@@ -4,6 +4,7 @@ import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuContentStyled,
     DropdownMenuPortal,
     DropdownMenuTrigger
 } from './TempDropdown';
@@ -28,11 +29,9 @@ export function ResponsiveMenu({
                     <DropdownMenuTrigger asChild>
                         {trigger}
                     </DropdownMenuTrigger>
-                    <DropdownMenuPortal>
-                        <DropdownMenuContent>
-                            {children}
-                        </DropdownMenuContent>
-                    </DropdownMenuPortal>
+                    <DropdownMenuContentStyled>
+                        {children}
+                    </DropdownMenuContentStyled>
                 </DropdownMenu>
             </MediaQuery>
             {/* On smaller screens, render a drawer menu */}
