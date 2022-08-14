@@ -79,10 +79,11 @@ export const MenuItem = forwardRef(({ icon, label, children, variant, className,
             disabled={disabled}
             className={
                 cx(
-                    'group flex items-center w-full cursor-pointer select-none',
+                    'group flex items-center w-full cursor-pointer select-none text-left',
                     'p-4 gap-4 sm:p-3 sm:gap-3 md:p-2 md:gap-2',
-                    'select-none keyboard-only-focus-ring disabled:pointer-events-none disabled:opacity-50',
-                    'text-gray-700 hover:bg-gray-100 hover:text-gray-900 keyboard-only-focus-ring text-left',
+                    'disabled:pointer-events-none disabled:opacity-50',
+                    'hover:bg-gray-100 hover:text-gray-900 ', // todo remove when managed by dropdown.
+                    'text-gray-700 focus:outline-none focus:bg-gray-100',
                     className
                 )
             }
