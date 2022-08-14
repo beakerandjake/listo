@@ -11,6 +11,7 @@ export function ResponsiveMenu({
     open,
     onClose,
     children,
+    isSubMenu = false,
     desktopSide = undefined,
     desktopAlign = undefined,
     mobileAnchor = 'bottom',
@@ -41,6 +42,7 @@ export function ResponsiveMenu({
                 <Drawer
                     open={open}
                     onClose={onClose}
+                    isChildDrawer={isSubMenu}
                     anchor={mobileAnchor}
                     size={mobileSize}
                     showCloseButton={mobileShowCloseButton}
