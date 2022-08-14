@@ -114,6 +114,12 @@ const CLOSE_BUTTON_ANCHOR_STYLES = [
 
 const CLOSE_BUTTON_DEFAULT_ICON = faTimes;
 
+// TODO will need different solution for more levels of nesting.
+const Z_INDEX_STYLE = {
+    root: 'z-menu',
+    child: 'z-submenu'
+}
+
 function invalidProp(message) {
     throw new Error(message);
 }
@@ -140,6 +146,7 @@ function DefaultCloseButton({ anchor, icon, title }) {
  * @param {Object} props - The Props.
  * @param {boolean} props.open - Should the drawer currently be opened or closed?
  * @param {function} props.onClose - Callback fired when the user requests to close the drawer
+ * @param {boolean} props.isChildDrawer - Is this drawer a child of another drawer?
  * @param {'right'|'left'|'bottom'=} props.anchor - The side of the viewport that the Drawer is anchored to. 
  * @param {'xs'|'sm'|'md'|'lg'|'xl'|'full'=} props.size - How much of the viewport should the drawer take up? 
  * @param {boolean=} props.showCloseButton - Should a default show button be rendered?
@@ -150,24 +157,30 @@ function DefaultCloseButton({ anchor, icon, title }) {
 export function Drawer({
     open = false,
     onClose,
+    isChildDrawer = false,
     anchor = ANCHORS.right,
     size = SIZES.md,
     showCloseButton = false,
     closeButtonAnchor = ANCHORS.right,
     closeButtonIcon = CLOSE_BUTTON_DEFAULT_ICON,
     closeButtonTitle = 'Close',
-    children
+    children,
 }, z) {
     const drawerRef = useRef(null);
     const anchorStyle = ANCHOR_STYLES.find(x => x.anchor === anchor)?.className || invalidProp(`Unsupported anchor: '${anchor}'`);
     const sizeStyle = SIZE_STYLES.find(x => x.size === size && x.anchors.includes(anchor))?.className || invalidProp(`Unsupported size: '${size}'`);
+    const zStyle = isChildDrawer ? Z_INDEX_STYLE.child : Z_INDEX_STYLE.root;
+
 
     return (
         <Dialog.Root open={open} onOpenChange={open => !open && onClose()}>
-            <Dialog.Portal className="z-10">
-                <Dialog.Overlay className="z-10 fixed inset-0 bg-black bg-opacity-50 transition-opacity" tabIndex={-1} />
+            <Dialog.Portal className={zStyle}>
+                <Dialog.Overlay
+                    className={cx(zStyle, 'fixed inset-0 bg-black bg-opacity-50 transition-opacity')}
+                    tabIndex={-1}
+                />
                 <Dialog.Content
-                    className={cx(sizeStyle, anchorStyle, "z-10 fixed shadow-xl bg-white focus:outline-none flex flex-col")}
+                    className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}
                     onOpenAutoFocus={e => {
                         e.preventDefault();
                         drawerRef.current.focus();
