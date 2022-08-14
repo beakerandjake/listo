@@ -3,9 +3,7 @@ import MediaQuery from 'react-responsive';
 import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
 import {
     DropdownMenu,
-    DropdownMenuContent,
     DropdownMenuContentStyled,
-    DropdownMenuPortal,
     DropdownMenuTrigger
 } from './TempDropdown';
 
@@ -13,11 +11,14 @@ export function ResponsiveMenu({
     open,
     onClose,
     children,
+    desktopSide = undefined,
+    desktopAlign = undefined,
     mobileAnchor = 'bottom',
     mobileSize = 'xl',
     mobileShowCloseButton = true,
-    mobileCloseButtonIcon = null,
-    mobileCloseButtonTitle = null,
+    mobileCloseButtonIcon = undefined,
+    mobileCloseButtonTitle = undefined,
+    mobileCloseButtonAnchor = undefined,
     trigger = null
 }) {
 
@@ -29,7 +30,7 @@ export function ResponsiveMenu({
                     <DropdownMenuTrigger asChild>
                         {trigger}
                     </DropdownMenuTrigger>
-                    <DropdownMenuContentStyled>
+                    <DropdownMenuContentStyled side={desktopSide} align={desktopAlign}>
                         {children}
                     </DropdownMenuContentStyled>
                 </DropdownMenu>
@@ -43,8 +44,9 @@ export function ResponsiveMenu({
                     anchor={mobileAnchor}
                     size={mobileSize}
                     showCloseButton={mobileShowCloseButton}
-                    mobileCloseButtonIcon={mobileCloseButtonIcon}
+                    closeButtonIcon={mobileCloseButtonIcon}
                     closeButtonTitle={mobileCloseButtonTitle}
+                    closeButtonAnchor={mobileCloseButtonAnchor}
                 >
                     {children}
                 </Drawer>
