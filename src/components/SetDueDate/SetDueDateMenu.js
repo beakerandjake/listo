@@ -25,7 +25,7 @@ function StaticDueDateMenuItem({ icon, date, text, onClick }) {
 };
 
 export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChange, }) {
-    const [subMenuOpen, setSubMenuOpen] = useState(true);
+    const [subMenuOpen, setSubMenuOpen] = useState(false);
 
     // Any time the menu is closed reset the sub menu state.
     useEffect(() => {
@@ -70,6 +70,7 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
                 <ResponsiveMenu
                     open={subMenuOpen}
                     onClose={() => setSubMenuOpen(false)}
+                    isSubMenu={true}
                     trigger={subMenuTrigger}
                     desktopSide="right"
                     desktopAlign="start"
