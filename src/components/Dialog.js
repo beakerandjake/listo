@@ -71,3 +71,8 @@ export const DialogContent = HeadlessUiDialog.Panel;
  * Accessible title for the Dialog.
  */
 export const DialogTitle = HeadlessUiDialog.Title;
+
+/**
+ * Accessible description for the Dialog.
+ */
+export const DialogDescription = HeadlessUiDialog.Description;
