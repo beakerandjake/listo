@@ -1,10 +1,8 @@
 import { useRef } from 'react';
 import cx from 'classnames';
-import * as Dialog from '@radix-ui/react-dialog';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-export const DrawerClose = Dialog.Close;
+import { Dialog as HeadlessDialog, DialogBackdrop, DialogContent, DialogTitle } from 'components/Dialog';
 
 const SIZES = {
     xs: 'xs',
@@ -124,20 +122,21 @@ function invalidProp(message) {
     throw new Error(message);
 }
 
-function DefaultCloseButton({ anchor, icon, title }) {
+function DefaultCloseButton({ onClick, anchor, icon, title }) {
     const anchorStyle = CLOSE_BUTTON_ANCHOR_STYLES.find(x => x.anchor === anchor)?.className || invalidProp(`Unsupported anchor for close button: '${anchor}'`);
 
     return (
-        <DrawerClose
+        <button
             className={cx(
                 'absolute h-6 w-6 rounded-full flex items-center justify-center',
                 'text-gray-500 enabled:hover:text-gray-700 keyboard-only-focus-ring',
                 anchorStyle
             )}
             title={title}
+            onClick={onClick}
         >
             <FontAwesomeIcon icon={icon} />
-        </DrawerClose>
+        </button>
     );
 }
 
@@ -172,26 +171,41 @@ export function Drawer({
     const zStyle = isChildDrawer ? Z_INDEX_STYLE.child : Z_INDEX_STYLE.root;
 
 
+    // <Dialog.Root open={open} onOpenChange={open => !open && onClose()}>
+    //     <Dialog.Portal className={zStyle}>
+    //         <Dialog.Overlay
+    //             className={cx(zStyle, 'fixed inset-0 bg-black bg-opacity-50 transition-opacity')}
+    //             tabIndex={-1}
+    //         />
+    //         <Dialog.Content
+    //             className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}
+    //             onOpenAutoFocus={e => {
+    //                 e.preventDefault();
+    //                 drawerRef.current.focus();
+    //             }}
+    //             ref={drawerRef}
+    //         >
+    //             {children}
+    //             {!!showCloseButton && DefaultCloseButton({ anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle })}
+    //         </Dialog.Content>
+    //     </Dialog.Portal>
+    // </Dialog.Root >
+
+    const defaultCloseButtonProps = {
+        anchor: closeButtonAnchor,
+        icon: closeButtonIcon,
+        title: closeButtonTitle,
+        onClick: onClose
+    };
+
     return (
-        <Dialog.Root open={open} onOpenChange={open => !open && onClose()}>
-            <Dialog.Portal className={zStyle}>
-                <Dialog.Overlay
-                    className={cx(zStyle, 'fixed inset-0 bg-black bg-opacity-50 transition-opacity')}
-                    tabIndex={-1}
-                />
-                <Dialog.Content
-                    className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}
-                    onOpenAutoFocus={e => {
-                        e.preventDefault();
-                        drawerRef.current.focus();
-                    }}
-                    ref={drawerRef}
-                >
-                    {children}
-                    {!!showCloseButton && DefaultCloseButton({ anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle })}
-                </Dialog.Content>
-            </Dialog.Portal>
-        </Dialog.Root >
+        <HeadlessDialog open={open} onClose={onClose} className={zStyle}>
+            <DialogBackdrop />
+            <DialogContent className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
+                {children}
+                {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
+            </DialogContent>
+        </HeadlessDialog>
     );
 }
 
@@ -203,9 +217,9 @@ export function Drawer({
  */
 export function DrawerTitle({ title, className }) {
     return (
-        <Dialog.Title className={cx('text-md font-semibold text-gray-500 select-none truncate', className)}>
+        <DialogTitle className={cx('text-md font-semibold text-gray-500 select-none truncate', className)}>
             {title}
-        </Dialog.Title>
+        </DialogTitle>
     )
 }
 
