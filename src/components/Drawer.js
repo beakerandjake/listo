@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { Fragment } from 'react';
 import cx from 'classnames';
+import { Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Dialog as HeadlessDialog, DialogBackdrop, DialogContent, DialogTitle } from 'components/Dialog';
@@ -99,6 +100,36 @@ const ANCHOR_STYLES = [
     },
 ]
 
+const TRANSITION_STYLES = [
+    {
+        anchor: ANCHORS.bottom,
+        styles: {
+            enterFrom: 'translate-y-full',
+            enterTo: 'translate-y-0',
+            leaveFrom: 'translate-y-0',
+            leaveTo: 'translate-y-full'
+        }
+    },
+    {
+        anchor: ANCHORS.right,
+        styles: {
+            enterFrom: 'translate-x-full',
+            enterTo: 'translate-x-0',
+            leaveFrom: 'translate-x-0',
+            leaveTo: 'translate-x-full'
+        }
+    },
+    {
+        anchor: ANCHORS.left,
+        styles: {
+            enterFrom: '-translate-x-full',
+            enterTo: 'translate-x-0',
+            leaveFrom: 'translate-x-0',
+            leaveTo: '-translate-x-full'
+        }
+    },
+];
+
 const CLOSE_BUTTON_ANCHOR_STYLES = [
     {
         anchor: ANCHORS.right,
@@ -165,46 +196,28 @@ export function Drawer({
     closeButtonTitle = 'Close',
     children,
 }, z) {
-    const drawerRef = useRef(null);
     const anchorStyle = ANCHOR_STYLES.find(x => x.anchor === anchor)?.className || invalidProp(`Unsupported anchor: '${anchor}'`);
     const sizeStyle = SIZE_STYLES.find(x => x.size === size && x.anchors.includes(anchor))?.className || invalidProp(`Unsupported size: '${size}'`);
     const zStyle = isChildDrawer ? Z_INDEX_STYLE.child : Z_INDEX_STYLE.root;
-
-
-    // <Dialog.Root open={open} onOpenChange={open => !open && onClose()}>
-    //     <Dialog.Portal className={zStyle}>
-    //         <Dialog.Overlay
-    //             className={cx(zStyle, 'fixed inset-0 bg-black bg-opacity-50 transition-opacity')}
-    //             tabIndex={-1}
-    //         />
-    //         <Dialog.Content
-    //             className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}
-    //             onOpenAutoFocus={e => {
-    //                 e.preventDefault();
-    //                 drawerRef.current.focus();
-    //             }}
-    //             ref={drawerRef}
-    //         >
-    //             {children}
-    //             {!!showCloseButton && DefaultCloseButton({ anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle })}
-    //         </Dialog.Content>
-    //     </Dialog.Portal>
-    // </Dialog.Root >
-
-    const defaultCloseButtonProps = {
-        anchor: closeButtonAnchor,
-        icon: closeButtonIcon,
-        title: closeButtonTitle,
-        onClick: onClose
-    };
+    const transitionStyles = TRANSITION_STYLES.find(x => x.anchor === anchor)?.styles || invalidProp(`Transitions not supported for anchor: '${anchor}'`);
+    const defaultCloseButtonProps = showCloseButton
+        ? { anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle, onClick: onClose }
+        : null;
 
     return (
         <HeadlessDialog open={open} onClose={onClose} className={zStyle}>
             <DialogBackdrop />
-            <DialogContent className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
-                {children}
-                {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
-            </DialogContent>
+            <Transition.Child
+                as={Fragment}
+                enter="transform transition ease-out duration-300"
+                leave="transform transition ease-in duration-200"
+                {...transitionStyles}
+            >
+                <DialogContent className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
+                    {children}
+                    {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
+                </DialogContent>
+            </Transition.Child>
         </HeadlessDialog>
     );
 }
