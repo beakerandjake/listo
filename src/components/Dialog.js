@@ -16,7 +16,7 @@ import {
  * @param {string=} props.transitionLeaveFrom - Classes to leave from.
  * @param {string=} [props.transitionLeaveTo] - Classes to leave to.
  */
-const DialogBackdrop = ({
+export const DialogBackdrop = ({
   transitionEnter = 'ease-out duration-300',
   transitionEnterFrom = 'opacity-0',
   transitionEnterTo = 'opacity-100',
@@ -66,3 +66,8 @@ export function Dialog({
  * will cause the onClose event of the parent Dialog to fire. 
  */
 export const DialogContent = HeadlessUiDialog.Panel;
+
+/**
+ * Accessible title for the Dialog.
+ */
+export const DialogTitle = HeadlessUiDialog.Title;
