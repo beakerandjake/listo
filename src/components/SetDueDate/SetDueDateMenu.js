@@ -30,7 +30,6 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
     // Any time the menu is closed reset the sub menu state.
     useEffect(() => {
         if (!open) {
-            console.log('close sub menu!')
             setSubMenuOpen(false);
         }
     }, [open])
@@ -84,8 +83,11 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
                         <Calendar value={dueDate} onChange={onDueDateChange} />
                     </ScrollableMenuContent>
                 </ResponsiveMenu>
-                {/* Remove Due Date Button */}
-                {!!dueDate && (
+                {/* Remove Due Date Button
+                    Don't show when closing to prevent flash of appearing during close animation.
+                    The flash can happen when a due date is selected after having been null.
+                 */}
+                {(!!dueDate && !!open) && (
                     <>
                         <MenuSeparator />
                         <MenuItem icon={faTrashAlt} label="Remove Due Date" variant="danger" onClick={() => onDueDateChange(null)} />
