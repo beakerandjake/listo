@@ -37,7 +37,7 @@ export function ResponsiveMenu({
                 </DropdownMenu>
             </MediaQuery>
             {/* On smaller screens, render a drawer menu */}
-            <MediaQuery maxWidth={MOBILE_BREAKPOINT}>
+            <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
                 {trigger}
                 <Drawer
                     open={open}
