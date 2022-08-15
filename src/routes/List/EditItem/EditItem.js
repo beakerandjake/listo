@@ -41,9 +41,7 @@ export function EditItem(props) {
             <div className="h-full flex flex-col justify-between">
                 {/* Header */}
                 <DrawerHeader className="flex items-center gap-3">
-                    <DrawerClose asChild>
-                        <IconButton icon={faArrowLeft} title="Close Item Details" />
-                    </DrawerClose>
+                    <IconButton icon={faArrowLeft} title="Close Item Details" onClick={() => props.onClose()} />
                     <DrawerTitle title="Item Details" />
                 </DrawerHeader>
                 {/* Main Content */}
@@ -89,9 +87,7 @@ export function EditItem(props) {
                 </div>
                 {/* Footer */}
                 <DrawerFooter className="flex items-center justify-between">
-                    <DrawerClose asChild>
-                        <IconButton icon={faArrowRightFromBracket} title="Close Item Details" />
-                    </DrawerClose>
+                    <IconButton icon={faArrowRightFromBracket} title="Close Item Details" onClick={() => props.onClose()} />
                     {cachedItem.created && (
                         <span className="text-sm font-semibold text-gray-500 select-none">
                             Created {formatDistanceToNow(parseISO(cachedItem.created), { addSuffix: true })}
