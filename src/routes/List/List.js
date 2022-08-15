@@ -9,7 +9,7 @@ import { EmptyItemList } from './EmptyItemList';
 import { EditItem } from './EditItem';
 import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
-import { ConfirmModal } from 'components/ConfirmModal';
+import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
 import { SortingDropdown } from './SortingDropdown';
 
@@ -201,7 +201,7 @@ export function List(props) {
                 onDeleteItem={() => confirmDeleteItem(selectedItemId)}
                 onEditItem={editItem}
             />
-            <ConfirmModal
+            <ConfirmDialog
                 open={confirmModalData?.open || false}
                 onDismiss={() => setConfirmModalData({ ...confirmModalData, open: false })}
                 onConfirm={async () => {

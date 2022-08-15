@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from "components/Button";
 
-export function ConfirmModal(props) {
+export function ConfirmDialog(props) {
     return (
         <Dialog.Root open={props.open} onOpenChange={(open) => !open && props.onDismiss()}>
             <Dialog.Portal>
