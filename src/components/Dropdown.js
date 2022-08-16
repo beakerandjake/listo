@@ -15,7 +15,6 @@ import { useKeyDown } from 'hooks/useKeyDown';
 /**
  * A floating dropdown menu rendered beneath a trigger. 
  * @param {Object} props - The props.
- * @param {React.} props.open - Is the menu currently open or closed?
  * @param {boolean} props.open - Is the menu currently open or closed?
  * @param {function=} props.onClickOutside - Callback invoked when the user clicks outside of the Dropdown.
  * @param {function=} props.onEscapeKeyDown - Callback invoked when the user presses the escape key.

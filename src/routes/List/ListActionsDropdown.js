@@ -1,42 +1,72 @@
-import { faCheck, faGear } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {
-    DropdownMenu,
-    DropdownMenuItem,
-    DropdownMenuContent,
-    DropdownMenuNav,
-    DropdownMenuSeparator,
-    EllipsisDropdownMenuTrigger,
-    DropdownMenuHeading
-} from 'components/DropdownMenu';
+    EllipsisMenuTrigger,
+    MenuHeader,
+    MenuItem,
+    MenuSeparator,
+    MenuTitle,
+    ResponsiveMenu,
+    ScrollableMenuContent
+} from "components/Menu";
 
 
-export function ListActionsDropdown(props) {
+/**
+ * Dropdown menu which contains list wide actions.
+ * @param {Object} props - The props.
+ * @param {Array} props.items - The items of the list.
+ * @param {function} props.onSetItemsCompleted - Callback invoked when the user wants to mark all items of the list as completed.
+ * @param {function} props.onDeleteItems - Callback invoked when the user wants to delete all of the items in the list.
+ */
+export function ListActionsDropdown({
+    items,
+    onSetItemsCompleted,
+    onDeleteItems
+}) {
+    const [open, setOpen] = useState(false);
+
+    const markItemsCompeted = () => {
+        setOpen(false);
+        onSetItemsCompleted(items.filter(x => !x.completed).map(x => x.id), true);
+    };
+
+    const deleteAllItems = () => {
+        setOpen(false);
+        onDeleteItems(items.map(x => x.id));
+    };
+
     return (
-        <DropdownMenu modal={false}>
-            <EllipsisDropdownMenuTrigger />
-            <DropdownMenuContent loop={true} align="start">
-                <DropdownMenuHeading title="List Actions" />
-                {props.items?.length > 0 && (
+        <ResponsiveMenu
+            open={open}
+            onClose={() => setOpen(false)}
+            trigger={<EllipsisMenuTrigger onClick={() => setOpen(true)} />}
+        >
+            <MenuHeader className="flex items-center justify-center">
+                <MenuTitle>List Actions</MenuTitle>
+            </MenuHeader>
+            <ScrollableMenuContent>
+                {items?.length > 0 && (
                     <>
-                        <DropdownMenuItem
+                        <MenuItem
                             icon={faCheck}
                             label="Mark Items Complete"
-                            disabled={props.items.every(x => x.completed)}
-                            onClick={() => props.onSetItemsCompleted(props.items.filter(x => !x.completed).map(x => x.id), true)}
+                            disabled={items.every(x => x.completed)}
+                            onClick={markItemsCompeted}
                         />
-                        <DropdownMenuItem
+                        <MenuItem
                             icon={faTrashCan}
                             variant="danger"
                             label="Delete All Items"
-                            disabled={props.items.length < 1}
-                            onClick={() => props.onDeleteItems(props.items.map(x => x.id))}
+                            disabled={items.length < 1}
+                            onClick={deleteAllItems}
                         />
-                        <DropdownMenuSeparator />
+                        <MenuSeparator />
                     </>
                 )}
-                <DropdownMenuNav icon={faGear} label="Settings" to="edit" />
-            </DropdownMenuContent>
-        </DropdownMenu>
+                {/* TODO settings button */}
+                {/* <DropdownMenuNav icon={faGear} label="Settings" to="edit" /> */}
+            </ScrollableMenuContent>
+        </ResponsiveMenu>
     );
 }
