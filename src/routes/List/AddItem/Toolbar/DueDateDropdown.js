@@ -33,7 +33,7 @@ function CustomDueDatePicker(props) {
         <div>
             <InlineDatePicker date={chosenDate} onChange={setChosenDate} />
             <div className="flex items-center justify-end px-4 pb-2">
-                <Button text="Save" disabled={!chosenDate} onClick={() => props.onDateChange(chosenDate)} />
+                <Button disabled={!chosenDate} onClick={() => props.onDateChange(chosenDate)}>Save</Button>
             </div>
         </div>
     )

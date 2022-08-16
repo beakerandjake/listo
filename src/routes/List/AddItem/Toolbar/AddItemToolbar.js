@@ -15,11 +15,12 @@ export function AddItemToolbar(props) {
 
             <Toolbar.Button asChild>
                 <Button
-                    text="Add"
                     size="sm"
                     disabled={!props.canAddItem}
                     onClick={props.onAddItem}
-                />
+                >
+                    Add
+                </Button>
             </Toolbar.Button>
         </Toolbar.Root>
 

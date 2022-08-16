@@ -68,16 +68,18 @@ export function ConfirmDialog({
                         {/* Footer */}
                         <div className="bg-gray-50 px-4 py-3 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end sm:gap-2">
                             <Button
-                                text={cancelButtonText || "Cancel"}
                                 className="w-full sm:w-auto text-base font-medium sm:text-sm"
                                 onClick={onDismiss}
-                            />
+                            >
+                                {cancelButtonText || "Cancel"}
+                            </Button>
                             <Button
-                                text={confirmButtonText}
                                 variant={variant}
                                 className="w-full sm:w-auto text-base font-medium sm:text-sm"
                                 onClick={onConfirm}
-                            />
+                            >
+                                {confirmButtonText}
+                            </Button>
                         </div>
                         <div className="absolute top-3 right-3">
                             <IconButton icon={faTimes} onClick={onDismiss} />

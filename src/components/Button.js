@@ -25,16 +25,16 @@ const BORDERS = {
  * Styled button.
  * @param {Object} props - The props.
  * @param {React.} props.className - Additional styles to apply to the button.
- * @param {'danger'|'success'|'default'} props.variant - Pre-set variant styling.
+ * @param {'danger'|'success'|'default'=} props.variant - Pre-set variant styling.
  * @param {'sm', 'default'=} props.size - Pre-set size styling.
  * @param {'none'=} props.border - Pre-set border styling.
  * @param {React.ReactNode} props.children - The child elements to render.
  */
 export const Button = forwardRef(({
     className,
-    variant,
-    size = SIZES.default,
-    border = BORDERS.default,
+    variant = 'default',
+    size = 'default',
+    border = 'default',
     children,
     ...props
 }, ref) => {
