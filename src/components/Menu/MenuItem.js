@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { forwardRef } from 'react';
+import PropTypes from 'prop-types';
 
 const VARIANT_STYLES = {
     icon: {
@@ -70,7 +71,7 @@ export function MenuItemLabel({ children, variant, className }) {
  * @param {function=} props.onClick - Callback function invoked when the item is clicked on. 
  * 
  */
-export const MenuItem = forwardRef(({ icon, label, children, variant, className, disabled, ...props }, ref) => {
+const MenuItem = forwardRef(({ icon, label, children, variant, className, disabled, ...props }, ref) => {
 
     return (
         <button
@@ -95,3 +96,13 @@ export const MenuItem = forwardRef(({ icon, label, children, variant, className,
         </button >
     )
 });
+
+MenuItem.propTypes = {
+    __type: PropTypes.string
+};
+
+MenuItem.defaultProps = {
+    __type: 'MenuItem'
+};
+
+export { MenuItem };
