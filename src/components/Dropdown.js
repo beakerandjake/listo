@@ -1,4 +1,5 @@
 import { cloneElement } from 'react';
+import { createPortal } from 'react-dom';
 import FocusLock from 'react-focus-lock';
 import { Transition } from '@headlessui/react';
 import {
@@ -47,29 +48,31 @@ export const Dropdown = ({
             {cloneElement(trigger, { ref: reference })}
 
             {/* Dropdown Content */}
-            <Transition
-                show={open}
-                enter="transition duration-100 ease-out"
-                enterFrom="opacity-0"
-                enterTo=" opacity-100"
-                leave="transition duration-75 ease-out"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-            >
-                <FocusLock autoFocus={false}>
-                    <div
-                        ref={floating}
-                        className="absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
-                        style={{
-                            position: strategy,
-                            top: y ?? 0,
-                            left: x ?? 0,
-                        }}
-                    >
-                        {children}
-                    </div>
-                </FocusLock>
-            </Transition>
+            {createPortal((
+                <Transition
+                    show={open}
+                    enter="transition duration-100 ease-out"
+                    enterFrom="opacity-0"
+                    enterTo=" opacity-100"
+                    leave="transition duration-75 ease-out"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
+                    <FocusLock autoFocus={false}>
+                        <div
+                            ref={floating}
+                            className="absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
+                            style={{
+                                position: strategy,
+                                top: y ?? 0,
+                                left: x ?? 0,
+                            }}
+                        >
+                            {children}
+                        </div>
+                    </FocusLock>
+                </Transition>
+            ), document.body)}
         </>
     )
 };
