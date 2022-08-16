@@ -10,7 +10,7 @@ import {
     shift
 } from '@floating-ui/react-dom-interactions';
 
-export function Dropdown({ open, onClose, triggerElement }) {
+export function Dropdown({ open, onClose, triggerElement, children }) {
     const { x, y, reference, floating, strategy, context, } = useFloating({
         open,
         onOpenChange: value => {
@@ -23,12 +23,12 @@ export function Dropdown({ open, onClose, triggerElement }) {
         middleware: [offset(5), flip(), shift()]
     });
 
+    // Hook into dom interactions.
     const { getReferenceProps, getFloatingProps, } = useInteractions([
         useDismiss(context),
     ]);
 
-    console.log(getReferenceProps());
-
+    // Support external trigger. 
     useLayoutEffect(() => {
         reference(triggerElement.current);
     }, [triggerElement]);
@@ -45,7 +45,7 @@ export function Dropdown({ open, onClose, triggerElement }) {
             leaveTo="transform scale-95 opacity-0"
         >
             <div
-                className="absolute top-0 left-0 flex items-center justify-center bg-pink-500"
+                className="absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
                 ref={floating}
                 style={{
                     position: strategy,
@@ -54,7 +54,7 @@ export function Dropdown({ open, onClose, triggerElement }) {
                 }}
                 {...getFloatingProps()}
             >
-                Hello World!
+                {children}
             </div>
         </Transition>
     )
