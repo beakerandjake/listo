@@ -1,22 +1,20 @@
 import { Drawer } from 'components/Drawer';
+import { Dropdown } from 'components/Dropdown';
 import MediaQuery from 'react-responsive';
 import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
-import {
-    DropdownMenu,
-    DropdownMenuContentStyled,
-    DropdownMenuSub,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-    DropdownMenuSubContent
-} from './TempDropdown';
+
+const CLOSE_REASON = {
+    outsideClick: 'click',
+    escapeKey: 'esc'
+}
 
 export function ResponsiveMenu({
     open,
     onClose,
     children,
     isSubMenu = false,
-    desktopSide = undefined,
-    desktopAlign = undefined,
+    desktopPlacement = undefined,
+    desktopOffset = undefined,
     mobileAnchor = 'bottom',
     mobileSize = 'xl',
     mobileShowCloseButton = true,
@@ -30,27 +28,16 @@ export function ResponsiveMenu({
         <div>
             {/* On larger screens, render a floating dropdown menu */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-                {!isSubMenu && (
-                    <DropdownMenu open={open} onOpenChange={value => !value && onClose()} >
-                        <DropdownMenuTrigger asChild>
-                            {trigger}
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContentStyled side={desktopSide} align={desktopAlign} hideWhenDetached={false}>
-                            {children}
-                        </DropdownMenuContentStyled>
-                    </DropdownMenu>
-                )}
-
-                {!!isSubMenu && (
-                    <DropdownMenuSub open={open} onOpenChange={value => !value && onClose()}>
-                        <DropdownMenuSubTrigger>
-                            {trigger}
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuSubContent side={desktopSide} align={desktopAlign}>
-                            {children}
-                        </DropdownMenuSubContent>
-                    </DropdownMenuSub>
-                )}
+                <Dropdown
+                    open={open}
+                    trigger={trigger}
+                    onClickOutside={e => onClose(CLOSE_REASON.outsideClick, e)}
+                    onEscapeKeyDown={() => onClose(CLOSE_REASON.escapeKey)}
+                    placement={desktopPlacement}
+                    offset={desktopOffset}
+                >
+                    {children}
+                </Dropdown>
             </MediaQuery>
             {/* On smaller screens, render a drawer menu */}
             <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
