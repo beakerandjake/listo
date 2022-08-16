@@ -1,5 +1,5 @@
-import { Children, isValidElement, cloneElement, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import { cloneElement } from 'react';
+import FocusLock from 'react-focus-lock';
 import { Transition } from '@headlessui/react';
 import {
     useFloating,
@@ -8,54 +8,35 @@ import {
     flip,
     shift,
 } from '@floating-ui/react-dom';
-import FocusLock from 'react-focus-lock';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
 
-function iterateChildren(children, listItemsRef, getItemProps) {
-    return Children.map(children, (child, index) => {
-        // if the child is a Dropdown menu, then we don't want to map its list items
-        if (!isValidElement(child) || child.props.__type === 'Dropdown') {
-            return child;
-        }
-
-        if (child.props.children?.length > 0) {
-            child = cloneElement(child, {
-                children: iterateChildren(child.props.children, listItemsRef, getItemProps)
-            });
-        }
-
-        if (child.props.__type === 'MenuItem') {
-            child = cloneElement(child, getItemProps({
-                role: "menuitem",
-                ref: node => {
-                    listItemsRef.current[index] = node;
-                }
-            }))
-        }
-
-        return child;
-    })
-}
-
+/**
+ * A floating dropdown menu rendered beneath a trigger. 
+ * @param {Object} props - The props.
+ * @param {React.} props.open - Is the menu currently open or closed?
+ * @param {boolean} props.open - Is the menu currently open or closed?
+ * @param {function=} props.onClickOutside - Callback invoked when the user clicks outside of the Dropdown.
+ * @param {function=} props.onEscapeKeyDown - Callback invoked when the user presses the escape key.
+ * @param {React.ReactNode} props.children - The child elements to render.
+ * @param {'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'|'bottom-start'|'bottom-end'|'left'|'left-start'|'left-end'=} props.placement - Where to place the floating element against the trigger.
+ * @param {number} props.offset - Amount to displace the floating element from its default placement against the trigger.
+ */
 export const Dropdown = ({
+    trigger,
     open,
     onClickOutside,
     onEscapeKeyDown,
-    onClose,
-    trigger,
+    placement = 'bottom-end',
+    offsetAmount = 5,
     children,
-    placement = 'bottom-end'
 }) => {
     const { x, y, reference, floating, strategy, refs, } = useFloating({
-        middleware: [offset(5), flip(), shift()],
+        middleware: [offset(offsetAmount), flip(), shift()],
         whileElementsMounted: autoUpdate,
         placement: placement,
         strategy: 'fixed'
     });
-
-    const listItemsRef = useRef([]);
-    const [activeIndex, setActiveIndex] = useState(null);
 
     useOnClickOutside(refs.floating, e => onClickOutside && onClickOutside(e), !open);
     useKeyDown('Escape', () => onEscapeKeyDown && onEscapeKeyDown(), !open);
