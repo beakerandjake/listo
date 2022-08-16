@@ -178,7 +178,7 @@ export function List(props) {
                 )}
             </ListPageHeader>
             <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
-                <div className="rounded shadow-md shadow-gray-300 mb-3 z-[2]">
+                <div className="rounded shadow-md shadow-gray-300 mb-3">
                     <AddItem onAddItem={onAddItem} />
                 </div>
                 {sortedItems?.length
