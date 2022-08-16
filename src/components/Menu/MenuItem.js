@@ -69,7 +69,6 @@ export function MenuItemLabel({ children, variant, className }) {
  * @param {string=} props.className - Additional styles to apply to the item. 
  * @param {boolean=} props.disabled - If true, will apply styles and disable interaction with the element, onClick will not fire. 
  * @param {function=} props.onClick - Callback function invoked when the item is clicked on. 
- * 
  */
 const MenuItem = forwardRef(({ icon, label, children, variant, className, disabled, ...props }, ref) => {
 
