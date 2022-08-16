@@ -1,16 +1,14 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { Button } from 'components/Button';
-import {
-    DropdownMenu,
-    DropdownMenuItem,
-    DropdownMenuContent,
-    DropdownMenuHeading
-} from 'components/DropdownMenu';
+import { Dropdown } from 'components/Dropdown';
+import { MenuHeader, MenuItem, MenuTitle, ResponsiveMenu, ScrollableMenuContent } from 'components/Menu';
 
 export function SortingDropdown(props) {
+    const [open, setOpen] = useState(false);
+
     const sortingFields = [
         {
             itemKey: itemSortingFields.name,
@@ -48,46 +46,54 @@ export function SortingDropdown(props) {
         props.activeSort.itemKey === itemKey && props.activeSort.direction === sortingDirection
     );
 
-    const dropdownItems = sortingFields.map(x => {
-        const { itemKey, sortingDirection, ...rest } = x;
-        const onClick = () => props.onChooseSort({ itemKey, direction: sortingDirection });
-        const reactKey = `${itemKey}-${sortingDirection}`;
+    const menuItems = sortingFields
+        .map(x => {
+            const { itemKey, sortingDirection, ...rest } = x;
+            const onClick = () => {
+                setOpen(false);
+                props.onChooseSort({ itemKey, direction: sortingDirection })
+            };
+            const reactKey = `${itemKey}-${sortingDirection}`;
 
-        if (x === activeSortingField) {
-            return (
-                <DropdownMenuItem key={reactKey} onClick={onClick} {...rest}>
-                    <FontAwesomeIcon icon={faCheck} />
-                </DropdownMenuItem>
-            );
-        }
+            if (x === activeSortingField) {
+                return (
+                    <MenuItem key={reactKey} onClick={onClick} {...rest}>
+                        <FontAwesomeIcon icon={faCheck} />
+                    </MenuItem>
+                );
+            }
 
-        return <DropdownMenuItem key={reactKey} onClick={onClick} {...rest} />
-    });
-
-    // Render different trigger text based on size of viewport 
-    const triggerText = (
-        <span>
-            <span className="inline sm:hidden">Sort Items</span>
-            <span className="hidden sm:inline">
-                Sorted by <span className="font-semibold">{activeSortingField.label}</span>
-            </span>
-        </span>
-    );
+            return <MenuItem key={reactKey} onClick={onClick} {...rest} />
+        });
 
     return (
-        <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
+        <ResponsiveMenu
+            open={open}
+            onClose={() => setOpen(false)}
+            trigger={(
                 <Button
-                    icon={faSort}
-                    text={!!activeSortingField ? triggerText : null}
                     border="none"
                     className="bg-inherit shadow-none enabled:hover:bg-white"
-                />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent loop={true} onCloseAutoFocus={e => e.preventDefault()}>
-                <DropdownMenuHeading title="Sort Items By" />
-                {dropdownItems}
-            </DropdownMenuContent>
-        </DropdownMenu>
+                    onClick={() => setOpen(true)}
+                >
+                    <FontAwesomeIcon icon={faSort} />
+                    {!!activeSortingField && (
+                        <span>
+                            <span className="inline sm:hidden">Sort Items</span>
+                            <span className="hidden sm:inline">
+                                Sorted by <span className="font-semibold">{activeSortingField.label}</span>
+                            </span>
+                        </span>
+                    )}
+                </Button>
+            )}
+        >
+            <MenuHeader className="flex items-center justify-center">
+                <MenuTitle>Sort Items By</MenuTitle>
+            </MenuHeader>
+            <ScrollableMenuContent>
+                {menuItems}
+            </ScrollableMenuContent>
+        </ResponsiveMenu>
     )
 }
