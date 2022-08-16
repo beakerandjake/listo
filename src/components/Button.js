@@ -20,30 +20,42 @@ const BORDERS = {
     default: 'border border-gray-300'
 };
 
-export const Button = forwardRef((props, ref) => {
-    const { className, variant, size, border, ...leftOverProps } = props;
 
-    const variantStyle = VARIANTS[variant] || VARIANTS.default;
-    const sizeStyle = SIZES[size] || SIZES.default;
-    const borderStyle = BORDERS[border] || BORDERS.default;
-    const flexJustifyStyle = !!props.icon ? 'justify-between' : 'justify-center'
+/**
+ * Styled button.
+ * @param {Object} props - The props.
+ * @param {React.} props.className - Additional styles to apply to the button.
+ * @param {'danger'|'success'|'default'} props.variant - Pre-set variant styling.
+ * @param {'sm', 'default'=} props.size - Pre-set size styling.
+ * @param {'none'=} props.border - Pre-set border styling.
+ * @param {React.ReactNode} props.children - The child elements to render.
+ */
+export const Button = forwardRef(({
+    className,
+    variant,
+    size = SIZES.default,
+    border = BORDERS.default,
+    children,
+    ...props
+}, ref) => {
+    const variantStyle = VARIANTS[variant];
+    const sizeStyle = SIZES[size];
+    const borderStyle = BORDERS[border];
 
     return (
         <button
-            {...leftOverProps}
+            {...props}
             ref={ref}
             className={classNames(
                 variantStyle,
                 sizeStyle,
                 borderStyle,
-                flexJustifyStyle,
-                'flex items-center gap-2 shadow-sm font-medium rounded-md',
+                'flex items-center justify-center gap-2 shadow-sm font-medium rounded-md',
                 'disabled:cursor-not-allowed disabled:opacity-50 keyboard-only-focus-ring',
                 className
             )}
         >
-            {!!props.icon && <FontAwesomeIcon icon={props.icon} />}
-            {props.text}
+            {children}
         </button>
     )
 });

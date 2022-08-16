@@ -1,14 +1,14 @@
 import { forwardRef } from "react";
 import cx from 'classnames';
 import { Button } from "./Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Styled button which just displays an icon with small amount of padding.
-export const IconButton = forwardRef((props, ref) => {
-    const { className, ...rest } = props;
+export const IconButton = forwardRef(({ className, icon, ...props }, ref) => {
 
     return (
         <Button
-            {...rest}
+            {...props}
             ref={ref}
             className={cx(
                 'bg-inherit shadow-none text-gray-500 enabled:hover:text-gray-700 enabled:hover:bg-inherit text-base p-1',
@@ -16,6 +16,8 @@ export const IconButton = forwardRef((props, ref) => {
             )}
             border="none"
             size="custom"
-        />
+        >
+            <FontAwesomeIcon icon={icon} />
+        </Button>
     )
 });
