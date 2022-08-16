@@ -4,7 +4,10 @@ import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
 import {
     DropdownMenu,
     DropdownMenuContentStyled,
-    DropdownMenuTrigger
+    DropdownMenuSub,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+    DropdownMenuSubContent
 } from './TempDropdown';
 
 export function ResponsiveMenu({
@@ -27,14 +30,27 @@ export function ResponsiveMenu({
         <div>
             {/* On larger screens, render a floating dropdown menu */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-                <DropdownMenu open={open} onOpenChange={value => !value && onClose()}>
-                    <DropdownMenuTrigger asChild>
-                        {trigger}
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContentStyled side={desktopSide} align={desktopAlign}>
-                        {children}
-                    </DropdownMenuContentStyled>
-                </DropdownMenu>
+                {!isSubMenu && (
+                    <DropdownMenu open={open} onOpenChange={value => !value && onClose()} >
+                        <DropdownMenuTrigger asChild>
+                            {trigger}
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContentStyled side={desktopSide} align={desktopAlign} hideWhenDetached={false}>
+                            {children}
+                        </DropdownMenuContentStyled>
+                    </DropdownMenu>
+                )}
+
+                {!!isSubMenu && (
+                    <DropdownMenuSub open={open} onOpenChange={value => !value && onClose()}>
+                        <DropdownMenuSubTrigger>
+                            {trigger}
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuSubContent side={desktopSide} align={desktopAlign}>
+                            {children}
+                        </DropdownMenuSubContent>
+                    </DropdownMenuSub>
+                )}
             </MediaQuery>
             {/* On smaller screens, render a drawer menu */}
             <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>

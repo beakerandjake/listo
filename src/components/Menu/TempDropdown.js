@@ -36,3 +36,31 @@ export function DropdownMenuContentStyled({
         </RadixDropdownMenu.Portal>
     );
 }
+
+export const DropdownMenuSub = RadixDropdownMenu.Sub;
+export const DropdownMenuSubTrigger = RadixDropdownMenu.SubTrigger;
+
+
+export function DropdownMenuSubContent({
+    side = 'bottom',
+    align = 'end',
+    sideOffset = 5,
+    collisionPadding = 10,
+    children,
+    ...props
+}) {
+    return (
+        <RadixDropdownMenu.Portal>
+            <RadixDropdownMenu.SubContent
+                side={side}
+                align={align}
+                sideOffset={sideOffset}
+                collisionPadding={collisionPadding}
+                className="flex flex-col min-w-[14rem] rounded-md shadow-lg bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none z-[3] overflow-hidden"
+                {...props}
+            >
+                {children}
+            </RadixDropdownMenu.SubContent>
+        </RadixDropdownMenu.Portal>
+    );
+}
