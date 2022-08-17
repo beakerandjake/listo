@@ -4,6 +4,7 @@ import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import classNames from "classnames";
 import * as Collapsible from '@radix-ui/react-collapsible';
+import { Transition } from "@headlessui/react";
 import { Badge } from "components/Badge";
 import {
     EllipsisMenuTrigger,
@@ -49,7 +50,7 @@ const CompletedItemsDropdown = ({ onSetAllItemsCompleted, onDeleteAllItems }) =>
 export function CompletedItemsContainer(props) {
     const [open, setOpen] = useState(false);
 
-    const container = (
+    return (
         <Collapsible.Root open={open} onOpenChange={setOpen}>
             <div
                 className={classNames({ "border-b border-gray-200": !open },
@@ -78,12 +79,5 @@ export function CompletedItemsContainer(props) {
                 {props.children}
             </Collapsible.Content>
         </Collapsible.Root>
-    );
-
-    return (
-        <>
-            {/* todo animate fade in / out */}
-            {props.count > 0 && container}
-        </>
     )
 }
