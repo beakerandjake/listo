@@ -143,6 +143,12 @@ const CLOSE_BUTTON_ANCHOR_STYLES = [
 
 const CLOSE_BUTTON_DEFAULT_ICON = faTimes;
 
+// TODO will need different solution for more levels of nesting.
+const Z_INDEX_STYLE = {
+    root: 'z-menu',
+    child: 'z-submenu'
+}
+
 function invalidProp(message) {
     throw new Error(message);
 }
@@ -182,6 +188,7 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
 export function Drawer({
     open = false,
     onClose,
+    isChildDrawer = false,
     anchor = ANCHORS.right,
     size = SIZES.md,
     showCloseButton = false,
@@ -192,13 +199,14 @@ export function Drawer({
 }, z) {
     const anchorStyle = ANCHOR_STYLES.find(x => x.anchor === anchor)?.className || invalidProp(`Unsupported anchor: '${anchor}'`);
     const sizeStyle = SIZE_STYLES.find(x => x.size === size && x.anchors.includes(anchor))?.className || invalidProp(`Unsupported size: '${size}'`);
+    const zStyle = isChildDrawer ? Z_INDEX_STYLE.child : Z_INDEX_STYLE.root;
     const transitionStyles = TRANSITION_STYLES.find(x => x.anchor === anchor)?.styles || invalidProp(`Transitions not supported for anchor: '${anchor}'`);
     const defaultCloseButtonProps = showCloseButton
         ? { anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle, onClick: onClose }
         : null;
 
     return (
-        <HeadlessDialog open={open} onClose={onClose}>
+        <HeadlessDialog open={open} onClose={onClose} className={zStyle}>
             <DialogBackdrop />
             <Transition.Child
                 as={Fragment}
@@ -206,7 +214,7 @@ export function Drawer({
                 leave="transform transition ease-in duration-200"
                 {...transitionStyles}
             >
-                <DialogContent className={cx(sizeStyle, anchorStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
+                <DialogContent className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
                     {children}
                     {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
                 </DialogContent>
