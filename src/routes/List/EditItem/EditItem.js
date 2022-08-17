@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { Drawer } from 'components/Drawer';
+import { MenuFooter, MenuHeader, MenuTitle } from 'components/Menu';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item/CompletedCheckbox';
 import { NameLabel } from '../Item/NameLabel';
@@ -9,16 +11,22 @@ import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
 import { DueDateStatus } from '../Item/DueDateStatus';
 import { DueDatePicker } from './DueDatePicker';
-import {
-    Drawer,
-    DrawerTitle,
-    DrawerClose,
-    DrawerHeader,
-    DrawerFooter
-} from 'components/Drawer';
 
 
-export function EditItem(props) {
+/**
+ * Drawer which allows the user to edit fields of an Item.
+ * @param {Object} props
+ * @param {Object} props.item - The item which can be edited.
+ * @param {function} props.onClose - Callback invoked when the drawer is to be closed. 
+ * @param {function} props.onEditItem - Callback invoked when the user edits a field of the item. 
+ * @param {function} props.onDeleteItem - Callback invoked when the user wants to delete the item. 
+ */
+export function EditItem({
+    item,
+    onClose,
+    onEditItem,
+    onDeleteItem
+}) {
     const [open, setOpen] = useState(false);
     const [cachedItem, setCachedItem] = useState({});
 
@@ -28,29 +36,29 @@ export function EditItem(props) {
     // a reference to the cached item, that way we can still display
     // our contents as the close animation is happening.
     useEffect(() => {
-        if (!props.item) {
+        if (!item) {
             setOpen(false);
         } else {
-            setCachedItem(props.item);
+            setCachedItem(item);
             setOpen(true);
         }
-    }, [props.item]);
+    }, [item]);
 
     return (
-        <Drawer open={open} onClose={props.onClose}>
+        <Drawer open={open} onClose={onClose}>
             <div className="h-full flex flex-col justify-between">
                 {/* Header */}
-                <DrawerHeader className="flex items-center gap-3">
-                    <IconButton icon={faArrowLeft} title="Close Item Details" onClick={() => props.onClose()} />
-                    <DrawerTitle title="Item Details" />
-                </DrawerHeader>
+                <MenuHeader className="flex items-center gap-3 md:p-4">
+                    <IconButton icon={faArrowLeft} title="Close Item Details" onClick={() => onClose()} />
+                    <MenuTitle title="">Item Details</MenuTitle>
+                </MenuHeader>
                 {/* Main Content */}
                 <div className="flex-1 flex flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
                     <div className="flex items-center">
                         <div className="-ml-2">
                             <CompletedCheckbox
                                 checked={cachedItem.completed}
-                                onChange={completed => props.onEditItem(cachedItem.id, { completed })}
+                                onChange={completed => onEditItem(cachedItem.id, { completed })}
                             />
                         </div>
                         <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
@@ -59,14 +67,14 @@ export function EditItem(props) {
                         <EditItemField label="Quantity">
                             <QuantityButton
                                 quantity={cachedItem.quantity}
-                                onQuantityChange={quantity => props.onEditItem(cachedItem.id, { quantity })}
+                                onQuantityChange={quantity => onEditItem(cachedItem.id, { quantity })}
                             />
                         </EditItemField>
 
                         <EditItemField label="Due Date">
                             <DueDatePicker
                                 date={cachedItem.dueDate}
-                                onChange={date => props.onEditItem(cachedItem.id, { dueDate: date })}
+                                onChange={date => onEditItem(cachedItem.id, { dueDate: date })}
                             />
                             <DueDateStatus dueDate={cachedItem.dueDate} />
                         </EditItemField>
@@ -75,7 +83,7 @@ export function EditItem(props) {
                             <DebounceInput
                                 element="textarea"
                                 value={cachedItem.note}
-                                onChange={event => props.onEditItem(cachedItem.id, { note: event.target.value })}
+                                onChange={event => onEditItem(cachedItem.id, { note: event.target.value })}
                                 debounceTimeout={800}
                                 forceNotifyByEnter={false}
                                 placeholder="Add Note"
@@ -86,15 +94,15 @@ export function EditItem(props) {
                     </div>
                 </div>
                 {/* Footer */}
-                <DrawerFooter className="flex items-center justify-between">
-                    <IconButton icon={faArrowRightFromBracket} title="Close Item Details" onClick={() => props.onClose()} />
+                <MenuFooter className="flex items-center justify-between">
+                    <IconButton icon={faArrowRightFromBracket} title="Close Item Details" onClick={() => onClose()} />
                     {cachedItem.created && (
                         <span className="text-sm font-semibold text-gray-500 select-none">
                             Created {formatDistanceToNow(parseISO(cachedItem.created), { addSuffix: true })}
                         </span>
                     )}
-                    <IconButton icon={faTrashCan} title="Delete Item" onClick={props.onDeleteItem} />
-                </DrawerFooter>
+                    <IconButton icon={faTrashCan} title="Delete Item" onClick={onDeleteItem} />
+                </MenuFooter>
             </div>
         </Drawer >
     )
