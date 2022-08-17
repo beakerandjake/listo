@@ -1,5 +1,6 @@
 import { Drawer } from 'components/Drawer';
 import { Dropdown } from 'components/Dropdown';
+import { forwardRef } from 'react';
 import MediaQuery from 'react-responsive';
 import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
 
@@ -8,7 +9,7 @@ const CLOSE_REASON = {
     escapeKey: 'esc'
 }
 
-export function ResponsiveMenu({
+export const ResponsiveMenu = forwardRef(({
     open,
     onClose,
     children,
@@ -22,13 +23,14 @@ export function ResponsiveMenu({
     mobileCloseButtonTitle = undefined,
     mobileCloseButtonAnchor = undefined,
     trigger = null
-}) {
+}, ref) => {
 
     return (
         <div>
             {/* On larger screens, render a floating dropdown menu */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
                 <Dropdown
+                    ref={ref}
                     open={open}
                     trigger={trigger}
                     onClickOutside={e => onClose(CLOSE_REASON.outsideClick, e)}
@@ -58,4 +60,6 @@ export function ResponsiveMenu({
             </MediaQuery>
         </div >
     )
-}
+});
+
+export const closeReasons = CLOSE_REASON;
