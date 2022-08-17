@@ -3,18 +3,18 @@ import { useEffect } from "react";
 
 /**
  * Fires a callback any time a click happens outside of the element. 
- * @param {React.RefObject} ref - The element to watch for clicks outside of.
  * @param {function} callback - The function that is invoked when the user clicks outside.
  * @param {boolean} disabled - Should this effect be disabled?
+ * @param {...React.RefObject} refs - The element(s) to watch for clicks outside of.
  */
-export function useOnClickOutside(ref, callback, disabled) {
+export function useOnClickOutside(callback, disabled, ...refs) {
     useEffect(() => {
         if (!!disabled) {
             return;
         };
 
         const onClick = event => {
-            if (ref.current?.contains(event.target)) {
+            if (refs.some(ref => ref?.current?.contains(event.target))) {
                 return;
             }
 
@@ -28,5 +28,5 @@ export function useOnClickOutside(ref, callback, disabled) {
             document.removeEventListener('mousedown', onClick);
             document.removeEventListener('touchstart', onClick);
         };
-    }, [ref, callback, disabled]);
+    }, [refs, callback, disabled]);
 }
