@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { format, nextMonday, startOfToday, startOfTomorrow } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,10 +20,11 @@ import {
     ScrollableMenuContent
 } from "components/Menu";
 import { Calendar } from "components/Calendar";
-
+import { closeReasons } from "components/Menu/ResponsiveMenu";
 
 export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChange, }) {
     const [subMenuOpen, setSubMenuOpen] = useState(false);
+    const subMenuRef = useRef(null);
 
     // Any time the menu is closed reset the sub menu state.
     useEffect(() => {
@@ -49,10 +50,41 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
         }
     ];
 
+    // Callback for the top level menu components onClose event.
+    const onMainMenuClose = (reason, event) => {
+        if (subMenuOpen) {
+            // Keep the menu open if the user is interacting with the sub menu.
+            if (reason === closeReasons.outsideClick && subMenuRef.current.contains(event.target)) {
+                return;
+            }
+
+            // Keep the menu open if the user pressed the escape key.
+            if (reason === closeReasons.escapeKey) {
+                return;
+            }
+        }
+
+        onClose();
+    }
+
+    // Callback for the sub menu components onClose event.
+    const onSubMenuClose = (reason) => {
+        if (!open) {
+            return;
+        }
+
+        setSubMenuOpen(false);
+
+        // Handle edge case, always close the main menu if the user clicks outside the sub menu.
+        if (subMenuOpen && reason === closeReasons.outsideClick) {
+            onClose();
+        }
+    }
+
     return (
         <ResponsiveMenu
             open={open}
-            onClose={onClose}
+            onClose={onMainMenuClose}
             trigger={trigger}
         >
             <MenuHeader className="flex items-center justify-center">
@@ -76,14 +108,20 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
                 <MenuSeparator />
                 {/* Custom Due Date Sub Menu */}
                 <ResponsiveMenu
+                    ref={subMenuRef}
                     open={subMenuOpen}
-                    onClose={() => setSubMenuOpen(false)}
+                    onClose={onSubMenuClose}
                     isSubMenu={true}
                     desktopPlacement="right-start"
                     mobileCloseButtonAnchor="left"
                     mobileCloseButtonIcon={faArrowLeft}
                     trigger={(
-                        <MenuItem icon={faCalendarDays} label="Custom Due Date" onClick={() => setSubMenuOpen(true)}>
+                        <MenuItem
+                            icon={faCalendarDays}
+                            label="Custom Due Date"
+                            onClick={() => setSubMenuOpen(!subMenuOpen)}
+                            onMouseEnter={() => !subMenuOpen && setSubMenuOpen(true)}
+                        >
                             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500 group-hover:text-gray-700" />
                         </MenuItem>
                     )}
