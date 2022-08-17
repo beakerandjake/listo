@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import FocusLock from 'react-focus-lock';
 import { Transition } from '@headlessui/react';
@@ -16,6 +16,7 @@ import { mergeRefs } from 'react-merge-refs';
 /**
  * A floating dropdown menu rendered beneath a trigger. 
  * @param {Object} props - The props.
+ * @param {ReactElement} props.trigger - The trigger element to render and position the floating content against.
  * @param {boolean} props.open - Is the menu currently open or closed?
  * @param {function=} props.onClickOutside - Callback invoked when the user clicks outside of the Dropdown.
  * @param {function=} props.onEscapeKeyDown - Callback invoked when the user presses the escape key.

@@ -180,8 +180,8 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
  * @param {'right'|'left'|'bottom'=} props.anchor - The side of the viewport that the Drawer is anchored to. 
  * @param {'xs'|'sm'|'md'|'lg'|'xl'|'full'=} props.size - How much of the viewport should the drawer take up? 
  * @param {boolean=} props.showCloseButton - Should a default show button be rendered?
- * @param {'left'|'right'=} props.closeButtonAnchor - The side of the drawer that the default show button will be anchored to.
- * @param {IconDefinition=}  props.closeButtonIcon - The FontAwesomeIcon of the default show button.
+ * @param {'left'|'right'=} props.closeButtonAnchor - The side of the drawer that the default close button will be anchored to.
+ * @param {IconDefinition=}  props.closeButtonIcon - The FontAwesomeIcon of the default close button.
  * @param {string}  props.closeButtonTitle - The text to display on close button hover.
  * @param {React.ReactNode} props.children - The child elements to render.
  */
