@@ -211,7 +211,7 @@ export function Drawer({
             <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-out duration-300"
-                leave="transform transition ease-in duration-200"
+                leave="transform transition ease-out duration-200"
                 {...transitionStyles}
             >
                 <DialogContent className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
