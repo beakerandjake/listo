@@ -4,12 +4,12 @@ import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/f
 import { Drawer } from 'components/Drawer';
 import { MenuFooter, MenuHeader, MenuTitle } from 'components/Menu';
 import { IconButton } from 'components/IconButton';
-import { CompletedCheckbox } from '../Item/CompletedCheckbox';
-import { NameLabel } from '../Item/NameLabel';
-import { QuantityButton } from '../Item/QuantityButton';
+import { CompletedCheckbox } from '../Item';
+import { NameLabel } from '../Item';
+import { QuantityButton } from '../Item';
+import { DueDateStatus } from '../Item';
 import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
-import { DueDateStatus } from '../Item/DueDateStatus';
 import { DueDatePicker } from './DueDatePicker';
 
 
