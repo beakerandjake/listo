@@ -10,7 +10,7 @@ export function AddItemToolbar(props) {
         <Toolbar.Root className="px-3 py-2 bg-gray-100 rounded-b flex items-center justify-between">
             <div className="flex items-center gap-3">
                 <DueDateButton dueDate={props.item.dueDate} onDueDateChange={dueDate => props.onItemChange({ dueDate })} />
-                <QuantityButton quantity={props.item.quantity} onQuantityChange={quantity => props.onItemChange({ quantity })} />
+                {/* <QuantityButton quantity={props.item.quantity} onQuantityChange={quantity => props.onItemChange({ quantity })} /> */}
             </div>
 
             <Toolbar.Button asChild>

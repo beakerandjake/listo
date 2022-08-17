@@ -3,7 +3,7 @@ import { useState } from "react";
 import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import { formatDueDate } from "services/formatDueDate";
 import { ToolbarButton } from "./ToolbarButton";
-import { DueDateDropdown } from "./DueDateDropdown";
+import { SetDueDateMenu } from "routes/List/Item";
 
 
 export function DueDateButton(props) {
@@ -25,13 +25,12 @@ export function DueDateButton(props) {
 
     return (
         <div>
-            <DueDateDropdown
-                trigger={button}
+            <SetDueDateMenu
                 open={menuOpen}
-                onOpenChange={setMenuOpen}
+                onClose={() => setMenuOpen(false)}
                 dueDate={props.dueDate}
-                onDateChange={onDateChange}
-                showClearButton={!!props.dueDate}
+                onDueDateChange={onDateChange}
+                trigger={button}
             />
         </div>
     )
