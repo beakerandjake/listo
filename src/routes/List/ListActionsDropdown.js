@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faGear } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {
     EllipsisMenuTrigger,
@@ -10,6 +10,7 @@ import {
     ResponsiveMenu,
     ScrollableMenuContent
 } from "components/Menu";
+import { Link } from "react-router-dom";
 
 
 /**
@@ -46,6 +47,7 @@ export function ListActionsDropdown({
                 <MenuTitle>List Actions</MenuTitle>
             </MenuHeader>
             <ScrollableMenuContent>
+                {/* List Actions */}
                 {items?.length > 0 && (
                     <>
                         <MenuItem
@@ -64,8 +66,13 @@ export function ListActionsDropdown({
                         <MenuSeparator />
                     </>
                 )}
-                {/* TODO settings button */}
-                {/* <DropdownMenuNav icon={faGear} label="Settings" to="edit" /> */}
+                {/* List Settings Link */}
+                <Link to="edit" >
+                    <MenuItem
+                        icon={faGear}
+                        label="Settings"
+                    />
+                </Link>
             </ScrollableMenuContent>
         </ResponsiveMenu>
     );
