@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import { Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -197,6 +197,8 @@ export function Drawer({
     closeButtonTitle = 'Close',
     children,
 }, z) {
+    const initialFocusRef = useRef(null);
+    const [initialFocusCapture, setInitialFocusCapture] = useState(false);
     const anchorStyle = ANCHOR_STYLES.find(x => x.anchor === anchor)?.className || invalidProp(`Unsupported anchor: '${anchor}'`);
     const sizeStyle = SIZE_STYLES.find(x => x.size === size && x.anchors.includes(anchor))?.className || invalidProp(`Unsupported size: '${size}'`);
     const zStyle = isChildDrawer ? Z_INDEX_STYLE.child : Z_INDEX_STYLE.root;
@@ -205,8 +207,15 @@ export function Drawer({
         ? { anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle, onClick: onClose }
         : null;
 
+    // any time we are closed, reset the focus capture state.
+    useEffect(() => {
+        if (!open) {
+            setInitialFocusCapture(false);
+        }
+    }, [open]);
+
     return (
-        <HeadlessDialog open={open} onClose={onClose} className={zStyle}>
+        <HeadlessDialog open={open} onClose={onClose} className={zStyle} initialFocus={initialFocusRef}>
             <DialogBackdrop />
             <Transition.Child
                 as={Fragment}
@@ -215,6 +224,13 @@ export function Drawer({
                 {...transitionStyles}
             >
                 <DialogContent className={cx(sizeStyle, anchorStyle, zStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
+                    {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
+                    Once the user focuses on something else, remove this element from being focusable */}
+                    <span
+                        tabIndex={initialFocusCapture ? -1 : 0}
+                        ref={initialFocusRef}
+                        onBlur={() => setInitialFocusCapture(true)}
+                    />
                     {children}
                     {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
                 </DialogContent>
