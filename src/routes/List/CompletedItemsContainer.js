@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { Transition, Disclosure } from "@headlessui/react";
 import classNames from "classnames";
-import * as Collapsible from '@radix-ui/react-collapsible';
-import { Transition } from "@headlessui/react";
+import { usePreviousValue } from "hooks/usePreviousValue";
 import { Badge } from "components/Badge";
 import {
     EllipsisMenuTrigger,
@@ -14,7 +14,6 @@ import {
     ResponsiveMenu,
     ScrollableMenuContent
 } from "components/Menu";
-import { usePreviousValue } from "hooks/usePreviousValue";
 
 /**
  * Dropdown menu which contains actions which apply to all of the items in the completed container.
@@ -90,34 +89,47 @@ export function CompletedItemsContainer({
             leaveFrom="opacity-100 scale-75"
             leaveTo="opacity-0 scale-95"
         >
-            <Collapsible.Root open={open} onOpenChange={setOpen}>
-                <div
-                    className={classNames({ "border-b border-gray-200": !open },
-                        "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none "
-                    )}
-                >
-                    <Collapsible.Trigger className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
-                        <FontAwesomeIcon
-                            icon={faChevronRight}
-                            className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
-                            fixedWidth
-                        />
-                        <h3 className="text-md leading-6 font-medium text-gray-700">
-                            <span className="pr-2">Completed</span>
-                            <Badge content={count || previousCount} size="lg" variant="success" />
-                        </h3>
-                    </Collapsible.Trigger>
-                    <div className="flex-grow-0 flex items-center">
-                        <CompletedItemsDropdown
-                            onSetAllItemsCompleted={onSetAllItemsCompleted}
-                            onDeleteAllItems={onDeleteAllItems}
-                        />
-                    </div>
-                </div>
-                <Collapsible.Content>
-                    {children}
-                </Collapsible.Content>
-            </Collapsible.Root>
+            <Disclosure>
+                {({ open }) => (
+                    <>
+                        <div
+                            className={classNames({ "border-b border-gray-200": !open },
+                                "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none "
+                            )}
+                        >
+                            <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
+                                <FontAwesomeIcon
+                                    icon={faChevronRight}
+                                    className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
+                                    fixedWidth
+                                />
+                                <h3 className="text-md leading-6 font-medium text-gray-700">
+                                    <span className="pr-2">Completed</span>
+                                    <Badge content={count || previousCount} size="lg" variant="success" />
+                                </h3>
+                            </Disclosure.Button>
+                            <div className="flex-grow-0 flex items-center">
+                                <CompletedItemsDropdown
+                                    onSetAllItemsCompleted={onSetAllItemsCompleted}
+                                    onDeleteAllItems={onDeleteAllItems}
+                                />
+                            </div>
+                        </div>
+                        <Transition
+                            enter="transition-all duration-300 ease-out"
+                            enterFrom="transform -translate-y-1/4 opacity-0"
+                            enterTo="transform translate-y-100 opacity-100"
+                            leave="transition duration-150 ease-out"
+                            leaveFrom="transform opacity-100"
+                            leaveTo="transform opacity-0"
+                        >
+                            <Disclosure.Panel>
+                                {children}
+                            </Disclosure.Panel>
+                        </Transition>
+                    </>
+                )}
+            </Disclosure>
         </Transition>
     )
 }
