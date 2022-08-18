@@ -26,7 +26,7 @@ export const ToolbarButton = forwardRef(({
                 className
             )}>
             <FontAwesomeIcon icon={icon} fixedWidth />
-            {text && <span className="text-sm">{text}</span>}
+            {text && <span className="text-sm leading-none">{text}</span>}
         </button>
     )
 });
