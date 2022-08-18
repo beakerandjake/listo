@@ -7,7 +7,14 @@ import { CSSTransition } from "react-transition-group";
 import { useLongPress } from "hooks/useLongPress";
 
 
-
+/**
+ * Styled Quantity button which can be pressed or long held.
+ * @param {object} props - The props
+ * @param {date} props.title - The tooltip to display on hover.
+ * @param {IconDefinition} props.icon - The icon to display.
+ * @param {boolean} props.disabled - Is the button disabled?
+ * @param {function} props.onClick - Callback invoked once when the button is clicked, or regularly when the button is held 
+ */
 const QuantityButton = ({ title, icon, disabled, onClick }) => {
     const [pressStartTime, setPressStartTime] = useState(null);
 
@@ -30,34 +37,32 @@ const QuantityButton = ({ title, icon, disabled, onClick }) => {
         if (disabled) {
             return;
         }
-        
+
         onClick();
         setPressStartTime(new Date());
     }
 
     /**
- * Handle the user releasing us.
- */
+     * Handle the user releasing us.
+     */
     const onRelease = () => {
         setPressStartTime(null);
     }
 
     return (
-        <div>
-            <IconButton
-                title={title}
-                icon={icon}
-                className="cursor:pointer flex-1 disabled:opacity-50 disabled:cursor-not-allowed rounded keyboard-only-focus-ring text-4xl md:text-base enabled:hover:bg-gray-100  select-none"
-                onMouseDown={onPressDown}
-                onMouseUp={onRelease}
-                onTouchStart={onPressDown}
-                onTouchEnd={e => {
-                    e.preventDefault()
-                    onRelease();
-                }}
-                disabled={disabled}
-            />
-        </div>
+        <IconButton
+            title={title}
+            icon={icon}
+            className="cursor:pointer flex-1 disabled:opacity-50 disabled:cursor-not-allowed rounded keyboard-only-focus-ring text-4xl md:text-base enabled:hover:bg-gray-100 select-none"
+            onMouseDown={onPressDown}
+            onMouseUp={onRelease}
+            onTouchStart={onPressDown}
+            onTouchEnd={e => {
+                e.preventDefault()
+                onRelease();
+            }}
+            disabled={disabled}
+        />
     )
 }
 
