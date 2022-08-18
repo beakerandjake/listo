@@ -1,6 +1,5 @@
 import { forwardRef } from 'react';
 import classNames from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const VARIANTS = {
     danger: 'text-white bg-red-600 enabled:hover:bg-red-700 focus-visible:ring-red-500',
