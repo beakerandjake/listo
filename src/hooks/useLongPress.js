@@ -9,7 +9,7 @@ const CALLBACK_SPEEDS = [
     },
     // Medium
     {
-        fireSpeed: 150,
+        fireSpeed: 100,
         minDuration: 2500
     },
     // Fast
@@ -24,8 +24,8 @@ const MIN_DURATION_FOR_HOLD = 250;
 /**
  * After a minimum amount of time has passed from the pressStartTime, the callback will be fired continually
  * at increasing speeds (up to a limit) until the pressStartTime is reset.
- * @param {date} props.pressStartTime - The time when the press started. 
- * @param {function} props.callback - Callback invoked on an interval while the press has been maintained long enough.
+ * @param {date} pressStartTime - The time when the press started. 
+ * @param {function} callback - Callback invoked on an interval while the press has been maintained long enough.
  */
 export function useLongPress(pressStartTime, callback) {
     const [holdStartTime, setHoldStartTime] = useState(null);
