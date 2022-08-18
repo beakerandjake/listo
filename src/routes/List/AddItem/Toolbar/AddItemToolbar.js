@@ -1,6 +1,6 @@
 import { Button } from 'components/Button';
-import { QuantityButton } from 'routes/List/Item/QuantityButton';
-import { DueDateButton } from './DueDateButton';
+import { SetDueDateButton } from './SetDueDateButton';
+import { SetQuantityButton } from './SetQuantityButton';
 
 /**
  * Toolbar which allows the user to edit properties of the item.
@@ -19,9 +19,9 @@ export function AddItemToolbar({
     return (
         <div className="px-3 py-2 bg-gray-100 rounded-b flex items-center justify-between">
             {/* Item edit buttons */}
-            <div className="flex items-center gap-3">
-                <DueDateButton dueDate={item.dueDate} onDueDateChange={dueDate => onItemChange({ dueDate })} />
-                {/* <QuantityButton quantity={props.item.quantity} onQuantityChange={quantity => props.onItemChange({ quantity })} /> */}
+            <div className="flex items-center gap-2 sm:gap-3">
+                <SetDueDateButton dueDate={item.dueDate} onDueDateChange={dueDate => onItemChange({ dueDate })} />
+                <SetQuantityButton quantity={item.quantity} onQuantityChange={quantity => onItemChange({ quantity })} />
             </div>
             {/* Add item button */}
             <Button size="sm" disabled={!canAddItem} onClick={onAddItem}>Add</Button>

@@ -12,7 +12,7 @@ import { SetDueDateMenu } from "routes/List/Item";
  * @param {date} props.dueDate - The current due date of the item.
  * @param {function} props.onDueDateChange - Callback invoked when the user changes the due date. 
  */
-export function DueDateButton({ dueDate, onDueDateChange }) {
+export function SetDueDateButton({ dueDate, onDueDateChange }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const onDateChange = date => {
