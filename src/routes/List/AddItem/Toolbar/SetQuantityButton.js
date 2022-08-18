@@ -7,6 +7,9 @@ import { CSSTransition } from "react-transition-group";
 import { useLongPress } from "hooks/useLongPress";
 
 
+const MAX_QUANTITY = 100;
+const MIN_QUANTITY = 1;
+
 /**
  * Styled Quantity button which can be pressed or long held.
  * @param {object} props - The props
@@ -67,8 +70,28 @@ const QuantityButton = ({ title, icon, disabled, onClick }) => {
 }
 
 const QuantityControl = ({ quantity, onQuantityChange }) => {
+    const [internalQuantity, setInternalQuantity] = useState(null);
     const [animate, setAnimate] = useState(false);
     const animateRef = useRef();
+
+    useEffect(() => {
+        setInternalQuantity(quantity);
+    }, [quantity]);
+
+    const onInputChange = e => {
+        const value = Number(e.target.value);
+
+        if (value < MIN_QUANTITY) {
+            return;
+        }
+
+        if (value > MAX_QUANTITY) {
+            return;
+        }
+
+        // const sanitizedValue = Math.max(0, Math.min(MAX_QUANTITY, Number(e.target.value)));
+        onQuantityChange(value);
+    }
 
     return (
         <div className="flex w-full flex-1 items-stretch justify-between min-h-[8rem] md:min-h-[3rem] px-2 py-2 select-none">
@@ -78,7 +101,7 @@ const QuantityControl = ({ quantity, onQuantityChange }) => {
                 onClick={() => {
                     setAnimate(true); onQuantityChange(quantity - 1);
                 }}
-                disabled={quantity <= 1}
+                disabled={quantity <= MIN_QUANTITY}
             />
             <span className="flex-1 flex items-center justify-center text-5xl md:text-2xl font-light md:font-semibold  select-none">
                 <CSSTransition
@@ -87,12 +110,21 @@ const QuantityControl = ({ quantity, onQuantityChange }) => {
                     nodeRef={animateRef}
                     classNames={{
                         enter: 'transition ease-in',
-                        enterActive: 'scale-125',
+                        enterActive: 'scale-150',
                         enterDone: 'scale-100'
                     }}
                     onEntered={() => setAnimate(false)}
                 >
-                    <span ref={animateRef}>{quantity}</span>
+                    <input
+                        type="number"
+                        ref={animateRef}
+                        value={quantity}
+                        onChange={onInputChange}
+                        pattern="\d*"
+                        max={MAX_QUANTITY}
+                        min={0}
+                        className="p-0 h-full leading-none text-5xl md:text-xl max-w-[5ch] font-light md:font-semibold text-center appearance-none border-none focus:outline-none"
+                    />
                 </CSSTransition>
             </span>
             <QuantityButton
@@ -102,6 +134,7 @@ const QuantityControl = ({ quantity, onQuantityChange }) => {
                     setAnimate(true);
                     onQuantityChange(quantity + 1);
                 }}
+                disabled={quantity >= MAX_QUANTITY}
             />
         </div >
     )
@@ -120,23 +153,6 @@ export function SetQuantityButton({ quantity, onQuantityChange }) {
         setMenuOpen(false);
         onQuantityChange(newQuantity);
     }
-
-    // return (
-    //     <SetDueDateMenu
-    //         open={menuOpen}
-    //         onClose={() => setMenuOpen(false)}
-    //         dueDate={dueDate}
-    //         onDueDateChange={onDateChange}
-    //         trigger={(
-    //             <ToolbarButton
-    //                 icon={!!dueDate ? faCalendarCheck : faCalendarPlus}
-    //                 title="Add Due Date"
-    //                 text={dueDate && formatDueDate(dueDate)}
-    //                 onClick={() => setMenuOpen(!menuOpen)}
-    //             />
-    //         )}
-    //     />
-    // )
 
     return (
         <ResponsiveMenu
