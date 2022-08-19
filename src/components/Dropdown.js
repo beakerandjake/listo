@@ -1,4 +1,5 @@
 import React, { cloneElement, forwardRef } from 'react';
+import { createPortal } from 'react-dom';
 import FocusLock from 'react-focus-lock';
 import { Transition } from '@headlessui/react';
 import {
@@ -11,7 +12,6 @@ import {
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
 import { mergeRefs } from 'react-merge-refs';
-import { Portal } from './Portal';
 
 /**
  * A floating dropdown menu rendered beneath a trigger. 
@@ -51,18 +51,18 @@ export const Dropdown = forwardRef(({
             {cloneElement(trigger, { ref: reference })}
 
             {/* Dropdown Content */}
-
-            <Transition
-                show={open}
-                enter="transition duration-100 ease-out"
-                enterFrom="transform scale-95 opacity-0"
-                enterTo="transform scale-100 opacity-100"
-                leave="transition duration-75 ease-out"
-                leaveFrom="transform scale-100 opacity-100"
-                leaveTo="transform scale-95 opacity-0"
-            >
-                <FocusLock autoFocus={false}>
-                    <Portal overlay={overlay}>
+            {createPortal((
+                <Transition
+                    show={open}
+                    enter="transition duration-100 ease-out"
+                    enterFrom="transform scale-95 opacity-0"
+                    enterTo="transform scale-100 opacity-100"
+                    leave="transition duration-75 ease-out"
+                    leaveFrom="transform scale-100 opacity-100"
+                    leaveTo="transform scale-95 opacity-0"
+                >
+                    {overlay && createPortal(<div className="fixed inset-0"></div>, document.body)}
+                    <FocusLock autoFocus={false}>
                         <div
                             ref={mergeRefs([floating, forwardedRef])}
                             className="absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
@@ -74,9 +74,9 @@ export const Dropdown = forwardRef(({
                         >
                             {children}
                         </div>
-                    </Portal>
-                </FocusLock>
-            </Transition>
+                    </FocusLock>
+                </Transition>
+            ), document.body)}
         </>
     )
 });
