@@ -22,14 +22,23 @@ import {
 import { Calendar } from "components/Calendar";
 import { closeReasons } from "components/Menu/ResponsiveMenu";
 
+/**
+ * Responsive menu which allows the user to set or edit the item's due date.
+ * @param {Object} props - The props (spread onto the responsive menu)
+ * @param {boolean} props.open - Should the menu be opened or closed?
+ * @param {function} props.onClose - Callback fired when the menu is closed.
+ * @param {ReactElement} props.trigger -  The trigger element to render and position the floating content against.
+ * @param {date} props.dueDate - The items due date.
+ * @param {function} props.onDueDateChange - Callback fired when the due date changes.
+
+ */
 export function SetDueDateMenu({
     open,
     onClose,
     trigger,
     dueDate,
     onDueDateChange,
-    desktopPlacement,
-    desktopOffset
+    ...props
 }) {
     const [subMenuOpen, setSubMenuOpen] = useState(false);
     const subMenuRef = useRef(null);
@@ -91,11 +100,10 @@ export function SetDueDateMenu({
 
     return (
         <ResponsiveMenu
+            {...props}
             open={open}
             onClose={onMainMenuClose}
             trigger={trigger}
-            desktopPlacement={desktopPlacement}
-            desktopOffset={desktopOffset}
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Add Due Date</MenuTitle>
