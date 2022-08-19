@@ -42,6 +42,7 @@ export function ListActionsDropdown({
             open={open}
             onClose={() => setOpen(false)}
             trigger={<EllipsisMenuTrigger onClick={() => setOpen(true)} />}
+            desktopPlacement='bottom-start'
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>List Actions</MenuTitle>

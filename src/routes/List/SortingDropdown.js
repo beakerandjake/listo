@@ -87,6 +87,7 @@ export function SortingDropdown(props) {
                     )}
                 </Button>
             )}
+            desktopPlacement='bottom-end'
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Sort Items By</MenuTitle>

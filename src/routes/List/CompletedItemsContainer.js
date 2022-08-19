@@ -35,6 +35,7 @@ const CompletedItemsDropdown = ({ onSetAllItemsCompleted, onDeleteAllItems }) =>
             open={open}
             onClose={() => setOpen(false)}
             trigger={<EllipsisMenuTrigger onClick={() => setOpen(true)} />}
+            desktopPlacement='bottom-end'
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>List Actions</MenuTitle>

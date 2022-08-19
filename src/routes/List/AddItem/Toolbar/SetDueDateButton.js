@@ -50,6 +50,7 @@ export function SetDueDateButton({
                     className={cx({ 'text-indigo-700': !!dueDate })}
                 />
             )}
+            desktopPlacement='bottom-start'
         />
     )
 }

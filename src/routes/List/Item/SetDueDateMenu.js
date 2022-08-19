@@ -22,7 +22,14 @@ import {
 import { Calendar } from "components/Calendar";
 import { closeReasons } from "components/Menu/ResponsiveMenu";
 
-export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChange, }) {
+export function SetDueDateMenu({
+    open,
+    onClose,
+    trigger,
+    dueDate,
+    onDueDateChange,
+    desktopPlacement
+}) {
     const [subMenuOpen, setSubMenuOpen] = useState(false);
     const subMenuRef = useRef(null);
 
@@ -86,6 +93,7 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
             open={open}
             onClose={onMainMenuClose}
             trigger={trigger}
+            desktopPlacement={desktopPlacement}
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Add Due Date</MenuTitle>
@@ -120,7 +128,7 @@ export function SetDueDateMenu({ open, onClose, trigger, dueDate, onDueDateChang
                             icon={faCalendarDays}
                             label="Custom Due Date"
                             onClick={() => setSubMenuOpen(!subMenuOpen)}
-                            onMouseEnter={() =>  open && !subMenuOpen && setSubMenuOpen(true)}
+                            onMouseEnter={() => open && !subMenuOpen && setSubMenuOpen(true)}
                         >
                             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500 group-hover:text-gray-700" />
                         </MenuItem>

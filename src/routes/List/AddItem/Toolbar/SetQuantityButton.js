@@ -44,6 +44,7 @@ export function SetQuantityButton({
                     className={cx({ 'text-indigo-700': quantity > 1 })}
                 />
             )}
+            desktopPlacement='bottom-start'
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Change Quantity</MenuTitle>

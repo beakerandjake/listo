@@ -127,7 +127,10 @@ export function EditItem({
                                     placeholder="Add Due Date"
                                     clearButtonTitle="Remove Due Date"
                                     onClick={() => setDueDateMenuOpen(true)}
-                                    onClearValue={() => onEditItem(cachedItem.id, { dueDate: null })}
+                                    onClearValue={() => {
+                                        setDueDateMenuOpen(false);
+                                        onEditItem(cachedItem.id, { dueDate: null });
+                                    }}
                                     variant={!cachedItem.dueDate
                                         ? 'default'
                                         : isOverdue(cachedItem.dueDate) ? 'danger' : 'success'
@@ -138,6 +141,7 @@ export function EditItem({
                                     )}
                                 </ItemFieldMenuButton>
                             )}
+                            desktopPlacement='bottom'
                         />
 
 
