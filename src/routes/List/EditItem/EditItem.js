@@ -13,6 +13,7 @@ import { DebounceInput } from "react-debounce-input";
 import { QuantitySelector } from 'components/QuantitySelector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EditDueDate } from './EditDueDate';
+import { EditQuantity } from './EditQuantity';
 
 
 
@@ -75,8 +76,8 @@ export function EditItem({
                         <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
                     </div>
                     <div className="flex flex-col space-y-2">
+                        <EditQuantity quantity={cachedItem.quantity} onChange={value => onEditItem(cachedItem.id, { quantity: value })} />
                         <EditDueDate dueDate={cachedItem.dueDate} onChange={value => onEditItem(cachedItem.id, { dueDate: value })} />
-
 
                         {/* <ItemFieldMenuButton icon={faCalendarPlus} placeholder="Add Due Date">
 
