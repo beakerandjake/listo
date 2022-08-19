@@ -37,7 +37,7 @@ export function CompletedCheckbox(props) {
                 icon={icon}
                 className={cx(
                     style,
-                    "rounded group-focus:outline-none group-focus:ring-2 group-focus:ring-green-600 group-focus:ring-offset-2"
+                    "rounded group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-green-700 group-focus"
                 )}
             />
         </div>
