@@ -3,7 +3,7 @@ import { useState } from "react";
 import { faCalendarPlus, faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
 import cx from 'classnames';
 import { formatDueDate } from "services/dueDateHelpers";
-import { ToolbarButton } from "./ToolbarButton";
+import { AddItemToolbarButton } from "./AddItemToolbar";
 import { SetDueDateMenu } from "routes/List/Item";
 
 
@@ -42,7 +42,7 @@ export function SetDueDateButton({
             dueDate={dueDate}
             onDueDateChange={onDateChange}
             trigger={(
-                <ToolbarButton
+                <AddItemToolbarButton
                     icon={!!dueDate ? faCalendarCheck : faCalendarPlus}
                     title="Add Due Date"
                     text={dueDate && formatDueDate(dueDate)}

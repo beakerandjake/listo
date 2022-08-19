@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { faPlusMinus } from "@fortawesome/free-solid-svg-icons";
 import cx from 'classnames';
-import { ToolbarButton } from "./ToolbarButton";
+import { AddItemToolbarButton } from "./AddItemToolbar";
 import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
 
 /**
@@ -38,7 +38,7 @@ export function SetQuantityButton({
             open={menuOpen}
             onClose={() => setMenuOpenAndNotify(false)}
             trigger={(
-                <ToolbarButton
+                <AddItemToolbarButton
                     icon={faPlusMinus}
                     title="Change Quantity"
                     text={quantity > 1 && `Qty: ${quantity}`}

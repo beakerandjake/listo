@@ -1,6 +1,38 @@
+import { forwardRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import cx from 'classnames';
 import { Button } from 'components/Button';
 import { SetDueDateButton } from './SetDueDateButton';
 import { SetQuantityButton } from './SetQuantityButton';
+
+/**
+ * Button styled for the Add Item Toolbar.
+ * @param {Object} props - The props.
+ * @param {IconDefinition} props.icon - The icon to display.
+ * @param {string=} props.text - The text to display (if any). 
+ * @param {string=} props.className - Additional styles to apply. 
+ */
+export const AddItemToolbarButton = forwardRef(({
+    icon,
+    text,
+    className,
+    ...props
+}, ref) => {
+    return (
+        <button
+            {...props}
+            ref={ref}
+            className={cx(
+                'p-1 flex items-center justify-between gap-1 leading-0 keyboard-only-focus-ring',
+                'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+                'rounded shadow-sm border border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
+                className
+            )}>
+            <FontAwesomeIcon icon={icon} fixedWidth />
+            {text && <span className="text-sm leading-none">{text}</span>}
+        </button>
+    )
+});
 
 /**
  * Toolbar which allows the user to edit properties of the item.
