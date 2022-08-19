@@ -32,7 +32,7 @@ export const EditQuantity = ({
                     placeholder="Change Quantity"
                     clearButtonTitle="Reset Quantity"
                     onClick={() => setIsOpen(true)}
-                    onClearValue={() => setQuantityAndCloseMenu(null)}
+                    onClearValue={() => setQuantityAndCloseMenu(1)}
                     variant={quantity > 1 ? 'success' : 'default'}
                 >
                     {quantity > 1 && (
