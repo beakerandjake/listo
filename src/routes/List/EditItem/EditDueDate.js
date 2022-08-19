@@ -38,7 +38,7 @@ export const EditDueDate = ({
                         : isOverdue(dueDate) ? 'danger' : 'success'
                     }
                 >
-                    {dueDate && (
+                    {!!dueDate && (
                         <span>{formatDueDate(dueDate)}</span>
                     )}
                 </ItemFieldMenuButton>
