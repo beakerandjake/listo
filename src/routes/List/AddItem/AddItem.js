@@ -35,7 +35,7 @@ export function AddItem(props) {
     };
 
     // Whenever the user clicks outside of this component, try to minimize the toolbar.
-    useOnClickOutside(tryToMinimizeToolbar, false, containerRef);
+    useOnClickOutside(tryToMinimizeToolbar, toolbarMenuOpen, containerRef);
 
     // Callback invoked whenever the user makes changes to the item.
     const onItemChange = changes => {
