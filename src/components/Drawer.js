@@ -230,6 +230,7 @@ export function Drawer({
                         tabIndex={initialFocusCapture ? -1 : 0}
                         ref={initialFocusRef}
                         onBlur={() => setInitialFocusCapture(true)}
+                        className="focus:outline-none focus:ring-0"
                     />
                     {children}
                     {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}

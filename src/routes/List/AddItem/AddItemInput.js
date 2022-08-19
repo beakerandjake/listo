@@ -11,7 +11,7 @@ export function AddItemInput(props) {
     }
 
     return (
-        <div className="relative border-b border-gray-300">
+        <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
                 <FontAwesomeIcon icon={faPlus} className="text-gray-400 font-thin" />
             </div>
@@ -20,7 +20,7 @@ export function AddItemInput(props) {
                 value={props.value}
                 onChange={e => props.onChange(e.target.value)}
                 onKeyDown={onKeyDown}
-                className="w-full pl-14 sm:text-sm border-none rounded-t min-h-[50px]"
+                className="w-full pl-14 sm:text-sm border-none min-h-[50px] focus:outline-none focus:ring-0"
                 placeholder="Add Item"
                 autoComplete="off"
                 enterKeyHint="done"
