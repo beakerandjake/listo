@@ -43,8 +43,9 @@ export const EditDueDate = ({
                     )}
                 </ItemFieldMenuButton>
             )}
-            desktopPlacement='bottom'
+            desktopPlacement="bottom"
             desktopOffset={1}
+            desktopSubMenuPlacement="left"
         />
     )
 };  
