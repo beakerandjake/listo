@@ -227,7 +227,7 @@ export function Drawer({
                     {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
                     Once the user focuses on something else, remove this element from being focusable */}
                     <span
-                        tabIndex={initialFocusCapture ? -1 : 0}
+                        tabIndex={open && initialFocusCapture ? -1 : 0}
                         ref={initialFocusRef}
                         onBlur={() => setInitialFocusCapture(true)}
                         className="focus:outline-none focus:ring-0"
