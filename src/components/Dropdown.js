@@ -1,5 +1,4 @@
 import React, { cloneElement, forwardRef } from 'react';
-import { createPortal } from 'react-dom';
 import FocusLock from 'react-focus-lock';
 import { Transition } from '@headlessui/react';
 import {
@@ -12,6 +11,7 @@ import {
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
 import { mergeRefs } from 'react-merge-refs';
+import { Portal } from './Portal';
 
 /**
  * A floating dropdown menu rendered beneath a trigger. 
@@ -49,7 +49,7 @@ export const Dropdown = forwardRef(({
             {cloneElement(trigger, { ref: reference })}
 
             {/* Dropdown Content */}
-            {createPortal((
+            <Portal>
                 <Transition
                     show={open}
                     enter="transition duration-100 ease-out"
@@ -73,7 +73,7 @@ export const Dropdown = forwardRef(({
                         </div>
                     </FocusLock>
                 </Transition>
-            ), document.body)}
+            </Portal>
         </>
     )
 });
