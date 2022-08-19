@@ -2,8 +2,7 @@ import { useState } from "react";
 import { faPlusMinus } from "@fortawesome/free-solid-svg-icons";
 import cx from 'classnames';
 import { ToolbarButton } from "./ToolbarButton";
-import { MenuHeader, MenuItem, MenuSeparator, MenuTitle, ResponsiveMenu, ScrollableMenuContent } from "components/Menu";
-import { QuantitySelector } from "components/QuantitySelector";
+import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
 
 /**
  * Toolbar button which exposes a menu to set the Due Date of the item.
@@ -32,7 +31,10 @@ export function SetQuantityButton({
     }
 
     return (
-        <ResponsiveMenu
+        <SetQuantityMenu
+            quantity={quantity}
+            onChange={onQuantityChange}
+            onReset={() => updateQuantityAndCloseMenu(1)}
             open={menuOpen}
             onClose={() => setMenuOpenAndNotify(false)}
             trigger={(
@@ -44,26 +46,6 @@ export function SetQuantityButton({
                     className={cx({ 'text-indigo-700': quantity > 1 })}
                 />
             )}
-            desktopPlacement='bottom-start'
-        >
-            <MenuHeader className="flex items-center justify-center">
-                <MenuTitle>Change Quantity</MenuTitle>
-            </MenuHeader>
-            <ScrollableMenuContent className="flex flex-col items-center justify-center">
-                <div className="flex w-full items-stretch justify-between min-h-[8rem] md:min-h-[3rem]">
-                    <QuantitySelector
-                        quantity={quantity}
-                        onQuantityChange={quantity => onQuantityChange(quantity)}
-                    />
-                </div>
-                <MenuSeparator />
-                <MenuItem
-                    label="Reset"
-                    variant="danger"
-                    disabled={quantity <= 1}
-                    onClick={() => updateQuantityAndCloseMenu(1)} className="text-center"
-                />
-            </ScrollableMenuContent>
-        </ResponsiveMenu>
+        />
     )
 }
