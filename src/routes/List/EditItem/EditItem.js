@@ -9,57 +9,12 @@ import { CompletedCheckbox, SetDueDateMenu } from '../Item';
 import { NameLabel } from '../Item';
 import { QuantityButton } from '../Item';
 import { DueDateStatus } from '../Item';
-import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
 import { QuantitySelector } from 'components/QuantitySelector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
+import { EditDueDate } from './EditDueDate';
 
-const VARIANT_STYLES = {
-    default: 'text-gray-400',
-    success: 'text-indigo-700',
-    danger: 'text-red-700'
-}
 
-const ItemFieldMenuButton = forwardRef(({
-    icon,
-    placeholder,
-    variant = 'default',
-    children,
-    onClick,
-    onClearValue,
-    clearButtonTitle
-}, ref) => {
-    const variantStyle = VARIANT_STYLES[variant];
-
-    return (
-        <div
-            ref={ref}
-            className={cx(
-                'min-h-[3.5rem] flex justify-between flex-1 w-full cursor-pointer select-none',
-                'bg-white hover:bg-slate-100 border-gray-300 border rounded',
-            )}
-        >
-            <div
-                onClick={() => onClick()}
-                className={cx(variantStyle, 'flex-1 py-2 pl-3 flex items-center')}
-            >
-                <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
-                {!children && <span>{placeholder}</span>}
-                {children}
-            </div>
-            {/* Show the close button if the field has a value. */}
-            {!!children && (
-                <IconButton
-                    icon={faTimes}
-                    className="w-[10%]"
-                    onClick={() => onClearValue()}
-                    title={clearButtonTitle}
-                />
-            )}
-        </div>
-    )
-});
 
 /**
  * Drawer which allows the user to edit fields of an Item.
@@ -93,6 +48,13 @@ export function EditItem({
         }
     }, [item]);
 
+    // Close all menus when we are closed
+    useEffect(() => {
+        if (!open) {
+            setDueDateMenuOpen(false);
+        }
+    }, [open]);
+
     return (
         <Drawer open={open} onClose={onClose}>
             <div className="h-full flex flex-col justify-between">
@@ -113,36 +75,7 @@ export function EditItem({
                         <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <SetDueDateMenu
-                            open={dueDateMenuOpen}
-                            onClose={() => setDueDateMenuOpen(false)}
-                            dueDate={cachedItem.dueDate}
-                            onDueDateChange={date => {
-                                setDueDateMenuOpen(false);
-                                onEditItem(cachedItem.id, { dueDate: date });
-                            }}
-                            trigger={(
-                                <ItemFieldMenuButton
-                                    icon={cachedItem.dueDate ? faCalendarDay : faCalendarPlus}
-                                    placeholder="Add Due Date"
-                                    clearButtonTitle="Remove Due Date"
-                                    onClick={() => setDueDateMenuOpen(true)}
-                                    onClearValue={() => {
-                                        setDueDateMenuOpen(false);
-                                        onEditItem(cachedItem.id, { dueDate: null });
-                                    }}
-                                    variant={!cachedItem.dueDate
-                                        ? 'default'
-                                        : isOverdue(cachedItem.dueDate) ? 'danger' : 'success'
-                                    }
-                                >
-                                    {cachedItem.dueDate && (
-                                        <span>{formatDueDate(cachedItem.dueDate)}</span>
-                                    )}
-                                </ItemFieldMenuButton>
-                            )}
-                            desktopPlacement='bottom'
-                        />
+                        <EditDueDate dueDate={cachedItem.dueDate} onChange={value => onEditItem(cachedItem.id, { dueDate: value })} />
 
 
                         {/* <ItemFieldMenuButton icon={faCalendarPlus} placeholder="Add Due Date">
