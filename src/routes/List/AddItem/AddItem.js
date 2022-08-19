@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { AddItemInput } from './AddItemInput';
 import { AddItemToolbar } from './Toolbar/AddItemToolbar';
+import { useOnScroll } from 'hooks/useOnScroll';
 
 const DEFAULT_ITEM = {
     name: '',
@@ -35,7 +36,8 @@ export function AddItem(props) {
     };
 
     // Whenever the user clicks outside of this component, try to minimize the toolbar.
-    useOnClickOutside(tryToMinimizeToolbar, toolbarMenuOpen, containerRef);
+    useOnClickOutside(tryToMinimizeToolbar, !toolbarOpen || toolbarMenuOpen, containerRef);
+    useOnScroll(tryToMinimizeToolbar, !toolbarOpen || toolbarMenuOpen);
 
     // Callback invoked whenever the user makes changes to the item.
     const onItemChange = changes => {
