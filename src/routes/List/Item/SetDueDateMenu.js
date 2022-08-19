@@ -130,7 +130,6 @@ export function SetDueDateMenu({
                             icon={faCalendarDays}
                             label="Custom Due Date"
                             onClick={() => setSubMenuOpen(!subMenuOpen)}
-                            onMouseEnter={() => open && !subMenuOpen && setSubMenuOpen(true)}
                         >
                             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500 group-hover:text-gray-700" />
                         </MenuItem>
