@@ -52,6 +52,7 @@ const QuantityButton = ({ title, icon, disabled, onClick }) => {
             icon={icon}
             className="flex-1 text-4xl md:text-base enabled:hover:bg-gray-100 select-none"
             onMouseDown={onPressDown}
+            onMouseLeave={() => !!pressStartTime && onRelease()}
             onMouseUp={onRelease}
             onTouchStart={onPressDown}
             onTouchEnd={e => {
