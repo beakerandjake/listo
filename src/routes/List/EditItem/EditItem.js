@@ -3,12 +3,17 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { DebounceInput } from "react-debounce-input";
 import { Drawer } from 'components/Drawer';
-import { MenuFooter, MenuHeader, MenuTitle } from 'components/Menu';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item';
 import { NameLabel } from '../Item';
 import { EditDueDate } from './EditDueDate';
 import { EditQuantity } from './EditQuantity';
+import {
+    MenuFooter,
+    MenuHeader,
+    MenuTitle,
+    ScrollableMenuContent
+} from 'components/Menu';
 
 
 
@@ -27,7 +32,6 @@ export function EditItem({
     onDeleteItem
 }) {
     const [open, setOpen] = useState(false);
-    const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false);
     const [cachedItem, setCachedItem] = useState({});
 
     // any time our item changes, update our current state.
@@ -44,60 +48,58 @@ export function EditItem({
         }
     }, [item]);
 
-    // Close all menus when we are closed
-    useEffect(() => {
-        if (!open) {
-            setDueDateMenuOpen(false);
-        }
-    }, [open]);
-
     return (
         <Drawer open={open} onClose={onClose}>
-            <div className="h-full flex flex-col justify-between">
-                {/* Header */}
-                <MenuHeader className="flex items-center gap-3 md:p-4">
-                    <IconButton icon={faArrowLeft} title="Close Item Details" onClick={() => onClose()} />
-                    <MenuTitle title="">Item Details</MenuTitle>
-                </MenuHeader>
-                {/* Main Content */}
-                <div className="flex-1 flex flex-col overflow-y-scroll py-6 px-4 sm:px-6 gap-6 bg-gray-50">
-                    {/* Item Name / Checkbox */}
-                    <div className="flex items-center">
-                        <div className="-ml-2">
-                            <CompletedCheckbox
-                                checked={cachedItem.completed}
-                                onChange={completed => onEditItem(cachedItem.id, { completed })}
-                            />
-                        </div>
-                        <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
-                    </div>
-                    {/* Edit Item Fields */}
-                    <div className="flex flex-col space-y-2">
-                        <EditQuantity quantity={cachedItem.quantity} onChange={value => onEditItem(cachedItem.id, { quantity: value })} />
-                        <EditDueDate dueDate={cachedItem.dueDate} onChange={value => onEditItem(cachedItem.id, { dueDate: value })} />
-                        <DebounceInput
-                            element="textarea"
-                            value={cachedItem.note}
-                            onChange={event => onEditItem(cachedItem.id, { note: event.target.value })}
-                            debounceTimeout={800}
-                            forceNotifyByEnter={false}
-                            placeholder="Add Note"
-                            className="self-stretch rounded border border-gray-300"
-                            rows={3}
+            <MenuHeader className="flex items-center gap-3 md:p-4">
+                <IconButton icon={faArrowLeft} title="Close Item Details" onClick={() => onClose()} />
+                <MenuTitle title="">Item Details</MenuTitle>
+            </MenuHeader>
+            <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-6 bg-gray-50">
+                {/* Item Name / Checkbox */}
+                <div className="flex items-center">
+                    <div className="-ml-2">
+                        <CompletedCheckbox
+                            checked={cachedItem.completed}
+                            onChange={completed => onEditItem(cachedItem.id, { completed })}
                         />
                     </div>
+                    <NameLabel
+                        completed={cachedItem.completed}
+                        name={cachedItem.name}
+                        className="text-lg sm:text-lg font-semibold text-gray-900"
+                    />
                 </div>
-                {/* Footer */}
-                <MenuFooter className="flex items-center justify-between">
-                    <IconButton icon={faArrowRightFromBracket} title="Close Item Details" onClick={() => onClose()} />
-                    {cachedItem.created && (
-                        <span className="text-sm font-semibold text-gray-500 select-none">
-                            Created {formatDistanceToNow(parseISO(cachedItem.created), { addSuffix: true })}
-                        </span>
-                    )}
-                    <IconButton icon={faTrashCan} title="Delete Item" onClick={onDeleteItem} />
-                </MenuFooter>
-            </div >
+                {/* Edit Item Fields */}
+                <div className="flex flex-col space-y-2">
+                    <EditQuantity
+                        quantity={cachedItem.quantity}
+                        onChange={value => onEditItem(cachedItem.id, { quantity: value })}
+                    />
+                    <EditDueDate
+                        dueDate={cachedItem.dueDate}
+                        onChange={value => onEditItem(cachedItem.id, { dueDate: value })}
+                    />
+                    <DebounceInput
+                        element="textarea"
+                        value={cachedItem.note}
+                        onChange={event => onEditItem(cachedItem.id, { note: event.target.value })}
+                        debounceTimeout={800}
+                        forceNotifyByEnter={false}
+                        placeholder="Add Note"
+                        className="self-stretch rounded border border-gray-300"
+                        rows={3}
+                    />
+                </div>
+            </ScrollableMenuContent>
+            <MenuFooter className="flex items-center justify-between">
+                <IconButton icon={faArrowRightFromBracket} title="Close Item Details" onClick={() => onClose()} />
+                {cachedItem.created && (
+                    <span className="text-sm font-semibold text-gray-500 select-none">
+                        Created {formatDistanceToNow(parseISO(cachedItem.created), { addSuffix: true })}
+                    </span>
+                )}
+                <IconButton icon={faTrashCan} title="Delete Item" onClick={onDeleteItem} />
+            </MenuFooter>
         </Drawer >
     )
 }
