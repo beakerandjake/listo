@@ -5,7 +5,7 @@ import { Transition } from '@headlessui/react';
 import {
     useFloating,
     autoUpdate,
-    offset,
+    offset as offsetMiddleware,
     flip,
     shift,
 } from '@floating-ui/react-dom';
@@ -30,11 +30,11 @@ export const Dropdown = forwardRef(({
     onClickOutside,
     onEscapeKeyDown,
     placement = 'bottom-end',
-    offsetAmount = 5,
+    offset = 5,
     children,
 }, forwardedRef) => {
     const { x, y, reference, floating, strategy, refs, } = useFloating({
-        middleware: [offset(offsetAmount), flip(), shift()],
+        middleware: [offsetMiddleware(offset), flip(), shift()],
         whileElementsMounted: autoUpdate,
         placement: placement,
         strategy: 'fixed'
