@@ -17,7 +17,7 @@ export function AddItemToolbar({
     onAddItem
 }) {
     return (
-        <div className="px-3 py-2 bg-gray-100 rounded-b flex items-center justify-between">
+        <div className="px-3 py-2 bg-slate-100 flex items-center justify-between">
             {/* Item edit buttons */}
             <div className="flex items-center gap-2 sm:gap-3">
                 <SetDueDateButton dueDate={item.dueDate} onDueDateChange={dueDate => onItemChange({ dueDate })} />

@@ -11,9 +11,9 @@ export function AddItemInput(props) {
     }
 
     return (
-        <div className="relative">
+        <div className="relative ">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                <FontAwesomeIcon icon={faPlus} className="text-gray-400 font-thin" />
+                <FontAwesomeIcon icon={faPlus} className="text-green-700 font-thin" />
             </div>
             <input
                 type="text"

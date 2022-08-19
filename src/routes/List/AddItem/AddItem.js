@@ -50,9 +50,9 @@ export function AddItem(props) {
             ref={containerRef}
             onMouseDown={() => setToolbarOpen(true)}
             onFocus={() => setToolbarOpen(true)}
-            className={cx(toolbarOpen ? 'rounded-t' : 'rounded', 'border border-gray-200')}
+            className="rounded border border-gray-300 shadow-md overflow-hidden"
         >
-            <div className={cx({ 'border-b border-gray-300': toolbarOpen })}>
+            <div className={cx({ 'border-b border-gray-300': toolbarOpen }, 'transition-all duration-75')}>
                 <AddItemInput value={item.name} onChange={name => onItemChange({ name })} onSubmit={onAddItem} />
             </div>
             <Transition

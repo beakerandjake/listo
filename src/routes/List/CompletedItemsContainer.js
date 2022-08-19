@@ -93,7 +93,7 @@ export function CompletedItemsContainer({
                 {({ open }) => (
                     <>
                         <div
-                            className={classNames({ "border-b border-gray-200": !open },
+                            className={classNames({ "border-b border-gray-300": !open },
                                 "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none "
                             )}
                         >
