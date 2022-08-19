@@ -6,6 +6,7 @@ import { QuantitySelector } from "components/QuantitySelector";
  * @param {Object} props - The props (spread onto the responsive menu)
  * @param {number} props.quantity - The current quantity.
  * @param {function} props.onChange - Callback fired when the quantity changes.
+ * @param {function} props.onReset - Callback fired when the reset button is clicked.
  * @param {boolean} props.open - Should the menu be opened or closed?
  * @param {function} props.onClose - Callback fired when the menu is closed.
  * @param {ReactElement} props.trigger -  The trigger element to render and position the floating content against.
@@ -13,6 +14,7 @@ import { QuantitySelector } from "components/QuantitySelector";
 export const SetQuantityMenu = ({
     quantity,
     onChange,
+    onReset,
     open,
     onClose,
     trigger,
@@ -25,7 +27,6 @@ export const SetQuantityMenu = ({
             open={open}
             onClose={onClose}
             trigger={trigger}
-            desktopPlacement='bottom-start'
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Change Quantity</MenuTitle>
@@ -39,7 +40,7 @@ export const SetQuantityMenu = ({
                     label="Reset"
                     variant="danger"
                     disabled={quantity <= 1}
-                    onClick={() => onChange(1)} className="text-center"
+                    onClick={() => onReset(1)} className="text-center"
                 />
             </ScrollableMenuContent>
         </ResponsiveMenu>
