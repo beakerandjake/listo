@@ -55,6 +55,7 @@ export const ResponsiveMenu = forwardRef(({
                     onEscapeKeyDown={() => onClose(CLOSE_REASON.escapeKey)}
                     placement={desktopPlacement}
                     offset={desktopOffset}
+                    overlay={!isSubMenu}
                 >
                     {children}
                 </Dropdown>
