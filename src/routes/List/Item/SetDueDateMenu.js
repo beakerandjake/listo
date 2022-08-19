@@ -28,7 +28,8 @@ export function SetDueDateMenu({
     trigger,
     dueDate,
     onDueDateChange,
-    desktopPlacement
+    desktopPlacement,
+    desktopOffset
 }) {
     const [subMenuOpen, setSubMenuOpen] = useState(false);
     const subMenuRef = useRef(null);
@@ -94,6 +95,7 @@ export function SetDueDateMenu({
             onClose={onMainMenuClose}
             trigger={trigger}
             desktopPlacement={desktopPlacement}
+            desktopOffset={desktopOffset}
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Add Due Date</MenuTitle>
