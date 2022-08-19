@@ -1,17 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faCalendarDay, faCalendarPlus, faPlusMinus, faT, faTimes, faTrash, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import cx from 'classnames';
 import { Drawer } from 'components/Drawer';
-import { MenuFooter, MenuHeader, MenuTitle } from 'components/Menu';
+import { MenuFooter, MenuHeader, MenuSeparator, MenuTitle } from 'components/Menu';
 import { IconButton } from 'components/IconButton';
-import { CompletedCheckbox } from '../Item';
+import { CompletedCheckbox, SetDueDateMenu } from '../Item';
 import { NameLabel } from '../Item';
 import { QuantityButton } from '../Item';
 import { DueDateStatus } from '../Item';
 import { EditItemField } from './EditItemField';
 import { DebounceInput } from "react-debounce-input";
-import { DueDatePicker } from './DueDatePicker';
+import { QuantitySelector } from 'components/QuantitySelector';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
 
+const VARIANT_STYLES = {
+    default: 'text-gray-400',
+    success: 'text-indigo-700',
+    danger: 'text-red-700'
+}
+
+const ItemFieldMenuButton = forwardRef(({
+    icon,
+    placeholder,
+    variant = 'default',
+    children,
+    onClick,
+    onClearValue,
+    clearButtonTitle
+}, ref) => {
+    const variantStyle = VARIANT_STYLES[variant];
+
+    return (
+        <div
+            ref={ref}
+            className={cx(
+                'min-h-[3.5rem] flex justify-between flex-1 w-full cursor-pointer select-none',
+                'bg-white hover:bg-slate-100 border-gray-300 border rounded',
+            )}
+        >
+            <div
+                onClick={() => onClick()}
+                className={cx(variantStyle, 'flex-1 py-2 pl-3 flex items-center')}
+            >
+                <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
+                {!children && <span>{placeholder}</span>}
+                {children}
+            </div>
+            {/* Show the close button if the field has a value. */}
+            {!!children && (
+                <IconButton
+                    icon={faTimes}
+                    className="w-[10%]"
+                    onClick={() => onClearValue()}
+                    title={clearButtonTitle}
+                />
+            )}
+        </div>
+    )
+});
 
 /**
  * Drawer which allows the user to edit fields of an Item.
@@ -28,6 +76,7 @@ export function EditItem({
     onDeleteItem
 }) {
     const [open, setOpen] = useState(false);
+    const [dueDateMenuOpen, setDueDateMenuOpen] = useState(false);
     const [cachedItem, setCachedItem] = useState({});
 
     // any time our item changes, update our current state.
@@ -63,12 +112,43 @@ export function EditItem({
                         </div>
                         <NameLabel completed={cachedItem.completed} name={cachedItem.name} className="text-lg sm:text-lg font-semibold text-gray-900" />
                     </div>
-                    <div className="flex flex-col space-y-6">
-                        <EditItemField label="Quantity">
-                            <QuantityButton
-                                quantity={cachedItem.quantity}
-                                onQuantityChange={quantity => onEditItem(cachedItem.id, { quantity })}
-                            />
+                    <div className="flex flex-col space-y-2">
+                        <SetDueDateMenu
+                            open={dueDateMenuOpen}
+                            onClose={() => setDueDateMenuOpen(false)}
+                            dueDate={cachedItem.dueDate}
+                            onDueDateChange={date => {
+                                setDueDateMenuOpen(false);
+                                onEditItem(cachedItem.id, { dueDate: date });
+                            }}
+                            trigger={(
+                                <ItemFieldMenuButton
+                                    icon={cachedItem.dueDate ? faCalendarDay : faCalendarPlus}
+                                    placeholder="Add Due Date"
+                                    clearButtonTitle="Remove Due Date"
+                                    onClick={() => setDueDateMenuOpen(true)}
+                                    onClearValue={() => onEditItem(cachedItem.id, { dueDate: null })}
+                                    variant={!cachedItem.dueDate
+                                        ? 'default'
+                                        : isOverdue(cachedItem.dueDate) ? 'danger' : 'success'
+                                    }
+                                >
+                                    {cachedItem.dueDate && (
+                                        <span>{formatDueDate(cachedItem.dueDate)}</span>
+                                    )}
+                                </ItemFieldMenuButton>
+                            )}
+                        />
+
+
+                        {/* <ItemFieldMenuButton icon={faCalendarPlus} placeholder="Add Due Date">
+
+                        </ItemFieldMenuButton> */}
+
+                        {/* <EditItemField label="Quantity">
+                            <div className="flex w-full items-stretch justify-center flex-1">
+                                <QuantitySelector quantity={cachedItem.quantity} onQuantityChange={quantity => onEditItem(cachedItem.id, { quantity })} />
+                            </div>
                         </EditItemField>
 
                         <EditItemField label="Due Date">
@@ -77,20 +157,20 @@ export function EditItem({
                                 onChange={date => onEditItem(cachedItem.id, { dueDate: date })}
                             />
                             <DueDateStatus dueDate={cachedItem.dueDate} />
-                        </EditItemField>
+                        </EditItemField> */}
 
-                        <EditItemField>
-                            <DebounceInput
-                                element="textarea"
-                                value={cachedItem.note}
-                                onChange={event => onEditItem(cachedItem.id, { note: event.target.value })}
-                                debounceTimeout={800}
-                                forceNotifyByEnter={false}
-                                placeholder="Add Note"
-                                className="border-gray-200 self-stretch"
-                                rows={3}
-                            />
-                        </EditItemField>
+                        {/* <EditItemField> */}
+                        <DebounceInput
+                            element="textarea"
+                            value={cachedItem.note}
+                            onChange={event => onEditItem(cachedItem.id, { note: event.target.value })}
+                            debounceTimeout={800}
+                            forceNotifyByEnter={false}
+                            placeholder="Add Note"
+                            className="self-stretch rounded border border-gray-300"
+                            rows={3}
+                        />
+                        {/* </EditItemField> */}
                     </div>
                 </div>
                 {/* Footer */}
@@ -103,7 +183,7 @@ export function EditItem({
                     )}
                     <IconButton icon={faTrashCan} title="Delete Item" onClick={onDeleteItem} />
                 </MenuFooter>
-            </div>
+            </div >
         </Drawer >
     )
 }

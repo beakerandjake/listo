@@ -30,3 +30,17 @@ export function formatDueDate(date) {
 
     return (isPast(parsed) ? 'Overdue, ' : 'Due ') + toReturn;
 }
+
+/**
+ * Is the give date in the past?
+ * @param {Date|string} date - The due date (either a Date object or an ISO date string)
+ */
+export function isOverdue(date) {
+    const parsed = isDate(date) ? date : parseISO(date);
+
+    if (!isValid(parsed)) {
+        throw new Error('Invalid Date');
+    }
+
+    return differenceInCalendarDays(parsed, new Date()) < 0;
+}

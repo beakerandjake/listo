@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { faCalendarPlus, faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
 import cx from 'classnames';
-import { formatDueDate } from "services/formatDueDate";
+import { formatDueDate } from "services/dueDateHelpers";
 import { ToolbarButton } from "./ToolbarButton";
 import { SetDueDateMenu } from "routes/List/Item";
 
