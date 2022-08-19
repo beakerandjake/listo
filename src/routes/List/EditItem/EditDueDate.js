@@ -4,7 +4,15 @@ import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
 import { SetDueDateMenu } from '../Item';
 import { ItemFieldMenuButton } from './ItemFieldMenuButton';
 
-export const EditDueDate = ({dueDate, onChange }) => {
+/**
+ * Allows the user to set or edit the due date and displays the current due date (if any)
+ * @param {Object} props - The Props.
+ * @param {date} props.dueDate - The current due date.
+ * @param {function} props.onChange - Callback fired when the due date changes
+ */
+export const EditDueDate = ({
+    dueDate, onChange
+}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const setDueDateAndCloseMenu = value => {
