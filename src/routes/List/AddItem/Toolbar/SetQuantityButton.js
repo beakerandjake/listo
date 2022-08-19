@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { faPlusMinus } from "@fortawesome/free-solid-svg-icons";
+import cx from 'classnames';
 import { ToolbarButton } from "./ToolbarButton";
 import { MenuHeader, MenuItem, MenuSeparator, MenuTitle, ResponsiveMenu, ScrollableMenuContent } from "components/Menu";
 import { QuantitySelector } from "components/QuantitySelector";
@@ -40,6 +41,7 @@ export function SetQuantityButton({
                     title="Change Quantity"
                     text={quantity > 1 && `Qty: ${quantity}`}
                     onClick={() => setMenuOpenAndNotify(!menuOpen)}
+                    className={cx({ 'text-indigo-700': quantity > 1 })}
                 />
             )}
         >

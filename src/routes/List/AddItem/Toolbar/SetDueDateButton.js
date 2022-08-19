@@ -1,6 +1,7 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { faCalendarPlus, faCalendarCheck } from "@fortawesome/free-regular-svg-icons";
+import cx from 'classnames';
 import { formatDueDate } from "services/formatDueDate";
 import { ToolbarButton } from "./ToolbarButton";
 import { SetDueDateMenu } from "routes/List/Item";
@@ -46,6 +47,7 @@ export function SetDueDateButton({
                     title="Add Due Date"
                     text={dueDate && formatDueDate(dueDate)}
                     onClick={() => setMenuOpenAndNotify(!menuOpen)}
+                    className={cx({ 'text-indigo-700': !!dueDate })}
                 />
             )}
         />
