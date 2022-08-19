@@ -15,12 +15,19 @@ const DEFAULT_ITEM = {
 export function AddItem(props) {
     const containerRef = useRef(null);
     const [toolbarOpen, setToolbarOpen] = useState(false);
+    const [toolbarMenuOpen, setToolbarMenuOpen] = useState(false);
     const [item, setItem] = useState(DEFAULT_ITEM);
     const nameValid = item.name && item.name.length > 1;
 
-    // Will minimize the toolbar only if the user doesn't have any pending edits to the item.
+    // Will minimize the toolbar unless the user is interacting with it.
     const tryToMinimizeToolbar = () => {
+        // If the user has pending edits to the item, don't close the toolbar.
         if (!isEqual(item, DEFAULT_ITEM)) {
+            return;
+        }
+
+        // If a toolbar menu is open, ignore interaction with the menu. 
+        if (toolbarMenuOpen) {
             return;
         }
 
@@ -69,6 +76,7 @@ export function AddItem(props) {
                     onItemChange={onItemChange}
                     canAddItem={nameValid}
                     onAddItem={onAddItem}
+                    onMenuOpenChange={setToolbarMenuOpen}
                 />
             </Transition>
         </div >
