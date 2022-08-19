@@ -41,7 +41,7 @@ export const Dropdown = forwardRef(({
     });
 
     useOnClickOutside(e => onClickOutside && onClickOutside(e), !open, refs.floating, refs.reference);
-    useKeyDown('Escape', () => onEscapeKeyDown && onEscapeKeyDown(), !open);
+    useKeyDown('Escape', () => onEscapeKeyDown && onEscapeKeyDown(), !open, true);
 
     return (
         <>
