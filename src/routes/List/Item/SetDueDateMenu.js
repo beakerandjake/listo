@@ -38,6 +38,7 @@ export function SetDueDateMenu({
     trigger,
     dueDate,
     onDueDateChange,
+    desktopSubMenuPlacement = 'right-start',
     ...props
 }) {
     const [subMenuOpen, setSubMenuOpen] = useState(false);
@@ -130,7 +131,7 @@ export function SetDueDateMenu({
                     open={subMenuOpen}
                     onClose={onSubMenuClose}
                     isSubMenu={true}
-                    desktopPlacement="right-start"
+                    desktopPlacement={desktopSubMenuPlacement}
                     mobileCloseButtonAnchor="left"
                     mobileCloseButtonIcon={faArrowLeft}
                     trigger={(
