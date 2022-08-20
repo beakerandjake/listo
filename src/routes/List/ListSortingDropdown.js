@@ -1,3 +1,4 @@
+import { useLayoutEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
@@ -10,7 +11,6 @@ import {
     ScrollableMenuContent,
     StatefulMenu
 } from 'components/Menu';
-import { useEffect, useState } from 'react';
 
 const SORTING_FIELDS = [
     {
@@ -59,7 +59,7 @@ export function ListSortingDropdown({
 
     // Any time the active sort prop changes, search our sorting fields
     // to find the element that corresponds to the active sort prop.
-    useEffect(() => {
+    useLayoutEffect(() => {
         const result = SORTING_FIELDS.find(({ itemKey, sortingDirection }) =>
             activeSort.itemKey === itemKey && activeSort.direction === sortingDirection
         );

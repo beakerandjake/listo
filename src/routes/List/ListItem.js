@@ -3,7 +3,7 @@ import { faCalendarCheck, faNoteSticky } from '@fortawesome/free-regular-svg-ico
 import cx from 'classnames';
 import { formatDueDate, isDueToday, isOverdue } from 'services/dueDateHelpers';
 import { Badge } from 'components/Badge';
-import { CompletedCheckbox } from './Item/CompletedCheckbox';
+import { ItemCompletedCheckbox } from './Item/ItemCompletedCheckbox';
 import { ItemNameLabel } from './Item/ItemNameLabel';
 
 /**
@@ -43,7 +43,7 @@ export const ListItem = ({
             className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 drop-shadow min-h-[50px] rounded cursor-pointer select-none border-gray-300 border"
             onClick={() => onClick(item.id)}
         >
-            <CompletedCheckbox
+            <ItemCompletedCheckbox
                 checked={item.completed}
                 onChange={completed => onItemChange({ completed })}
             />

@@ -10,7 +10,7 @@ import {
     ScrollableMenuContent
 } from 'components/Menu';
 import { IconButton } from 'components/IconButton';
-import { CompletedCheckbox } from 'routes/List/Item';
+import { ItemCompletedCheckbox } from 'routes/List/Item';
 import { ItemNameLabel } from 'routes/List/Item';
 import { EditItemQuantity } from './EditItemQuantity';
 import { EditItemDudeDate } from './EditItemDueDate';
@@ -58,7 +58,7 @@ export function EditItem({
                 {/* Item Name / Checkbox */}
                 <div className="flex items-center">
                     <div className="-ml-2">
-                        <CompletedCheckbox
+                        <ItemCompletedCheckbox
                             checked={cachedItem.completed}
                             onChange={completed => onEditItem(cachedItem.id, { completed })}
                         />

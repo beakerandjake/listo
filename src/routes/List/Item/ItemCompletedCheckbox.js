@@ -4,7 +4,7 @@ import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/free-solid-svg
 import { faSquare, faSquareCheck as faSquareCheckRegular } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export function CompletedCheckbox(props) {
+export function ItemCompletedCheckbox(props) {
     const [hover, setHover] = useState(false);
 
     const onKeyDown = e => {
