@@ -11,7 +11,7 @@ import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
-import { SortingDropdown } from './SortingDropdown';
+import { ItemSortingDropdown } from './ItemSortingDropdown';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -173,7 +173,7 @@ export function List(props) {
                     })} />
                 {sortedItems.length > 0 && (
                     <div className="flex-shrink-0 ml-auto">
-                        <SortingDropdown activeSort={activeSort} onChange={setActiveSort} />
+                        <ItemSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
                     </div>
                 )}
             </ListPageHeader>

@@ -17,7 +17,7 @@ import {
  * @param {object} props.activeSort - The current active sort. 
  * @param {function} props.onChange - Callback invoked when the user selects an active sort from the dropdown. 
  */
-export function SortingDropdown({
+export function ItemSortingDropdown({
     activeSort,
     onChange
 }) {
