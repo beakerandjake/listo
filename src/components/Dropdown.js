@@ -88,7 +88,7 @@ export const Dropdown = forwardRef(({
                         <div
                             ref={mergeRefs([floating, forwardedRef])}
                             className={cx(
-                                'absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden',
+                                'absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
                                 'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
                                 className
                             )}
