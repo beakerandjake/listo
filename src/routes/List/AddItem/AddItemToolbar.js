@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
 import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/free-solid-svg-icons";
-import { SetDueDateMenu } from "routes/List/Item";
-import { ItemQuantityMenu } from "routes/List/Item/ItemQuantityMenu";
+import { ItemDueDateMenu } from "routes/List/Item";
+import { ItemQuantityMenu } from "routes/List/Item";
 import { formatDueDate } from "services/dueDateHelpers";
 
 const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
@@ -64,8 +64,7 @@ export function AddItemToolbar({
         <div className="px-3 py-2 bg-slate-100 flex items-center justify-between">
             {/* Item edit buttons */}
             <div className="flex items-center gap-2 sm:gap-3">
-
-                <SetDueDateMenu
+                <ItemDueDateMenu
                     className={TOOLBAR_MENU_CLASS}
                     dueDate={item.dueDate}
                     onDueDateChange={dueDate => onItemChange({ dueDate })}
@@ -79,7 +78,6 @@ export function AddItemToolbar({
                     )}
                     desktopPlacement="bottom-start"
                 />
-
                 <ItemQuantityMenu
                     className={TOOLBAR_MENU_CLASS}
                     quantity={item.quantity}

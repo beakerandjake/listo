@@ -1,7 +1,7 @@
 import { faCalendarDay, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
-import { SetDueDateMenu } from '../Item';
 import { EditItemMenuButton } from './EditItemMenuButton';
+import { ItemDueDateMenu } from 'routes/List/Item';
 
 /**
  * An ItemFieldMenuButton that allows the user to view / edit the item due date.
@@ -13,7 +13,7 @@ export const EditItemDudeDate = ({
     dueDate, onChange
 }) => {
     return (
-        <SetDueDateMenu
+        <ItemDueDateMenu
             dueDate={dueDate}
             onDueDateChange={onChange}
             trigger={(

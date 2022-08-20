@@ -3,15 +3,15 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { DebounceInput } from "react-debounce-input";
 import { Drawer } from 'components/Drawer';
-import { IconButton } from 'components/IconButton';
-import { CompletedCheckbox } from '../Item';
-import { NameLabel } from '../Item';
 import {
     MenuFooter,
     MenuHeader,
     MenuTitle,
     ScrollableMenuContent
 } from 'components/Menu';
+import { IconButton } from 'components/IconButton';
+import { CompletedCheckbox } from 'routes/List/Item';
+import { ItemNameLabel } from 'routes/List/Item';
 import { EditItemQuantity } from './EditItemQuantity';
 import { EditItemDudeDate } from './EditItemDueDate';
 
@@ -63,7 +63,7 @@ export function EditItem({
                             onChange={completed => onEditItem(cachedItem.id, { completed })}
                         />
                     </div>
-                    <NameLabel
+                    <ItemNameLabel
                         completed={cachedItem.completed}
                         name={cachedItem.name}
                         className="text-lg sm:text-lg font-semibold text-gray-900"
@@ -80,7 +80,7 @@ export function EditItem({
                         dueDate={cachedItem.dueDate}
                         onChange={value => onEditItem(cachedItem.id, { dueDate: value })}
                     />
-                    
+
                     <DebounceInput
                         element="textarea"
                         value={cachedItem.note}
