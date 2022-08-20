@@ -177,10 +177,7 @@ export function List(props) {
 
     return (
         <>
-            <ListPageHeader
-                iconName={list.iconName}
-                name={list.name}
-            >
+            <ListPageHeader iconName={list.iconName} name={list.name}>
                 <ListActionsDropdown
                     items={sortedItems}
                     onSetItemsCompleted={setItemsCompleted}
