@@ -16,13 +16,13 @@ import {
 } from "components/Menu";
 
 /**
- * Dropdown menu which contains actions which apply to all of the items in the completed container.
+ * Menu which contains actions which apply to all of the items in the completed container.
  * @param {Object} props - The props.
  * @param {Array} props.items - The items of the list.
- * @param {function} props.onSetAllItemsCompleted - Callback invoked when the user wants to mark all of the completed items as incomplete.
+ * @param {function} props.onSetItemsIncomplete - Callback invoked when the user wants to mark all of the completed items as incomplete.
  * @param {function} props.onDeleteAllItems - Callback invoked when the user wants to delete all of the completed items
  */
-const CompletedItemsDropdown = ({ onSetAllItemsCompleted, onDeleteAllItems }) => {
+const CompletedItemsActionsMenu = ({ onSetItemsIncomplete, onDeleteAllItems }) => {
     return (
         <StatefulMenu>
             {({ open, setOpen }) => (
@@ -41,7 +41,7 @@ const CompletedItemsDropdown = ({ onSetAllItemsCompleted, onDeleteAllItems }) =>
                             label="Mark Items Incomplete"
                             onClick={() => {
                                 setOpen(false);
-                                onSetAllItemsCompleted();
+                                onSetItemsIncomplete();
                             }}
                         />
                         <MenuItem
@@ -65,13 +65,13 @@ const CompletedItemsDropdown = ({ onSetAllItemsCompleted, onDeleteAllItems }) =>
  * A collapsible container which renders items as children.
  * @param {Object} props - The props.
  * @param {Array} props.count - The number of completed items in the container, controls whether this component is rendered or not.
- * @param {function} props.onSetAllItemsCompleted - Callback invoked when the user wants to mark all of the completed items as incomplete.
+ * @param {function} props.onSetItemsIncomplete - Callback invoked when the user wants to mark all of the completed items as incomplete.
  * @param {function} props.onDeleteAllItems - Callback invoked when the user wants to delete all of the completed items
  * @param {React.ReactNode=} props.children - The completed items to render.
  */
-export function CompletedItemsContainer({
+export function ListCompletedItemsCollapsible({
     count,
-    onSetAllItemsCompleted,
+    onSetItemsIncomplete,
     onDeleteAllItems,
     children
 }) {
@@ -114,8 +114,8 @@ export function CompletedItemsContainer({
                                 </h3>
                             </Disclosure.Button>
                             <div className="flex-grow-0 flex items-center">
-                                <CompletedItemsDropdown
-                                    onSetAllItemsCompleted={onSetAllItemsCompleted}
+                                <CompletedItemsActionsMenu
+                                    onSetItemsIncomplete={onSetItemsIncomplete}
                                     onDeleteAllItems={onDeleteAllItems}
                                 />
                             </div>

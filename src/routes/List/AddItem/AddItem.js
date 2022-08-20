@@ -69,7 +69,7 @@ export function AddItem({
     return (
         <div
             ref={containerRef}
-            className="rounded border border-gray-300 shadow-md shadow-black/5 overflow-hidden"
+            className="rounded border border-gray-300 shadow-md shadow-black/20 overflow-hidden mb-3"
         >
             <div className={cx({ 'border-b border-gray-300': toolbarVisible }, 'transition-all duration-75')}>
                 <AddItemInput

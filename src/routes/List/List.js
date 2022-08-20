@@ -12,6 +12,7 @@ import { ListPageHeader } from './ListPageHeader';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
 import { ItemSortingDropdown } from './ItemSortingDropdown';
+import { ListItems } from './ListItems';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -154,6 +155,24 @@ export function List(props) {
         return list.items.find(x => x.id === itemId);
     }
 
+    const editItems = (changes) => {
+        try {
+            const newItems = list.items.map(item => {
+                const changeForItem = changes.find(change => change.id === item.id);
+
+                if (!changeForItem) {
+                    return item;
+                }
+
+                return { ...item, ...changeForItem.changes }
+            });
+
+            setList({ ...list, items: newItems });
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
     if (!initialized) {
         return <Skeleton />;
     }
@@ -170,7 +189,8 @@ export function List(props) {
                     onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
                         title: 'Delete All Items?',
                         message: 'All Items in this list will be permanently deleted.'
-                    })} />
+                    })}
+                />
                 {sortedItems.length > 0 && (
                     <div className="flex-shrink-0 ml-auto">
                         <ItemSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
@@ -178,22 +198,16 @@ export function List(props) {
                 )}
             </ListPageHeader>
             <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
-                <div className="rounded shadow-md shadow-gray-300 mb-3">
-                    <AddItem onAddItem={onAddItem} />
-                </div>
-                {sortedItems?.length
-                    ? <ItemsContainer
-                        items={sortedItems}
-                        onSetItemCompleted={onSetItemCompleted}
-                        onClickItem={setSelectedItemId}
-                        onSetItemsCompleted={setItemsCompleted}
-                        onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                            title: 'Delete Completed Items?',
-                            message: 'All Items marked as completed will be permanently deleted.'
-                        })}
-                    />
-                    : <EmptyItemList />
-                }
+                <AddItem onAddItem={onAddItem} />
+                <ListItems
+                    items={sortedItems}
+                    onItemSelected={setSelectedItemId}
+                    onItemsChange={editItems}
+                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                        title: 'Delete Completed Items?',
+                        message: 'All Items marked as completed will be permanently deleted.'
+                    })}
+                />
             </div>
             <EditItem
                 item={getSelectedItem(selectedItemId)}
