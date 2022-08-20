@@ -9,24 +9,16 @@ import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
  * @param {Object} props
  * @param {date} props.quantity - The current due date of the item.
  * @param {function} props.onQuantityChange - Callback invoked when the user changes the due date. 
- * @param {function} props.onMenuOpenChange - Callback invoked when the user opens or closes the menu. 
  */
 export function SetQuantityButton({
     quantity,
     onQuantityChange,
-    onMenuOpenChange
 }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
-    // Opens or closes the menu and notifies anyone interested.
-    const setMenuOpenAndNotify = open => {
-        setMenuOpen(open);
-        onMenuOpenChange(open);
-    };
-
     // Fires the quantity change callback and closes the menu.
     const updateQuantityAndCloseMenu = newQuantity => {
-        setMenuOpenAndNotify(false);
+        setMenuOpen(false);
         onQuantityChange(newQuantity);
     }
 
@@ -36,13 +28,13 @@ export function SetQuantityButton({
             onChange={onQuantityChange}
             onReset={() => updateQuantityAndCloseMenu(1)}
             open={menuOpen}
-            onClose={() => setMenuOpenAndNotify(false)}
+            onClose={() => setMenuOpen(false)}
             trigger={(
                 <AddItemToolbarButton
                     icon={faPlusMinus}
                     title="Change Quantity"
                     text={quantity > 1 && `Qty: ${quantity}`}
-                    onClick={() => setMenuOpenAndNotify(!menuOpen)}
+                    onClick={() => setMenuOpen(!menuOpen)}
                     className={cx({ 'text-indigo-700': quantity > 1 })}
                 />
             )}

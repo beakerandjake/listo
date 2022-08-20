@@ -56,7 +56,6 @@ export function AddItem(props) {
             ref={containerRef}
             className="rounded border border-gray-300 shadow-md overflow-hidden"
         >
-            {toolbarVisible ? 'true' : 'false'}
             <div className={cx({ 'border-b border-gray-300': toolbarVisible }, 'transition-all duration-75')}>
                 <AddItemInput
                     value={item.name}
