@@ -7,9 +7,12 @@ import { SetDueDateMenu } from "routes/List/Item";
 import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
 import { formatDueDate } from "services/dueDateHelpers";
 
-// Class that should be applied to toolbar menus.
 const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
 
+/**
+ * Is the given element a child of the AddItemToolbar?
+ * @param {DOMEventTarget} element - The element to check.
+ */
 export function elementIsPartOfToolbar(element) {
     return !!element.closest(`.${TOOLBAR_MENU_CLASS}`);
 }
