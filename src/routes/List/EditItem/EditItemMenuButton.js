@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
@@ -10,14 +10,25 @@ const VARIANT_STYLES = {
     danger: 'text-red-700'
 }
 
-export const ItemFieldMenuButton = forwardRef(({
+/**
+ * An ItemFieldMenuButton that allows the user to view / edit the item quantity.
+ * @param {Object} props
+ * @param {IconDefinition} props.icon - The icon to display.
+ * @param {string} props.placeholder - The text to render if no children are provided.
+ * @param {'default'|'success'|'danger'} props.variant - The variant style of the button.
+ * @param {function} props.onClick - Callback invoked when the user clicks the button.
+ * @param {function} props.onClearValue - Callback invoked when the user clicks the clear button.
+ * @param {string} props.clearButtonTitle - The title to display when hovering the clear button.
+ * @param {React.ReactNode} props.children - The child element.  
+ */
+export const EditItemMenuButton = forwardRef(({
     icon,
     placeholder,
     variant = 'default',
-    children,
     onClick,
     onClearValue,
-    clearButtonTitle
+    clearButtonTitle,
+    children,
 }, ref) => {
     const variantStyle = VARIANT_STYLES[variant];
 
@@ -34,10 +45,10 @@ export const ItemFieldMenuButton = forwardRef(({
                 className={cx(variantStyle, 'flex-1 py-2 pl-3 flex items-center')}
             >
                 <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
-                {!children && <span>{placeholder}</span>}
-                {children}
+                {/* Render either the children or the placeholder text if no children provided. */}
+                {!!children ? children : placeholder}
             </div>
-            {/* Show the close button if the field has a value. */}
+            {/* Show the close button if children are present */}
             {!!children && (
                 <IconButton
                     icon={faTimes}
