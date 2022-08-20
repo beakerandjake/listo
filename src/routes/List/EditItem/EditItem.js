@@ -66,7 +66,7 @@ export function EditItem({
                     <ItemNameLabel
                         completed={cachedItem.completed}
                         name={cachedItem.name}
-                        className="text-lg sm:text-lg font-semibold text-gray-900"
+                        className="text-2xl font-medium text-gray-900"
                     />
                 </div>
                 {/* Edit Item Fields */}
