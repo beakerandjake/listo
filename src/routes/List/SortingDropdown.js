@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { Button } from 'components/Button';
-import { Dropdown } from 'components/Dropdown';
 import { MenuHeader, MenuItem, MenuTitle, ResponsiveMenu, ScrollableMenuContent } from 'components/Menu';
 
 export function SortingDropdown(props) {
