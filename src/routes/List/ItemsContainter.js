@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Transition } from "@headlessui/react";
 import { CompletedItemsContainer } from "./CompletedItemsContainer";
 import { ItemList } from "./ItemList";
 
