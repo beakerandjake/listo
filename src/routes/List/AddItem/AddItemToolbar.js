@@ -11,9 +11,7 @@ import { formatDueDate } from "services/dueDateHelpers";
 const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
 
 export function elementIsPartOfToolbar(element) {
-    const z = element.closest(`.${TOOLBAR_MENU_CLASS}`);
-    console.log('z', z);
-    return !!z;
+    return !!element.closest(`.${TOOLBAR_MENU_CLASS}`);
 }
 
 /**

@@ -13,7 +13,16 @@ const DEFAULT_ITEM = {
     quantity: 1
 }
 
-export function AddItem(props) {
+/**
+ * Allows the user to add a new Item to the list.
+ * @param {object} props - the props
+ * @param {function} props.onAddItem - Callback invoked when the user adds a new Item to the list.
+ * @param {boolean} props.disabled - Should the input be disabled?
+ **/
+export function AddItem({
+    onAddItem,
+    disabled,
+}) {
     const containerRef = useRef(null);
     const [toolbarVisible, setToolbarVisible] = useState(false);
     const [item, setItem] = useState(DEFAULT_ITEM);
@@ -21,12 +30,15 @@ export function AddItem(props) {
 
     // Will minimize the toolbar unless the user is interacting with it.
     const tryToHideToolbar = e => {
-        console.log('click outside!');
-
+        // If the user is interacting with a toolbar menu, then don't minimize the toolbar. 
+        // This edge case can happen if menu items are portalled they will technically
+        // not be a child of this containerRef, so the useOnClickOutside hook will fire 
+        // even thought the outside element is really "inside" the menu.
         if (elementIsPartOfToolbar(e.target)) {
             return;
         }
 
+        // Don't close the toolbar if the user has pending edits to the item.
         if (!isEqual(item, DEFAULT_ITEM)) {
             return;
         }
@@ -45,12 +57,12 @@ export function AddItem(props) {
     };
 
     // Callback invoked when the user submits the item.
-    const onAddItem = () => {
-        if (!nameValid || props.disabled) {
+    const tryToAddItem = () => {
+        if (!nameValid || disabled) {
             return;
         }
 
-        props.onAddItem(item);
+        onAddItem(item);
         setItem(DEFAULT_ITEM);
     };
 
@@ -63,7 +75,7 @@ export function AddItem(props) {
                 <AddItemInput
                     value={item.name}
                     onChange={name => onItemChange({ name })}
-                    onSubmit={onAddItem}
+                    onSubmit={tryToAddItem}
                     onFocus={() => setToolbarVisible(true)}
                 />
             </div>
@@ -80,7 +92,7 @@ export function AddItem(props) {
                     item={item}
                     onItemChange={onItemChange}
                     canAddItem={nameValid}
-                    onAddItem={onAddItem}
+                    onAddItem={tryToAddItem}
                 />
             </Transition>
         </div >
