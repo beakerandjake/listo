@@ -1,10 +1,30 @@
-import classNames from 'classnames';
-import { faNoteSticky } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendarCheck, faNoteSticky } from '@fortawesome/free-regular-svg-icons';
+import cx from 'classnames';
+import { formatDueDate, isDueToday, isOverdue } from 'services/dueDateHelpers';
 import { Badge } from 'components/Badge';
-import { DueDateStatus } from './Item/DueDateStatus';
 import { CompletedCheckbox } from './Item/CompletedCheckbox';
-import { NameLabel } from './Item/NameLabel';
-import { Status } from './Item/Status';
+import { ItemNameLabel } from './Item/ItemNameLabel';
+
+/**
+ * Used to compactly display the values of various item properties.
+ * @param {Object} props
+ * @param {IconDefinition} props.icon - The icon to display.
+ * @param {string} props.text - The text to display.
+ * @param {string=} props.className - Additional styles to apply to the component
+ */
+const ItemIndicator = ({
+    icon,
+    text,
+    className
+}) => {
+    return (
+        <div className={cx("flex items-center gap-1 text-gray-500 text-xs font-medium", className)}>
+            <FontAwesomeIcon icon={icon} />
+            <span>{text}</span>
+        </div>
+    )
+};
 
 /**
  * Represents an item in a list. Displayed in a ListItemContainer.
@@ -27,15 +47,27 @@ export const ListItem = ({
                 checked={item.completed}
                 onChange={completed => onItemChange({ completed })}
             />
-            <span className={classNames({ 'opacity-50': item.completed }, 'pl-3 w-full flex flex-col gap-1 items-start')}>
+            <span className={cx({ 'opacity-50': item.completed }, 'pl-3 w-full flex flex-col gap-1 items-start')}>
                 <span className="w-full flex items-center gap-2">
-                    <NameLabel completed={item.completed} name={item.name} className="text-sm md:text-base" />
+                    <ItemNameLabel completed={item.completed} name={item.name} className="text-sm md:text-base" />
                     {item.quantity > 1 && <Badge content={item.quantity} />}
                 </span>
                 <span className="flex items-center gap-2 w-full">
-                    <DueDateStatus dueDate={item.dueDate} completed={item.completed} />
-                    {(item.note && item.dueDate) && <span className="text-gray-400 text-xs font-medium">{"\u2022"}</span>}
-                    {item.note && <Status icon={faNoteSticky} text="Note" />}
+                    {/* Due Date Indicator */}
+                    {item.dueDate && (
+                        <ItemIndicator
+                            icon={faCalendarCheck}
+                            text={formatDueDate(item.dueDate)}
+                            className={cx({
+                                'text-indigo-700': !item.completed && isDueToday(item.dueDate),
+                                'text-red-800': !item.completed && isOverdue(item.dueDate)
+                            })}
+                        />
+                    )}
+                    {/* Indicator Separator */}
+                    <span className="last:hidden text-gray-400 text-xs font-medium">{"\u2022"}</span>
+                    {/* Note Indicator */}
+                    {item.note && <ItemIndicator icon={faNoteSticky} text="Note" />}
                 </span>
             </span>
         </li>
