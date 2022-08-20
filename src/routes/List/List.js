@@ -9,7 +9,7 @@ import { EditItem } from './EditItem';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
-import { ItemSortingDropdown } from './ItemSortingDropdown';
+import { ListSortingDropdown } from './ListSortingDropdown';
 import { ListItems } from './ListItems';
 
 const defaultSorting = {
@@ -191,7 +191,7 @@ export function List(props) {
                 />
                 {sortedItems.length > 0 && (
                     <div className="flex-shrink-0 ml-auto">
-                        <ItemSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
+                        <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
                     </div>
                 )}
             </ListPageHeader>

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCropSimple, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { Button } from 'components/Button';
 import {
@@ -51,7 +51,7 @@ const SORTING_FIELDS = [
  * @param {object} props.activeSort - The current active sort. 
  * @param {function} props.onChange - Callback invoked when the user selects an active sort from the dropdown. 
  */
-export function ItemSortingDropdown({
+export function ListSortingDropdown({
     activeSort,
     onChange
 }) {
