@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
@@ -12,7 +11,8 @@ import {
     MenuItem,
     MenuTitle,
     ResponsiveMenu,
-    ScrollableMenuContent
+    ScrollableMenuContent,
+    StatefulMenu
 } from "components/Menu";
 
 /**
@@ -23,28 +23,40 @@ import {
  * @param {function} props.onDeleteAllItems - Callback invoked when the user wants to delete all of the completed items
  */
 const CompletedItemsDropdown = ({ onSetAllItemsCompleted, onDeleteAllItems }) => {
-    const [open, setOpen] = useState(false);
-
-    const closeDropdownThen = fn => {
-        setOpen(false);
-        fn();
-    }
-
     return (
-        <ResponsiveMenu
-            open={open}
-            onClose={() => setOpen(false)}
-            trigger={<EllipsisMenuTrigger onClick={() => setOpen(true)} />}
-            desktopPlacement='bottom-end'
-        >
-            <MenuHeader className="flex items-center justify-center">
-                <MenuTitle>List Actions</MenuTitle>
-            </MenuHeader>
-            <ScrollableMenuContent>
-                <MenuItem icon={faRotateLeft} label="Mark Items Incomplete" onClick={() => closeDropdownThen(onSetAllItemsCompleted)} />
-                <MenuItem icon={faTrashCan} variant="danger" label="Delete Completed Items" onClick={() => closeDropdownThen(onDeleteAllItems)} />
-            </ScrollableMenuContent>
-        </ResponsiveMenu >
+        <StatefulMenu>
+            {({ open, setOpen }) => (
+                <ResponsiveMenu
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    trigger={<EllipsisMenuTrigger onClick={() => setOpen(true)} />}
+                    desktopPlacement='bottom-end'
+                >
+                    <MenuHeader className="flex items-center justify-center">
+                        <MenuTitle>List Actions</MenuTitle>
+                    </MenuHeader>
+                    <ScrollableMenuContent>
+                        <MenuItem
+                            icon={faRotateLeft}
+                            label="Mark Items Incomplete"
+                            onClick={() => {
+                                setOpen(false);
+                                onSetAllItemsCompleted();
+                            }}
+                        />
+                        <MenuItem
+                            icon={faTrashCan}
+                            variant="danger"
+                            label="Delete Completed Items"
+                            onClick={() => {
+                                setOpen(false);
+                                onDeleteAllItems();
+                            }}
+                        />
+                    </ScrollableMenuContent>
+                </ResponsiveMenu >
+            )}
+        </StatefulMenu>
     )
 };
 
@@ -70,14 +82,6 @@ export function CompletedItemsContainer({
      * value becomes zero 
      **/
     const previousCount = usePreviousValue(count);
-    const [open, setOpen] = useState(false);
-
-    // Reset our open state any time the count becomes zero. 
-    useEffect(() => {
-        if (count <= 0) {
-            setOpen(false);
-        }
-    }, [count]);
 
     return (
         <Transition
