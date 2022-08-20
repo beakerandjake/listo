@@ -5,6 +5,7 @@ import { MenuItem, MenuItemLabel } from './MenuItem';
 import { MenuSeparator } from './MenuSeparator';
 import { ResponsiveMenu } from './ResponsiveMenu';
 import { ScrollableMenuContent } from './ScrollableMenuContent';
+import { StatefulMenu } from './StatefulMenu';
 
 export {
     EllipsisMenuTrigger,
@@ -15,5 +16,6 @@ export {
     MenuSeparator,
     MenuTitle,
     ResponsiveMenu,
-    ScrollableMenuContent
+    ScrollableMenuContent,
+    StatefulMenu
 };
