@@ -1,13 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export function AddItemInput(props) {
+/**
+ * Input field which allows the user to set the name of the Item.
+ * @param {object} props - the props
+ * @param {string} props.value - The current item name.
+ * @param {function} props.onChange - Fired when the user changes the name value.
+ * @param {function} props.onSubmit - Fired when the user presses the enter key. 
+ * @param {function} props.onFocus - Fired when the input element gains focus.
+ **/
+export function AddItemInput({
+    value,
+    onChange,
+    onSubmit,
+    onFocus
+}) {
     const onKeyDown = e => {
         if (e.key !== 'Enter') {
             return;
         }
 
-        props.onSubmit();
+        onSubmit();
     }
 
     return (
@@ -17,9 +30,10 @@ export function AddItemInput(props) {
             </div>
             <input
                 type="text"
-                value={props.value}
-                onChange={e => props.onChange(e.target.value)}
+                value={value}
+                onChange={e => onChange(e.target.value)}
                 onKeyDown={onKeyDown}
+                onFocus={() => onFocus()}
                 className="w-full pl-14 sm:text-sm border-none min-h-[50px] focus:outline-none focus:ring-0"
                 placeholder="Add Item"
                 autoComplete="off"
