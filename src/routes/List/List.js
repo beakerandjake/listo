@@ -173,7 +173,7 @@ export function List(props) {
                     })} />
                 {sortedItems.length > 0 && (
                     <div className="flex-shrink-0 ml-auto">
-                        <SortingDropdown onChooseSort={setActiveSort} activeSort={activeSort} />
+                        <SortingDropdown activeSort={activeSort} onChange={setActiveSort} />
                     </div>
                 )}
             </ListPageHeader>
