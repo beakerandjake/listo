@@ -16,12 +16,14 @@ const DEFAULT_ITEM = {
 export function AddItem(props) {
     const containerRef = useRef(null);
     const [toolbarVisible, setToolbarVisible] = useState(false);
-    const [toolbarSubMenuOpen, setToolbarSubMenuOpen] = useState(false);
     const [item, setItem] = useState(DEFAULT_ITEM);
     const nameValid = item.name && item.name.length > 1;
 
     // Will minimize the toolbar unless the user is interacting with it.
-    const tryToHideToolbar = () => {
+    const tryToHideToolbar = e => {
+        // todo ignore if clicking on toolbar menu
+        // const z = e.target.closest(`.${toolbarMenuClassName}`);
+
         if (!isEqual(item, DEFAULT_ITEM)) {
             return;
         }
@@ -31,10 +33,8 @@ export function AddItem(props) {
 
     // Whenever the user clicks outside of this component, try to minimize the toolbar.
     // Disabled these event listeners if the toolbar isn't visible.
-    // But also disable if user is interacting with the toolbars sub menu (which might be portalled).
-    // Interacting with a portaled element would cause a click outside event to fire.
-    useOnClickOutside(tryToHideToolbar, !toolbarVisible || toolbarSubMenuOpen, containerRef);
-    useOnScroll(tryToHideToolbar, !toolbarVisible || toolbarSubMenuOpen);
+    useOnClickOutside(tryToHideToolbar, !toolbarVisible, containerRef);
+    useOnScroll(tryToHideToolbar, !toolbarVisible);
 
     // Callback invoked whenever the user makes changes to the item.
     const onItemChange = changes => {
@@ -54,12 +54,16 @@ export function AddItem(props) {
     return (
         <div
             ref={containerRef}
-            onMouseDown={() => setToolbarVisible(true)}
-            onFocus={() => setToolbarVisible(true)}
             className="rounded border border-gray-300 shadow-md overflow-hidden"
         >
+            {toolbarVisible ? 'true' : 'false'}
             <div className={cx({ 'border-b border-gray-300': toolbarVisible }, 'transition-all duration-75')}>
-                <AddItemInput value={item.name} onChange={name => onItemChange({ name })} onSubmit={onAddItem} />
+                <AddItemInput
+                    value={item.name}
+                    onChange={name => onItemChange({ name })}
+                    onSubmit={onAddItem}
+                    onFocus={() => setToolbarVisible(true)}
+                />
             </div>
             <Transition
                 show={toolbarVisible}
@@ -75,7 +79,6 @@ export function AddItem(props) {
                     onItemChange={onItemChange}
                     canAddItem={nameValid}
                     onAddItem={onAddItem}
-                    onMenuOpenChange={setToolbarSubMenuOpen}
                 />
             </Transition>
         </div >

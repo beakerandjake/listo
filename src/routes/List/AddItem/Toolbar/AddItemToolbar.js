@@ -1,9 +1,19 @@
-import { forwardRef } from "react";
+import { cloneElement, forwardRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
 import { SetDueDateButton } from './SetDueDateButton';
 import { SetQuantityButton } from './SetQuantityButton';
+import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
+import { faPlusMinus } from "@fortawesome/free-solid-svg-icons";
+
+// Class that should be applied to toolbar menus.
+const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
+
+const StatefulToolbarMenu = ({ children }) => {
+    const [open, setOpen] = useState(false);
+    return children({ open, setOpen });
+};
 
 /**
  * Button styled for the Add Item Toolbar.
@@ -41,14 +51,12 @@ export const AddItemToolbarButton = forwardRef(({
  * @param {function} props.onItemChange - Callback invoked when the user changes a property of the item. 
  * @param {boolean} props.canAddItem - Is the item in a valid state to be added to the list? 
  * @param {function} props.onAddItem - Callback invoked when the user clicks the add Item button. 
- * @param {function} props.onMenuOpenChange - Callback invoked when the user opens or closes a toolbar menu item. 
  */
 export function AddItemToolbar({
     item,
     onItemChange,
     canAddItem,
     onAddItem,
-    onMenuOpenChange
 }) {
     return (
         <div className="px-3 py-2 bg-slate-100 flex items-center justify-between">
@@ -57,13 +65,37 @@ export function AddItemToolbar({
                 <SetDueDateButton
                     dueDate={item.dueDate}
                     onDueDateChange={dueDate => onItemChange({ dueDate })}
-                    onMenuOpenChange={onMenuOpenChange}
                 />
                 <SetQuantityButton
                     quantity={item.quantity}
                     onQuantityChange={quantity => onItemChange({ quantity })}
-                    onMenuOpenChange={onMenuOpenChange}
                 />
+
+                {/* Quantity Menu */}
+                {/* <StatefulToolbarMenu>
+                    {({ open, setOpen }) => (
+                        <SetQuantityMenu
+                            className={toolbarMenuClassName}
+                            quantity={item.quantity}
+                            onChange={quantity => onItemChange({ quantity })}
+                            onReset={() => {
+                                setOpen(false);
+                                onItemChange({ quantity: 1 });
+                            }}
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            trigger={(
+                                <AddItemToolbarButton
+                                    icon={faPlusMinus}
+                                    title="Change Quantity"
+                                    text={item.quantity > 1 && `Qty: ${item.quantity}`}
+                                    onClick={() => setOpen(!open)}
+                                    className={cx({ 'text-indigo-700': item.quantity > 1 })}
+                                />
+                            )}
+                        />
+                    )}
+                </StatefulToolbarMenu> */}
             </div>
             {/* Add item button */}
             <Button size="sm" disabled={!canAddItem} onClick={onAddItem}>Add</Button>
@@ -71,3 +103,5 @@ export function AddItemToolbar({
 
     )
 }
+
+export const toolbarMenuClassName = TOOLBAR_MENU_CLASS;
