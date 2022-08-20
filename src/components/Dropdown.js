@@ -1,4 +1,4 @@
-import React, { cloneElement, forwardRef } from 'react';
+import React, { cloneElement, forwardRef, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import FocusLock from 'react-focus-lock';
 import { Transition } from '@headlessui/react';
@@ -12,6 +12,24 @@ import {
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
 import { mergeRefs } from 'react-merge-refs';
+
+/**
+ * Invisible overlay which prevents interaction with anything behind it. 
+ * @param {function=} props.onClick - Callback invoked when the user clicks inside of the overlay.
+ */
+const Overlay = forwardRef(({ onClick }, ref) => {
+    // Capture the mouse down event then stop it to prevent anything else from getting it.
+    const onMouseDownCapture = e => {
+        e.preventDefault();
+        onClick(e);
+    };
+
+    return createPortal(
+        <div ref={ref} className="fixed inset-0" onMouseDownCapture={onMouseDownCapture} />,
+        document.body
+    );
+
+});
 
 /**
  * A floating dropdown menu rendered beneath a trigger. 
@@ -61,7 +79,7 @@ export const Dropdown = forwardRef(({
                     leaveFrom="transform scale-100 opacity-100"
                     leaveTo="transform scale-95 opacity-0"
                 >
-                    {overlay && createPortal(<div className="fixed inset-0"></div>, document.body)}
+                    {overlay && <Overlay onClick={e => onClickOutside && onClickOutside(e)} />}
                     <FocusLock autoFocus={false}>
                         <div
                             ref={mergeRefs([floating, forwardedRef])}
