@@ -9,6 +9,7 @@ import {
     flip,
     shift,
 } from '@floating-ui/react-dom';
+import cx from 'classnames';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
 import { mergeRefs } from 'react-merge-refs';
@@ -21,6 +22,7 @@ const Overlay = forwardRef(({ onClick }, ref) => {
     // Capture the mouse down event then stop it to prevent anything else from getting it.
     const onMouseDownCapture = e => {
         e.preventDefault();
+        e.stopPropagation();
         onClick(e);
     };
 
@@ -41,6 +43,7 @@ const Overlay = forwardRef(({ onClick }, ref) => {
  * @param {'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'|'bottom-start'|'bottom-end'|'left'|'left-start'|'left-end'=} props.placement - Where to place the floating element against the trigger.
  * @param {number} props.offset - Amount to displace the floating element from its default placement against the trigger.
  * @param {boolean} props.overlay - Should background content be blocked by an overlay?
+ * @param {string}  props.className - Additional styles to be applied to the dropdown.
  * @param {React.ReactNode} props.children - The child elements to render.
  */
 export const Dropdown = forwardRef(({
@@ -51,6 +54,7 @@ export const Dropdown = forwardRef(({
     placement = 'bottom-end',
     offset = 5,
     overlay = true,
+    className,
     children,
 }, forwardedRef) => {
     const { x, y, reference, floating, strategy, refs, } = useFloating({
@@ -83,7 +87,11 @@ export const Dropdown = forwardRef(({
                     <FocusLock autoFocus={false}>
                         <div
                             ref={mergeRefs([floating, forwardedRef])}
-                            className="absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none"
+                            className={cx(
+                                'absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg flex flex-col overflow-hidden',
+                                'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
+                                className
+                            )}
                             style={{
                                 position: strategy,
                                 top: y ?? 0,

@@ -177,6 +177,7 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
  * @param {'left'|'right'=} props.closeButtonAnchor - The side of the drawer that the default close button will be anchored to.
  * @param {IconDefinition=}  props.closeButtonIcon - The FontAwesomeIcon of the default close button.
  * @param {string}  props.closeButtonTitle - The text to display on close button hover.
+ * @param {string}  props.className - Additional styles to be applied to the drawer.
  * @param {React.ReactNode} props.children - The child elements to render.
  */
 export function Drawer({
@@ -189,6 +190,7 @@ export function Drawer({
     closeButtonAnchor = ANCHORS.right,
     closeButtonIcon = CLOSE_BUTTON_DEFAULT_ICON,
     closeButtonTitle = 'Close',
+    className,
     children,
 }, z) {
     const initialFocusRef = useRef(null);
@@ -216,7 +218,14 @@ export function Drawer({
                 leave="transform transition ease-out duration-200"
                 {...transitionStyles}
             >
-                <DialogContent className={cx(sizeStyle, anchorStyle, "fixed shadow-xl bg-white focus:outline-none flex flex-col")}>
+                <DialogContent
+                    className={cx(
+                        sizeStyle,
+                        anchorStyle,
+                        'fixed shadow-xl bg-white focus:outline-none flex flex-col',
+                        className
+                    )}
+                >
                     {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
                     Once the user focuses on something else, remove this element from being focusable */}
                     <span

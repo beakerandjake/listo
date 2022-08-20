@@ -25,6 +25,7 @@ const CLOSE_REASON = {
  * @param {IconDefinition=}  props.mobileCloseButtonIcon - The FontAwesomeIcon of the default close button.
  * @param {string}  props.mobileCloseButtonTitle - The text to display on close button hover.
  * @param {'left'|'right'=} props.mobileCloseButtonAnchor - The side of the drawer that the default close button will be anchored to.
+ * @param {string} props.className - Classes to be applied to the root of the menu on desktop or mobile.
  * @param {React.ReactNode} props.children - The child elements to render.
  */
 export const ResponsiveMenu = forwardRef(({
@@ -40,11 +41,12 @@ export const ResponsiveMenu = forwardRef(({
     mobileCloseButtonIcon = undefined,
     mobileCloseButtonTitle = undefined,
     mobileCloseButtonAnchor = undefined,
+    className,
     children,
 }, ref) => {
 
     return (
-        <div>
+        <>
             {/* On larger screens, render a floating dropdown menu */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
                 <Dropdown
@@ -56,6 +58,7 @@ export const ResponsiveMenu = forwardRef(({
                     placement={desktopPlacement}
                     offset={desktopOffset}
                     overlay={!isSubMenu}
+                    className={className}
                 >
                     {children}
                 </Dropdown>
@@ -73,11 +76,12 @@ export const ResponsiveMenu = forwardRef(({
                     closeButtonIcon={mobileCloseButtonIcon}
                     closeButtonTitle={mobileCloseButtonTitle}
                     closeButtonAnchor={mobileCloseButtonAnchor}
+                    className={className}
                 >
                     {children}
                 </Drawer>
             </MediaQuery>
-        </div >
+        </>
     )
 });
 
