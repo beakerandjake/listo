@@ -1,15 +1,13 @@
 import { CompletedCheckbox } from './CompletedCheckbox';
 import { DueDateStatus } from './DueDateStatus';
 import { NameLabel } from './NameLabel';
-import { QuantityButton } from './QuantityButton';
-import { SetDueDateMenu } from './SetDueDateMenu';
+import { ItemDueDateMenu } from './ItemDueDateMenu';
 import { Status } from './Status';
 
 export {
     CompletedCheckbox,
     DueDateStatus,
     NameLabel,
-    QuantityButton,
-    SetDueDateMenu,
+    ItemDueDateMenu as SetDueDateMenu,
     Status
 };

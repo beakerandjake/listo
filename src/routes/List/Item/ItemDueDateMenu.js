@@ -29,7 +29,7 @@ import { closeReasons } from "components/Menu/ResponsiveMenu";
  * @param {date} props.dueDate - The items due date.
  * @param {function} props.onDueDateChange - Callback fired when the due date changes.
  */
-export function SetDueDateMenu({
+export function ItemDueDateMenu({
     trigger,
     dueDate,
     onDueDateChange,

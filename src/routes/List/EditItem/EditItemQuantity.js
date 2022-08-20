@@ -1,5 +1,5 @@
 import { faPlusMinus } from "@fortawesome/free-solid-svg-icons"
-import { SetQuantityMenu } from "../Item/SetQuantityMenu"
+import { ItemQuantityMenu } from "../Item/ItemQuantityMenu"
 import { EditItemMenuButton } from "./EditItemMenuButton"
 
 /**
@@ -13,7 +13,7 @@ export const EditItemQuantity = ({
     onChange
 }) => {
     return (
-        <SetQuantityMenu
+        <ItemQuantityMenu
             quantity={quantity}
             onChange={onChange}
             onReset={onChange}

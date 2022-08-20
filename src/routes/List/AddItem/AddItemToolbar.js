@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Button } from 'components/Button';
 import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/free-solid-svg-icons";
 import { SetDueDateMenu } from "routes/List/Item";
-import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
+import { ItemQuantityMenu } from "routes/List/Item/ItemQuantityMenu";
 import { formatDueDate } from "services/dueDateHelpers";
 
 const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
@@ -80,7 +80,7 @@ export function AddItemToolbar({
                     desktopPlacement="bottom-start"
                 />
 
-                <SetQuantityMenu
+                <ItemQuantityMenu
                     className={TOOLBAR_MENU_CLASS}
                     quantity={item.quantity}
                     onChange={quantity => onItemChange({ quantity })}

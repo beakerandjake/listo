@@ -182,7 +182,7 @@ const QuantitySelector = ({ quantity, onQuantityChange }) => {
  * @param {function} props.onReset - Callback fired when the reset button is clicked.
  * @param {ReactElement} props.trigger -  The trigger element to render and position the floating content against.
  */
-export const SetQuantityMenu = ({
+export const ItemQuantityMenu = ({
     quantity,
     onChange,
     onReset,
