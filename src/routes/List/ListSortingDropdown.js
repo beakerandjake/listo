@@ -82,10 +82,7 @@ export function ListSortingDropdown({
                             <FontAwesomeIcon icon={faSort} />
                             {!!activeSortingField && (
                                 <span>
-                                    <span className="inline sm:hidden">Sort Items</span>
-                                    <span className="hidden sm:inline">
-                                        Sorted by <span className="font-semibold">{activeSortingField.label}</span>
-                                    </span>
+                                    Sorted by <span className="font-semibold">{activeSortingField.label}</span>
                                 </span>
                             )}
                         </Button>

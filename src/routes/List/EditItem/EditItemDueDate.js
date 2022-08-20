@@ -1,4 +1,4 @@
-import { faCalendarDay, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
 import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
 import { EditItemMenuButton } from './EditItemMenuButton';
 import { ItemDueDateMenu } from 'routes/List/Item';
@@ -18,7 +18,7 @@ export const EditItemDudeDate = ({
             onDueDateChange={onChange}
             trigger={(
                 <EditItemMenuButton
-                    icon={dueDate ? faCalendarDay : faCalendarPlus}
+                    icon={dueDate ? faCalendarCheck : faCalendarPlus}
                     placeholder="Add Due Date"
                     clearButtonTitle="Remove Due Date"
                     onClearValue={() => onChange(null)}
