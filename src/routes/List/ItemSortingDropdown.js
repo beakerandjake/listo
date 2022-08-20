@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faCropSimple, faSort } from '@fortawesome/free-solid-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { Button } from 'components/Button';
 import {
@@ -10,6 +10,40 @@ import {
     ScrollableMenuContent,
     StatefulMenu
 } from 'components/Menu';
+import { useEffect, useState } from 'react';
+
+const SORTING_FIELDS = [
+    {
+        itemKey: itemSortingFields.name,
+        label: "Name",
+        sortingDirection: sortingDirections.asc
+    },
+    {
+        itemKey: itemSortingFields.dueDate,
+        label: "Due Soonest",
+        sortingDirection: sortingDirections.asc
+    },
+    {
+        itemKey: itemSortingFields.dueDate,
+        label: "Due Latest",
+        sortingDirection: sortingDirections.desc
+    },
+    {
+        itemKey: itemSortingFields.created,
+        label: "Oldest",
+        sortingDirection: sortingDirections.asc
+    },
+    {
+        itemKey: itemSortingFields.created,
+        label: "Newest",
+        sortingDirection: sortingDirections.desc
+    },
+    {
+        itemKey: itemSortingFields.quantity,
+        label: "Quantity",
+        sortingDirection: sortingDirections.desc
+    }
+];
 
 /**
  * Dropdown which allows the user to select the active sorting field.
@@ -21,42 +55,17 @@ export function ItemSortingDropdown({
     activeSort,
     onChange
 }) {
-    const sortingFields = [
-        {
-            itemKey: itemSortingFields.name,
-            label: "Name",
-            sortingDirection: sortingDirections.asc
-        },
-        {
-            itemKey: itemSortingFields.dueDate,
-            label: "Due Soonest",
-            sortingDirection: sortingDirections.asc
-        },
-        {
-            itemKey: itemSortingFields.dueDate,
-            label: "Due Latest",
-            sortingDirection: sortingDirections.desc
-        },
-        {
-            itemKey: itemSortingFields.created,
-            label: "Oldest",
-            sortingDirection: sortingDirections.asc
-        },
-        {
-            itemKey: itemSortingFields.created,
-            label: "Newest",
-            sortingDirection: sortingDirections.desc
-        },
-        {
-            itemKey: itemSortingFields.quantity,
-            label: "Quantity",
-            sortingDirection: sortingDirections.desc
-        }
-    ];
+    const [activeSortingField, setActiveSortingField] = useState(null);
 
-    const activeSortingField = sortingFields.find(({ itemKey, sortingDirection }) =>
-        activeSort.itemKey === itemKey && activeSort.direction === sortingDirection
-    );
+    // Any time the active sort prop changes, search our sorting fields
+    // to find the element that corresponds to the active sort prop.
+    useEffect(() => {
+        const result = SORTING_FIELDS.find(({ itemKey, sortingDirection }) =>
+            activeSort.itemKey === itemKey && activeSort.direction === sortingDirection
+        );
+
+        setActiveSortingField(result);
+    }, [activeSort]);
 
     return (
         <StatefulMenu>
@@ -87,7 +96,7 @@ export function ItemSortingDropdown({
                         <MenuTitle>Sort Items By</MenuTitle>
                     </MenuHeader>
                     <ScrollableMenuContent>
-                        {sortingFields.map(x => (
+                        {SORTING_FIELDS.map(x => (
                             <MenuItem
                                 key={`${x.itemKey}-${x.sortingDirection}`}
                                 onClick={() => {

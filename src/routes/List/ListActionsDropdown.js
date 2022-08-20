@@ -38,7 +38,7 @@ export function ListActionsDropdown({
                         <MenuTitle>List Actions</MenuTitle>
                     </MenuHeader>
                     <ScrollableMenuContent>
-                        {/* List Actions */}
+                        {/* List Actions, only show if there actually is items. */}
                         {items?.length > 0 && (
                             <>
                                 <MenuItem
