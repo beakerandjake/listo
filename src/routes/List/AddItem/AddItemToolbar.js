@@ -66,6 +66,7 @@ export function AddItemToolbar({
             <div className="flex items-center gap-2 sm:gap-3">
                 <ItemDueDateMenu
                     className={TOOLBAR_MENU_CLASS}
+                    subMenuClassName={TOOLBAR_MENU_CLASS}
                     dueDate={item.dueDate}
                     onDueDateChange={dueDate => onItemChange({ dueDate })}
                     trigger={(

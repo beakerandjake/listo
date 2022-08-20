@@ -28,12 +28,15 @@ import { closeReasons } from "components/Menu/ResponsiveMenu";
  * @param {ReactElement} props.trigger -  The trigger element to render and position the floating content against.
  * @param {date} props.dueDate - The items due date.
  * @param {function} props.onDueDateChange - Callback fired when the due date changes.
+ * @param {'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'|'bottom-start'|'bottom-end'|'left'|'left-start'|'left-end'=} props.desktopSubMenuPlacement - Where to place the floating element against the trigger.
+ * @param {string} subMenuClassName - Additional styles to apply to the sub menu specifically.
  */
 export function ItemDueDateMenu({
     trigger,
     dueDate,
     onDueDateChange,
     desktopSubMenuPlacement = 'right-start',
+    subMenuClassName,
     ...props
 }) {
     const [open, setOpen] = useState(false);
@@ -144,6 +147,7 @@ export function ItemDueDateMenu({
                             <FontAwesomeIcon icon={faChevronRight} className="text-gray-500 group-hover:text-gray-700" />
                         </MenuItem>
                     )}
+                    className={subMenuClassName}
                 >
                     <MenuHeader className="flex items-center justify-center">
                         <MenuTitle className="">Custom Due Date</MenuTitle>
