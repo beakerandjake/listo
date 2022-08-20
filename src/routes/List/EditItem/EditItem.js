@@ -13,7 +13,7 @@ import {
     ScrollableMenuContent
 } from 'components/Menu';
 import { EditItemQuantity } from './EditItemQuantity';
-import { EditDueDate } from './EditDueDate';
+import { EditItemDudeDate } from './EditItemDueDate';
 
 
 
@@ -76,10 +76,11 @@ export function EditItem({
                         onChange={value => onEditItem(cachedItem.id, { quantity: value })}
                     />
 
-                    <EditDueDate
+                    <EditItemDudeDate
                         dueDate={cachedItem.dueDate}
                         onChange={value => onEditItem(cachedItem.id, { dueDate: value })}
                     />
+                    
                     <DebounceInput
                         element="textarea"
                         value={cachedItem.note}

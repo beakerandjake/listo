@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { cloneElement, useRef, useState } from "react";
 import { format, nextMonday, startOfToday, startOfTomorrow } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -25,31 +25,20 @@ import { closeReasons } from "components/Menu/ResponsiveMenu";
 /**
  * Responsive menu which allows the user to set or edit the item's due date.
  * @param {Object} props - The props (spread onto the responsive menu)
- * @param {boolean} props.open - Should the menu be opened or closed?
- * @param {function} props.onClose - Callback fired when the menu is closed.
  * @param {ReactElement} props.trigger -  The trigger element to render and position the floating content against.
  * @param {date} props.dueDate - The items due date.
  * @param {function} props.onDueDateChange - Callback fired when the due date changes.
-
  */
 export function SetDueDateMenu({
-    open,
-    onClose,
     trigger,
     dueDate,
     onDueDateChange,
     desktopSubMenuPlacement = 'right-start',
     ...props
 }) {
+    const [open, setOpen] = useState(false);
     const [subMenuOpen, setSubMenuOpen] = useState(false);
     const subMenuRef = useRef(null);
-
-    // Any time the menu is closed reset the sub menu state.
-    useEffect(() => {
-        if (!open) {
-            setSubMenuOpen(false);
-        }
-    }, [open])
 
     // Provide commonly used dates.
     const staticDates = [
@@ -68,6 +57,18 @@ export function SetDueDateMenu({
         }
     ];
 
+    // Close all menus and notify of due date change.
+    const setDueDateAndCloseMenu = (dueDate) => {
+        closeMenus();
+        onDueDateChange(dueDate);
+    }
+
+    // Closes both the main and sub menus.
+    const closeMenus = () => {
+        setOpen(false);
+        setSubMenuOpen(false);
+    }
+
     // Callback for the top level menu components onClose event.
     const onMainMenuClose = (reason, event) => {
         if (subMenuOpen) {
@@ -82,7 +83,7 @@ export function SetDueDateMenu({
             }
         }
 
-        onClose();
+        closeMenus();
     }
 
     // Callback for the sub menu components onClose event.
@@ -95,7 +96,7 @@ export function SetDueDateMenu({
 
         // Handle edge case, always close the main menu if the user clicks outside the sub menu.
         if (subMenuOpen && reason === closeReasons.outsideClick) {
-            onClose();
+            closeMenus();
         }
     }
 
@@ -104,7 +105,7 @@ export function SetDueDateMenu({
             {...props}
             open={open}
             onClose={onMainMenuClose}
-            trigger={trigger}
+            trigger={cloneElement(trigger, { onClick: () => setOpen(!open) })}
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Add Due Date</MenuTitle>
@@ -116,7 +117,7 @@ export function SetDueDateMenu({
                         key={text}
                         icon={icon}
                         label={text}
-                        onClick={() => onDueDateChange(date)}
+                        onClick={() => setDueDateAndCloseMenu(date)}
                         onMouseEnter={() => setSubMenuOpen(false)}
                     >
                         <MenuItemLabel className="text-gray-400 font-semibold">
@@ -148,7 +149,7 @@ export function SetDueDateMenu({
                         <MenuTitle className="">Custom Due Date</MenuTitle>
                     </MenuHeader>
                     <ScrollableMenuContent className="mb-2">
-                        <Calendar value={dueDate} onChange={onDueDateChange} />
+                        <Calendar value={dueDate} onChange={setDueDateAndCloseMenu} />
                     </ScrollableMenuContent>
                 </ResponsiveMenu>
                 {/* Remove Due Date Button
@@ -162,7 +163,7 @@ export function SetDueDateMenu({
                             icon={faTrashAlt}
                             label="Remove Due Date"
                             variant="danger"
-                            onClick={() => onDueDateChange(null)}
+                            onClick={() => setDueDateAndCloseMenu(null)}
                             onMouseEnter={() => setSubMenuOpen(false)}
                         />
                     </>
