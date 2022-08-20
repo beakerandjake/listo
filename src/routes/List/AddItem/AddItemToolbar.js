@@ -2,12 +2,19 @@ import { forwardRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
-import { SetDueDateButton } from './SetDueDateButton';
+import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/free-solid-svg-icons";
+import { SetDueDateMenu } from "routes/List/Item";
 import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
-import { faPlusMinus } from "@fortawesome/free-solid-svg-icons";
+import { formatDueDate } from "services/dueDateHelpers";
 
 // Class that should be applied to toolbar menus.
 const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
+
+export function elementIsPartOfToolbar(element) {
+    const z = element.closest(`.${TOOLBAR_MENU_CLASS}`);
+    console.log('z', z);
+    return !!z;
+}
 
 /**
  * Button styled for the Add Item Toolbar.
@@ -56,12 +63,24 @@ export function AddItemToolbar({
         <div className="px-3 py-2 bg-slate-100 flex items-center justify-between">
             {/* Item edit buttons */}
             <div className="flex items-center gap-2 sm:gap-3">
-                <SetDueDateButton
+
+                <SetDueDateMenu
+                    className={TOOLBAR_MENU_CLASS}
                     dueDate={item.dueDate}
                     onDueDateChange={dueDate => onItemChange({ dueDate })}
+                    trigger={(
+                        <AddItemToolbarButton
+                            icon={!!item.dueDate ? faCalendarCheck : faCalendarPlus}
+                            title="Add Due Date"
+                            text={item.dueDate && formatDueDate(item.dueDate)}
+                            className={cx({ 'text-indigo-700': !!item.dueDate })}
+                        />
+                    )}
+                    desktopPlacement="bottom-start"
                 />
 
                 <SetQuantityMenu
+                    className={TOOLBAR_MENU_CLASS}
                     quantity={item.quantity}
                     onChange={quantity => onItemChange({ quantity })}
                     onReset={quantity => onItemChange({ quantity })}
@@ -76,11 +95,10 @@ export function AddItemToolbar({
                     desktopPlacement='bottom-start'
                 />
             </div>
+
             {/* Add item button */}
             <Button size="sm" disabled={!canAddItem} onClick={onAddItem}>Add</Button>
         </div>
 
     )
 }
-
-export const toolbarMenuClassName = TOOLBAR_MENU_CLASS;

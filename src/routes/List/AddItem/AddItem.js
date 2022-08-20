@@ -4,7 +4,7 @@ import isEqual from 'lodash.isequal';
 import cx from 'classnames';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { AddItemInput } from './AddItemInput';
-import { AddItemToolbar } from './Toolbar/AddItemToolbar';
+import { AddItemToolbar, elementIsPartOfToolbar } from './AddItemToolbar';
 import { useOnScroll } from 'hooks/useOnScroll';
 
 const DEFAULT_ITEM = {
@@ -21,8 +21,11 @@ export function AddItem(props) {
 
     // Will minimize the toolbar unless the user is interacting with it.
     const tryToHideToolbar = e => {
-        // todo ignore if clicking on toolbar menu
-        // const z = e.target.closest(`.${toolbarMenuClassName}`);
+        console.log('click outside!');
+
+        if (elementIsPartOfToolbar(e.target)) {
+            return;
+        }
 
         if (!isEqual(item, DEFAULT_ITEM)) {
             return;
