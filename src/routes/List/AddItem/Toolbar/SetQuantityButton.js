@@ -38,6 +38,7 @@ export function SetQuantityButton({
                     className={cx({ 'text-indigo-700': quantity > 1 })}
                 />
             )}
+            desktopPlacement='bottom-start'
         />
     )
 }
