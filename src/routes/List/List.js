@@ -3,11 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
 import { sortItems, itemSortingFields, sortingDirections } from 'services/sorting';
-import { Skeleton } from './Skeleton';
+import { ListSkeleton } from './ListSkeleton';
 import { AddItem } from './AddItem';
-import { EmptyItemList } from './EmptyItemList';
 import { EditItem } from './EditItem';
-import { ItemsContainer } from './ItemsContainter';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
@@ -174,7 +172,7 @@ export function List(props) {
     }
 
     if (!initialized) {
-        return <Skeleton />;
+        return <ListSkeleton />;
     }
 
     return (

@@ -1,5 +1,5 @@
 
-export function Skeleton() {
+export function ListSkeleton() {
     const items = [...Array(6)].map((_, index) => (
         <div key={index} className="flex justify-between items-center gap-2">
             <div className="bg-slate-200 rounded-full w-6 h-6"></div>
