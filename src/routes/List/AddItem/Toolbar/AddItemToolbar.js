@@ -1,19 +1,13 @@
-import { cloneElement, forwardRef, useState } from "react";
+import { forwardRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
 import { SetDueDateButton } from './SetDueDateButton';
-import { SetQuantityButton } from './SetQuantityButton';
 import { SetQuantityMenu } from "routes/List/Item/SetQuantityMenu";
 import { faPlusMinus } from "@fortawesome/free-solid-svg-icons";
 
 // Class that should be applied to toolbar menus.
 const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
-
-const StatefulToolbarMenu = ({ children }) => {
-    const [open, setOpen] = useState(false);
-    return children({ open, setOpen });
-};
 
 /**
  * Button styled for the Add Item Toolbar.
@@ -66,36 +60,21 @@ export function AddItemToolbar({
                     dueDate={item.dueDate}
                     onDueDateChange={dueDate => onItemChange({ dueDate })}
                 />
-                <SetQuantityButton
-                    quantity={item.quantity}
-                    onQuantityChange={quantity => onItemChange({ quantity })}
-                />
 
-                {/* Quantity Menu */}
-                {/* <StatefulToolbarMenu>
-                    {({ open, setOpen }) => (
-                        <SetQuantityMenu
-                            className={toolbarMenuClassName}
-                            quantity={item.quantity}
-                            onChange={quantity => onItemChange({ quantity })}
-                            onReset={() => {
-                                setOpen(false);
-                                onItemChange({ quantity: 1 });
-                            }}
-                            open={open}
-                            onClose={() => setOpen(false)}
-                            trigger={(
-                                <AddItemToolbarButton
-                                    icon={faPlusMinus}
-                                    title="Change Quantity"
-                                    text={item.quantity > 1 && `Qty: ${item.quantity}`}
-                                    onClick={() => setOpen(!open)}
-                                    className={cx({ 'text-indigo-700': item.quantity > 1 })}
-                                />
-                            )}
+                <SetQuantityMenu
+                    quantity={item.quantity}
+                    onChange={quantity => onItemChange({ quantity })}
+                    onReset={quantity => onItemChange({ quantity })}
+                    trigger={(
+                        <AddItemToolbarButton
+                            icon={faPlusMinus}
+                            title="Change Quantity"
+                            text={item.quantity > 1 && `Qty: ${item.quantity}`}
+                            className={cx({ 'text-indigo-700': item.quantity > 1 })}
                         />
                     )}
-                </StatefulToolbarMenu> */}
+                    desktopPlacement='bottom-start'
+                />
             </div>
             {/* Add item button */}
             <Button size="sm" disabled={!canAddItem} onClick={onAddItem}>Add</Button>

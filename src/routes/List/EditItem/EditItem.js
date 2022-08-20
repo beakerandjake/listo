@@ -1,19 +1,20 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faPlusMinus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { DebounceInput } from "react-debounce-input";
 import { Drawer } from 'components/Drawer';
 import { IconButton } from 'components/IconButton';
 import { CompletedCheckbox } from '../Item';
 import { NameLabel } from '../Item';
 import { EditDueDate } from './EditDueDate';
-import { EditQuantity } from './EditQuantity';
 import {
     MenuFooter,
     MenuHeader,
     MenuTitle,
     ScrollableMenuContent
 } from 'components/Menu';
+import { SetQuantityMenu } from '../Item/SetQuantityMenu';
+import { ItemFieldMenuButton } from './ItemFieldMenuButton';
 
 
 
@@ -71,10 +72,27 @@ export function EditItem({
                 </div>
                 {/* Edit Item Fields */}
                 <div className="flex flex-col space-y-2">
-                    <EditQuantity
+                    <SetQuantityMenu
                         quantity={cachedItem.quantity}
                         onChange={value => onEditItem(cachedItem.id, { quantity: value })}
+                        onReset={value => onEditItem(cachedItem.id, { quantity: value })}
+                        trigger={(
+                            <ItemFieldMenuButton
+                                icon={faPlusMinus}
+                                placeholder="Change Quantity"
+                                clearButtonTitle="Reset Quantity"
+                                onClearValue={() => onEditItem(cachedItem.id, { quantity: 1 })}
+                                variant={cachedItem.quantity > 1 ? 'success' : 'default'}
+                            >
+                                {cachedItem.quantity > 1 && (
+                                    <span>Quantity: {cachedItem.quantity}</span>
+                                )}
+                            </ItemFieldMenuButton>
+                        )}
+                        desktopPlacement='bottom'
+                        desktopOffset={1}
                     />
+
                     <EditDueDate
                         dueDate={cachedItem.dueDate}
                         onChange={value => onEditItem(cachedItem.id, { dueDate: value })}
