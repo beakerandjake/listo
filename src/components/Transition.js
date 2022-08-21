@@ -1,15 +1,5 @@
-import { mergeRefs } from "react-merge-refs";
-import {
-    cloneElement,
-    createRef,
-    forwardRef,
-    useMemo,
-    useRef
-} from "react";
-import {
-    CSSTransition,
-    SwitchTransition as ReactTransitionGroupSwitchTransition
-} from "react-transition-group";
+import { cloneElement, createRef, useMemo, useRef } from "react";
+import { CSSTransition, SwitchTransition as ReactTransitionGroupSwitchTransition } from "react-transition-group";
 
 /**
 * Appends a '!' prefix to each className in the string.. 
@@ -54,7 +44,7 @@ const generateClassNames = (enter, enterActive, enterDone, exit, exitActive, exi
  * @param {string} props.enterDone - Classes to apply during the exited phase.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
-export const Transition = forwardRef(({
+export const Transition = ({
     enter,
     enterActive,
     enterDone,
@@ -63,21 +53,20 @@ export const Transition = forwardRef(({
     exitDone,
     children,
     ...props
-}, ref) => {
-    const childrenRef = useRef(null);
+}) => {
+    const nodeRef = useRef(null);
 
     return (
         <CSSTransition
             {...props}
-            ref={ref}
-            nodeRef={childrenRef}
+            nodeRef={nodeRef}
             classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
-            addEndListener={(done) => childrenRef.current.addEventListener("transitionend", done, false)}
+            addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
         >
-            {cloneElement(children, { ref: (ref) => (childrenRef.current = ref) })}
+            {cloneElement(children, { ref: (ref) => (nodeRef.current = ref) })}
         </CSSTransition>
     );
-});
+};
 
 /**
  * Wrapper around react-transition-group's SwitchTransition component that allows easier usage with TailwindCSS. 
@@ -91,7 +80,7 @@ export const Transition = forwardRef(({
  * @param {string} props.enterDone - Classes to apply during the exited phase.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
-export const SwitchTransition = forwardRef(({
+export const SwitchTransition = ({
     switchKey,
     enter,
     enterActive,
@@ -100,7 +89,7 @@ export const SwitchTransition = forwardRef(({
     exitActive,
     exitDone,
     children
-}, ref) => {
+}) => {
     return useMemo(() => {
         const nodeRef = createRef();
         return (
@@ -111,9 +100,9 @@ export const SwitchTransition = forwardRef(({
                     classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
                     addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
                 >
-                    {cloneElement(children, { ref: mergeRefs([nodeRef, ref]) })}
+                    {cloneElement(children, { ref: (ref) => (nodeRef.current = ref) })}
                 </CSSTransition>
             </ReactTransitionGroupSwitchTransition>
         );
-    }, [switchKey, children, enter, enterActive, enterDone, exit, exitActive, exitDone, ref]);
-});
+    }, [switchKey, children, enter, enterActive, enterDone, exit, exitActive, exitDone]);
+};
