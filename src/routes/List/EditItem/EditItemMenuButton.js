@@ -32,6 +32,9 @@ export const EditItemMenuButton = forwardRef(({
     children,
     ...props
 }, ref) => {
+    const [placeholderTransitionFinished, setPlaceholderTransitionFinished] = useState(true);
+    const [childrenTransitionFinished, setChildrenTransitionFinished] = useState(true);
+
     const variantStyle = VARIANT_STYLES[variant];
 
     return (
@@ -47,15 +50,32 @@ export const EditItemMenuButton = forwardRef(({
                 onClick={() => onClick()}
                 className={cx(
                     variantStyle,
-                    'transition-colors duration-75',
+                    'transition-colors duration-150',
                     'flex-1 py-2 pl-3 flex items-center'
                 )}
             >
                 <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
-                {/* Render either the children or the placeholder text if no children provided. */}
-                {!!children ? children : placeholder}
+                <Transition
+                    show={!children && childrenTransitionFinished}
+                    beforeEnter={() => setPlaceholderTransitionFinished(false)}
+                    enter="transition-all duration-150"
+                    enterFrom="opacity-0 scale-75"
+                    enterTo="opacity-100 scale-100"
+                    afterLeave={() => setPlaceholderTransitionFinished(true)}
+                >
+                    {placeholder}
+                </Transition>
+                <Transition
+                    show={!!children && placeholderTransitionFinished}
+                    beforeEnter={() => setChildrenTransitionFinished(false)}
+                    enter="transition-all duration-150"
+                    enterFrom="opacity-0 scale-75"
+                    enterTo="opacity-100 scale-100"
+                    afterLeave={() => setChildrenTransitionFinished(true)}
+                >
+                    {children}
+                </Transition>
             </div>
-
             {/* Show the close button if children are present */}
             <Transition
                 as={Fragment}
