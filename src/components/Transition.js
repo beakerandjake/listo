@@ -1,4 +1,5 @@
 import { cloneElement, createRef, forwardRef, useMemo, useRef } from "react";
+import { mergeRefs } from "react-merge-refs";
 import { CSSTransition, SwitchTransition as ReactTransitionGroupSwitchTransition } from "react-transition-group";
 
 /**
@@ -69,7 +70,19 @@ export const Transition = forwardRef(({
     );
 });
 
-export const SwitchTransition = ({
+/**
+ * Wrapper around react-transition-group's SwitchTransition component that allows easier usage with TailwindCSS. 
+ * @param {Object} props
+ * @param {string} props.switchKey - The key to pass to the SwitchTransition component.
+ * @param {string} props.enter - Classes to apply during enter phase.
+ * @param {string} props.enterActive - Classes to apply during the entire enter phase.
+ * @param {string} props.enterDone - Classes to apply during the entered phase.
+ * @param {string} props.exit - Classes to apply during the entire exit phase.
+ * @param {string} props.exitActive - Classes to apply during the exiting phase.
+ * @param {string} props.enterDone - Classes to apply during the exited phase.
+ * @param {React.ReactNode} props.children - The child elements to render.
+ **/
+export const SwitchTransition = forwardRef(({
     switchKey,
     enter,
     enterActive,
@@ -78,7 +91,7 @@ export const SwitchTransition = ({
     exitActive,
     exitDone,
     children
-}) => {
+}, ref) => {
     return useMemo(() => {
         const nodeRef = createRef();
         return (
@@ -89,9 +102,9 @@ export const SwitchTransition = ({
                     classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
                     addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
                 >
-                    {cloneElement(children, { ref: (ref) => (nodeRef.current = ref) })}
+                    {cloneElement(children, { ref: mergeRefs([nodeRef, ref]) })}
                 </CSSTransition>
             </ReactTransitionGroupSwitchTransition>
         );
-    }, [switchKey, children, enter, enterActive, enterDone, exit, exitActive, exitDone]);
-};
+    }, [switchKey, children, enter, enterActive, enterDone, exit, exitActive, exitDone, ref]);
+});
