@@ -10,14 +10,18 @@ import cx from 'classnames';
 export const ItemNameLabel = ({
     name,
     completed,
-    className
+    className,
+    ...props
 }) => {
     return (
-        <p className={cx(
-            completed ? 'decoration-auto ease-in' : 'decoration-transparent ease-out',
-            'transition-colors duration-75 line-through',
-            className
-        )}>
+        <p
+            {...props}
+            className={cx(
+                completed ? 'decoration-auto ease-in' : 'decoration-transparent ease-out',
+                'transition-colors duration-75 line-through',
+                className
+            )}
+        >
             {name}
         </p>
     )
