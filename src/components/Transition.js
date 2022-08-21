@@ -1,27 +1,37 @@
-import { cloneElement, forwardRef, useEffect, useMemo, useRef, useState } from "react";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
+import { cloneElement, createRef, forwardRef, useMemo, useRef } from "react";
+import { CSSTransition, SwitchTransition as ReactTransitionGroupSwitchTransition } from "react-transition-group";
 
 /**
- * Join an array of class names together into one long class name.
- * But most importantly * appends a ! modifier to each class name. 
- * This ensures that enterActive/exitActive classes take priority over enter/exit classes. 
- * Without this there would be conflicts between those classes,
- * and since their css specificity would be the same there would be inconsistent results when animating.  
- * @param {Object} props
- * @param {string} props.icon - The icon to display.
- * @param {string} props.text - The text to display.
- * @param {string=} props.className - Additional styles to apply to the component
- */
-function generateActiveClassName(...classes) {
-    return classes
-        .filter(x => !!x)
-        .map(x => x.split(' ')
-            .filter((className) => className.trim().length > 1)
-            .map(x => `!${x}`)
-            .join(' ')
-        )
+* Appends a '!' prefix to each className in the string.. 
+* @param {string} classNames - A string of space separated classNames.
+* @returns {array} An array of all classNames, with the ! prefixed to each one.
+**/
+const addImportantPrefix = (classNames) =>
+    classNames
+        .split(' ')
+        .filter((className) => className.trim().length > 1)
+        .map(x => `!${x}`)
         .join(' ') || '';
-}
+
+/**
+* Creates a classNames object which can be passed to a CSSTransition component.
+* But most importantly appends a ! modifier to each *Active class. 
+* This ensures that enterActive/exitActive classes take priority over enter/exit classes. 
+* Without this there would be conflicts between those classes,
+* and since their css specificity would be the same there would be inconsistent results when animating.  
+* @param {Object} props
+* @param {string} props.icon - The icon to display.
+* @param {string} props.text - The text to display.
+* @param {string=} props.className - Additional styles to apply to the component
+*/
+const generateClassNames = (enter, enterActive, enterDone, exit, exitActive, exitDone) => ({
+    enter,
+    enterActive: addImportantPrefix(enterActive),
+    enterDone,
+    exit,
+    exitActive: addImportantPrefix(exitActive),
+    exitDone
+})
 
 /**
  * Wrapper around react-transition-group's CSSTransition component that allows easier usage with TailwindCSS.
@@ -53,27 +63,16 @@ export const Transition = forwardRef(({
     exitActive,
     exitDone,
     children,
-    ...rest
+    ...props
 }, ref) => {
     const childrenRef = useRef(null);
-    const [classNames, setClassNames] = useState(null);
-
-    useEffect(() => {
-        setClassNames({
-            enter,
-            enterActive: generateActiveClassName(enterActive),
-            exit,
-            exitActive: generateActiveClassName(exitActive)
-        });
-
-    }, [enter, enterActive, enterDone, exit, exitActive, exitDone]);
 
     return (
         <CSSTransition
-            {...rest}
+            {...props}
             ref={ref}
             nodeRef={childrenRef}
-            classNames={classNames}
+            classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
             addEndListener={(done) => childrenRef.current.addEventListener("transitionend", done, false)}
         >
             {cloneElement(children, { ref: (ref) => (childrenRef.current = ref) })}
@@ -81,4 +80,29 @@ export const Transition = forwardRef(({
     );
 });
 
-export { SwitchTransition };
+export const SwitchTransition = ({
+    switchKey,
+    enter,
+    enterActive,
+    enterDone,
+    exit,
+    exitActive,
+    exitDone,
+    children
+}) => {
+    return useMemo(() => {
+        const nodeRef = createRef();
+        return (
+            <ReactTransitionGroupSwitchTransition>
+                <CSSTransition
+                    key={switchKey}
+                    nodeRef={nodeRef}
+                    classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
+                    addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
+                >
+                    {cloneElement(children, { ref: (ref) => (nodeRef.current = ref) })}
+                </CSSTransition>
+            </ReactTransitionGroupSwitchTransition>
+        );
+    }, [switchKey, children, enter, enterActive, enterDone, exit, exitActive, exitDone]);
+};
