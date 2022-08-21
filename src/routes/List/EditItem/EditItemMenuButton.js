@@ -29,11 +29,13 @@ export const EditItemMenuButton = forwardRef(({
     onClearValue,
     clearButtonTitle,
     children,
+    ...props
 }, ref) => {
     const variantStyle = VARIANT_STYLES[variant];
 
     return (
         <div
+            {...props}
             ref={ref}
             className={cx(
                 'min-h-[3.5rem] flex justify-between flex-1 w-full cursor-pointer select-none',

@@ -91,6 +91,7 @@ export function EditItem({
                         placeholder="Add Note"
                         className="self-stretch rounded border border-gray-300"
                         rows={3}
+                        title="Change Note"
                     />
                 </div>
             </ScrollableMenuContent>

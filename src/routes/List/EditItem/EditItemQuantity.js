@@ -24,6 +24,7 @@ export const EditItemQuantity = ({
                     clearButtonTitle="Reset Quantity"
                     onClearValue={() => onChange(1)}
                     variant={quantity > 1 ? 'success' : 'default'}
+                    title="Change Quantity"
                 >
                     {quantity > 1 && <span>Quantity: {quantity}</span>}
                 </EditItemMenuButton>

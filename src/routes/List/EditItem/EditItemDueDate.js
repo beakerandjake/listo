@@ -26,6 +26,7 @@ export const EditItemDudeDate = ({
                         ? 'default'
                         : isOverdue(dueDate) ? 'danger' : 'success'
                     }
+                    title="Change Due Date"
                 >
                     {!!dueDate && <span>{formatDueDate(dueDate)}</span>}
                 </EditItemMenuButton>
