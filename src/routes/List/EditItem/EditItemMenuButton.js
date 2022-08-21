@@ -42,7 +42,11 @@ export const EditItemMenuButton = forwardRef(({
         >
             <div
                 onClick={() => onClick()}
-                className={cx(variantStyle, 'flex-1 py-2 pl-3 flex items-center')}
+                className={cx(
+                    variantStyle,
+                    'transition-colors duration-75',
+                    'flex-1 py-2 pl-3 flex items-center'
+                )}
             >
                 <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
                 {/* Render either the children or the placeholder text if no children provided. */}
