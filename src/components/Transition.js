@@ -1,6 +1,15 @@
-import { cloneElement, createRef, forwardRef, useMemo, useRef } from "react";
 import { mergeRefs } from "react-merge-refs";
-import { CSSTransition, SwitchTransition as ReactTransitionGroupSwitchTransition } from "react-transition-group";
+import {
+    cloneElement,
+    createRef,
+    forwardRef,
+    useMemo,
+    useRef
+} from "react";
+import {
+    CSSTransition,
+    SwitchTransition as ReactTransitionGroupSwitchTransition
+} from "react-transition-group";
 
 /**
 * Appends a '!' prefix to each className in the string.. 
