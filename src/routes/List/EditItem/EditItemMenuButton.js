@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, Fragment, useEffect, useLayoutEffect, useState } from 'react';
+import { Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
@@ -54,15 +55,25 @@ export const EditItemMenuButton = forwardRef(({
                 {/* Render either the children or the placeholder text if no children provided. */}
                 {!!children ? children : placeholder}
             </div>
+
             {/* Show the close button if children are present */}
-            {!!children && (
+            <Transition
+                as={Fragment}
+                show={!!children}
+                enter="transition-opacity duration-75"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
                 <IconButton
                     icon={faTimes}
                     className="w-[10%]"
                     onClick={() => onClearValue()}
                     title={clearButtonTitle}
                 />
-            )}
+            </Transition>
         </div>
     )
 });
