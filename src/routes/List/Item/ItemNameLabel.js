@@ -13,7 +13,11 @@ export const ItemNameLabel = ({
     className
 }) => {
     return (
-        <p className={cx({ 'line-through opacity-50': completed }, className)}>
+        <p className={cx(
+            completed ? 'decoration-auto ease-in' : 'decoration-transparent ease-out',
+            'transition-colors duration-75 line-through',
+            className
+        )}>
             {name}
         </p>
     )
