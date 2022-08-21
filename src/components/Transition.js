@@ -1,5 +1,5 @@
-import { cloneElement, useEffect, useRef, useState } from "react";
-import { CSSTransition } from "react-transition-group";
+import { cloneElement, forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 /**
  * Join an array of class names together into one long class name.
@@ -45,25 +45,16 @@ function generateActiveClassName(...classes) {
  * @param {function} props.onAfterExit - Callback invoked when the exit transition finishes.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
-export const Transition = ({
-    show,
+export const Transition = forwardRef(({
     enter,
     enterActive,
     enterDone,
-    enterTimeout = 0,
     exit,
     exitActive,
     exitDone,
-    exitTimeout = 0,
-    onBeforeEnter,
-    onEntering,
-    onAfterEnter,
-    onBeforeExit,
-    onExiting,
-    onAfterExit,
     children,
-    ...props
-}) => {
+    ...rest
+}, ref) => {
     const childrenRef = useRef(null);
     const [classNames, setClassNames] = useState(null);
 
@@ -79,23 +70,15 @@ export const Transition = ({
 
     return (
         <CSSTransition
-            {...props}
+            {...rest}
+            ref={ref}
             nodeRef={childrenRef}
-            in={!!show}
-            unmountOnExit
-            timeout={{
-                enter: enterTimeout,
-                exit: exitTimeout
-            }}
-            classNames={classNames || {}}
-            onEnter={() => onBeforeEnter && onBeforeEnter()}
-            onEntering={() => onEntering && onEntering()}
-            onEntered={() => onAfterEnter && onAfterEnter()}
-            onExit={() => onBeforeExit && onBeforeExit()}
-            onExiting={() => onExiting && onExiting()}
-            onExited={() => onAfterExit && onAfterExit()}
+            classNames={classNames}
+            addEndListener={(done) => childrenRef.current.addEventListener("transitionend", done, false)}
         >
             {cloneElement(children, { ref: (ref) => (childrenRef.current = ref) })}
         </CSSTransition>
     );
-};
+});
+
+export { SwitchTransition };
