@@ -17,7 +17,7 @@ export const ItemNameLabel = ({
         <p
             {...props}
             className={cx(
-                completed ? 'decoration-auto ease-in' : 'decoration-transparent ease-out',
+                completed ? 'decoration-auto' : 'decoration-transparent',
                 'transition-colors duration-75 line-through',
                 className
             )}

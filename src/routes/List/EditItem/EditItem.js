@@ -66,7 +66,8 @@ export function EditItem({
                     <ItemNameLabel
                         completed={cachedItem.completed}
                         name={cachedItem.name}
-                        className="text-2xl font-medium text-gray-900"
+                        className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
+                        onClick={() => onEditItem(cachedItem.id, { completed: !cachedItem.completed })}
                     />
                 </div>
                 {/* Edit Item Fields */}
