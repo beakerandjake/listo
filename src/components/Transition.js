@@ -34,25 +34,14 @@ const generateClassNames = (enter, enterActive, enterDone, exit, exitActive, exi
 })
 
 /**
- * Wrapper around react-transition-group's CSSTransition component that allows easier usage with TailwindCSS.
- * Will mark enterActive/exitActive classes as important to fix specificity conflicts between enter/enterActive and exit/exitActive.
- * Also manages setting the nodeRef and 
+ * Wrapper around react-transition-group's CSSTransition component that allows easier usage with TailwindCSS. 
  * @param {Object} props
- * @param {boolean} props.show - The icon to display.
  * @param {string} props.enter - Classes to apply during enter phase.
  * @param {string} props.enterActive - Classes to apply during the entire enter phase.
  * @param {string} props.enterDone - Classes to apply during the entered phase.
- * @param {number=} props.enterTimeout - The icon to display.
  * @param {string} props.exit - Classes to apply during the entire exit phase.
  * @param {string} props.exitActive - Classes to apply during the exiting phase.
  * @param {string} props.enterDone - Classes to apply during the exited phase.
- * @param {number=} props.exitTimeout - Duration of the exit timeout in ms.
- * @param {function} props.onBeforeEnter - Callback invoked before the enter transition starts.
- * @param {function} props.onEntering - Callback invoked when the enter transition starts.
- * @param {function} props.onAfterEnter - Callback invoked when the enter transition finishes.
- * @param {function} props.onBeforeExit - Callback invoked before the exit transition starts.
- * @param {function} props.onExiting - Callback invoked when the exit transition starts.
- * @param {function} props.onAfterExit - Callback invoked when the exit transition finishes.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
 export const Transition = forwardRef(({
