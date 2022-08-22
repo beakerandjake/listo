@@ -74,7 +74,7 @@ export const ListItem = ({
                         />
                     )}
                     {/* Indicator Separator */}
-                    <span className="last:hidden text-gray-400 text-xs font-medium">{"\u2022"}</span>
+                    <span className="last:hidden first:hidden text-gray-400 text-xs font-medium">{"\u2022"}</span>
                     {/* Note Indicator */}
                     {item.note && <ItemIndicator icon={faNoteSticky} text="Note" />}
                 </span>
