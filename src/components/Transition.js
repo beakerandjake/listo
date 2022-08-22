@@ -1,5 +1,15 @@
-import { cloneElement, createRef, useMemo, useRef } from "react";
-import { CSSTransition, SwitchTransition as ReactTransitionGroupSwitchTransition } from "react-transition-group";
+import {
+    cloneElement,
+    createRef,
+    Fragment,
+    isValidElement,
+    useMemo,
+    useRef
+} from "react";
+import {
+    CSSTransition,
+    SwitchTransition as ReactTransitionGroupSwitchTransition
+} from "react-transition-group";
 
 /**
 * Appends a '!' prefix to each className in the string.. 
@@ -24,7 +34,14 @@ const addImportantPrefix = (classNames) =>
 * @param {string} props.text - The text to display.
 * @param {string=} props.className - Additional styles to apply to the component
 */
-const generateClassNames = (enter, enterActive, enterDone, exit, exitActive, exitDone) => ({
+const generateClassNames = (
+    enter = '',
+    enterActive = '',
+    enterDone = '',
+    exit = '',
+    exitActive = '',
+    exitDone = ''
+) => ({
     enter,
     enterActive: addImportantPrefix(enterActive),
     enterDone,
@@ -56,6 +73,10 @@ export const Transition = ({
 }) => {
     const nodeRef = useRef(null);
 
+    const childrenSafe = isValidElement(children)
+        ? children
+        : <span>{children}</span>;
+
     return (
         <CSSTransition
             {...props}
@@ -63,7 +84,7 @@ export const Transition = ({
             classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
             addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
         >
-            {cloneElement(children, { ref: (ref) => (nodeRef.current = ref) })}
+            {cloneElement(childrenSafe, { ref: (ref) => (nodeRef.current = ref) })}
         </CSSTransition>
     );
 };
@@ -78,6 +99,7 @@ export const Transition = ({
  * @param {string} props.exit - Classes to apply during the entire exit phase.
  * @param {string} props.exitActive - Classes to apply during the exiting phase.
  * @param {string} props.enterDone - Classes to apply during the exited phase.
+ * @param {string} props.classNames - When provided, will only use this value for classNames.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
 export const SwitchTransition = ({
@@ -88,21 +110,29 @@ export const SwitchTransition = ({
     exit,
     exitActive,
     exitDone,
-    children
+    classNames,
+    children,
+    ...props
 }) => {
     return useMemo(() => {
         const nodeRef = createRef();
+
+        const childrenSafe = isValidElement(children)
+            ? children
+            : <span>{children}</span>;
+
         return (
             <ReactTransitionGroupSwitchTransition>
                 <CSSTransition
+                    {...props}
                     key={switchKey}
                     nodeRef={nodeRef}
-                    classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
+                    classNames={classNames || generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
                     addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
                 >
-                    {cloneElement(children, { ref: (ref) => (nodeRef.current = ref) })}
+                    {cloneElement(childrenSafe, { ref: (ref) => (nodeRef.current = ref) })}
                 </CSSTransition>
             </ReactTransitionGroupSwitchTransition>
         );
-    }, [switchKey, children, enter, enterActive, enterDone, exit, exitActive, exitDone]);
+    }, [switchKey, children, classNames, enter, enterActive, enterDone, exit, exitActive, exitDone, props]);
 };
