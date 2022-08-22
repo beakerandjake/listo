@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { Transition, Disclosure } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import classNames from "classnames";
 import { usePreviousValue } from "hooks/usePreviousValue";
+import { Transition } from "components/Transition";
 import { Badge } from "components/Badge";
 import {
     EllipsisMenuTrigger,
@@ -85,58 +86,61 @@ export function ListCompletedItemsCollapsible({
 
     return (
         <Transition
-            appear={false}
-            show={count > 0}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 scale-95"
-            enterTo="opacity-100 scale-100"
-            leave="ease-in duration-100"
-            leaveFrom="opacity-100 scale-75"
-            leaveTo="opacity-0 scale-95"
+            in={count > 0}
+            unmountOnExit
+            enter="opacity-0 scale-95"
+            enterActive="transition-all ease-out duration-300 !opacity-100 !scale-100"
+            exit="opacity-100 scale-100"
+            exitActive="transition-all ease-in duration-100 !opacity-0 !scale-95"
         >
-            <Disclosure>
-                {({ open }) => (
-                    <>
-                        <div
-                            className={classNames({ "border-b border-gray-300": !open },
-                                "mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none "
-                            )}
-                        >
-                            <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
-                                <FontAwesomeIcon
-                                    icon={faChevronRight}
-                                    className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
-                                    fixedWidth
-                                />
-                                <h3 className="text-md leading-6 font-medium text-gray-700">
-                                    <span className="pr-2">Completed</span>
-                                    <Badge size="lg" variant="success">
-                                        {count || previousCount}
-                                    </Badge>
-                                </h3>
-                            </Disclosure.Button>
-                            <div className="flex-grow-0 flex items-center">
-                                <CompletedItemsActionsMenu
-                                    onSetItemsIncomplete={onSetItemsIncomplete}
-                                    onDeleteAllItems={onDeleteAllItems}
-                                />
+            <div>
+                <Disclosure>
+                    {({ open }) => (
+                        <>
+                            <div
+                                className={classNames(
+                                    { "border-b border-gray-300": !open },
+                                    'mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none transition-all'
+                                )}
+                            >
+                                <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
+                                    <FontAwesomeIcon
+                                        icon={faChevronRight}
+                                        className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
+                                        fixedWidth
+                                    />
+                                    <h3 className="text-md leading-6 font-medium text-gray-700">
+                                        <span className="pr-2">Completed</span>
+                                        <Badge size="lg" variant="success">
+                                            {count || previousCount}
+                                        </Badge>
+                                    </h3>
+                                </Disclosure.Button>
+                                <div className="flex-grow-0 flex items-center">
+                                    <CompletedItemsActionsMenu
+                                        onSetItemsIncomplete={onSetItemsIncomplete}
+                                        onDeleteAllItems={onDeleteAllItems}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <Transition
-                            enter="transition-all duration-300 ease-out"
-                            enterFrom="transform -translate-y-1/4 opacity-0"
-                            enterTo="transform translate-y-100 opacity-100"
-                            leave="transition duration-150 ease-out"
-                            leaveFrom="transform opacity-100"
-                            leaveTo="transform opacity-0"
-                        >
-                            <Disclosure.Panel>
-                                {children}
-                            </Disclosure.Panel>
-                        </Transition>
-                    </>
-                )}
-            </Disclosure>
+                            <div className="overflow-hidden">
+                                <Transition
+                                    in={open}
+                                    unmountOnExit
+                                    enter="-translate-y-full opacity-0"
+                                    enterActive="transition-all ease-out duration-300 !translate-y-0 !opacity-100"
+                                    exit="opacity-100 translate-y-0"
+                                    exitActive="transition-all ease-out duration-300 !opacity-0 !-translate-y-full"
+                                >
+                                    <Disclosure.Panel static>
+                                        {children}
+                                    </Disclosure.Panel>
+                                </Transition>
+                            </div>
+                        </>
+                    )}
+                </Disclosure>
+            </div>
         </Transition>
     )
 }
