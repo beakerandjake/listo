@@ -72,6 +72,11 @@ export const Dropdown = forwardRef(({
             {/* Dropdown Trigger */}
             {cloneElement(trigger, { ref: reference })}
 
+            {/* Overlay*/}
+            {(open && overlay) && (
+                <Overlay onClick={e => onClickOutside && onClickOutside(e)} />
+            )}
+
             {/* Dropdown Content */}
             {createPortal((
                 <Transition
@@ -83,24 +88,23 @@ export const Dropdown = forwardRef(({
                     leaveFrom="transform scale-100 opacity-100"
                     leaveTo="transform scale-95 opacity-0"
                 >
-                    {overlay && <Overlay onClick={e => onClickOutside && onClickOutside(e)} />}
-                    <FocusLock autoFocus={false}>
-                        <div
-                            ref={mergeRefs([floating, forwardedRef])}
-                            className={cx(
-                                'absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
-                                'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
-                                className
-                            )}
-                            style={{
-                                position: strategy,
-                                top: y ?? 0,
-                                left: x ?? 0,
-                            }}
-                        >
+                    <div
+                        ref={mergeRefs([floating, forwardedRef])}
+                        className={cx(
+                            'absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
+                            'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
+                            className
+                        )}
+                        style={{
+                            position: strategy,
+                            top: y ?? 0,
+                            left: x ?? 0,
+                        }}
+                    >
+                        <FocusLock autoFocus={false}>
                             {children}
-                        </div>
-                    </FocusLock>
+                        </FocusLock>
+                    </div>
                 </Transition>
             ), document.body)}
         </>
