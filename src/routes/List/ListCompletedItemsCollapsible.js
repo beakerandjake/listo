@@ -110,7 +110,9 @@ export function ListCompletedItemsCollapsible({
                                 />
                                 <h3 className="text-md leading-6 font-medium text-gray-700">
                                     <span className="pr-2">Completed</span>
-                                    <Badge content={count || previousCount} size="lg" variant="success" />
+                                    <Badge size="lg" variant="success">
+                                        {count || previousCount}
+                                    </Badge>
                                 </h3>
                             </Disclosure.Button>
                             <div className="flex-grow-0 flex items-center">
