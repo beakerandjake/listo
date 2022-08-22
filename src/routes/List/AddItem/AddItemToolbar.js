@@ -61,7 +61,7 @@ export function AddItemToolbar({
     onAddItem,
 }) {
     return (
-        <div className="px-3 py-2 bg-slate-100 flex items-center justify-between">
+        <div className="shadow-inner h-10 px-3 py-2 bg-slate-100 flex items-center justify-between">
             {/* Item edit buttons */}
             <div className="flex items-center gap-2 sm:gap-3">
                 <ItemDueDateMenu
