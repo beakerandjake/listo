@@ -1,8 +1,8 @@
-import React, { forwardRef, Fragment, useEffect, useLayoutEffect, useState } from 'react';
-import { Transition } from '@headlessui/react';
+import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
+import { Transition, SwitchTransition } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
 
 const VARIANT_STYLES = {
@@ -24,7 +24,7 @@ const VARIANT_STYLES = {
  */
 export const EditItemMenuButton = forwardRef(({
     icon,
-    placeholder,
+    placeholder = '',
     variant = 'default',
     onClick,
     onClearValue,
@@ -32,9 +32,6 @@ export const EditItemMenuButton = forwardRef(({
     children,
     ...props
 }, ref) => {
-    const [placeholderTransitionFinished, setPlaceholderTransitionFinished] = useState(true);
-    const [childrenTransitionFinished, setChildrenTransitionFinished] = useState(true);
-
     const variantStyle = VARIANT_STYLES[variant];
 
     return (
@@ -51,41 +48,29 @@ export const EditItemMenuButton = forwardRef(({
                 className={cx(
                     variantStyle,
                     'transition-colors duration-150',
-                    'flex-1 py-2 pl-3 flex items-center'
+                    'flex-1 py-2 pl-3 flex items-center '
                 )}
             >
                 <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
-                <Transition
-                    show={!children && childrenTransitionFinished}
-                    beforeEnter={() => setPlaceholderTransitionFinished(false)}
-                    enter="transition-all duration-150"
-                    enterFrom="opacity-0 scale-75"
-                    enterTo="opacity-100 scale-100"
-                    afterLeave={() => setPlaceholderTransitionFinished(true)}
+                {/* Display placeholder if no children */}
+                <SwitchTransition
+                    switchKey={!!children ? 'open' : 'close'}
+                    enter="opacity-0 scale-75"
+                    enterActive="transition-all duration-150 opacity-100 scale-100"
+                    exit="opacity-100"
+                    exitActive="transition-all duration-75 opacity-0"
                 >
-                    {placeholder}
-                </Transition>
-                <Transition
-                    show={!!children && placeholderTransitionFinished}
-                    beforeEnter={() => setChildrenTransitionFinished(false)}
-                    enter="transition-all duration-150"
-                    enterFrom="opacity-0 scale-75"
-                    enterTo="opacity-100 scale-100"
-                    afterLeave={() => setChildrenTransitionFinished(true)}
-                >
-                    {children}
-                </Transition>
+                    {!!children ? children : placeholder}
+                </SwitchTransition>
             </div>
-            {/* Show the close button if children are present */}
+            {/* Reset Value Button */}
             <Transition
-                as={Fragment}
-                show={!!children}
-                enter="transition-opacity duration-75"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="transition-opacity duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+                in={!!children}
+                unmountOnExit
+                enter="opacity-0 scale-75"
+                enterActive="transition-all duration-150 opacity-100 scale-100"
+                exit="opacity-100"
+                exitActive="transition-opacity duration-75 opacity-0"
             >
                 <IconButton
                     icon={faTimes}
