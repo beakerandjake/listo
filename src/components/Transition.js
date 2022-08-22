@@ -1,7 +1,6 @@
 import {
     cloneElement,
     createRef,
-    Fragment,
     isValidElement,
     useMemo,
     useRef
@@ -20,7 +19,9 @@ const addImportantPrefix = (classNames) =>
     classNames
         .split(' ')
         .filter((className) => className.trim().length > 1)
-        .map(x => `!${x}`)
+        // Don't prefix classes transition-x utilities.
+        // That way they can be over-ridden by other utility classes like duration-x
+        .map(x => x.startsWith('transition') ? x : `!${x}`)
         .join(' ') || '';
 
 /**
@@ -37,17 +38,13 @@ const addImportantPrefix = (classNames) =>
 const generateClassNames = (
     enter = '',
     enterActive = '',
-    enterDone = '',
     exit = '',
     exitActive = '',
-    exitDone = ''
 ) => ({
-    enter,
+    enter: enter,
     enterActive: addImportantPrefix(enterActive),
-    enterDone,
-    exit,
+    exit: exit,
     exitActive: addImportantPrefix(exitActive),
-    exitDone
 })
 
 /**
@@ -55,19 +52,17 @@ const generateClassNames = (
  * @param {Object} props
  * @param {string} props.enter - Classes to apply during enter phase.
  * @param {string} props.enterActive - Classes to apply during the entire enter phase.
- * @param {string} props.enterDone - Classes to apply during the entered phase.
  * @param {string} props.exit - Classes to apply during the entire exit phase.
  * @param {string} props.exitActive - Classes to apply during the exiting phase.
- * @param {string} props.enterDone - Classes to apply during the exited phase.
+ * @param {string} props.classNames - When provided, will only use this value for classNames.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
 export const Transition = ({
     enter,
     enterActive,
-    enterDone,
     exit,
     exitActive,
-    exitDone,
+    classNames,
     children,
     ...props
 }) => {
@@ -81,7 +76,7 @@ export const Transition = ({
         <CSSTransition
             {...props}
             nodeRef={nodeRef}
-            classNames={generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
+            classNames={classNames || generateClassNames(enter, enterActive, exit, exitActive)}
             addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
         >
             {cloneElement(childrenSafe, { ref: (ref) => (nodeRef.current = ref) })}
@@ -95,10 +90,8 @@ export const Transition = ({
  * @param {string} props.switchKey - The key to pass to the SwitchTransition component.
  * @param {string} props.enter - Classes to apply during enter phase.
  * @param {string} props.enterActive - Classes to apply during the entire enter phase.
- * @param {string} props.enterDone - Classes to apply during the entered phase.
  * @param {string} props.exit - Classes to apply during the entire exit phase.
  * @param {string} props.exitActive - Classes to apply during the exiting phase.
- * @param {string} props.enterDone - Classes to apply during the exited phase.
  * @param {string} props.classNames - When provided, will only use this value for classNames.
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
@@ -106,10 +99,8 @@ export const SwitchTransition = ({
     switchKey,
     enter,
     enterActive,
-    enterDone,
     exit,
     exitActive,
-    exitDone,
     classNames,
     children,
     ...props
@@ -127,12 +118,14 @@ export const SwitchTransition = ({
                     {...props}
                     key={switchKey}
                     nodeRef={nodeRef}
-                    classNames={classNames || generateClassNames(enter, enterActive, enterDone, exit, exitActive, exitDone)}
+                    classNames={classNames || generateClassNames(enter, enterActive, exit, exitActive)}
                     addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
                 >
                     {cloneElement(childrenSafe, { ref: (ref) => (nodeRef.current = ref) })}
                 </CSSTransition>
             </ReactTransitionGroupSwitchTransition>
         );
-    }, [switchKey, children, classNames, enter, enterActive, enterDone, exit, exitActive, exitDone, props]);
+        // Only memoize when the key changes or when the children change
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [switchKey, children]);
 };
