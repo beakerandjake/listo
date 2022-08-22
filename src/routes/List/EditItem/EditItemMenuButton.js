@@ -56,9 +56,9 @@ export const EditItemMenuButton = forwardRef(({
                 <SwitchTransition
                     switchKey={!!children ? 'open' : 'close'}
                     enter="opacity-0 scale-75"
-                    enterActive="transition-all duration-150 opacity-100 scale-100"
+                    enterActive="transition-all duration-150 !opacity-100 !scale-100"
                     exit="opacity-100"
-                    exitActive="transition-all duration-75 opacity-0"
+                    exitActive="transition-all duration-75 !opacity-0"
                 >
                     {!!children ? children : placeholder}
                 </SwitchTransition>
@@ -68,9 +68,9 @@ export const EditItemMenuButton = forwardRef(({
                 in={!!children}
                 unmountOnExit
                 enter="opacity-0 scale-75"
-                enterActive="transition-all duration-150 opacity-100 scale-100"
+                enterActive="transition-all duration-150 !opacity-100 !scale-100"
                 exit="opacity-100"
-                exitActive="transition-opacity duration-75 opacity-0"
+                exitActive="transition-opacity duration-75 !opacity-0"
             >
                 <IconButton
                     icon={faTimes}
