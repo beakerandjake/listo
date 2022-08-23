@@ -5,6 +5,7 @@ import { IconButton } from 'components/IconButton';
 import { Transition } from 'components/Transition';
 import {
     Dialog,
+    DialogBackdrop,
     DialogContent,
     DialogDescription,
     DialogTitle
@@ -39,6 +40,15 @@ export function ConfirmDialog({
             onClose={onDismiss}
             className="z-20"
         >
+            <DialogBackdrop
+                open={open}
+                classNames={{
+                    appear: 'opacity-0',
+                    appearActive: 'transition-opacity ease-in !opacity-100',
+                    exit: 'opacity-100',
+                    exitActive: 'transition-opacity ease-in !opacity-0',
+                }}
+            />
             <div
                 className={cx(
                     'fixed inset-0 p-4 sm:p-0',
@@ -50,9 +60,9 @@ export function ConfirmDialog({
                     appear
                     classNames={{
                         appear: 'opacity-0 translate-y-[10%]',
-                        appearActive: 'transition-[transform,opacity] ease-out duration-300 !opacity-100 !translate-y-0',
+                        appearActive: 'transition-[transform,opacity] ease-out !opacity-100 !translate-y-0',
                         exit: 'translate-y-0 opacity-100',
-                        exitActive: 'transition-[transform,opacity] ease-in duration-300 !translate-y-[10%] !opacity-0'
+                        exitActive: 'transition-[transform,opacity] ease-in !translate-y-[10%] !opacity-0'
                     }}
                 >
                     <DialogContent className="bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg w-full">

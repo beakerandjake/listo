@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Dialog, DialogContent } from 'components/Dialog';
+import { Dialog, DialogContent, DialogBackdrop } from 'components/Dialog';
 import { Transition } from './Transition';
 
 const SIZES = {
@@ -216,6 +216,15 @@ export function Drawer({
             className={cx({ 'z-10': isChildDrawer })}
             initialFocus={initialFocusRef}
         >
+            <DialogBackdrop
+                open={open}
+                classNames={{
+                    appear: 'opacity-0',
+                    appearActive: 'transition-opacity ease-in duration-300 !opacity-100',
+                    exit: 'opacity-100',
+                    exitActive: 'transition-opacity ease-in duration-300 !opacity-0',
+                }}
+            />
             <div className="overflow-hidden">
                 <Transition
                     in={open}
