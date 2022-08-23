@@ -10,6 +10,23 @@ import {
     SwitchTransition as ReactTransitionGroupSwitchTransition
 } from "react-transition-group";
 
+const cloneChildren = (children, nodeRef) => {
+    const childrenSafe = isValidElement(children)
+        ? children
+        : <span>{children}</span>;
+
+    return cloneElement(childrenSafe, {
+        ref: (node) => {
+            nodeRef.current = node;
+
+            const { ref } = children;
+            if (typeof ref === 'function') {
+                ref(node);
+            }
+        }
+    })
+}
+
 /**
  * Wrapper around react-transition-group's CSSTransition that handles boilerplate. 
  * Due to how CSSTransition and Tailwind work there is likely to be specificity conflicts during enter/enterActive, exit/exitActive.
@@ -24,26 +41,13 @@ export const Transition = ({
 }) => {
     const nodeRef = useRef(null);
 
-    const childrenSafe = isValidElement(children)
-        ? children
-        : <span>{children}</span>;
-
     return (
         <CSSTransition
             {...props}
             nodeRef={nodeRef}
             addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
         >
-            {cloneElement(childrenSafe, {
-                ref(node) {
-                    nodeRef.current = node;
-
-                    const { ref } = children;
-                    if (typeof ref === 'function') {
-                        ref(node);
-                    }
-                }
-            })}
+            {cloneChildren(children, nodeRef)}
         </CSSTransition>
     );
 };
@@ -62,10 +66,6 @@ export const SwitchTransition = ({
     return useMemo(() => {
         const nodeRef = createRef();
 
-        const childrenSafe = isValidElement(children)
-            ? children
-            : <span>{children}</span>;
-
         return (
             <ReactTransitionGroupSwitchTransition>
                 <CSSTransition
@@ -74,7 +74,7 @@ export const SwitchTransition = ({
                     nodeRef={nodeRef}
                     addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
                 >
-                    {cloneElement(childrenSafe, { ref: (ref) => (nodeRef.current = ref) })}
+                    {cloneChildren(children, nodeRef)}
                 </CSSTransition>
             </ReactTransitionGroupSwitchTransition>
         );
