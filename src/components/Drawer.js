@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
-import { Transition } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Dialog as HeadlessDialog, DialogBackdrop, DialogContent, DialogTitle } from 'components/Dialog';
+import { Dialog, DialogContent } from 'components/Dialog';
+import { Transition } from './Transition';
 
 const SIZES = {
     xs: 'xs',
@@ -104,10 +104,10 @@ const TRANSITION_STYLES = [
     {
         anchor: ANCHORS.bottom,
         styles: {
-            enterFrom: 'translate-y-full',
-            enterTo: 'translate-y-0',
-            leaveFrom: 'translate-y-0',
-            leaveTo: 'translate-y-full'
+            appear: 'translate-y-full',
+            appearActive: '!translate-y-0',
+            exit: 'translate-y-0',
+            exitActive: '!translate-y-full'
         }
     },
     {
@@ -210,34 +210,44 @@ export function Drawer({
     }, [open]);
 
     return (
-        <HeadlessDialog open={open} onClose={onClose} className={cx({ 'z-10': isChildDrawer })} initialFocus={initialFocusRef}>
-            <DialogBackdrop open={open}/>
-            <Transition.Child
-                as={Fragment}
-                enter="transform transition ease-out duration-300"
-                leave="transform transition ease-out duration-200"
-                {...transitionStyles}
-            >
-                <DialogContent
-                    className={cx(
-                        sizeStyle,
-                        anchorStyle,
-                        'fixed shadow-xl bg-white focus:outline-none flex flex-col',
-                        className
-                    )}
+        <Dialog
+            open={open}
+            onClose={onClose}
+            className={cx({ 'z-10': isChildDrawer })}
+            initialFocus={initialFocusRef}
+        >
+            <div className="overflow-hidden">
+                <Transition
+                    in={open}
+                    appear
+                    classNames={{
+                        appear: transitionStyles.appear,
+                        appearActive: ['transform-transition ease-out duration-300', transitionStyles.appearActive].join(' '),
+                        exit: transitionStyles.exit,
+                        exitActive: ['transform-transition ease-in duration-300', transitionStyles.exitActive].join(' ')
+                    }}
                 >
-                    {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
-                    Once the user focuses on something else, remove this element from being focusable */}
-                    <span
-                        tabIndex={open && initialFocusCapture ? -1 : 0}
-                        ref={initialFocusRef}
-                        onBlur={() => setInitialFocusCapture(true)}
-                        className="focus:outline-none focus:ring-0"
-                    />
-                    {children}
-                    {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
-                </DialogContent>
-            </Transition.Child>
-        </HeadlessDialog>
+                    <DialogContent
+                        className={cx(
+                            sizeStyle,
+                            anchorStyle,
+                            'fixed shadow-xl bg-white focus:outline-none flex flex-col',
+                            className
+                        )}
+                    >
+                        {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
+                        Once the user focuses on something else, remove this element from being focusable */}
+                        <span
+                            tabIndex={open && initialFocusCapture ? -1 : 0}
+                            ref={initialFocusRef}
+                            onBlur={() => setInitialFocusCapture(true)}
+                            className="focus:outline-none focus:ring-0"
+                        />
+                        {children}
+                        {!!showCloseButton && <DefaultCloseButton {...defaultCloseButtonProps} />}
+                    </DialogContent>
+                </Transition>
+            </div>
+        </Dialog>
     );
 }
