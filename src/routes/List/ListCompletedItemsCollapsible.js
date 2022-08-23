@@ -90,9 +90,9 @@ export function ListCompletedItemsCollapsible({
             unmountOnExit
             classNames={{
                 enter: 'opacity-0 scale-95',
-                enterActive: 'transition-all ease-out duration-300 !opacity-100 !scale-100',
+                enterActive: 'transition transform ease-out duration-300 !opacity-100 !scale-100',
                 exit: 'opacity-100 scale-100',
-                exitActive: 'transition-all ease-in duration-100 !opacity-0 !scale-95'
+                exitActive: 'transition transform ease-in !opacity-0 !scale-95'
             }}
         >
             <div>
