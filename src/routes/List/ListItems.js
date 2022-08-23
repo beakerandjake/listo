@@ -44,6 +44,9 @@ const Items = ({
     );
 }
 
+const getCompleteItems = items => items?.filter(x => x.completed) || [];
+const getIncompleteItems = items => items?.filter(x => !x.completed) || [];
+
 /**
  * Renders the items of a list. Divides items between complete and incomplete.
  * @param {Object} props
@@ -58,15 +61,15 @@ export const ListItems = ({
     onItemsChange,
     onDeleteItems
 }) => {
-    const [incompleteItems, setIncompleteItems] = useState([]);
-    const [completeItems, setCompleteItems] = useState([]);
+    const [incompleteItems, setIncompleteItems] = useState(getIncompleteItems(items));
+    const [completeItems, setCompleteItems] = useState(getCompleteItems(items));
 
     // Any time our items list changes, divide the items into completed / pending
     useEffect(() => {
-        setIncompleteItems(items?.filter(x => !x.completed) || []);
-        setCompleteItems(items?.filter(x => x.completed) || []);
+        console.log('effect called');
+        setIncompleteItems(getIncompleteItems(items));
+        setCompleteItems(getCompleteItems(items));
     }, [items]);
-
 
     if (items?.length <= 0) {
         return <NoItemsDisplay />;
