@@ -1,7 +1,5 @@
-import React, { cloneElement, forwardRef, useRef } from 'react';
+import React, { cloneElement, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import FocusLock from 'react-focus-lock';
-import { Transition } from '@headlessui/react';
 import {
     useFloating,
     autoUpdate,
@@ -9,10 +7,12 @@ import {
     flip,
     shift,
 } from '@floating-ui/react-dom';
+import { mergeRefs } from 'react-merge-refs';
 import cx from 'classnames';
+import FocusLock from 'react-focus-lock';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
-import { mergeRefs } from 'react-merge-refs';
+import { Transition } from 'components/Transition';
 
 /**
  * Invisible overlay which prevents interaction with anything behind it. 
@@ -80,30 +80,48 @@ export const Dropdown = forwardRef(({
             {/* Dropdown Content */}
             {createPortal((
                 <Transition
-                    show={open}
-                    enter="transition duration-100 ease-out"
-                    enterFrom="transform scale-95 opacity-0"
-                    enterTo="transform scale-100 opacity-100"
-                    leave="transition duration-75 ease-out"
-                    leaveFrom="transform scale-100 opacity-100"
-                    leaveTo="transform scale-95 opacity-0"
+                    in={open}
+                    unmountOnExit
+                    classNames={{
+                        enter: 'opacity-0',
+                        enterActive: 'transition-opacity duration-200 !opacity-100',
+                        exit: 'opacity-100',
+                        exitActive: 'transition-opacity duration-75 !opacity-0'
+                    }}
                 >
+                    {/* Floating parent container */}
                     <div
                         ref={mergeRefs([floating, forwardedRef])}
-                        className={cx(
-                            'absolute top-0 left-0 min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
-                            'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
-                            className
-                        )}
-                        style={{
-                            position: strategy,
-                            top: y ?? 0,
-                            left: x ?? 0,
-                        }}
+                        style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}
+                        className="top-0 left-0"
                     >
-                        <FocusLock autoFocus={false}>
-                            {children}
-                        </FocusLock>
+                        {/* Transforming scale causes issues with floating container, so apply the scale transform inside of it. */}
+                        <Transition
+                            in={open}
+                            appear
+                            classNames={{
+                                appear: 'scale-90',
+                                appearActive: 'transition-transform ease-out duration-200 !scale-100',
+                                enter: 'scale-90',
+                                enterActive: 'transition-transform ease-out duration-200 !scale-100',
+                                exit: 'scale-100',
+                                exitActive: 'transition-transform ease-out duration-75 !scale-90'
+                            }}
+                        >
+                            {/* Styled Dropdown Container */}
+                            <div
+                                className={cx(
+                                    'min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
+                                    'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
+                                    className
+                                )}
+                            >
+                                {/* Dropdown Content */}
+                                <FocusLock autoFocus={false}>
+                                    {children}
+                                </FocusLock>
+                            </div>
+                        </Transition>
                     </div>
                 </Transition>
             ), document.body)}
