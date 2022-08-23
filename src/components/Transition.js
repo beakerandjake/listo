@@ -123,6 +123,8 @@ export const Fade = (props) => {
         <Transition
             {...props}
             classNames={{
+                appear: 'opacity-0',
+                appearActive: 'transition-opacity duration-300 !opacity-100',
                 enter: 'opacity-0',
                 enterActive: 'transition-opacity duration-300 !opacity-100',
                 exit: 'opacity-100',
@@ -133,13 +135,34 @@ export const Fade = (props) => {
 }
 
 /**
- * Transition which Fades/Scales in and out.
+ * Transition which Pops in.
  **/
-export const FadeAndPop = (props) => {
+export const PopIn = (props) => {
     return (
         <Transition
             {...props}
             classNames={{
+                appear: 'scale-90',
+                appearActive: 'transition-transform ease-out !scale-100',
+                enter: 'scale-90',
+                enterActive: 'transition-transform ease-out !scale-100',
+                exit: 'scale-100',
+                exitActive: 'transition-transform ease-out duration-75 !scale-90'
+            }}
+        />
+    );
+}
+
+/**
+ * Transition which Fades in and out and Pops in.
+ **/
+ export const FadeAndPopIn = (props) => {
+    return (
+        <Transition
+            {...props}
+            classNames={{
+                appear: 'opacity-0 scale-75',
+                appearActive: 'transition-[transform,opacity] !opacity-100 !scale-100',
                 enter: 'opacity-0 scale-75',
                 enterActive: 'transition-[transform,opacity] !opacity-100 !scale-100',
                 exit: 'opacity-100',
