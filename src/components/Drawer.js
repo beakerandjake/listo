@@ -104,28 +104,28 @@ const TRANSITION_STYLES = [
     {
         anchor: ANCHORS.bottom,
         styles: {
-            appear: 'translate-y-full',
-            appearActive: '!translate-y-0',
-            exit: 'translate-y-0',
-            exitActive: '!translate-y-full'
+            appear: 'opacity-60 translate-y-full',
+            appearActive: '!opacity-100 !translate-y-0',
+            exit: 'opacity-100 translate-y-0',
+            exitActive: '!translate-y-full !opacity-60'
         }
     },
     {
         anchor: ANCHORS.right,
         styles: {
-            appear: 'translate-x-full',
-            appearActive: '!translate-x-0',
-            exit: 'translate-x-0',
-            exitActive: '!translate-x-full'
+            appear: 'opacity-60 translate-x-full',
+            appearActive: '!opacity-100 !translate-x-0',
+            exit: 'opacity-100 translate-x-0',
+            exitActive: '!translate-x-full !opacity-60'
         }
     },
     {
         anchor: ANCHORS.left,
         styles: {
-            appear: '-translate-x-full',
-            appearActive: '!translate-x-0',
-            exit: 'translate-x-0',
-            exitActive: '!-translate-x-full'
+            appear: 'opacity-60 -translate-x-full',
+            appearActive: '!opacity-100 !translate-x-0',
+            exit: 'opacity-100 translate-x-0',
+            exitActive: '!opacity-60 !-translate-x-full'
         }
     },
 ];
@@ -220,9 +220,9 @@ export function Drawer({
                 open={open}
                 classNames={{
                     appear: 'opacity-0',
-                    appearActive: 'transition-opacity ease-in duration-300 !opacity-100',
+                    appearActive: 'transition-opacity ease-out duration-300 !opacity-100',
                     exit: 'opacity-100',
-                    exitActive: 'transition-opacity ease-in duration-300 !opacity-0',
+                    exitActive: 'transition-opacity ease-in duration-200 !opacity-0',
                 }}
             />
             <div className="overflow-hidden">
@@ -231,9 +231,9 @@ export function Drawer({
                     appear
                     classNames={{
                         appear: transitionStyles.appear,
-                        appearActive: ['transform-transition ease-out duration-300', transitionStyles.appearActive].join(' '),
+                        appearActive: ['transform-[opacity,transition] ease-out duration-300', transitionStyles.appearActive].join(' '),
                         exit: transitionStyles.exit,
-                        exitActive: ['transform-transition ease-in duration-300', transitionStyles.exitActive].join(' ')
+                        exitActive: ['transform-[opacity,transition] ease-in duration-200', transitionStyles.exitActive].join(' ')
                     }}
                 >
                     <DialogContent

@@ -66,7 +66,6 @@ export const ListItems = ({
 
     // Any time our items list changes, divide the items into completed / pending
     useEffect(() => {
-        console.log('effect called');
         setIncompleteItems(getIncompleteItems(items));
         setCompleteItems(getCompleteItems(items));
     }, [items]);
