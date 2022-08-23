@@ -113,19 +113,19 @@ const TRANSITION_STYLES = [
     {
         anchor: ANCHORS.right,
         styles: {
-            enterFrom: 'translate-x-full',
-            enterTo: 'translate-x-0',
-            leaveFrom: 'translate-x-0',
-            leaveTo: 'translate-x-full'
+            appear: 'translate-x-full',
+            appearActive: '!translate-x-0',
+            exit: 'translate-x-0',
+            exitActive: '!translate-x-full'
         }
     },
     {
         anchor: ANCHORS.left,
         styles: {
-            enterFrom: '-translate-x-full',
-            enterTo: 'translate-x-0',
-            leaveFrom: 'translate-x-0',
-            leaveTo: '-translate-x-full'
+            appear: '-translate-x-full',
+            appearActive: '!translate-x-0',
+            exit: 'translate-x-0',
+            exitActive: '!-translate-x-full'
         }
     },
 ];
