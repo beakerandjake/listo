@@ -36,7 +36,7 @@ export function ConfirmDialog({
 }) {
     return (
         <Dialog open={open} onClose={onDismiss} className="z-20">
-            <DialogBackdrop />
+            <DialogBackdrop open={open} />
             <div
                 className={cx(
                     'fixed inset-0 p-4 sm:p-0',

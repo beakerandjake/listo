@@ -211,7 +211,7 @@ export function Drawer({
 
     return (
         <HeadlessDialog open={open} onClose={onClose} className={cx({ 'z-10': isChildDrawer })} initialFocus={initialFocusRef}>
-            <DialogBackdrop />
+            <DialogBackdrop open={open}/>
             <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-out duration-300"

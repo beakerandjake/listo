@@ -4,11 +4,13 @@ import {
   Dialog as HeadlessUiDialog,
   Transition
 } from '@headlessui/react'
+import { Fade } from './Transition';
 
 
 /**
  * Full screen backdrop which can sit over content but behind the Dialog.
  * @param {Object} props - The Props.
+ * @param {boolean} props.open - Should the Dialog be displayed?
  * @param {string=} props.transitionEnter - Classes applied the entire time an element is entering.
  * @param {string=} props.transitionEnterFrom - Classes to start from.
  * @param {string=} props.enterTo - Classes to end at.
@@ -17,6 +19,7 @@ import {
  * @param {string=} [props.transitionLeaveTo] - Classes to leave to.
  */
 export const DialogBackdrop = ({
+  open = false,
   transitionEnter = 'ease-out duration-300',
   transitionEnterFrom = 'opacity-0',
   transitionEnterTo = 'opacity-100',
@@ -25,16 +28,9 @@ export const DialogBackdrop = ({
   transitionLeaveTo = 'opacity-0'
 }) => {
   return (
-    <Transition.Child
-      enter={transitionEnter}
-      enterFrom={transitionEnterFrom}
-      enterTo={transitionEnterTo}
-      leave={transitionLeave}
-      leaveFrom={transitionLeaveFrom}
-      leaveTo={transitionLeaveTo}
-    >
+    <Fade in={open} appear unmountOnExit >
       <div className='fixed inset-0 bg-black bg-opacity-50 transition-opacity' tabIndex={-1} />
-    </Transition.Child>
+    </Fade>
   )
 }
 
