@@ -3,7 +3,7 @@ import { faCalendarCheck, faNoteSticky } from '@fortawesome/free-regular-svg-ico
 import cx from 'classnames';
 import { formatDueDate, isDueToday, isOverdue } from 'services/dueDateHelpers';
 import { Badge } from 'components/Badge';
-import { Transition } from 'components/Transition';
+import { PopIn, SwitchTransition } from 'components/Transition';
 import { ItemCompletedCheckbox } from './Item/ItemCompletedCheckbox';
 import { ItemNameLabel } from './Item/ItemNameLabel';
 
@@ -51,17 +51,9 @@ export const ListItem = ({
             <span className={cx({ 'opacity-50': item.completed }, 'pl-3 w-full flex flex-col gap-1 items-start')}>
                 <span className="w-full flex items-center gap-2">
                     <ItemNameLabel completed={item.completed} name={item.name} className="text-sm md:text-base" />
-                    <Transition
-                        in={item.quantity > 1}
-                        unmountOnExit
-                        classNames={{
-                            enter:'opacity-0 scale-75',
-                            enterActive:'transition-[opacity,transform] !opacity-100 !scale-100',
-                            exit:'opacity-0'
-                        }}
-                    >
-                        <Badge>{item.quantity}</Badge>
-                    </Transition>
+                    <SwitchTransition switchKey={item.quantity} as={PopIn}>
+                        {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
+                    </SwitchTransition>
                 </span>
                 <span className="flex items-center gap-2 w-full">
                     {/* Due Date Indicator */}
