@@ -71,7 +71,7 @@ export function AddItem({
             ref={containerRef}
             className="rounded border border-gray-300 shadow-md shadow-black/20 overflow-hidden mb-3"
         >
-            <div className={cx({ 'border-b border-gray-300': toolbarVisible }, 'transition-all duration-300')}>
+            <div className={cx({ 'border-b border-gray-300 ': toolbarVisible }, 'transition-all duration-300')}>
                 <AddItemInput
                     value={item.name}
                     onChange={name => onItemChange({ name })}
@@ -84,9 +84,9 @@ export function AddItem({
                 unmountOnExit
                 classNames={{
                     enter:'max-h-0 opacity-30 overflow-hidden',
-                    enterActive:'transition-all ease-out duration-300 !max-h-10 !opacity-100',
+                    enterActive:'transition-[transform,opacity,max-height] ease-out duration-300 !max-h-10 !opacity-100',
                     exit:'max-h-10 opacity-100 overflow-hidden',
-                    exitActive:'transition-all ease-out duration-300 !max-h-0 !opacity-30'
+                    exitActive:'transition-[transform,opacity,max-height] ease-out duration-300 !max-h-0 !opacity-30'
                 }}
             >
                 {/* Wrap in div to prevent padding issue when animating */}

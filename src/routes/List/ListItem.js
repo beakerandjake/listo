@@ -55,8 +55,8 @@ export const ListItem = ({
                         in={item.quantity > 1}
                         unmountOnExit
                         classNames={{
-                            enter:'opacity-0 size-75',
-                            enterActive:'transition-all !opacity-100 !size-100',
+                            enter:'opacity-0 scale-75',
+                            enterActive:'transition-[opacity,transform] !opacity-100 !scale-100',
                             exit:'opacity-0'
                         }}
                     >

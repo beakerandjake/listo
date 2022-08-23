@@ -57,9 +57,9 @@ export const EditItemMenuButton = forwardRef(({
                     switchKey={!!children ? 'open' : 'close'}
                     classNames={{
                         enter:'opacity-0 scale-75',
-                        enterActive:'transition-all duration-150 !opacity-100 !scale-100',
+                        enterActive:'transition-[transform,opacity] !opacity-100 !scale-100',
                         exit:'opacity-100',
-                        exitActive:'transition-all duration-75 !opacity-0'
+                        exitActive:'transition-[transform,opacity] duration-75 !opacity-0'
                     }}
                 >
                     {!!children ? children : placeholder}
@@ -71,9 +71,9 @@ export const EditItemMenuButton = forwardRef(({
                 unmountOnExit
                 classNames={{
                     enter:'opacity-0 scale-75',
-                    enterActive:'transition-all duration-150 !opacity-100 !scale-100',
+                    enterActive:'transition-[transform,opacity] !opacity-100 !scale-100',
                     exit:'opacity-100',
-                    exitActive:'transition-opacity duration-75 !opacity-0'
+                    exitActive:'transition-[transform,opacity] duration-75 !opacity-0'
                 }}
             >
                 <IconButton

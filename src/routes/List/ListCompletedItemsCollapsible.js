@@ -90,9 +90,9 @@ export function ListCompletedItemsCollapsible({
             unmountOnExit
             classNames={{
                 enter: 'opacity-0 scale-95',
-                enterActive: 'transition transform ease-out duration-300 !opacity-100 !scale-100',
+                enterActive: 'transition-[transform,opacity] ease-in-out duration-300 !opacity-100 !scale-100',
                 exit: 'opacity-100 scale-100',
-                exitActive: 'transition transform ease-in !opacity-0 !scale-95'
+                exitActive: 'transition-[transform,opacity] ease-in !opacity-0 !scale-95'
             }}
         >
             <div>
@@ -102,7 +102,8 @@ export function ListCompletedItemsCollapsible({
                             <div
                                 className={classNames(
                                     { "border-b border-gray-300": !open },
-                                    'mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none transition-all'
+                                    'transition-[border-bottom-width,border-color] duration-300 ease-out',
+                                    'mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none'
                                 )}
                             >
                                 <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
@@ -130,10 +131,10 @@ export function ListCompletedItemsCollapsible({
                                     in={open}
                                     unmountOnExit
                                     classNames={{
-                                        enter:'-translate-y-full opacity-0',
-                                        enterActive:'transition-all ease-out duration-300 !translate-y-0 !opacity-100',
-                                        exit:'opacity-100 translate-y-0',
-                                        exitActive:'transition-all ease-out duration-300 !opacity-0 !-translate-y-full'
+                                        enter: '-translate-y-full opacity-0',
+                                        enterActive: 'transition-[transform,opacity] ease-out duration-300 !translate-y-0 !opacity-100',
+                                        exit: 'opacity-100 translate-y-0',
+                                        exitActive: 'transition-[transform,opacity] ease-out duration-300 !opacity-0 !-translate-y-full'
                                     }}
                                 >
                                     <Disclosure.Panel static>
