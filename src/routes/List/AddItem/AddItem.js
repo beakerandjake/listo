@@ -82,10 +82,12 @@ export function AddItem({
             <Transition
                 in={toolbarVisible}
                 unmountOnExit
-                enter="max-h-0 opacity-30 overflow-hidden"
-                enterActive="transition-all ease-out duration-300 !max-h-10 !opacity-100"
-                exit="max-h-10 opacity-100 overflow-hidden"
-                exitActive="transition-all ease-out duration-300 !max-h-0 !opacity-30"
+                classNames={{
+                    enter:'max-h-0 opacity-30 overflow-hidden',
+                    enterActive:'transition-all ease-out duration-300 !max-h-10 !opacity-100',
+                    exit:'max-h-10 opacity-100 overflow-hidden',
+                    exitActive:'transition-all ease-out duration-300 !max-h-0 !opacity-30'
+                }}
             >
                 {/* Wrap in div to prevent padding issue when animating */}
                 <div>

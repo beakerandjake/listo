@@ -55,10 +55,12 @@ export const EditItemMenuButton = forwardRef(({
                 {/* Display placeholder if no children */}
                 <SwitchTransition
                     switchKey={!!children ? 'open' : 'close'}
-                    enter="opacity-0 scale-75"
-                    enterActive="transition-all duration-150 !opacity-100 !scale-100"
-                    exit="opacity-100"
-                    exitActive="transition-all duration-75 !opacity-0"
+                    classNames={{
+                        enter:'opacity-0 scale-75',
+                        enterActive:'transition-all duration-150 !opacity-100 !scale-100',
+                        exit:'opacity-100',
+                        exitActive:'transition-all duration-75 !opacity-0'
+                    }}
                 >
                     {!!children ? children : placeholder}
                 </SwitchTransition>
@@ -67,10 +69,12 @@ export const EditItemMenuButton = forwardRef(({
             <Transition
                 in={!!children}
                 unmountOnExit
-                enter="opacity-0 scale-75"
-                enterActive="transition-all duration-150 !opacity-100 !scale-100"
-                exit="opacity-100"
-                exitActive="transition-opacity duration-75 !opacity-0"
+                classNames={{
+                    enter:'opacity-0 scale-75',
+                    enterActive:'transition-all duration-150 !opacity-100 !scale-100',
+                    exit:'opacity-100',
+                    exitActive:'transition-opacity duration-75 !opacity-0'
+                }}
             >
                 <IconButton
                     icon={faTimes}

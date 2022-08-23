@@ -88,10 +88,12 @@ export function ListCompletedItemsCollapsible({
         <Transition
             in={count > 0}
             unmountOnExit
-            enter="opacity-0 scale-95"
-            enterActive="transition-all ease-out duration-300 !opacity-100 !scale-100"
-            exit="opacity-100 scale-100"
-            exitActive="transition-all ease-in duration-100 !opacity-0 !scale-95"
+            classNames={{
+                enter: 'opacity-0 scale-95',
+                enterActive: 'transition-all ease-out duration-300 !opacity-100 !scale-100',
+                exit: 'opacity-100 scale-100',
+                exitActive: 'transition-all ease-in duration-100 !opacity-0 !scale-95'
+            }}
         >
             <div>
                 <Disclosure>
@@ -127,10 +129,12 @@ export function ListCompletedItemsCollapsible({
                                 <Transition
                                     in={open}
                                     unmountOnExit
-                                    enter="-translate-y-full opacity-0"
-                                    enterActive="transition-all ease-out duration-300 !translate-y-0 !opacity-100"
-                                    exit="opacity-100 translate-y-0"
-                                    exitActive="transition-all ease-out duration-300 !opacity-0 !-translate-y-full"
+                                    classNames={{
+                                        enter:'-translate-y-full opacity-0',
+                                        enterActive:'transition-all ease-out duration-300 !translate-y-0 !opacity-100',
+                                        exit:'opacity-100 translate-y-0',
+                                        exitActive:'transition-all ease-out duration-300 !opacity-0 !-translate-y-full'
+                                    }}
                                 >
                                     <Disclosure.Panel static>
                                         {children}

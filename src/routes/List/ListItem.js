@@ -54,9 +54,11 @@ export const ListItem = ({
                     <Transition
                         in={item.quantity > 1}
                         unmountOnExit
-                        enter="opacity-0 size-75"
-                        enterActive="transition-all !opacity-100 !size-100"
-                        exit="opacity-0"
+                        classNames={{
+                            enter:'opacity-0 size-75',
+                            enterActive:'transition-all !opacity-100 !size-100',
+                            exit:'opacity-0'
+                        }}
                     >
                         <Badge>{item.quantity}</Badge>
                     </Transition>
