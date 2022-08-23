@@ -8,20 +8,15 @@ import { Transition } from './Transition';
 /**
  * Full screen backdrop which can sit over content but behind the Dialog.
  * @param {Object} props - The Props.
- * @param {boolean} props.open - Should the Dialog be displayed?
- * @param {string=} props.transitionEnter - Classes applied the entire time an element is entering.
- * @param {string=} props.transitionEnterFrom - Classes to start from.
- * @param {string=} props.enterTo - Classes to end at.
- * @param {string=} props.transitionLeave - Classes applied the entire time an element is leaving.
- * @param {string=} props.transitionLeaveFrom - Classes to leave from.
- * @param {string=} [props.transitionLeaveTo] - Classes to leave to.
+ * @param {boolean} props.open - Should the backdrop be displayed?
+ * @param {object|string} props.classNames - Allows the default transition to be overwritten
  */
-export const DialogBackdrop = ({ open = false }) => {
+export const DialogBackdrop = ({ open = false, classNames = null }) => {
   return (
     <Transition
       in={open}
       appear
-      classNames={{
+      classNames={classNames || {
         appear: 'opacity-0',
         appearActive: 'transition-opacity ease-in duration-300 !opacity-100',
         exit: 'opacity-100',
@@ -61,7 +56,6 @@ export function Dialog({
         onClose={() => onClose()}
         className={cx('relative', className)}
       >
-        <DialogBackdrop open={open} />
         {children}
       </HeadlessUiDialog>
     </Transition >
