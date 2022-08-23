@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
-import { SwitchTransition, FadeAndPop } from 'components/Transition';
+import { SwitchTransition, FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
 
 const VARIANT_STYLES = {
@@ -53,19 +53,19 @@ export const EditItemMenuButton = forwardRef(({
             >
                 <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
                 {/* Display placeholder if no children */}
-                <SwitchTransition switchKey={!!children} as={FadeAndPop}>
+                <SwitchTransition switchKey={!!children} as={FadeAndPopIn}>
                     {!!children ? children : placeholder}
                 </SwitchTransition>
             </div>
             {/* Reset Value Button */}
-            <FadeAndPop in={!!children} unmountOnExit>
+            <FadeAndPopIn in={!!children} unmountOnExit>
                 <IconButton
                     icon={faTimes}
                     className="w-[10%]"
                     onClick={() => onClearValue()}
                     title={clearButtonTitle}
                 />
-            </FadeAndPop>
+            </FadeAndPopIn>
         </div>
     )
 });

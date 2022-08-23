@@ -12,7 +12,7 @@ import cx from 'classnames';
 import FocusLock from 'react-focus-lock';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
-import { Transition } from 'components/Transition';
+import { Fade, PopIn } from 'components/Transition';
 
 /**
  * Invisible overlay which prevents interaction with anything behind it. 
@@ -79,16 +79,7 @@ export const Dropdown = forwardRef(({
 
             {/* Dropdown Content */}
             {createPortal((
-                <Transition
-                    in={open}
-                    unmountOnExit
-                    classNames={{
-                        enter: 'opacity-0',
-                        enterActive: 'transition-opacity duration-200 !opacity-100',
-                        exit: 'opacity-100',
-                        exitActive: 'transition-opacity duration-75 !opacity-0'
-                    }}
-                >
+                <Fade in={open} unmountOnExit>
                     {/* Floating parent container */}
                     <div
                         ref={mergeRefs([floating, forwardedRef])}
@@ -96,18 +87,7 @@ export const Dropdown = forwardRef(({
                         className="top-0 left-0"
                     >
                         {/* Transforming scale causes issues with floating container, so apply the scale transform inside of it. */}
-                        <Transition
-                            in={open}
-                            appear
-                            classNames={{
-                                appear: 'scale-90',
-                                appearActive: 'transition-transform ease-out duration-200 !scale-100',
-                                enter: 'scale-90',
-                                enterActive: 'transition-transform ease-out duration-200 !scale-100',
-                                exit: 'scale-100',
-                                exitActive: 'transition-transform ease-out duration-75 !scale-90'
-                            }}
-                        >
+                        <PopIn in={open} appear>
                             {/* Styled Dropdown Container */}
                             <div
                                 className={cx(
@@ -121,9 +101,9 @@ export const Dropdown = forwardRef(({
                                     {children}
                                 </FocusLock>
                             </div>
-                        </Transition>
+                        </PopIn>
                     </div>
-                </Transition>
+                </Fade>
             ), document.body)}
         </>
     )
