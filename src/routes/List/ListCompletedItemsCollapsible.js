@@ -3,7 +3,7 @@ import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { Disclosure } from "@headlessui/react";
 import classNames from "classnames";
-import { SwitchTransition, Transition } from "components/Transition";
+import { PopIn, SwitchTransition, Transition } from "components/Transition";
 import { Badge } from "components/Badge";
 import {
     EllipsisMenuTrigger,
@@ -107,22 +107,14 @@ export function ListCompletedItemsCollapsible({
                                     <h3 className="text-md leading-6 font-medium text-gray-700">
                                         <span className="pr-2">Completed</span>
                                         {/* Count Badge */}
-                                        <Badge size="lg" variant="success">
-                                            <SwitchTransition
-                                                switchKey={count}
-                                                classNames={{
-                                                    enter:'opacity-0 scale-75',
-                                                    enterActive:'transition-[transform,opacity] !opacity-100 !scale-100',
-                                                    exit:'opacity-100',
-                                                    exitActive:'transition-opacity duration-75 !opacity-0'
-                                                }}
-                                            >
+                                        <SwitchTransition switchKey={count} as={PopIn}>
+                                            <Badge size="lg" variant="success">
                                                 {count}
-                                            </SwitchTransition>
-                                        </Badge>
+                                            </Badge>
+                                        </SwitchTransition>
                                     </h3>
                                 </Disclosure.Button>
-                                
+
                                 {/* Action Dropdown */}
                                 <div className="flex-grow-0 flex items-center">
                                     <CompletedItemsActionsMenu
