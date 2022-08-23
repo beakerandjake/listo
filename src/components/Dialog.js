@@ -1,10 +1,8 @@
-import { Fragment } from 'react';
 import cx from 'classnames';
 import {
-  Dialog as HeadlessUiDialog,
-  Transition
+  Dialog as HeadlessUiDialog
 } from '@headlessui/react'
-import { Fade } from './Transition';
+import { Transition } from './Transition';
 
 
 /**
@@ -18,19 +16,20 @@ import { Fade } from './Transition';
  * @param {string=} props.transitionLeaveFrom - Classes to leave from.
  * @param {string=} [props.transitionLeaveTo] - Classes to leave to.
  */
-export const DialogBackdrop = ({
-  open = false,
-  transitionEnter = 'ease-out duration-300',
-  transitionEnterFrom = 'opacity-0',
-  transitionEnterTo = 'opacity-100',
-  transitionLeave = 'ease-in duration-200',
-  transitionLeaveFrom = 'opacity-100',
-  transitionLeaveTo = 'opacity-0'
-}) => {
+export const DialogBackdrop = ({ open = false }) => {
   return (
-    <Fade in={open} appear unmountOnExit >
+    <Transition
+      in={open}
+      appear
+      classNames={{
+        appear: 'opacity-0',
+        appearActive: 'transition-opacity ease-out duration-300 !opacity-100',
+        exit: 'opacity-100',
+        exitActive: 'transition-opacity ease-in !opacity-0',
+      }}
+    >
       <div className='fixed inset-0 bg-black bg-opacity-50 transition-opacity' tabIndex={-1} />
-    </Fade>
+    </Transition>
   )
 }
 
@@ -46,11 +45,23 @@ export function Dialog({
   open = false,
   onClose,
   className,
-  children
+  children,
+  ...props
 }) {
   return (
-    <Transition show={open} as={Fragment}>
-      <HeadlessUiDialog onClose={() => onClose()} className={cx('relative', className)}>
+    <Transition
+      {...props}
+      in={open}
+      appear
+      unmountOnExit
+    >
+      <HeadlessUiDialog
+        static
+        open={open}
+        onClose={() => onClose()}
+        className={cx('relative', className)}
+      >
+        <DialogBackdrop open={open} />
         {children}
       </HeadlessUiDialog>
     </Transition >

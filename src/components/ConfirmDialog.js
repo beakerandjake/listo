@@ -1,11 +1,10 @@
-import { Transition } from '@headlessui/react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
 import { Button } from "components/Button";
-import { IconButton } from './IconButton';
+import { IconButton } from 'components/IconButton';
+import { Transition } from 'components/Transition';
 import {
     Dialog,
-    DialogBackdrop,
     DialogContent,
     DialogDescription,
     DialogTitle
@@ -35,21 +34,27 @@ export function ConfirmDialog({
     variant
 }) {
     return (
-        <Dialog open={open} onClose={onDismiss} className="z-20">
-            <DialogBackdrop open={open} />
+        <Dialog
+            open={open}
+            onClose={onDismiss}
+            className="z-20"
+            timeout={{ exit: 2000 }}
+        >
             <div
                 className={cx(
                     'fixed inset-0 p-4 sm:p-0',
                     'flex items-end sm:items-center justify-center min-h-full text-center'
                 )}
             >
-                <Transition.Child
-                    enter="transform transition opacity ease-out duration-300"
-                    enterFrom="translate-y-full opacity-50"
-                    enterTo="translate-y-0 opacity-100"
-                    leave="transform transition opacity ease-in duration-200"
-                    leaveFrom="translate-y-0 opacity-100"
-                    leaveTo="translate-y-full opacity-75"
+                <Transition
+                    in={open}
+                    appear
+                    classNames={{
+                        appear: 'opacity-0 translate-y-[10%]',
+                        appearActive: 'transition-[transform,opacity] ease-out duration-300 !opacity-100 !translate-y-0',
+                        exit: 'translate-y-0 opacity-100',
+                        exitActive: 'transition-[transform,opacity] ease-in !translate-y-[10%] !opacity-0'
+                    }}
                 >
                     <DialogContent className="bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg w-full">
                         {/* Main Content */}
@@ -85,8 +90,8 @@ export function ConfirmDialog({
                             <IconButton icon={faTimes} onClick={onDismiss} />
                         </div>
                     </DialogContent>
-                </Transition.Child>
+                </Transition>
             </div>
-        </Dialog>
+        </Dialog >
     )
 }
