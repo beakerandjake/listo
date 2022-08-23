@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import cx from 'classnames';
-import { Transition, SwitchTransition } from 'components/Transition';
+import { SwitchTransition, FadeAndPop } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
 
 const VARIANT_STYLES = {
@@ -53,36 +53,19 @@ export const EditItemMenuButton = forwardRef(({
             >
                 <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
                 {/* Display placeholder if no children */}
-                <SwitchTransition
-                    switchKey={!!children ? 'open' : 'close'}
-                    classNames={{
-                        enter:'opacity-0 scale-75',
-                        enterActive:'transition-[transform,opacity] !opacity-100 !scale-100',
-                        exit:'opacity-100',
-                        exitActive:'transition-[transform,opacity] duration-75 !opacity-0'
-                    }}
-                >
+                <SwitchTransition switchKey={!!children} as={FadeAndPop}>
                     {!!children ? children : placeholder}
                 </SwitchTransition>
             </div>
             {/* Reset Value Button */}
-            <Transition
-                in={!!children}
-                unmountOnExit
-                classNames={{
-                    enter:'opacity-0 scale-75',
-                    enterActive:'transition-[transform,opacity] !opacity-100 !scale-100',
-                    exit:'opacity-100',
-                    exitActive:'transition-[transform,opacity] duration-75 !opacity-0'
-                }}
-            >
+            <FadeAndPop in={!!children} unmountOnExit>
                 <IconButton
                     icon={faTimes}
                     className="w-[10%]"
                     onClick={() => onClearValue()}
                     title={clearButtonTitle}
                 />
-            </Transition>
+            </FadeAndPop>
         </div>
     )
 });
