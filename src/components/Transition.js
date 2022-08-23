@@ -34,7 +34,16 @@ export const Transition = ({
             nodeRef={nodeRef}
             addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
         >
-            {cloneElement(childrenSafe, { ref: (ref) => (nodeRef.current = ref) })}
+            {cloneElement(childrenSafe, {
+                ref(node) {
+                    nodeRef.current = node;
+
+                    const { ref } = children;
+                    if (typeof ref === 'function') {
+                        ref(node);
+                    }
+                }
+            })}
         </CSSTransition>
     );
 };
