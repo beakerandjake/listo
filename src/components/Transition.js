@@ -60,23 +60,26 @@ export const Transition = ({
  * @param {React.ReactNode} props.children - The child elements to render.
  **/
 export const SwitchTransition = ({
+    as,
     switchKey,
     children,
     ...props
 }) => {
+    const ComponentToRender = as || Transition;
+
     return useMemo(() => {
         const nodeRef = createRef();
 
         return (
             <ReactTransitionGroupSwitchTransition>
-                <CSSTransition
+                <ComponentToRender
                     {...props}
                     key={switchKey}
                     nodeRef={nodeRef}
                     addEndListener={(done) => nodeRef.current.addEventListener("transitionend", done, false)}
                 >
                     {cloneChildren(children, nodeRef)}
-                </CSSTransition>
+                </ComponentToRender>
             </ReactTransitionGroupSwitchTransition>
         );
         // Only memoize when the key changes or when the children change
@@ -138,9 +141,9 @@ export const FadeAndPop = (props) => {
             {...props}
             classNames={{
                 enter: 'opacity-0 scale-75',
-                enterActive: 'transition-[opacity,transform] duration-300 !opacity-100 !scale-100',
-                exit: 'opacity-100 scale-100',
-                exitActive: 'transition-[opacity,transform] !opacity-0 !scale-75',
+                enterActive: 'transition-[transform,opacity] !opacity-100 !scale-100',
+                exit: 'opacity-100',
+                exitActive: 'transition-opacity duration-75 !opacity-0'
             }}
         />
     );
