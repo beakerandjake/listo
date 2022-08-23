@@ -23,9 +23,9 @@ export const DialogBackdrop = ({ open = false }) => {
       appear
       classNames={{
         appear: 'opacity-0',
-        appearActive: 'transition-opacity ease-out duration-300 !opacity-100',
+        appearActive: 'transition-opacity ease-in duration-300 !opacity-100',
         exit: 'opacity-100',
-        exitActive: 'transition-opacity ease-in !opacity-0',
+        exitActive: 'transition-opacity ease-in duration-300 !opacity-0',
       }}
     >
       <div className='fixed inset-0 bg-black bg-opacity-50 transition-opacity' tabIndex={-1} />

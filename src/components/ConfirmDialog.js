@@ -38,7 +38,6 @@ export function ConfirmDialog({
             open={open}
             onClose={onDismiss}
             className="z-20"
-            timeout={{ exit: 2000 }}
         >
             <div
                 className={cx(
@@ -53,7 +52,7 @@ export function ConfirmDialog({
                         appear: 'opacity-0 translate-y-[10%]',
                         appearActive: 'transition-[transform,opacity] ease-out duration-300 !opacity-100 !translate-y-0',
                         exit: 'translate-y-0 opacity-100',
-                        exitActive: 'transition-[transform,opacity] ease-in !translate-y-[10%] !opacity-0'
+                        exitActive: 'transition-[transform,opacity] ease-in duration-300 !translate-y-[10%] !opacity-0'
                     }}
                 >
                     <DialogContent className="bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg w-full">
