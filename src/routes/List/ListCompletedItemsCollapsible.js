@@ -3,8 +3,7 @@ import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons"
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { Disclosure } from "@headlessui/react";
 import classNames from "classnames";
-import { usePreviousValue } from "hooks/usePreviousValue";
-import { Transition } from "components/Transition";
+import { SwitchTransition, Transition } from "components/Transition";
 import { Badge } from "components/Badge";
 import {
     EllipsisMenuTrigger,
@@ -76,14 +75,6 @@ export function ListCompletedItemsCollapsible({
     onDeleteAllItems,
     children
 }) {
-    /**
-     * Cache the previous count value, this resolves an issue when the count becomes zero
-     * the fade out animation will start, and the count badge will briefly change to zero.
-     * to prevent this display the previous value instead of the current value whenever the current
-     * value becomes zero 
-     **/
-    const previousCount = usePreviousValue(count);
-
     return (
         <Transition
             in={count > 0}
@@ -107,6 +98,7 @@ export function ListCompletedItemsCollapsible({
                                 )}
                             >
                                 <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
+                                    {/* Toggle Icon */}
                                     <FontAwesomeIcon
                                         icon={faChevronRight}
                                         className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
@@ -114,11 +106,24 @@ export function ListCompletedItemsCollapsible({
                                     />
                                     <h3 className="text-md leading-6 font-medium text-gray-700">
                                         <span className="pr-2">Completed</span>
+                                        {/* Count Badge */}
                                         <Badge size="lg" variant="success">
-                                            {count || previousCount}
+                                            <SwitchTransition
+                                                switchKey={count}
+                                                classNames={{
+                                                    enter:'opacity-0 scale-75',
+                                                    enterActive:'transition-[transform,opacity] !opacity-100 !scale-100',
+                                                    exit:'opacity-100',
+                                                    exitActive:'transition-opacity duration-75 !opacity-0'
+                                                }}
+                                            >
+                                                {count}
+                                            </SwitchTransition>
                                         </Badge>
                                     </h3>
                                 </Disclosure.Button>
+                                
+                                {/* Action Dropdown */}
                                 <div className="flex-grow-0 flex items-center">
                                     <CompletedItemsActionsMenu
                                         onSetItemsIncomplete={onSetItemsIncomplete}
