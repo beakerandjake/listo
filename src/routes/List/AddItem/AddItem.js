@@ -66,12 +66,19 @@ export function AddItem({
         setItem(DEFAULT_ITEM);
     };
 
+    //  className="rounded border border-gray-300 shadow-md shadow-black/20 overflow-hidden mb-3"
+
+
     return (
-        <div
-            ref={containerRef}
-            className="rounded border border-gray-300 shadow-md shadow-black/20 overflow-hidden mb-3"
-        >
-            <div className={cx({ 'border-b border-gray-300 ': toolbarVisible }, 'transition-all duration-300')}>
+        <div ref={containerRef}>
+            <div
+                className={cx(
+                    { 'border-b ': toolbarVisible },
+                    { 'rounded-b ': !toolbarVisible },
+                    'border-x border-t rounded-t border-gray-300',
+                    'transition-[border-radius] duration-300 overflow-hidden shadow-md shadow-black/20'
+                )}
+            >
                 <AddItemInput
                     value={item.name}
                     onChange={name => onItemChange({ name })}
@@ -79,26 +86,28 @@ export function AddItem({
                     onFocus={() => setToolbarVisible(true)}
                 />
             </div>
-            <Transition
-                in={toolbarVisible}
-                unmountOnExit
-                classNames={{
-                    enter:'max-h-0 opacity-30 overflow-hidden',
-                    enterActive:'transition-[transform,opacity,max-height] ease-out duration-300 !max-h-10 !opacity-100',
-                    exit:'max-h-10 opacity-100 overflow-hidden',
-                    exitActive:'transition-[transform,opacity,max-height] ease-out duration-300 !max-h-0 !opacity-30'
-                }}
-            >
-                {/* Wrap in div to prevent padding issue when animating */}
-                <div>
-                    <AddItemToolbar
-                        item={item}
-                        onItemChange={onItemChange}
-                        canAddItem={nameValid}
-                        onAddItem={tryToAddItem}
-                    />
-                </div>
-            </Transition>
+            <div className="overflow-hidden -mb-3 pb-3 -mx-2 px-2">
+                <Transition
+                    in={toolbarVisible}
+                    unmountOnExit
+                    classNames={{
+                        enter: '-translate-y-full opacity-0',
+                        enterActive: 'transition-[transform,opacity] ease-out duration-300 !translate-y-0 !opacity-100',
+                        exit: 'translate-y-0 opacity-100',
+                        exitActive: 'transition-[transform,opacity] ease-in duration-200 !-translate-y-full !opacity-30'
+                    }}
+                >
+                    {/* Wrap in div to prevent padding issue when animating */}
+                    <div className="shadow-md rounded-b shadow-black/20">
+                        <AddItemToolbar
+                            item={item}
+                            onItemChange={onItemChange}
+                            canAddItem={nameValid}
+                            onAddItem={tryToAddItem}
+                        />
+                    </div>
+                </Transition>
+            </div>
         </div >
     )
 }

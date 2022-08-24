@@ -192,7 +192,7 @@ export function List(props) {
                     </div>
                 )}
             </ListPageHeader>
-            <div className="pt-2 sm:pt-4 flex flex-1 flex-col">
+            <div className="pt-2 sm:pt-4 flex flex-1 flex-col gap-3">
                 <AddItem onAddItem={onAddItem} />
                 <ListItems
                     items={sortedItems}
