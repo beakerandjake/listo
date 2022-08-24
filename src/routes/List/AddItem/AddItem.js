@@ -73,10 +73,10 @@ export function AddItem({
         <div ref={containerRef}>
             <div
                 className={cx(
-                    { 'border-b ': toolbarVisible },
-                    { 'rounded-b ': !toolbarVisible },
+                    { 'border-b': toolbarVisible },
+                    { 'rounded-b': !toolbarVisible },
                     'border-x border-t rounded-t border-gray-300',
-                    'transition-[border-radius, border-width] duration-300 overflow-hidden shadow-md shadow-black/20'
+                    'transition-[border-radius, border-width] overflow-hidden shadow-md shadow-black/20'
                 )}
             >
                 <AddItemInput
@@ -93,8 +93,8 @@ export function AddItem({
                     classNames={{
                         enter: '-translate-y-full opacity-0',
                         enterActive: 'transition-[transform,opacity] ease-out duration-300 !translate-y-0 !opacity-100',
-                        exit: 'translate-y-0 opacity-100',
-                        exitActive: 'transition-[transform,opacity] ease-in duration-200 !-translate-y-full !opacity-30'
+                        exit: 'h-10 opacity-100',
+                        exitActive: 'transition-[height,opacity] ease-in !h-0 !opacity-100'
                     }}
                 >
                     {/* Wrap in div to prevent padding issue when animating */}
