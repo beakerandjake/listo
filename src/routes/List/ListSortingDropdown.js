@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
@@ -11,6 +11,7 @@ import {
     ScrollableMenuContent,
     StatefulMenu
 } from 'components/Menu';
+import { FadeAndPopIn, SwitchTransition } from 'components/Transition';
 
 const SORTING_FIELDS = [
     {
@@ -45,6 +46,9 @@ const SORTING_FIELDS = [
     }
 ];
 
+const getSortingField = ({ itemKey = '', direction = '' } = {}) => SORTING_FIELDS
+    .find(x => itemKey === x.itemKey && direction === x.sortingDirection);
+
 /**
  * Dropdown which allows the user to select the active sorting field.
  * @param {Object} props - The props.
@@ -55,16 +59,12 @@ export function ListSortingDropdown({
     activeSort,
     onChange
 }) {
-    const [activeSortingField, setActiveSortingField] = useState(null);
+    const [activeSortingField, setActiveSortingField] = useState(getSortingField(activeSort));
 
     // Any time the active sort prop changes, search our sorting fields
     // to find the element that corresponds to the active sort prop.
-    useLayoutEffect(() => {
-        const result = SORTING_FIELDS.find(({ itemKey, sortingDirection }) =>
-            activeSort.itemKey === itemKey && activeSort.direction === sortingDirection
-        );
-
-        setActiveSortingField(result);
+    useEffect(() => {
+        setActiveSortingField(getSortingField(activeSort));
     }, [activeSort]);
 
     return (
@@ -74,18 +74,22 @@ export function ListSortingDropdown({
                     open={open}
                     onClose={() => setOpen(false)}
                     trigger={(
-                        <Button
-                            border="none"
-                            className="bg-inherit shadow-none enabled:hover:bg-white"
-                            onClick={() => setOpen(true)}
-                        >
-                            <FontAwesomeIcon icon={faSort} />
-                            {!!activeSortingField && (
-                                <span>
-                                    Sorted by <span className="font-semibold">{activeSortingField.label}</span>
-                                </span>
-                            )}
-                        </Button>
+                        <div>
+                            <SwitchTransition switchKey={activeSortingField?.label || ''} as={FadeAndPopIn}>
+                                <Button
+                                    border="none"
+                                    className="bg-inherit shadow-none enabled:hover:bg-white"
+                                    onClick={() => setOpen(true)}
+                                >
+                                    <FontAwesomeIcon icon={faSort} />
+                                    {!!activeSortingField && (
+                                        <span>
+                                            Sorted by <span className="font-semibold">{activeSortingField.label}</span>
+                                        </span>
+                                    )}
+                                </Button>
+                            </SwitchTransition>
+                        </div>
                     )}
                     desktopPlacement='bottom-end'
                 >
