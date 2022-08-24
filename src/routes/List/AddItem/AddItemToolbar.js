@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
 import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/free-solid-svg-icons";
+import { FadeAndPopIn, SwitchTransition } from "components/Transition";
 import { ItemDueDateMenu } from "routes/List/Item";
 import { ItemQuantityMenu } from "routes/List/Item";
 import { formatDueDate } from "services/dueDateHelpers";
@@ -31,18 +32,25 @@ export const AddItemToolbarButton = forwardRef(({
     ...props
 }, ref) => {
     return (
-        <button
-            {...props}
-            ref={ref}
-            className={cx(
-                'p-1 flex items-center justify-between gap-1 leading-0 keyboard-only-focus-ring',
-                'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
-                'rounded border border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
-                className
-            )}>
-            <FontAwesomeIcon icon={icon} fixedWidth />
-            {text && <span className="text-sm leading-none">{text}</span>}
-        </button>
+        <div ref={ref}>
+            <SwitchTransition
+                switchKey={text || ''}
+                as={FadeAndPopIn}
+            >
+                <button
+                    {...props}
+                    className={cx(
+                        'p-1 flex items-center justify-between gap-1 leading-0 keyboard-only-focus-ring',
+                        'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+                        'rounded border border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
+                        className
+                    )}
+                >
+                    <FontAwesomeIcon icon={icon} fixedWidth />
+                    {text && <span className="text-sm leading-none">{text}</span>}
+                </button>
+            </SwitchTransition>
+        </div>
     )
 });
 
