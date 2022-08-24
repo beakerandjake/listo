@@ -41,7 +41,7 @@ export const ListItem = ({
 }) => {
     return (
         <li
-            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 drop-shadow min-h-[50px] rounded cursor-pointer select-none border-gray-300 border"
+            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 min-h-[50px] shadow rounded cursor-pointer select-none border-gray-300 border"
             onClick={() => onClick(item.id)}
         >
             <ItemCompletedCheckbox
