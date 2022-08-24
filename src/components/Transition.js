@@ -8,8 +8,11 @@ import {
 } from "react";
 import {
     CSSTransition,
-    SwitchTransition as ReactTransitionGroupSwitchTransition
+    SwitchTransition as ReactTransitionGroupSwitchTransition,
+    TransitionGroup as ReactTransitionGroup
 } from "react-transition-group";
+
+export const TransitionGroup = ReactTransitionGroup;
 
 const cloneChildren = (children, nodeRef) => {
     const childrenSafe = isValidElement(children)
@@ -156,7 +159,7 @@ export const PopIn = (props) => {
 /**
  * Transition which Fades in and out and Pops in.
  **/
- export const FadeAndPopIn = (props) => {
+export const FadeAndPopIn = (props) => {
     return (
         <Transition
             {...props}
