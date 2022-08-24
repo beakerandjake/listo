@@ -213,7 +213,7 @@ export function Drawer({
         <Dialog
             open={open}
             onClose={onClose}
-            className={cx({ 'z-10': isChildDrawer })}
+            className={cx({ 'z-10': isChildDrawer }, className)}
             initialFocus={initialFocusRef}
         >
             <DialogBackdrop
@@ -240,8 +240,7 @@ export function Drawer({
                         className={cx(
                             sizeStyle,
                             anchorStyle,
-                            'fixed shadow-xl bg-white focus:outline-none flex flex-col',
-                            className
+                            'fixed shadow-xl bg-white focus:outline-none flex flex-col'
                         )}
                     >
                         {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.

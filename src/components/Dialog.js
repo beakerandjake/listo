@@ -1,7 +1,4 @@
-import cx from 'classnames';
-import {
-  Dialog as HeadlessUiDialog
-} from '@headlessui/react'
+import { Dialog as HeadlessUiDialog } from '@headlessui/react'
 import { Transition } from './Transition';
 
 
@@ -49,12 +46,13 @@ export function Dialog({
       in={open}
       appear
       unmountOnExit
+      className={className}
     >
       <HeadlessUiDialog
         static
         open={open}
         onClose={() => onClose()}
-        className={cx('relative', className)}
+        className="relative"
       >
         {children}
       </HeadlessUiDialog>
