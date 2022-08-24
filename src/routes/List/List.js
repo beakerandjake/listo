@@ -60,7 +60,7 @@ export function List(props) {
     const onAddItem = async item => {
         try {
             const defaultValues = {
-                id: Math.max(...list.items.map(x => x.id)) + 1,
+                id: list.items.length ? Math.max(...list.items.map(x => x.id)) + 1 : 0,
                 completed: false,
                 created: new Date().toISOString(),
                 note: null,
