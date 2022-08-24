@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { ListItem } from "./ListItem";
 import { ListCompletedItemsCollapsible } from "./ListCompletedItemsCollapsible";
+import { FadeAndPopIn } from "components/Transition";
 
 /**
  * Display indicating that the list is empty.
@@ -71,7 +72,13 @@ export const ListItems = ({
     }, [items]);
 
     if (items?.length <= 0) {
-        return <NoItemsDisplay />;
+        return (
+            <FadeAndPopIn in={true} appear>
+                <div>
+                    <NoItemsDisplay />
+                </div>
+            </FadeAndPopIn>
+        );
     }
 
     return (
