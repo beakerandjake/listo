@@ -76,7 +76,7 @@ export function AddItem({
                     { 'border-b ': toolbarVisible },
                     { 'rounded-b ': !toolbarVisible },
                     'border-x border-t rounded-t border-gray-300',
-                    'transition-[border-radius] duration-300 overflow-hidden shadow-md shadow-black/20'
+                    'transition-[border-radius, border-width] duration-300 overflow-hidden shadow-md shadow-black/20'
                 )}
             >
                 <AddItemInput
