@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { ListItem } from "./ListItem";
 import { ListCompletedItemsCollapsible } from "./ListCompletedItemsCollapsible";
-import { FadeAndPopIn } from "components/Transition";
+import { FadeAndPopIn, TransitionGroup } from "components/Transition";
 
 /**
  * Display indicating that the list is empty.
@@ -32,16 +32,18 @@ const Items = ({
     onItemChange
 }) => {
     return (
-        <ul className="w-full space-y-2">
-            {items.map(x => (
-                <ListItem
-                    key={x.id}
-                    item={x}
-                    onClick={() => onItemSelected(x.id)}
-                    onItemChange={changes => onItemChange({ id: x.id, changes })}
-                />
+        <TransitionGroup as="ul" className="w-full space-y-2">
+            {items.map((x, index) => (
+                <FadeAndPopIn key={x.id}>
+                    <ListItem
+                        key={x.id}
+                        item={x}
+                        onClick={() => onItemSelected(x.id)}
+                        onItemChange={changes => onItemChange({ id: x.id, changes })}
+                    />
+                </FadeAndPopIn>
             ))}
-        </ul>
+        </TransitionGroup>
     );
 }
 
