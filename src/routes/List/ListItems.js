@@ -24,28 +24,13 @@ const NoItemsDisplay = () => {
     )
 };
 
-const onElementAppear = (el, index) =>
-    spring({
-        onUpdate: val => {
-            el.style.opacity = val;
-        },
-        delay: index * 50
-    });
-
-const onElementExit = (el, index, removeElement) => {
-    spring({
-        onUpdate: val => {
-            el.style.opacity = 1 - val;
-        },
-        delay: index * 50,
-        onComplete: removeElement
-    });
-
-    return () => {
-        el.style.opacity = "";
-        removeElement();
-    };
-}
+// Callback invoked by react-flip-toolkit, lerps the opacity from 0 to 1 while a Flipped Element is appearing.
+const fadeFlippedElementIn = (el, index) => spring({
+    onUpdate: val => {
+        el.style.opacity = val;
+    },
+    delay: index * 50
+});
 
 /**
  * Wraps a ListItem in a Flipped and applies common flip behaviors. 
@@ -65,7 +50,7 @@ const FlippedListItem = ({
             {...props}
             flipId={item.id}
             spring="stiff"
-            onAppear={onElementAppear}
+            onAppear={fadeFlippedElementIn}
         >
             <ListItem item={item} onClick={onClick} onItemChange={onChange} />
         </Flipped>
@@ -85,6 +70,20 @@ const filterCompleteItems = items => items?.filter(x => x.completed) || [];
 const filterIncompleteItems = items => items?.filter(x => !x.completed) || [];
 
 /**
+ * Generates a key for use with the Flipper component.
+ * @param {array} incompleteItems - The items not yet completed.
+ * @param {array} completedItems - The items marked as completed.
+ * @returns {string}
+ */
+const generateFlipKey = (incompleteItems = [], completedItems = []) => (
+    [
+        ...incompleteItems.map(x => x.id),
+        completedItems.length > 0 && COMPLETED_ITEMS_CONTAINER_FLIP_ID,
+        ...completedItems.map(x => x.id)
+    ].filter(Boolean).join('')
+);
+
+/**
  * Renders the items of a list. Divides items between complete and incomplete.
  * @param {Object} props
  * @param {array} props.items - The items to render.
@@ -100,11 +99,17 @@ export const ListItems = ({
 }) => {
     const [incompleteItems, setIncompleteItems] = useState(filterIncompleteItems(items));
     const [completeItems, setCompleteItems] = useState(filterCompleteItems(items));
+    const [flipKey, setFlipKey] = useState(generateFlipKey(incompleteItems, completeItems));
 
     // Any time our items list changes, divide the items into completed / pending
     useEffect(() => {
-        setIncompleteItems(filterIncompleteItems(items));
-        setCompleteItems(filterCompleteItems(items));
+        const newIncomplete = filterIncompleteItems(items);
+        const newComplete = filterCompleteItems(items);
+
+        setIncompleteItems(newIncomplete);
+        setCompleteItems(newComplete);
+
+        setFlipKey(generateFlipKey(newIncomplete, newComplete));
     }, [items]);
 
     if (items?.length <= 0) {
@@ -124,7 +129,7 @@ export const ListItems = ({
         <Flipped
             key={COMPLETED_ITEMS_CONTAINER_FLIP_ID}
             flipId={COMPLETED_ITEMS_CONTAINER_FLIP_ID}
-            onAppear={onElementAppear}
+            onAppear={fadeFlippedElementIn}
             translate
             opacity
             scale={false}
@@ -146,13 +151,6 @@ export const ListItems = ({
             </div>
         </Flipped>
     );
-
-    // Generating flip key is a little weird because we have to also consider the completed items container as a flipped element. 
-    const flipKey = [
-        ...incompleteItems.map(x => x.id),
-        completeItems.length > 0 && COMPLETED_ITEMS_CONTAINER_FLIP_ID,
-        ...completeItems.map(x => x.id)
-    ].filter(Boolean).join('');
 
     return (
         <div className="flex-grow flex-col relative -mt-3">
