@@ -2,8 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { Disclosure } from "@headlessui/react";
-import classNames from "classnames";
-import { PopIn, SwitchTransition, Transition } from "components/Transition";
+import cx from "classnames";
 import { Badge } from "components/Badge";
 import {
     EllipsisMenuTrigger,
@@ -14,6 +13,11 @@ import {
     ScrollableMenuContent,
     StatefulMenu
 } from "components/Menu";
+import {
+    PopIn,
+    SwitchTransition,
+    Transition
+} from "components/Transition";
 
 /**
  * Menu which contains actions which apply to all of the items in the completed container.
@@ -80,18 +84,14 @@ export function ListCompletedItemsCollapsible({
         <Disclosure>
             {({ open }) => (
                 <>
-                    <div
-                        className={classNames(
-                            { "border-b border-gray-300": !open },
-                            'transition-[border-bottom-width,border-color] duration-300 ease-out',
-                            'mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none'
-                        )}
-                    >
+                    {/* Trigger / Menu */}
+                    <div className="mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none">
+                        {/* Trigger */}
                         <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
                             {/* Toggle Icon */}
                             <FontAwesomeIcon
                                 icon={faChevronRight}
-                                className={classNames({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
+                                className={cx({ 'rotate-90': open }, "transition-transform rounded group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-focus-visible:ring-indigo-500")}
                                 fixedWidth
                             />
                             <h3 className="text-md leading-6 font-medium text-gray-700">
@@ -104,8 +104,7 @@ export function ListCompletedItemsCollapsible({
                                 </SwitchTransition>
                             </h3>
                         </Disclosure.Button>
-
-                        {/* Action Dropdown */}
+                        {/* Menu */}
                         <div className="flex-grow-0 flex items-center">
                             <CompletedItemsActionsMenu
                                 onSetItemsIncomplete={onSetItemsIncomplete}
@@ -113,7 +112,23 @@ export function ListCompletedItemsCollapsible({
                             />
                         </div>
                     </div>
-                    <div className="overflow-hidden py-2">
+
+                    {/* Divider, shown while closed. */}
+                    <Transition
+                        in={!open}
+                        unmountOnExit
+                        classNames={{
+                            enter: 'opacity-0',
+                            enterActive: 'transition-opacity ease-in duration-300 !opacity-100',
+                            exit: 'opacity-100',
+                            exitActive: 'transition-opacity ease-out !opacity-0',
+                        }}
+                    >
+                        <div className="w-full border-t border-gray-300" />
+                    </Transition>
+
+                    {/* Items */}
+                    <div className="overflow-hidden py-1">
                         <Transition
                             in={open}
                             unmountOnExit
