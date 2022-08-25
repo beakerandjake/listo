@@ -7,16 +7,20 @@ import { ListCompletedItemsCollapsible } from "./ListCompletedItemsCollapsible";
 import { FadeAndPopIn } from "components/Transition";
 import { Flipped, Flipper, spring } from "react-flip-toolkit";
 
+const COMPLETED_ITEMS_CONTAINER_FLIP_ID = 'completed';
+
 /**
  * Display indicating that the list is empty.
  */
 const NoItemsDisplay = () => {
     return (
-        <div className=" w-full py-5 flex flex-col justify-center items-center gap-2 select-none">
-            <FontAwesomeIcon icon={faCat} size="4x" className="text-gray-400" />
-            <h1 className="text-2xl font-bold text-gray-500">List Is Empty!</h1>
-            <h3 className="text-md font-semibold text-gray-400">Add some Items to get started.</h3>
-        </div>
+        <FadeAndPopIn in={true} appear>
+            <div className="w-full py-5 flex flex-col justify-center items-center gap-2 select-none">
+                <FontAwesomeIcon icon={faCat} size="4x" className="text-gray-400" />
+                <h1 className="text-2xl font-bold text-gray-500">List Is Empty!</h1>
+                <h3 className="text-md font-semibold text-gray-400">Add some Items to get started.</h3>
+            </div>
+        </FadeAndPopIn>
     )
 };
 
@@ -43,58 +47,42 @@ const onElementExit = (el, index, removeElement) => {
     };
 }
 
-const exitThenFlipThenEnter = ({
-    hideEnteringElements,
-    animateEnteringElements,
-    animateExitingElements,
-    animateFlippedElements
-}) => {
-    hideEnteringElements();
-    animateExitingElements()
-        .then(animateFlippedElements)
-        .then(animateEnteringElements);
-};
-
-
 /**
- * Renders an array of items.
+ * Wraps a ListItem in a Flipped and applies common flip behaviors. 
  * @param {Object} props
- * @param {array} props.items - The items to render.
- * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
- * @param {function} props.onItemChange - Callback invoked when the user has made changes to an item.
+ * @param {Object} props.item - The item to render.
+ * @param {function} props.onClick - Callback invoked when the user clicks on the item.
+ * @param {function} props.onChange - Callback invoked when the user has made changes to the item.
  */
-const Items = ({
-    items,
-    onItemSelected,
-    onItemChange
+const FlippedListItem = ({
+    item,
+    onClick,
+    onChange,
+    ...props
 }) => {
     return (
-        <Flipper
-            flipKey={items.map(x => x.id).join('')}
+        <Flipped
+            {...props}
+            flipId={item.id}
+            spring="stiff"
+            onAppear={onElementAppear}
         >
-            <div className="w-full flex flex-col gap-2">
-                {items.map(x => (
-                    <Flipped
-                        key={x.id}
-                        flipId={x.id}
-                        spring="stiff"
-                        onAppear={onElementAppear}
-                        onExit={onElementExit}
-                    >
-                        <ListItem
-                            item={x}
-                            onClick={() => onItemSelected(x.id)}
-                            onItemChange={changes => onItemChange({ id: x.id, changes })}
-                        />
-                    </Flipped>
-                ))}
-            </div>
-        </Flipper>
+            <ListItem item={item} onClick={onClick} onItemChange={onChange} />
+        </Flipped>
     );
-}
+};
 
-const getCompleteItems = items => items?.filter(x => x.completed) || [];
-const getIncompleteItems = items => items?.filter(x => !x.completed) || [];
+/**
+ * Returns all of the items marked as completed.
+ * @param {array} items - The items to filter.
+ */
+const filterCompleteItems = items => items?.filter(x => x.completed) || [];
+
+/**
+ * Returns all of the items not marked as completed.
+ * @param {array} items - The items to filter.
+ */
+const filterIncompleteItems = items => items?.filter(x => !x.completed) || [];
 
 /**
  * Renders the items of a list. Divides items between complete and incomplete.
@@ -110,44 +98,32 @@ export const ListItems = ({
     onItemsChange,
     onDeleteItems
 }) => {
-    const [incompleteItems, setIncompleteItems] = useState(getIncompleteItems(items));
-    const [completeItems, setCompleteItems] = useState(getCompleteItems(items));
+    const [incompleteItems, setIncompleteItems] = useState(filterIncompleteItems(items));
+    const [completeItems, setCompleteItems] = useState(filterCompleteItems(items));
 
     // Any time our items list changes, divide the items into completed / pending
     useEffect(() => {
-        setIncompleteItems(getIncompleteItems(items));
-        setCompleteItems(getCompleteItems(items));
+        setIncompleteItems(filterIncompleteItems(items));
+        setCompleteItems(filterCompleteItems(items));
     }, [items]);
 
     if (items?.length <= 0) {
-        return (
-            <FadeAndPopIn in={true} appear>
-                <div>
-                    <NoItemsDisplay />
-                </div>
-            </FadeAndPopIn>
-        );
+        return <NoItemsDisplay />;
     }
 
     const incompleteFlipped = incompleteItems.map(x => (
-        <Flipped
+        <FlippedListItem
             key={x.id}
-            flipId={x.id}
-            spring="stiff"
-            onAppear={onElementAppear}
-        >
-            <ListItem
-                item={x}
-                onClick={() => onItemSelected(x.id)}
-                onItemChange={changes => onItemsChange([{ id: x.id, changes }])}
-            />
-        </Flipped>
+            item={x}
+            onClick={() => onItemSelected(x.id)}
+            onChange={changes => onItemsChange([{ id: x.id, changes }])}
+        />
     ));
 
     const completeFlipped = completeItems.length > 0 && (
         <Flipped
-            key="completed"
-            flipId="completed"
+            key={COMPLETED_ITEMS_CONTAINER_FLIP_ID}
+            flipId={COMPLETED_ITEMS_CONTAINER_FLIP_ID}
             onAppear={onElementAppear}
             translate
             opacity
@@ -159,25 +135,24 @@ export const ListItems = ({
                     onDeleteAllItems={() => onDeleteItems(completeItems.map(x => x.id))}
                 >
                     {completeItems.map(x => (
-                        <Flipped
+                        <FlippedListItem
                             key={x.id}
-                            flipId={x.id}
-                            spring="stiff"
-                        >
-                            <ListItem
-                                item={x}
-                                onClick={() => onItemSelected(x.id)}
-                                onItemChange={changes => onItemsChange([{ id: x.id, changes }])}
-                            />
-                        </Flipped>
+                            item={x}
+                            onClick={() => onItemSelected(x.id)}
+                            onChange={changes => onItemsChange([{ id: x.id, changes }])}
+                        />
                     ))}
                 </ListCompletedItemsCollapsible>
             </div>
         </Flipped>
     );
 
-    const flipped = [...incompleteFlipped, completeFlipped].filter(x => !!x);
-    const flippedIds = [...incompleteItems.map(x => x.id), completeItems.length && 'completed', ...completeItems.map(x => x.id)];
+    // Generating flip key is a little weird because we have to also consider the completed items container as a flipped element. 
+    const flipKey = [
+        ...incompleteItems.map(x => x.id),
+        completeItems.length > 0 && COMPLETED_ITEMS_CONTAINER_FLIP_ID,
+        ...completeItems.map(x => x.id)
+    ].filter(Boolean).join('');
 
     return (
         <div className="flex-grow flex-col relative -mt-3">
@@ -187,35 +162,12 @@ export const ListItems = ({
                     '-mx-3 -mb-3 px-3 pb-3 sm:-mx-6 sm:-mb-6 sm:px-6 sm:pb-6 md:-mx-8 md:-mb-8 md:px-8 md:pb-8'
                 )}
             >
-                {flippedIds}
-                <Flipper
-                    flipKey={flippedIds}
-                >
+                <Flipper flipKey={flipKey}>
                     <div className="w-full flex flex-col gap-2">
-                        {flipped}
+                        {[...incompleteFlipped, completeFlipped].filter(Boolean)}
                     </div>
                 </Flipper>
             </div>
         </div>
     )
 };
-
-
-                // {/* Incomplete Items */}
-                // <Items
-                //     items={incompleteItems}
-                //     onItemSelected={onItemSelected}
-                //     onItemChange={changes => onItemsChange([changes])}
-                // />
-                // {/* Completed Items */}
-                // <ListCompletedItemsCollapsible
-                //     count={completeItems.length}
-                //     onSetItemsIncomplete={() => onItemsChange(completeItems.map(x => ({ id: x.id, changes: { completed: false } })))}
-                //     onDeleteAllItems={() => onDeleteItems(completeItems.map(x => x.id))}
-                // >
-                //     <Items
-                //         items={completeItems}
-                //         onItemSelected={onItemSelected}
-                //         onItemChange={changes => onItemsChange([changes])}
-                //     />
-                // </ListCompletedItemsCollapsible>
