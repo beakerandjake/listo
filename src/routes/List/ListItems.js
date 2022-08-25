@@ -61,7 +61,7 @@ const FlippedListItem = ({
  * Returns all of the items marked as completed.
  * @param {array} items - The items to filter.
  */
-const filterCompleteItems = items => items?.filter(x => x.completed) || [];
+const filterCompletedItems = items => items?.filter(x => x.completed) || [];
 
 /**
  * Returns all of the items not marked as completed.
@@ -84,7 +84,7 @@ const generateFlipKey = (incompleteItems = [], completedItems = []) => (
 );
 
 /**
- * Renders the items of a list. Divides items between complete and incomplete.
+ * Renders the items of a list. Divides items between completed and incomplete.
  * @param {Object} props
  * @param {array} props.items - The items to render.
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
@@ -98,25 +98,25 @@ export const ListItems = ({
     onDeleteItems
 }) => {
     const [incompleteItems, setIncompleteItems] = useState(filterIncompleteItems(items));
-    const [completeItems, setCompleteItems] = useState(filterCompleteItems(items));
-    const [flipKey, setFlipKey] = useState(generateFlipKey(incompleteItems, completeItems));
+    const [completedItems, setCompletedItems] = useState(filterCompletedItems(items));
+    const [flipKey, setFlipKey] = useState(generateFlipKey(incompleteItems, completedItems));
 
-    // Any time our items list changes, divide the items into completed / pending
+    // Any time our items list changes, divide the items into completed / incomplete
     useEffect(() => {
         const newIncomplete = filterIncompleteItems(items);
-        const newComplete = filterCompleteItems(items);
+        const newCompleted = filterCompletedItems(items);
 
         setIncompleteItems(newIncomplete);
-        setCompleteItems(newComplete);
+        setCompletedItems(newCompleted);
 
-        setFlipKey(generateFlipKey(newIncomplete, newComplete));
+        setFlipKey(generateFlipKey(newIncomplete, newCompleted));
     }, [items]);
 
     if (items?.length <= 0) {
         return <NoItemsDisplay />;
     }
 
-    const incompleteFlipped = incompleteItems.map(x => (
+    const incompleteFlippedItems = incompleteItems.map(x => (
         <FlippedListItem
             key={x.id}
             item={x}
@@ -125,7 +125,7 @@ export const ListItems = ({
         />
     ));
 
-    const completeFlipped = completeItems.length > 0 && (
+    const completedFlippedItems = completedItems.length > 0 && (
         <Flipped
             key={COMPLETED_ITEMS_CONTAINER_FLIP_ID}
             flipId={COMPLETED_ITEMS_CONTAINER_FLIP_ID}
@@ -136,10 +136,10 @@ export const ListItems = ({
         >
             <div>
                 <ListCompletedItemsCollapsible
-                    onSetItemsIncomplete={() => onItemsChange(completeItems.map(x => ({ id: x.id, changes: { completed: false } })))}
-                    onDeleteAllItems={() => onDeleteItems(completeItems.map(x => x.id))}
+                    onSetItemsIncomplete={() => onItemsChange(completedItems.map(x => ({ id: x.id, changes: { completed: false } })))}
+                    onDeleteAllItems={() => onDeleteItems(completedItems.map(x => x.id))}
                 >
-                    {completeItems.map(x => (
+                    {completedItems.map(x => (
                         <FlippedListItem
                             key={x.id}
                             item={x}
@@ -162,7 +162,7 @@ export const ListItems = ({
             >
                 <Flipper flipKey={flipKey}>
                     <div className="w-full flex flex-col gap-2">
-                        {[...incompleteFlipped, completeFlipped].filter(Boolean)}
+                        {[...incompleteFlippedItems, completedFlippedItems].filter(Boolean)}
                     </div>
                 </Flipper>
             </div>
