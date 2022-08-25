@@ -5,7 +5,7 @@ import cx from 'classnames';
 import { ListItem } from "./ListItem";
 import { ListCompletedItemsCollapsible } from "./ListCompletedItemsCollapsible";
 import { FadeAndPopIn } from "components/Transition";
-import { Flipped, Flipper } from "react-flip-toolkit";
+import { Flipped, Flipper, spring } from "react-flip-toolkit";
 
 /**
  * Display indicating that the list is empty.
@@ -20,6 +20,42 @@ const NoItemsDisplay = () => {
     )
 };
 
+const onElementAppear = (el, index) =>
+    spring({
+        onUpdate: val => {
+            el.style.opacity = val;
+        },
+        delay: index * 50
+    });
+
+const onElementExit = (el, index, removeElement) => {
+    spring({
+        onUpdate: val => {
+            el.style.opacity = 1 - val;
+        },
+        delay: index * 50,
+        onComplete: removeElement
+    });
+
+    return () => {
+        el.style.opacity = "";
+        removeElement();
+    };
+}
+
+const exitThenFlipThenEnter = ({
+    hideEnteringElements,
+    animateEnteringElements,
+    animateExitingElements,
+    animateFlippedElements
+}) => {
+    hideEnteringElements();
+    animateExitingElements()
+        .then(animateFlippedElements)
+        .then(animateEnteringElements);
+};
+
+
 /**
  * Renders an array of items.
  * @param {Object} props
@@ -33,20 +69,26 @@ const Items = ({
     onItemChange
 }) => {
     return (
-        <Flipper flipKey={items.map(x => x.id).join('')}>
-            <ul className="w-full space-y-2">
+        <Flipper
+            flipKey={items.map(x => x.id).join('')}
+        >
+            <div className="w-full flex flex-col gap-2">
                 {items.map(x => (
-                    <Flipped key={x.id} flipId={x.id} spring="stiff">
-                        <ul>
-                            <ListItem
-                                item={x}
-                                onClick={() => onItemSelected(x.id)}
-                                onItemChange={changes => onItemChange({ id: x.id, changes })}
-                            />
-                        </ul>
+                    <Flipped
+                        key={x.id}
+                        flipId={x.id}
+                        spring="stiff"
+                        onAppear={onElementAppear}
+                        onExit={onElementExit}
+                    >
+                        <ListItem
+                            item={x}
+                            onClick={() => onItemSelected(x.id)}
+                            onItemChange={changes => onItemChange({ id: x.id, changes })}
+                        />
                     </Flipped>
                 ))}
-            </ul>
+            </div>
         </Flipper>
     );
 }

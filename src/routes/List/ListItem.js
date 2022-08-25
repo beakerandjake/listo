@@ -38,10 +38,12 @@ const ItemIndicator = ({
 export const ListItem = forwardRef(({
     item,
     onClick,
-    onItemChange
+    onItemChange,
+    ...props
 }, ref) => {
     return (
-        <li
+        <div
+            {...props}
             ref={ref}
             className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 min-h-[50px] shadow rounded cursor-pointer select-none border-gray-300 border"
             onClick={() => onClick(item.id)}
@@ -75,6 +77,6 @@ export const ListItem = forwardRef(({
                     {item.note && <ItemIndicator icon={faNoteSticky} text="Note" />}
                 </span>
             </span>
-        </li>
+        </div>
     )
 });
