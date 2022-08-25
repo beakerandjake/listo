@@ -129,6 +129,56 @@ export const ListItems = ({
         );
     }
 
+    const incompleteFlipped = incompleteItems.map(x => (
+        <Flipped
+            key={x.id}
+            flipId={x.id}
+            spring="stiff"
+            onAppear={onElementAppear}
+        >
+            <ListItem
+                item={x}
+                onClick={() => onItemSelected(x.id)}
+                onItemChange={changes => onItemsChange([{ id: x.id, changes }])}
+            />
+        </Flipped>
+    ));
+
+    const completeFlipped = completeItems.length > 0 && (
+        <Flipped
+            key="completed"
+            flipId="completed"
+            onAppear={onElementAppear}
+            translate
+            opacity
+            scale={false}
+        >
+            <div>
+                <ListCompletedItemsCollapsible
+                    onSetItemsIncomplete={() => onItemsChange(completeItems.map(x => ({ id: x.id, changes: { completed: false } })))}
+                    onDeleteAllItems={() => onDeleteItems(completeItems.map(x => x.id))}
+                >
+                    {completeItems.map(x => (
+                        <Flipped
+                            key={x.id}
+                            flipId={x.id}
+                            spring="stiff"
+                        >
+                            <ListItem
+                                item={x}
+                                onClick={() => onItemSelected(x.id)}
+                                onItemChange={changes => onItemsChange([{ id: x.id, changes }])}
+                            />
+                        </Flipped>
+                    ))}
+                </ListCompletedItemsCollapsible>
+            </div>
+        </Flipped>
+    );
+
+    const flipped = [...incompleteFlipped, completeFlipped].filter(x => !!x);
+    const flippedIds = [...incompleteItems.map(x => x.id), completeItems.length && 'completed', ...completeItems.map(x => x.id)];
+
     return (
         <div className="flex-grow flex-col relative -mt-3">
             <div
@@ -137,25 +187,35 @@ export const ListItems = ({
                     '-mx-3 -mb-3 px-3 pb-3 sm:-mx-6 sm:-mb-6 sm:px-6 sm:pb-6 md:-mx-8 md:-mb-8 md:px-8 md:pb-8'
                 )}
             >
-                {/* Incomplete Items */}
-                <Items
-                    items={incompleteItems}
-                    onItemSelected={onItemSelected}
-                    onItemChange={changes => onItemsChange([changes])}
-                />
-                {/* Completed Items */}
-                <ListCompletedItemsCollapsible
-                    count={completeItems.length}
-                    onSetItemsIncomplete={() => onItemsChange(completeItems.map(x => ({ id: x.id, changes: { completed: false } })))}
-                    onDeleteAllItems={() => onDeleteItems(completeItems.map(x => x.id))}
+                {flippedIds}
+                <Flipper
+                    flipKey={flippedIds}
                 >
-                    <Items
-                        items={completeItems}
-                        onItemSelected={onItemSelected}
-                        onItemChange={changes => onItemsChange([changes])}
-                    />
-                </ListCompletedItemsCollapsible>
+                    <div className="w-full flex flex-col gap-2">
+                        {flipped}
+                    </div>
+                </Flipper>
             </div>
         </div>
     )
 };
+
+
+                // {/* Incomplete Items */}
+                // <Items
+                //     items={incompleteItems}
+                //     onItemSelected={onItemSelected}
+                //     onItemChange={changes => onItemsChange([changes])}
+                // />
+                // {/* Completed Items */}
+                // <ListCompletedItemsCollapsible
+                //     count={completeItems.length}
+                //     onSetItemsIncomplete={() => onItemsChange(completeItems.map(x => ({ id: x.id, changes: { completed: false } })))}
+                //     onDeleteAllItems={() => onDeleteItems(completeItems.map(x => x.id))}
+                // >
+                //     <Items
+                //         items={completeItems}
+                //         onItemSelected={onItemSelected}
+                //         onItemChange={changes => onItemsChange([changes])}
+                //     />
+                // </ListCompletedItemsCollapsible>
