@@ -82,7 +82,7 @@ export function ListCompletedItemsCollapsible({
             {({ open }) => (
                 <>
                     {/* Trigger / Menu */}
-                    <div className="mt-2 w-full flex items-center justify-between gap-2 cursor-pointer select-none">
+                    <div className="w-full flex items-center justify-between gap-2 cursor-pointer select-none">
                         {/* Trigger */}
                         <Disclosure.Button className="py-5 flex items-center flex-1 gap-2 group focus:outline-none focus-visible:outline-none">
                             {/* Toggle Icon */}
