@@ -77,9 +77,6 @@ export function ListCompletedItemsCollapsible({
     onDeleteAllItems,
     children
 }) {
-
-    const itemCount = children?.length || 0;
-
     return (
         <Disclosure>
             {({ open }) => (
@@ -97,9 +94,9 @@ export function ListCompletedItemsCollapsible({
                             <h3 className="text-md leading-6 font-medium text-gray-700">
                                 <span className="pr-2">Completed</span>
                                 {/* Count Badge */}
-                                <SwitchTransition switchKey={itemCount} as={PopIn}>
+                                <SwitchTransition switchKey={children.length} as={PopIn}>
                                     <Badge size="lg" variant="success">
-                                        {itemCount}
+                                        {children.length}
                                     </Badge>
                                 </SwitchTransition>
                             </h3>
