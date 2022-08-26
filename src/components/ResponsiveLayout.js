@@ -1,8 +1,33 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import { StatefulMenu } from 'components/Menu';
 import { Navbar, CollapsibleSidebarContainer } from 'components/Navigation';
 
 const MOBILE_BREAKPOINT = 768;
+
+/**
+ * Renders a Navbar with a toggle to open a drawer containing the sidebar.
+ * @param {Object} props - The Props.
+ * @param {React.ReactNode} props.children - The sidebar.
+ */
+const MobileSidebar = ({ children }) => {
+    const [open, setOpen] = useState(false);
+    const location = useLocation();
+
+    // close the sidebar any time navigation takes place. 
+    useEffect(() => {
+        setOpen(false);
+    }, [location]);
+
+    return (
+        <>
+            <Navbar onClickOpenMenuButton={() => setOpen(!open)} />
+            <CollapsibleSidebarContainer open={open} onSetClose={() => setOpen(false)}>
+                {children}
+            </CollapsibleSidebarContainer>
+        </>
+    );
+};
 
 /**
  * Layout which adjusts content based on the width of the viewport..
@@ -24,16 +49,9 @@ export const ResponsiveLayout = ({
             </MediaQuery>
             {/* Navbar / Sidebar drawer on Mobile */}
             <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
-                <StatefulMenu>
-                    {({ open, setOpen }) => (
-                        <>
-                            <Navbar onClickOpenMenuButton={() => setOpen(!open)} />
-                            <CollapsibleSidebarContainer open={open} onSetClose={() => setOpen(false)}>
-                                {sidebar}
-                            </CollapsibleSidebarContainer>
-                        </>
-                    )}
-                </StatefulMenu>
+                <MobileSidebar>
+                    {sidebar}
+                </MobileSidebar>
             </MediaQuery>
             {/* Main Content */}
             <div className="md:ml-64 flex flex-col flex-1 overflow-y-auto">

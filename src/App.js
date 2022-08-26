@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { NotFound } from 'routes/NotFound';
-import { ResponsiveLayout } from 'components/Layout/ResponsiveLayout';
+import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
 import { useErrorHandler } from 'react-error-boundary';
 import { getLists } from './services/listService';
