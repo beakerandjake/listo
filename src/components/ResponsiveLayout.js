@@ -54,7 +54,7 @@ export const ResponsiveLayout = ({
                 </MobileSidebar>
             </MediaQuery>
             {/* Main Content */}
-            <div className="md:ml-64 flex flex-col flex-1 overflow-y-auto">
+            <div className="md:ml-64 flex flex-col flex-1">
                 <main className="flex-1 flex flex-col m-3 sm:m-6 md:m-8">
                     {children}
                 </main>

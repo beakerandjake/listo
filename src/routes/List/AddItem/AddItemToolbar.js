@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, isValidElement } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
@@ -15,6 +15,10 @@ const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
  * @param {DOMEventTarget} element - The element to check.
  */
 export function elementIsPartOfToolbar(element) {
+    if (!isValidElement(element)) {
+        return false;
+    }
+
     return !!element.closest(`.${TOOLBAR_MENU_CLASS}`);
 }
 
