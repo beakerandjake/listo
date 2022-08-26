@@ -1,7 +1,6 @@
 import MediaQuery from 'react-responsive';
 import { StatefulMenu } from 'components/Menu';
-import { CollapsibleSidebarContainer } from 'components/Navigation/CollapsibleSidebarContainer';
-import { Navbar } from 'components/Navigation/Navbar';
+import { Navbar, CollapsibleSidebarContainer } from 'components/Navigation';
 
 const MOBILE_BREAKPOINT = 768;
 
