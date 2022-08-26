@@ -1,31 +1,47 @@
 import MediaQuery from 'react-responsive';
-import { MOBILE_BREAKPOINT } from 'services/responsiveUtilities';
-import { DesktopLayout } from "./DesktopLayout";
-import { MobileLayout } from "./MobileLayout";
+import { StatefulMenu } from 'components/Menu';
+import { CollapsibleSidebarContainer } from 'components/Navigation/CollapsibleSidebarContainer';
+import { Navbar } from 'components/Navigation/Navbar';
 
+const MOBILE_BREAKPOINT = 768;
 
-
-export function ResponsiveLayout(props) {
-    const main = (
-        <main className="flex flex-col flex-1 m-3 sm:m-6 md:m-8">
-            {props.children}
-        </main>
-    )
+/**
+ * Layout which adjusts content based on the width of the viewport..
+ * @param {Object} props - The Props.
+ * @param {React.ReactNode} props.sidebar - The content of the sidebar.
+ * @param {React.ReactNode} props.children - The content of the page.
+ */
+export const ResponsiveLayout = ({
+    sidebar,
+    children
+}) => {
     return (
-        <div className="flex flex-col h-full overflow-auto">
-            {/* Desktop / Larger screens */}
+        <div className="h-screen">
+            {/* Static Sidebar on Desktop. */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-                <DesktopLayout sidebar={props.sidebar}>
-                    {main}
-                </DesktopLayout>
+                <div className="fixed inset-y-0 flex flex-col w-64">
+                    {sidebar}
+                </div>
             </MediaQuery>
-
-            {/* Mobile / Smaller screens */}
-            <MediaQuery maxWidth={MOBILE_BREAKPOINT}>
-                <MobileLayout sidebar={props.sidebar}>
-                    {main}
-                </MobileLayout>
+            {/* Navbar / Sidebar drawer on Mobile */}
+            <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
+                <StatefulMenu>
+                    {({ open, setOpen }) => (
+                        <>
+                            <Navbar onClickOpenMenuButton={() => setOpen(!open)} />
+                            <CollapsibleSidebarContainer open={open} onSetClose={() => setOpen(false)}>
+                                {sidebar}
+                            </CollapsibleSidebarContainer>
+                        </>
+                    )}
+                </StatefulMenu>
             </MediaQuery>
+            {/* Main Content */}
+            <div className="md:ml-64 flex flex-col flex-1 overflow-y-auto">
+                <main className="flex-1 flex flex-col m-3 sm:m-6 md:m-8">
+                    {children}
+                </main>
+            </div>
         </div>
     )
-}
+};
