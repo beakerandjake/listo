@@ -153,19 +153,10 @@ export const ListItems = ({
     );
 
     return (
-        <div className="flex-grow flex-col relative -mt-3">
-            <div
-                className={cx(
-                    'absolute inset-0 overflow-y-auto pt-3',
-                    '-mx-3 -mb-3 px-3 pb-3 sm:-mx-6 sm:-mb-6 sm:px-6 sm:pb-6 md:-mx-8 md:-mb-8 md:px-8 md:pb-8'
-                )}
-            >
-                <Flipper flipKey={flipKey}>
-                    <div className="w-full flex flex-col gap-2">
-                        {[...incompleteFlippedItems, completedFlippedItems].filter(Boolean)}
-                    </div>
-                </Flipper>
+        <Flipper flipKey={flipKey}>
+            <div className="w-full flex flex-col gap-2">
+                {[...incompleteFlippedItems, completedFlippedItems].filter(Boolean)}
             </div>
-        </div>
+        </Flipper>
     )
 };
