@@ -16,7 +16,7 @@ export const ResponsiveLayout = ({
     children
 }) => {
     return (
-        <div className="h-screen">
+        <div className="h-screen flex flex-col">
             {/* Static Sidebar on Desktop. */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
                 <div className="fixed inset-y-0 flex flex-col w-64">
