@@ -1,10 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Universal styles */
 .react-calendar {
     @apply w-full h-full p-2
 }
 
 .react-calendar button {
-    @apply m-0 border-0 outline-none enabled:hover:cursor-pointer keyboard-only-focus-ring  
+    @apply m-0 border-0 outline-none enabled:hover:cursor-pointer   
 }
 
 /* HEADER SECTION */
@@ -18,7 +22,7 @@
 
 .react-calendar__navigation button,
 .react-calendar__navigation button {
-    @apply disabled:opacity-50 disabled:cursor-not-allowed keyboard-only-focus-ring rounded
+    @apply disabled:opacity-50 disabled:cursor-not-allowed rounded
 }
 
 .react-calendar__navigation__arrow {
