@@ -38,7 +38,6 @@ export function ConfirmDialog({
         <Dialog
             open={open}
             onClose={onDismiss}
-            className="z-20"
         >
             <DialogBackdrop
                 open={open}

@@ -213,7 +213,7 @@ export function Drawer({
         <Dialog
             open={open}
             onClose={onClose}
-            className={cx({ 'z-10': isChildDrawer }, className)}
+            className={className}
             initialFocus={initialFocusRef}
         >
             <DialogBackdrop
