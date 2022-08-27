@@ -185,41 +185,34 @@ export function List(props) {
                 Instead of messing with z index, put list items before sticky section in the document
                 Use reverse flex direction to make them visually appear after the sticky section.           
             */}
-            <div className="flex flex-col-reverse gap-3">
-                <div className="flex flex-1 flex-col gap-3 px-1 mb-10">
-                    <ListItems
-                        items={sortedItems}
-                        onItemSelected={setSelectedItemId}
-                        onItemsChange={editItems}
-                        onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                            title: 'Delete Completed Items?',
-                            message: 'All Items marked as completed will be permanently deleted.'
-                        })}
-                    />
-                </div>
-                <div
-                    className={cx(
-                        'sticky top-14 md:top-0 flex flex-col gap-3 bg-gray-50' ,
-                        '-mt-3 pt-3 sm:-mt-6 sm:pt-6 md:-mt-8 md:pt-8 -mx-3 px-3'
-                    )}
-                >
-                    <ListPageHeader iconName={list.iconName} name={list.name}>
-                        <ListActionsDropdown
-                            items={sortedItems}
-                            onSetItemsCompleted={setItemsCompleted}
-                            onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                                title: 'Delete All Items?',
-                                message: 'All Items in this list will be permanently deleted.'
-                            })}
-                        />
-                        {sortedItems.length > 0 && (
-                            <div className="flex-shrink-0 ml-auto">
-                                <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
-                            </div>
-                        )}
-                    </ListPageHeader>
-                    <AddItem onAddItem={onAddItem} />
-                </div>
+
+            <ListPageHeader iconName={list.iconName} name={list.name}>
+                <ListActionsDropdown
+                    items={sortedItems}
+                    onSetItemsCompleted={setItemsCompleted}
+                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                        title: 'Delete All Items?',
+                        message: 'All Items in this list will be permanently deleted.'
+                    })}
+                />
+                {sortedItems.length > 0 && (
+                    <div className="flex-shrink-0 ml-auto">
+                        <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
+                    </div>
+                )}
+            </ListPageHeader>
+
+            <div className="pt-2 flex flex-1 flex-col gap-3 px-1 mb-10">
+                <AddItem onAddItem={onAddItem} />
+                <ListItems
+                    items={sortedItems}
+                    onItemSelected={setSelectedItemId}
+                    onItemsChange={editItems}
+                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                        title: 'Delete Completed Items?',
+                        message: 'All Items marked as completed will be permanently deleted.'
+                    })}
+                />
             </div>
 
             <EditItem
