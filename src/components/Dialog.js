@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { Dialog as HeadlessUiDialog } from '@headlessui/react'
 import { Transition } from './Transition';
+import { useScrollLock } from 'hooks/useScrollLock';
 
 
 /**
@@ -65,7 +66,23 @@ export function Dialog({
  * Container for the content of the dialog. Clicking outside of this element
  * will cause the onClose event of the parent Dialog to fire. 
  */
-export const DialogContent = HeadlessUiDialog.Panel;
+export const DialogContent = forwardRef(({ children, ...props }, ref) => {
+  const { lockScroll, unlockScroll } = useScrollLock();
+
+  useEffect(() => {
+    lockScroll();
+
+    return () => {
+      unlockScroll();
+    }
+  }, [lockScroll, unlockScroll]);
+
+  return (
+    <HeadlessUiDialog.Panel ref={ref} {...props}>
+      {children}
+    </HeadlessUiDialog.Panel>
+  )
+});
 
 /**
  * Accessible title for the Dialog.
