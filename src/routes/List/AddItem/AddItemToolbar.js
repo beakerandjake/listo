@@ -15,11 +15,7 @@ const TOOLBAR_MENU_CLASS = 'add-item-toolbar-menu';
  * @param {DOMEventTarget} element - The element to check.
  */
 export function elementIsPartOfToolbar(element) {
-    if (!isValidElement(element)) {
-        return false;
-    }
-
-    return !!element.closest(`.${TOOLBAR_MENU_CLASS}`);
+    return element.closest && !!element.closest(`.${TOOLBAR_MENU_CLASS}`);
 }
 
 /**

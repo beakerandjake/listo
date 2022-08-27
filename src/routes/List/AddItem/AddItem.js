@@ -4,7 +4,6 @@ import cx from 'classnames';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { AddItemInput } from './AddItemInput';
 import { AddItemToolbar, elementIsPartOfToolbar } from './AddItemToolbar';
-import { useOnScroll } from 'hooks/useOnScroll';
 import { Transition } from 'components/Transition';
 
 const DEFAULT_ITEM = {
@@ -49,7 +48,6 @@ export function AddItem({
     // Whenever the user clicks outside of this component, try to minimize the toolbar.
     // Disabled these event listeners if the toolbar isn't visible.
     useOnClickOutside(tryToHideToolbar, !toolbarVisible, containerRef);
-    useOnScroll(tryToHideToolbar, !toolbarVisible);
 
     // Callback invoked whenever the user makes changes to the item.
     const onItemChange = changes => {

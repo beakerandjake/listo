@@ -10,7 +10,6 @@ import {
 import { mergeRefs } from 'react-merge-refs';
 import cx from 'classnames';
 import FocusLock from 'react-focus-lock';
-import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useKeyDown } from 'hooks/useKeyDown';
 import { Fade, PopIn } from 'components/Transition';
 
@@ -19,15 +18,15 @@ import { Fade, PopIn } from 'components/Transition';
  * @param {function=} props.onClick - Callback invoked when the user clicks inside of the overlay.
  */
 const Overlay = forwardRef(({ onClick }, ref) => {
-    // Capture the mouse down event then stop it to prevent anything else from getting it.
-    const onMouseDownCapture = e => {
+    // Capture the click down event then stop it to prevent anything else from getting it.
+    const onClickCapture = e => {
         e.preventDefault();
         e.stopPropagation();
         onClick(e);
     };
 
     return createPortal(
-        <div ref={ref} className="fixed inset-0" onMouseDownCapture={onMouseDownCapture} />,
+        <div ref={ref} className="fixed inset-0" onClickCapture={onClickCapture} />,
         document.body
     );
 
@@ -64,7 +63,6 @@ export const Dropdown = forwardRef(({
         strategy: 'fixed'
     });
 
-    useOnClickOutside(e => onClickOutside && onClickOutside(e), !open, refs.floating, refs.reference);
     useKeyDown('Escape', () => onEscapeKeyDown && onEscapeKeyDown(), !open, true);
 
     return (

@@ -13,7 +13,7 @@ export function useOnClickOutside(callback, disabled, ...refs) {
             return;
         };
 
-        const onClick = event => {
+        const onClick = event => {          
             if (refs.some(ref => ref?.current?.contains(event.target))) {
                 return;
             }
@@ -21,12 +21,10 @@ export function useOnClickOutside(callback, disabled, ...refs) {
             callback(event);
         };
 
-        document.addEventListener('mousedown', onClick);
-        document.addEventListener('touchstart', onClick);
+        document.addEventListener('click', onClick);
 
         return () => {
-            document.removeEventListener('mousedown', onClick);
-            document.removeEventListener('touchstart', onClick);
+            document.removeEventListener('click', onClick);
         };
     }, [refs, callback, disabled]);
 }
