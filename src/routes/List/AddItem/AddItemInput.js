@@ -25,7 +25,7 @@ export function AddItemInput({
 
     return (
         <div className="relative ">
-            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                 <FontAwesomeIcon icon={faPlus} className="text-green-700 font-thin" />
             </div>
             <input

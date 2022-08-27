@@ -45,7 +45,7 @@ export const ListItem = forwardRef(({
         <div
             {...props}
             ref={ref}
-            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 min-h-[50px] shadow rounded cursor-pointer select-none border-gray-300 border"
+            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 min-h-[50px] shadow-inner rounded cursor-pointer select-none border-gray-300 border"
             onClick={() => onClick(item.id)}
         >
             <ItemCompletedCheckbox
