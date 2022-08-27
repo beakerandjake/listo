@@ -186,7 +186,7 @@ export function List(props) {
                 Use reverse flex direction to make them visually appear after the sticky section.           
             */}
             <div className="flex flex-col-reverse gap-3">
-                <div className="flex flex-1 flex-col gap-3 px-1">
+                <div className="flex flex-1 flex-col gap-3 px-1 mb-10">
                     <ListItems
                         items={sortedItems}
                         onItemSelected={setSelectedItemId}
