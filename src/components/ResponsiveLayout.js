@@ -55,7 +55,7 @@ export const ResponsiveLayout = ({
             </MediaQuery>
             {/* Main Content */}
             <div className="md:ml-64 flex flex-col flex-1">
-                <main className="flex-1 flex flex-col m-3 sm:m-6 md:m-8">
+                <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
                     {children}
                 </main>
             </div>
