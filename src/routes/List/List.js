@@ -11,6 +11,7 @@ import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
 import { ListSortingDropdown } from './ListSortingDropdown';
 import { ListItems } from './ListItems';
+import cx from 'classnames';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -177,33 +178,50 @@ export function List(props) {
 
     return (
         <>
-            <ListPageHeader iconName={list.iconName} name={list.name}>
-                <ListActionsDropdown
-                    items={sortedItems}
-                    onSetItemsCompleted={setItemsCompleted}
-                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                        title: 'Delete All Items?',
-                        message: 'All Items in this list will be permanently deleted.'
-                    })}
-                />
-                {sortedItems.length > 0 && (
-                    <div className="flex-shrink-0 ml-auto">
-                        <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
-                    </div>
-                )}
-            </ListPageHeader>
-            <div className="pt-2 sm:pt-4 flex flex-1 flex-col gap-3">
-                <AddItem onAddItem={onAddItem} />
-                <ListItems
-                    items={sortedItems}
-                    onItemSelected={setSelectedItemId}
-                    onItemsChange={editItems}
-                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                        title: 'Delete Completed Items?',
-                        message: 'All Items marked as completed will be permanently deleted.'
-                    })}
-                />
+            {/* 
+                The list items should scroll under the add item toolbar and the page header.
+                The sticky heading section handles this well except when transitioning transform/opacity. 
+                This causes the list items to render above the sticky section. 
+                Instead of messing with z index, put list items before sticky section in the document
+                Use reverse flex direction to make them visually appear after the sticky section.           
+            */}
+            <div className="flex flex-col-reverse gap-3">
+                <div className="flex flex-1 flex-col gap-3">
+                    <ListItems
+                        items={sortedItems}
+                        onItemSelected={setSelectedItemId}
+                        onItemsChange={editItems}
+                        onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                            title: 'Delete Completed Items?',
+                            message: 'All Items marked as completed will be permanently deleted.'
+                        })}
+                    />
+                </div>
+                <div
+                    className={cx(
+                        'sticky top-14 md:top-0 flex flex-col gap-3 bg-gray-50' ,
+                        '-mt-3 pt-3 sm:-mt-6 sm:pt-6 md:-mt-8 md:pt-8 -mx-3 px-3'
+                    )}
+                >
+                    <ListPageHeader iconName={list.iconName} name={list.name}>
+                        <ListActionsDropdown
+                            items={sortedItems}
+                            onSetItemsCompleted={setItemsCompleted}
+                            onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                                title: 'Delete All Items?',
+                                message: 'All Items in this list will be permanently deleted.'
+                            })}
+                        />
+                        {sortedItems.length > 0 && (
+                            <div className="flex-shrink-0 ml-auto">
+                                <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
+                            </div>
+                        )}
+                    </ListPageHeader>
+                    <AddItem onAddItem={onAddItem} />
+                </div>
             </div>
+
             <EditItem
                 item={getSelectedItem(selectedItemId)}
                 onClose={() => setSelectedItemId(null)}
