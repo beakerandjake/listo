@@ -1,4 +1,6 @@
+import { forwardRef } from 'react';
 import { Dialog as HeadlessUiDialog } from '@headlessui/react'
+import { RemoveScroll } from 'react-remove-scroll';
 import { Transition } from './Transition';
 
 
@@ -64,7 +66,18 @@ export function Dialog({
  * Container for the content of the dialog. Clicking outside of this element
  * will cause the onClose event of the parent Dialog to fire. 
  */
-export const DialogContent = HeadlessUiDialog.Panel;
+export const DialogContent = forwardRef(({
+  children,
+  ...props
+}, ref) => {
+  return (
+    <RemoveScroll>
+      <HeadlessUiDialog.Panel {...props} ref={ref}>
+        {children}
+      </HeadlessUiDialog.Panel>
+    </RemoveScroll>
+  )
+});
 
 /**
  * Accessible title for the Dialog.
