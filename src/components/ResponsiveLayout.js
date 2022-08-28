@@ -40,7 +40,13 @@ export const ResponsiveLayout = ({
     children
 }) => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col-reverse">
+            {/* Main Content */}
+            <div className="md:ml-64 flex flex-col flex-1">
+                <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
+                    {children}
+                </main>
+            </div>
             {/* Static Sidebar on Desktop. */}
             <MediaQuery minWidth={MOBILE_BREAKPOINT}>
                 <div className="fixed inset-y-0 flex flex-col w-64">
@@ -53,12 +59,6 @@ export const ResponsiveLayout = ({
                     {sidebar}
                 </MobileSidebar>
             </MediaQuery>
-            {/* Main Content */}
-            <div className="md:ml-64 flex flex-col flex-1">
-                <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
-                    {children}
-                </main>
-            </div>
         </div>
     )
 };
