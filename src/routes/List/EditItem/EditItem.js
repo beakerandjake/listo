@@ -49,7 +49,13 @@ export function EditItem({
     }, [item]);
 
     return (
-        <Drawer open={open} onClose={onClose}>
+        <Drawer
+            open={open}
+            onClose={onClose}
+            anchor="right"
+            size="full"
+            contentClassName="max-w-md"
+        >
             <MenuHeader className="flex items-center gap-3 md:p-4">
                 <IconButton icon={faArrowLeft} title="Close Item Details" onClick={() => onClose()} />
                 <MenuTitle title="">Item Details</MenuTitle>

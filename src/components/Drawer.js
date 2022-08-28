@@ -25,27 +25,27 @@ const SIZE_STYLES = [
     {
         size: SIZES.xs,
         anchors: [ANCHORS.left, ANCHORS.right],
-        className: 'w-full max-w-xs'
+        className: 'max-w-[16%]'
     },
     {
         size: SIZES.sm,
         anchors: [ANCHORS.left, ANCHORS.right],
-        className: 'w-full max-w-sm'
+        className: 'max-w-[33%]'
     },
     {
         size: SIZES.md,
         anchors: [ANCHORS.left, ANCHORS.right],
-        className: 'w-full max-w-md'
+        className: 'max-w-[50%]'
     },
     {
         size: SIZES.lg,
         anchors: [ANCHORS.left, ANCHORS.right],
-        className: 'w-full max-w-lg'
+        className: 'max-w-[66%]'
     },
     {
         size: SIZES.xl,
         anchors: [ANCHORS.left, ANCHORS.right],
-        className: 'w-full max-w-xl'
+        className: 'max-w-[83%]'
     },
     {
         size: SIZES.full,
@@ -56,27 +56,27 @@ const SIZE_STYLES = [
     {
         size: SIZES.xs,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5%] max-h-[16%]'
+        className: 'max-h-[16%]'
     },
     {
         size: SIZES.sm,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5%] max-h-[33%]'
+        className: 'max-h-[33%]'
     },
     {
         size: SIZES.md,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5%] max-h-[50%]'
+        className: 'max-h-[50%]'
     },
     {
         size: SIZES.lg,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[20%] max-h-[66%]'
+        className: 'max-h-[66%]'
     },
     {
         size: SIZES.xl,
         anchors: [ANCHORS.bottom],
-        className: 'min-h-[5%] max-h-[83%]'
+        className: 'max-h-[83%]'
     },
     {
         size: SIZES.full,
@@ -170,32 +170,34 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
  * @param {Object} props - The Props.
  * @param {boolean} props.open - Should the drawer currently be opened or closed?
  * @param {function} props.onClose - Callback fired when the user requests to close the drawer
- * @param {'right'|'left'|'bottom'=} props.anchor - The side of the viewport that the Drawer is anchored to. 
- * @param {'xs'|'sm'|'md'|'lg'|'xl'|'full'=} props.size - How much of the viewport should the drawer take up? 
+ * @param {'right'|'left'|'bottom'} props.anchor - The side of the viewport that the Drawer is anchored to. 
+ * @param {'xs'|'sm'|'md'|'lg'|'xl'|'full'=} props.size - What is the max amount of the viewport the drawer should take up? 
  * @param {boolean=} props.showCloseButton - Should a default show button be rendered?
  * @param {'left'|'right'=} props.closeButtonAnchor - The side of the drawer that the default close button will be anchored to.
  * @param {IconDefinition=}  props.closeButtonIcon - The FontAwesomeIcon of the default close button.
  * @param {string}  props.closeButtonTitle - The text to display on close button hover.
- * @param {string}  props.className - Additional styles to be applied to the drawer.
+ * @param {string}  props.className - Additional styles to be applied to the root of the drawer.
+ * @param {string}  props.contentClassName - Additional styles to be applied to the content of the drawer.
  * @param {React.ReactNode} props.children - The child elements to render.
  */
 export function Drawer({
-    open = false,
+    open,
     onClose,
-    anchor = ANCHORS.right,
-    size = SIZES.md,
+    anchor,
+    size,
     showCloseButton = false,
     closeButtonAnchor = ANCHORS.right,
     closeButtonIcon = CLOSE_BUTTON_DEFAULT_ICON,
     closeButtonTitle = 'Close',
     className,
+    contentClassName,
     children,
 }, z) {
     const initialFocusRef = useRef(null);
     const [initialFocusCapture, setInitialFocusCapture] = useState(false);
     const anchorStyle = ANCHOR_STYLES.find(x => x.anchor === anchor)?.className || invalidProp(`Unsupported anchor: '${anchor}'`);
-    const sizeStyle = SIZE_STYLES.find(x => x.size === size && x.anchors.includes(anchor))?.className || invalidProp(`Unsupported size: '${size}'`);
     const transitionStyles = TRANSITION_STYLES.find(x => x.anchor === anchor)?.styles || invalidProp(`Transitions not supported for anchor: '${anchor}'`);
+    const sizeStyle = SIZE_STYLES.find(x => x.size === size && x.anchors.includes(anchor))?.className || '';
     const defaultCloseButtonProps = showCloseButton
         ? { anchor: closeButtonAnchor, icon: closeButtonIcon, title: closeButtonTitle, onClick: onClose }
         : null;
@@ -238,7 +240,8 @@ export function Drawer({
                         className={cx(
                             sizeStyle,
                             anchorStyle,
-                            'fixed bg-white focus:outline-none flex flex-col'
+                            'fixed bg-white focus:outline-none flex flex-col',
+                            contentClassName
                         )}
                     >
                         {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
