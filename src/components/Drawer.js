@@ -170,7 +170,6 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
  * @param {Object} props - The Props.
  * @param {boolean} props.open - Should the drawer currently be opened or closed?
  * @param {function} props.onClose - Callback fired when the user requests to close the drawer
- * @param {boolean} props.isChildDrawer - Is this drawer a child of another drawer?
  * @param {'right'|'left'|'bottom'=} props.anchor - The side of the viewport that the Drawer is anchored to. 
  * @param {'xs'|'sm'|'md'|'lg'|'xl'|'full'=} props.size - How much of the viewport should the drawer take up? 
  * @param {boolean=} props.showCloseButton - Should a default show button be rendered?
@@ -183,7 +182,6 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
 export function Drawer({
     open = false,
     onClose,
-    isChildDrawer = false,
     anchor = ANCHORS.right,
     size = SIZES.md,
     showCloseButton = false,
@@ -240,7 +238,7 @@ export function Drawer({
                         className={cx(
                             sizeStyle,
                             anchorStyle,
-                            'fixed shadow-xl bg-white focus:outline-none flex flex-col'
+                            'fixed bg-white focus:outline-none flex flex-col'
                         )}
                     >
                         {/* Initial focus looks bad on mobile, disable it by capturing focus with an invisible element.
