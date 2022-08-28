@@ -66,6 +66,7 @@ export function AddItem({
 
     return (
         <div ref={containerRef}>
+            {/* Input bar */}
             <div
                 className={cx(
                     { 'rounded-b': !toolbarVisible },
@@ -80,6 +81,7 @@ export function AddItem({
                     onFocus={() => setToolbarVisible(true)}
                 />
             </div>
+            {/* Collapsible toolbar */}
             <div className="overflow-hidden -mb-3 pb-3 -mx-2 px-2">
                 <Transition
                     in={toolbarVisible}
