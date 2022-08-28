@@ -1,4 +1,4 @@
-import { NavLogo } from "components/NavLogo";
+import { NavLogo } from "components/Navigation/NavLogo";
 import { SidebarNav } from "./SidebarNav";
 import { SidebarNavItem } from "./SidebarNavItem";
 
