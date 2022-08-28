@@ -22,7 +22,7 @@ export const DialogBackdrop = ({ open = false, classNames = null }) => {
         exitActive: 'transition-opacity ease-in duration-300 !opacity-0',
       }}
     >
-      <div className='fixed inset-0 bg-black bg-opacity-50 transition-opacity' tabIndex={-1} />
+      <div className='fixed inset-0 bg-black bg-opacity-80 transition-opacity' tabIndex={-1} />
     </Transition>
   )
 }
