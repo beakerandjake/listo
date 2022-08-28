@@ -13,7 +13,11 @@ export function useOnClickOutside(callback, disabled, ...refs) {
             return;
         };
 
-        const onClick = event => {          
+        const onClick = event => {
+            if (event.defaultPrevented) {
+                return;
+            }
+
             if (refs.some(ref => ref?.current?.contains(event.target))) {
                 return;
             }
