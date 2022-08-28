@@ -64,17 +64,13 @@ export function AddItem({
         setItem(DEFAULT_ITEM);
     };
 
-    //  className="rounded border border-gray-300 shadow-md shadow-black/20 overflow-hidden mb-3"
-
-
     return (
         <div ref={containerRef}>
             <div
                 className={cx(
-                    { 'border-b': toolbarVisible },
                     { 'rounded-b': !toolbarVisible },
-                    'border-x border-t rounded-t border-gray-300',
-                    'transition-[border-radius, border-width] duration-300 overflow-hidden shadow-md shadow-black/20'
+                    'border rounded-t border-gray-300 shadow',
+                    'transition-[border-radius, border-width] duration-300 overflow-hidden'
                 )}
             >
                 <AddItemInput

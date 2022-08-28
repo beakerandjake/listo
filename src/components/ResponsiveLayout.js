@@ -21,7 +21,7 @@ const MobileSidebar = ({ children }) => {
 
     return (
         <>
-            <Navbar onClickOpenMenuButton={() => setOpen(!open)} />
+            <Navbar onClickMenuButton={() => setOpen(!open)} />
             <CollapsibleSidebarContainer open={open} onSetClose={() => setOpen(false)}>
                 {children}
             </CollapsibleSidebarContainer>
