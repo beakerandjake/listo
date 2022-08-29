@@ -36,7 +36,7 @@ export const AddItemInput = forwardRef(({
                 onChange={e => onChange(e.target.value)}
                 onKeyDown={onKeyDown}
                 onFocus={() => onFocus()}
-                className="w-full pl-14 sm:text-sm border-none min-h-[50px] focus:outline-none focus:ring-0"
+                className="w-full pl-14 sm:text-sm border-none min-h-[50px] focus:outline-none focus:ring-0 scroll-mt-64"
                 placeholder="Add Item"
                 autoComplete="off"
                 enterKeyHint="done"
