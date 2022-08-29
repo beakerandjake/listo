@@ -1,10 +1,10 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
 import { sortItems, itemSortingFields, sortingDirections } from 'services/sorting';
 import { ListSkeleton } from './ListSkeleton';
-import { AddItem } from './AddItem';
+import { AddItem, FocusAddItemFloatingButton } from './AddItem';
 import { EditItem } from './EditItem';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmDialog } from 'components/ConfirmDialog';
@@ -26,6 +26,7 @@ export function List(props) {
     const [activeSort, setActiveSort] = useState(defaultSorting);
     const { id } = useParams();
     const handleError = useErrorHandler();
+    const addItemRef = useRef(null);
 
     // whenever the id changes, load the list.
     useEffect(() => {
@@ -203,7 +204,7 @@ export function List(props) {
             </ListPageHeader>
 
             <div className="pt-2 flex flex-1 flex-col gap-3 px-1 mb-10">
-                <AddItem onAddItem={onAddItem} />
+                <AddItem ref={addItemRef} onAddItem={onAddItem} />
                 <ListItems
                     items={sortedItems}
                     onItemSelected={setSelectedItemId}
@@ -214,6 +215,8 @@ export function List(props) {
                     })}
                 />
             </div>
+
+            <FocusAddItemFloatingButton addItemRef={addItemRef} />
 
             <EditItem
                 item={getSelectedItem(selectedItemId)}
