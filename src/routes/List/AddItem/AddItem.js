@@ -71,7 +71,7 @@ export const AddItem = forwardRef(({
                 className={cx(
                     { 'rounded-b': !toolbarVisible },
                     'border rounded-t border-gray-300 shadow',
-                    'transition-[border-radius, border-width] duration-300 overflow-hidden'
+                    'transition-[border-radius] duration-300 overflow-hidden'
                 )}
             >
                 <AddItemInput
@@ -95,7 +95,7 @@ export const AddItem = forwardRef(({
                     }}
                 >
                     {/* Wrap in div to prevent padding issue when animating */}
-                    <div className="shadow-md rounded-b shadow-black/20">
+                    <div className="shadow rounded-b">
                         <AddItemToolbar
                             item={item}
                             onItemChange={onItemChange}
