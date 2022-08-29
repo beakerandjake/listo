@@ -4,7 +4,6 @@ import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
 import { sortItems, itemSortingFields, sortingDirections } from 'services/sorting';
 import { ListSkeleton } from './ListSkeleton';
-import { AddItem, FocusAddItemFloatingButton } from './AddItem';
 import { EditItem } from './EditItem';
 import { ListPageHeader } from './ListPageHeader';
 import { ConfirmDialog } from 'components/ConfirmDialog';
@@ -12,6 +11,7 @@ import { ListActionsDropdown } from './ListActionsDropdown';
 import { ListSortingDropdown } from './ListSortingDropdown';
 import { ListItems } from './ListItems';
 import cx from 'classnames';
+import { AddItemMobile } from './AddItem/AddItemMobile';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -26,7 +26,6 @@ export function List(props) {
     const [activeSort, setActiveSort] = useState(defaultSorting);
     const { id } = useParams();
     const handleError = useErrorHandler();
-    const addItemRef = useRef(null);
 
     // whenever the id changes, load the list.
     useEffect(() => {
@@ -179,7 +178,19 @@ export function List(props) {
 
     return (
         <>
-            <div className="flex flex-col gap-2 mb-5">
+            <div className="flex flex-col-reverse gap-2 mb-5">
+                <ListItems
+                    items={sortedItems}
+                    onItemSelected={setSelectedItemId}
+                    onItemsChange={editItems}
+                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                        title: 'Delete Completed Items?',
+                        message: 'All Items marked as completed will be permanently deleted.'
+                    })}
+                />
+
+                <AddItemMobile />
+
                 <ListPageHeader iconName={list.iconName} name={list.name}>
                     <ListActionsDropdown
                         items={sortedItems}
@@ -195,21 +206,7 @@ export function List(props) {
                         </div>
                     )}
                 </ListPageHeader>
-
-                <AddItem ref={addItemRef} onAddItem={onAddItem} />
-
-                <ListItems
-                    items={sortedItems}
-                    onItemSelected={setSelectedItemId}
-                    onItemsChange={editItems}
-                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                        title: 'Delete Completed Items?',
-                        message: 'All Items marked as completed will be permanently deleted.'
-                    })}
-                />
             </div>
-
-            <FocusAddItemFloatingButton addItemRef={addItemRef} />
 
             <EditItem
                 item={getSelectedItem(selectedItemId)}
@@ -217,7 +214,7 @@ export function List(props) {
                 onDeleteItem={() => confirmDeleteItem(selectedItemId)}
                 onEditItem={editItem}
             />
-            
+
             <ConfirmDialog
                 open={confirmModalData?.open || false}
                 onDismiss={() => setConfirmModalData({ ...confirmModalData, open: false })}
