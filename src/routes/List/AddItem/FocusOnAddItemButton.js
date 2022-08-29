@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import cx from 'classnames';
 import { useOnScreen } from "hooks/useOnScreen";
+import { useOnScroll } from "hooks/useOnScroll";
 import { Transition } from "components/Transition";
-
 
 /**
  * A floating button in the bottom right corner of the screen. 
@@ -15,10 +16,12 @@ import { Transition } from "components/Transition";
 export const FocusOnAddItemButton = ({
     addItemRef
 }) => {
-    
-
+    const [hasScrolled, setHasScrolled] = useState(false);
     // offset the top of the viewport by the size of the sticky header.
     const addItemIsOnScreen = useOnScreen(addItemRef, '-56px 0px 0px 0px');
+
+    // dont show component until user has scrolled page, that way we flash in briefly on page load. 
+    useOnScroll(() => setHasScrolled(true), hasScrolled);
 
     const onClick = (e) => {
         addItemRef.current.focus();
@@ -27,7 +30,7 @@ export const FocusOnAddItemButton = ({
 
     return (
         <Transition
-            in={!addItemIsOnScreen}
+            in={hasScrolled && !addItemIsOnScreen}
             unmountOnExit
             classNames={{
                 enter: 'opacity-0 scale-0',
