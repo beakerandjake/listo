@@ -1,7 +1,7 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
+import { RemoveScroll } from 'react-remove-scroll';
 import { Dialog as HeadlessUiDialog } from '@headlessui/react'
 import { Transition } from './Transition';
-import { useScrollLock } from 'hooks/useScrollLock';
 
 
 /**
@@ -67,20 +67,12 @@ export function Dialog({
  * will cause the onClose event of the parent Dialog to fire. 
  */
 export const DialogContent = forwardRef(({ children, ...props }, ref) => {
-  const { lockScroll, unlockScroll } = useScrollLock();
-
-  useEffect(() => {
-    lockScroll();
-
-    return () => {
-      unlockScroll();
-    }
-  }, [lockScroll, unlockScroll]);
-
   return (
-    <HeadlessUiDialog.Panel ref={ref} {...props}>
-      {children}
-    </HeadlessUiDialog.Panel>
+    <RemoveScroll>
+      <HeadlessUiDialog.Panel ref={ref} {...props}>
+        {children}
+      </HeadlessUiDialog.Panel>
+    </RemoveScroll>
   )
 });
 
