@@ -16,7 +16,7 @@ export function ListPageHeader({
     children
 }) {
     return (
-        <div className="flex flex-wrap items-center gap-3 mb-1 sm:mb-3 md:mb-4">
+        <div className="flex flex-wrap items-center gap-3 mb-1 sm:mb-3">
             <FontAwesomeIcon
                 icon={getIcon(iconName)}
                 size="xl"
