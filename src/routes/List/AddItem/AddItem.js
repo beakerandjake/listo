@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import isEqual from 'lodash.isequal';
 import cx from 'classnames';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
@@ -18,10 +18,10 @@ const DEFAULT_ITEM = {
  * @param {function} props.onAddItem - Callback invoked when the user adds a new Item to the list.
  * @param {boolean} props.disabled - Should the input be disabled?
  **/
-export function AddItem({
+export const AddItem = forwardRef(({
     onAddItem,
     disabled,
-}) {
+}, ref) => {
     const containerRef = useRef(null);
     const [toolbarVisible, setToolbarVisible] = useState(false);
     const [item, setItem] = useState(DEFAULT_ITEM);
@@ -75,6 +75,7 @@ export function AddItem({
                 )}
             >
                 <AddItemInput
+                    ref={ref}
                     value={item.name}
                     onChange={name => onItemChange({ name })}
                     onSubmit={tryToAddItem}
@@ -106,4 +107,4 @@ export function AddItem({
             </div>
         </div >
     )
-}
+});
