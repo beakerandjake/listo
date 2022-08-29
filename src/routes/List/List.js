@@ -179,32 +179,25 @@ export function List(props) {
 
     return (
         <>
-            {/* 
-                The list items should scroll under the add item toolbar and the page header.
-                The sticky heading section handles this well except when transitioning transform/opacity. 
-                This causes the list items to render above the sticky section. 
-                Instead of messing with z index, put list items before sticky section in the document
-                Use reverse flex direction to make them visually appear after the sticky section.           
-            */}
+            <div className="flex flex-col gap-2 mb-5">
+                <ListPageHeader iconName={list.iconName} name={list.name}>
+                    <ListActionsDropdown
+                        items={sortedItems}
+                        onSetItemsCompleted={setItemsCompleted}
+                        onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                            title: 'Delete All Items?',
+                            message: 'All Items in this list will be permanently deleted.'
+                        })}
+                    />
+                    {sortedItems.length > 0 && (
+                        <div className="flex-shrink-0 ml-auto">
+                            <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
+                        </div>
+                    )}
+                </ListPageHeader>
 
-            <ListPageHeader iconName={list.iconName} name={list.name}>
-                <ListActionsDropdown
-                    items={sortedItems}
-                    onSetItemsCompleted={setItemsCompleted}
-                    onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                        title: 'Delete All Items?',
-                        message: 'All Items in this list will be permanently deleted.'
-                    })}
-                />
-                {sortedItems.length > 0 && (
-                    <div className="flex-shrink-0 ml-auto">
-                        <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
-                    </div>
-                )}
-            </ListPageHeader>
-
-            <div className="pt-2 flex flex-1 flex-col gap-3 px-1 mb-10">
                 <AddItem ref={addItemRef} onAddItem={onAddItem} />
+
                 <ListItems
                     items={sortedItems}
                     onItemSelected={setSelectedItemId}
@@ -224,6 +217,7 @@ export function List(props) {
                 onDeleteItem={() => confirmDeleteItem(selectedItemId)}
                 onEditItem={editItem}
             />
+            
             <ConfirmDialog
                 open={confirmModalData?.open || false}
                 onDismiss={() => setConfirmModalData({ ...confirmModalData, open: false })}

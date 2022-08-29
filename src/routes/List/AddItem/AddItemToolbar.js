@@ -42,7 +42,7 @@ export const AddItemToolbarButton = forwardRef(({
                     className={cx(
                         'p-1 flex items-center justify-between gap-1 leading-0 keyboard-only-focus-ring',
                         'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
-                        'rounded border border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
+                        'rounded border shadow border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
                         className
                     )}
                 >
