@@ -1,2 +1,7 @@
 import { AddItem } from "./AddItem";
-export { AddItem };
+import { FocusAddItemFloatingButton } from "./FocusAddItemFloatingButton";
+
+export {
+    AddItem,
+    FocusAddItemFloatingButton
+};
