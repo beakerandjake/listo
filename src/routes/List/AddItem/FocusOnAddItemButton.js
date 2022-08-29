@@ -3,7 +3,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import cx from 'classnames';
 
 
-export const FocusAddItemFloatingButton = ({
+export const FocusOnAddItemButton = ({
     addItemRef
 }) => {
 
