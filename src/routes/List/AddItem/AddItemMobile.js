@@ -4,12 +4,12 @@ import cx from 'classnames';
 import { Button } from "components/Button";
 import { Drawer } from "components/Drawer";
 import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent } from "components/Menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { defaultItem, itemCanBeAdded } from "./index.js";
 import { EditItemDudeDate } from "../EditItem/EditItemDueDate";
-import { EditItemMenuButton } from "../EditItem/EditItemMenuButton";
 import { EditItemQuantity } from "../EditItem/EditItemQuantity";
 import { ItemNoteInput } from "../Item/ItemNoteInput.js";
+import { ItemNameInput } from "../Item/ItemNameInput.js";
 
 
 
@@ -35,6 +35,12 @@ export const AddItemMobile = ({ }) => {
     const [open, setOpen] = useState(false);
     const [item, setItem] = useState(defaultItem);
 
+    useEffect(() => {
+        if (!open) {
+            setItem(defaultItem);
+        }
+    }, [open]);
+
     const onItemChange = (changes) => {
         setItem({ ...item, ...changes });
     };
@@ -53,6 +59,11 @@ export const AddItemMobile = ({ }) => {
                     <MenuTitle title="">Add New Item</MenuTitle>
                 </MenuHeader>
                 <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-3 bg-gray-50">
+                    <ItemNameInput
+                        value={item.name}
+                        onChange={value => onItemChange({ name: value })}
+                    />
+
                     <EditItemQuantity
                         quantity={item.quantity}
                         onChange={value => onItemChange({ quantity: value })}
@@ -71,6 +82,7 @@ export const AddItemMobile = ({ }) => {
                     <Button
                         title="Cancel"
                         className="flex-1"
+                        size="lg"
                         onClick={() => setOpen(false)}
                     >
                         Cancel
@@ -79,6 +91,7 @@ export const AddItemMobile = ({ }) => {
                         title="Add Item"
                         className="flex-1"
                         variant="success"
+                        size="lg"
                         disabled={!itemCanBeAdded(item)}
                     >
                         Add

@@ -10,7 +10,8 @@ const VARIANTS = {
 const SIZES = {
     custom: ' ',
     sm: 'px-2 py-1 text-xs',
-    default: 'px-3 py-2 text-sm'
+    default: 'px-3 py-2 text-sm',
+    lg: 'text-lg py-2'
 };
 
 
