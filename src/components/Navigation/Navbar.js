@@ -9,7 +9,7 @@ import { IconButton } from "components/IconButton";
  **/
 export const Navbar = ({ onClickMenuButton }) => {
     return (
-        <div className="sticky top-0 h-14 flex items-center justify-center gap-2 drop-shadow-md border-b-2 border-gray-300 bg-white">
+        <div className="sticky top-0 h-14 flex items-center justify-center gap-2 drop-shadow-md bg-white">
             <IconButton
                 icon={faBars}
                 className="p-2 ml-2 absolute left-0"
