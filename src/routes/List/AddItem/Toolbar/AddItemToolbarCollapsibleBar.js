@@ -76,7 +76,7 @@ export function AddItemToolbarCollapsibleBar({
             )}
         >
             {/* Item edit buttons */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2">
                 <ItemDueDateMenu
                     className={TOOLBAR_MENU_CLASS}
                     subMenuClassName={TOOLBAR_MENU_CLASS}
