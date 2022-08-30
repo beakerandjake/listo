@@ -1,7 +1,6 @@
 import { isValid } from "date-fns";
 import { itemValidationConstants } from "../Item";
 import { AddItem } from "./AddItem";
-import { FocusOnAddItemButton } from "./FocusOnAddItemButton";
 
 const DEFAULT_ITEM = {
     name: '',
@@ -49,7 +48,6 @@ const formatItem = (item) => {
 
 export {
     AddItem,
-    FocusOnAddItemButton as FocusAddItemFloatingButton,
     DEFAULT_ITEM as defaultItem,
     itemCanBeAdded,
     formatItem
