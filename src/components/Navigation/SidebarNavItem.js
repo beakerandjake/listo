@@ -18,7 +18,7 @@ export function SidebarNavItem(props) {
             }
             children={({ isActive }) => (
                 <>
-                    <FontAwesomeIcon icon={icon} fixedWidth size="lg" className="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0" />
+                    <FontAwesomeIcon icon={icon} fixedWidth size="lg" className="mr-3 flex-shrink-0" />
                     <span className="flex-1">{props.name}</span>
                     {props.count > 1 && (
                         <Badge size="lg" variant={isActive ? 'success' : 'default'}>
