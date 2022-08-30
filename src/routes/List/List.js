@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
 import { itemSortingFields, sortingDirections, sortItems } from 'services/sorting';
+import { AddItem } from './AddItem';
 import { ConfirmDialog } from 'components/ConfirmDialog';
-import { AddItemMobile } from './AddItem/AddItemMobile';
 import { ListActionsDropdown } from './ListActionsDropdown';
 import { ListItemEditDrawer } from './ListItemEditDrawer';
 import { ListItems } from './ListItems';
@@ -188,7 +188,7 @@ export function List(props) {
                     })}
                 />
 
-                <AddItemMobile onAddItem={onAddItem} />
+                <AddItem onAddItem={onAddItem} />
 
                 <ListPageHeader iconName={list.iconName} name={list.name}>
                     <ListActionsDropdown

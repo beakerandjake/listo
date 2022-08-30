@@ -3,9 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from "components/Button";
 import { Drawer } from "components/Drawer";
-import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent } from "components/Menu";
-import { useState } from "react";
-import { defaultItem, itemCanBeAdded } from "./index.js";
+import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent, StatefulMenu } from "components/Menu";
+import { formatItem, itemCanBeAdded } from "./index.js";
 import {
     ItemDueDateMenu,
     ItemNameInput,
@@ -13,8 +12,11 @@ import {
     ItemQuantityMenu,
 } from "../Item";
 
-
-
+/**
+ * Fixed button which floats in the bottom right of the screen.
+ * @param {object} props - the props
+ * @param {function} props.onClick - Callback invoked when the user clicks the button.
+ **/
 const FloatingAddButton = ({ onClick }) => {
     return (
         <div className="fixed bottom-6 right-6">
@@ -34,39 +36,29 @@ const FloatingAddButton = ({ onClick }) => {
 };
 
 /**
- * Mobile friendly version of the Add Item component.
+ * Mobile friendly drawer with fields to create a new item.
  * @param {object} props - the props
  * @param {function} props.onAddItem - Callback invoked when the user wants to add a new Item to the list.
  **/
-export const AddItemMobile = ({
-    onAddItem
+export const AddItemDrawer = ({
+    open,
+    onOpenChange,
+    onCloseTransitionComplete,
+    item,
+    itemIsValid,
+    onItemChange,
+    onAddItem,
 }) => {
-    const [open, setOpen] = useState(false);
-    const [item, setItem] = useState(defaultItem);
-
-    const onItemChange = (changes) => {
-        setItem({ ...item, ...changes });
-    };
-
-    const tryToAddItem = () => {
-        if (!itemCanBeAdded(item)) {
-            return;
-        }
-
-        onAddItem(item);
-        setOpen(false);
-    };
-
     return (
         <>
             <Drawer
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={() => onOpenChange(false)}
                 anchor="bottom"
                 size="xl"
                 showCloseButton
                 closeButtonIcon={faChevronDown}
-                onExitTransitionComplete={() => setItem(defaultItem)}
+                onExitTransitionComplete={onCloseTransitionComplete}
             >
                 <MenuHeader className="flex items-center justify-center">
                     <MenuTitle>Add New Item</MenuTitle>
@@ -75,7 +67,7 @@ export const AddItemMobile = ({
                     <ItemNameInput
                         value={item.name}
                         onChange={value => onItemChange({ name: value })}
-                        onSubmit={() => tryToAddItem()}
+                        onSubmit={onAddItem}
                     />
                     <ItemQuantityMenu
                         quantity={item.quantity}
@@ -96,7 +88,7 @@ export const AddItemMobile = ({
                         title="Cancel"
                         className="flex-1"
                         size="responsive"
-                        onClick={() => setOpen(false)}
+                        onClick={() => onOpenChange(false)}
                     >
                         Cancel
                     </Button>
@@ -105,15 +97,15 @@ export const AddItemMobile = ({
                         className="flex-1"
                         variant="success"
                         size="responsive"
-                        onClick={tryToAddItem}
-                        disabled={!itemCanBeAdded(item)}
+                        onClick={onAddItem}
+                        disabled={!itemIsValid}
                     >
                         Add
                     </Button>
                 </MenuFooter>
             </Drawer>
 
-            <FloatingAddButton onClick={() => setOpen(true)} />
+            <FloatingAddButton onClick={() => onOpenChange(true)} />
         </>
     );
 };

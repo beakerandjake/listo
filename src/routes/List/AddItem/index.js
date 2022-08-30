@@ -1,6 +1,6 @@
 import { isValid } from "date-fns";
 import { itemValidationConstants } from "../Item";
-import { AddItem } from "./AddItem";
+import { AddItem } from "./AddItem2";
 
 const DEFAULT_ITEM = {
     name: '',
