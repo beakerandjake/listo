@@ -9,9 +9,11 @@ const VARIANTS = {
 
 const SIZES = {
     custom: ' ',
-    sm: 'px-2 py-1 text-xs',
-    default: 'px-3 py-2 text-sm',
-    lg: 'text-lg py-2'
+    xs: 'px-2.5 py-1.5 text-xs',
+    sm: 'px-3 py-2 text-sm',
+    md: 'px-4 py-2 text-sm',
+    lg: 'px-4 py-2 text-base',
+    xl: 'px-6 py-3 text-base'
 };
 
 
@@ -33,7 +35,7 @@ const BORDERS = {
 export const Button = forwardRef(({
     className,
     variant = 'default',
-    size = 'default',
+    size = 'md',
     border = 'default',
     children,
     ...props
