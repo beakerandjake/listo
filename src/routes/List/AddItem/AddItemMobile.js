@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Button } from "components/Button";
 import { Drawer } from "components/Drawer";
 import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent } from "components/Menu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { defaultItem, itemCanBeAdded } from "./index.js";
 import { EditItemDudeDate } from "../EditItem/EditItemDueDate";
 import { EditItemQuantity } from "../EditItem/EditItemQuantity";
@@ -35,12 +35,6 @@ export const AddItemMobile = ({ }) => {
     const [open, setOpen] = useState(false);
     const [item, setItem] = useState(defaultItem);
 
-    useEffect(() => {
-        if (!open) {
-            setItem(defaultItem);
-        }
-    }, [open]);
-
     const onItemChange = (changes) => {
         setItem({ ...item, ...changes });
     };
@@ -54,6 +48,7 @@ export const AddItemMobile = ({ }) => {
                 size="xl"
                 showCloseButton
                 closeButtonIcon={faChevronDown}
+                onExitTransitionComplete={() => setItem(defaultItem)}
             >
                 <MenuHeader className="flex items-center justify-center">
                     <MenuTitle title="">Add New Item</MenuTitle>
