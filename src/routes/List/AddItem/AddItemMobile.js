@@ -1,4 +1,4 @@
-import { faChevronDown, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faPlus } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from "components/Button";

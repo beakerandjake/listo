@@ -1,4 +1,4 @@
-import { faCalendarCheck, faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faCalendarPlus } from '@fortawesome/pro-solid-svg-icons';
 import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
 import { EditItemMenuButton } from './EditItemMenuButton';
 import { ItemDueDateMenu } from 'routes/List/Item';

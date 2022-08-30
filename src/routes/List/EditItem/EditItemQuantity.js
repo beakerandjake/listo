@@ -1,4 +1,4 @@
-import { faPlusMinus } from "@fortawesome/free-solid-svg-icons"
+import { faPlusMinus } from "@fortawesome/pro-solid-svg-icons"
 import { ItemQuantityMenu } from "../Item/ItemQuantityMenu"
 import { EditItemMenuButton } from "./EditItemMenuButton"
 

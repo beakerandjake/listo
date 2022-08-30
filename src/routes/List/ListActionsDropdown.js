@@ -1,5 +1,5 @@
-import { faCheck, faGear } from "@fortawesome/free-solid-svg-icons";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import { faCheck, faGear } from "@fortawesome/pro-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/pro-regular-svg-icons";
 import {
     EllipsisMenuTrigger,
     MenuHeader,

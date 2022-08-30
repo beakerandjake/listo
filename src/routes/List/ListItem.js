@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarCheck, faNoteSticky } from '@fortawesome/free-regular-svg-icons';
+import { faCalendarCheck, faNoteSticky } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
 import { formatDueDate, isDueToday, isOverdue } from 'services/dueDateHelpers';
 import { Badge } from 'components/Badge';

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import cx from 'classnames';
-import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/free-solid-svg-icons';
-import { faSquare, faSquareCheck as faSquareCheckRegular } from "@fortawesome/free-regular-svg-icons";
+import { faSquareCheck as faSquareCheckSolid } from '@fortawesome/pro-solid-svg-icons';
+import { faSquare, faSquareCheck as faSquareCheckRegular } from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function ItemCompletedCheckbox(props) {

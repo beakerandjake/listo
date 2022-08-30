@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/pro-solid-svg-icons";
 import cx from 'classnames';
 import { useOnScreen } from "hooks/useOnScreen";
 import { useOnScroll } from "hooks/useOnScroll";

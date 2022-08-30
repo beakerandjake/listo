@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
-import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faChevronRight, faRotateLeft } from "@fortawesome/pro-solid-svg-icons";
+import { faTrashCan } from '@fortawesome/pro-regular-svg-icons';
 import { Disclosure } from "@headlessui/react";
 import cx from "classnames";
 import { Badge } from "components/Badge";

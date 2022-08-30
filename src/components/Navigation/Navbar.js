@@ -1,4 +1,4 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/pro-solid-svg-icons';
 import { NavLogo } from "components/Navigation/NavLogo";
 import { IconButton } from "components/IconButton";
 

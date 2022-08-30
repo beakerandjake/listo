@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { forwardRef } from 'react';
 
 /**

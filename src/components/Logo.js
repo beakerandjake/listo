@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSquareCheck } from '@fortawesome/pro-solid-svg-icons';
 
 export function Logo(props) {
     return (

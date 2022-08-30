@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faSort } from '@fortawesome/pro-solid-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { Button } from 'components/Button';
 import {

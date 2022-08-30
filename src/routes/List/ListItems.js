@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { faCat } from "@fortawesome/free-solid-svg-icons";
+import { faCat } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { ListItem } from "./ListItem";

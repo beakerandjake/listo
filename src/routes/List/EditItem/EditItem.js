@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect } from 'react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRightFromBracket, faTrashCan } from '@fortawesome/pro-solid-svg-icons';
 import { DebounceInput } from "react-debounce-input";
 import { Drawer } from 'components/Drawer';
 import {

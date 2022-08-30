@@ -9,7 +9,7 @@ import {
     faCalendarWeek,
     faChevronRight,
     faTrashAlt
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-solid-svg-icons";
 import {
     MenuHeader,
     MenuItem,

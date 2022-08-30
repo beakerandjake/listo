@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { Button } from "components/Button";
 import { IconButton } from 'components/IconButton';

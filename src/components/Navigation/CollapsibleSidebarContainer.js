@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import { Drawer } from 'components/Drawer';
 import { Transition } from 'components/Transition';
 

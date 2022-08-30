@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import cx from 'classnames';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisH } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**

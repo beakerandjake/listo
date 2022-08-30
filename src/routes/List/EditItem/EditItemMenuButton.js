@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { SwitchTransition, FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';

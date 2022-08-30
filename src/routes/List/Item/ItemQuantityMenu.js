@@ -1,5 +1,5 @@
 import { cloneElement, useEffect, useState } from "react";
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus } from "@fortawesome/pro-solid-svg-icons";
 import cx from 'classnames';
 import { useLongPress } from "hooks/useLongPress";
 import { IconButton } from "components/IconButton";
