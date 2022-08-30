@@ -10,12 +10,12 @@ import { forwardRef } from 'react';
  * @param {function} props.onSubmit - Fired when the user presses the enter key. 
  * @param {function} props.onFocus - Fired when the input element gains focus.
  **/
-export const AddItemToolbarInput = forwardRef(({
+export const AddItemToolbarInput = ({
     value,
     onChange,
     onSubmit,
     onFocus
-}, ref) => {
+}) => {
     const onKeyDown = e => {
         if (e.key !== 'Enter') {
             return;
@@ -30,7 +30,6 @@ export const AddItemToolbarInput = forwardRef(({
                 <FontAwesomeIcon icon={faPlus} className="text-green-700 font-thin" />
             </div>
             <input
-                ref={ref}
                 type="text"
                 value={value}
                 onChange={e => onChange(e.target.value)}
@@ -43,4 +42,4 @@ export const AddItemToolbarInput = forwardRef(({
             />
         </div>
     )
-});
+};
