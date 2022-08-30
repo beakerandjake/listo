@@ -69,24 +69,26 @@ export const AddItem = ({ onAddItem }) => {
     // Will only invoke our onAddItem callback if the item is valid.
     const tryToAddItem = () => {
         if (!itemIsValid) {
-            return;
+            return false;
         }
 
-        setDrawerOpen(false);
         onAddItem(formatItem(item));
+        return true;
     };
 
     return (
         <>
             {/* Static Toolbar on Desktop. */}
-            <MediaQuery minWidth={mobileBreakpoint}>
+            <MediaQuery minWidth={mobileBreakpoint} >
                 <AddItemToolbar
                     open={drawerOpen}
                     onOpenChange={setDrawerOpen}
                     item={item}
                     itemIsValid={itemIsValid}
                     onItemChange={onItemChange}
-                    onAddItem={tryToAddItem}
+                    onAddItem={() => {
+                        tryToAddItem() && setItem(DEFAULT_ITEM);
+                    }}
                 />
             </MediaQuery>
             {/* Floating Action Button / Drawer on Mobile */}
@@ -98,7 +100,9 @@ export const AddItem = ({ onAddItem }) => {
                     item={item}
                     itemIsValid={itemIsValid}
                     onItemChange={onItemChange}
-                    onAddItem={tryToAddItem}
+                    onAddItem={() => {
+                        tryToAddItem() && setDrawerOpen(false);
+                    }}
                 />
             </MediaQuery>
         </>

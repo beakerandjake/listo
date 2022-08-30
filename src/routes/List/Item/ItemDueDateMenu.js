@@ -197,19 +197,18 @@ export function ItemDueDateMenu({
                 {/* Remove Due Date Button
                     Don't show when closing to prevent flash of appearing during close animation.
                     The flash can happen when a due date is selected after having been null.
+                    Visibility is controlled via CSS to prevent issue when toolbar detects an "outside click"
                  */}
-                {(!!dueDate && !!open) && (
-                    <>
-                        <MenuSeparator />
-                        <MenuItem
-                            icon={faTrashAlt}
-                            label="Remove Due Date"
-                            variant="danger"
-                            onClick={() => setDueDateAndCloseMenu(null)}
-                            onMouseEnter={() => setSubMenuOpen(false)}
-                        />
-                    </>
-                )}
+                <span className={!!dueDate && !!open ? 'visible' : 'hidden'}>
+                    <MenuSeparator />
+                    <MenuItem
+                        icon={faTrashAlt}
+                        label="Remove Due Date"
+                        variant="danger"
+                        onClick={() => setDueDateAndCloseMenu(null)}
+                        onMouseEnter={() => setSubMenuOpen(false)}
+                    />
+                </span>
             </ScrollableMenuContent>
         </ResponsiveMenu>
     )
