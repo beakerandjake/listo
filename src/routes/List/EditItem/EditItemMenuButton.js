@@ -1,10 +1,9 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { SwitchTransition, FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
-import { useKeyDown } from 'hooks/useKeyDown';
 
 const VARIANT_STYLES = {
     default: 'text-gray-400',
@@ -33,10 +32,15 @@ export const EditItemMenuButton = forwardRef(({
     children,
     ...props
 }, ref) => {
-    const [hasFocus, setHasFocus] = useState(false);
 
-    // Allow user to open then menu via keyboard input.
-    useKeyDown("Enter", () => onClick(), !hasFocus);
+    // allow the user to open the menu via keyboard input.
+    const onKeyDown = (e) => {
+        if (e.key !== 'Enter') {
+            return;
+        }
+
+        onClick();
+    };
 
     return (
         <div
@@ -47,8 +51,7 @@ export const EditItemMenuButton = forwardRef(({
                 'bg-white hover:bg-slate-100 border-gray-300 border rounded focus:border-indigo-500 form-input pl-3',
             )}
             tabIndex={0}
-            onFocus={() => setHasFocus(true)}
-            onBlur={() => setHasFocus(false)}
+            onKeyDown={onKeyDown}
         >
             <div
                 onClick={() => onClick()}

@@ -12,6 +12,14 @@ export const ItemNameInput = ({
     onChange
 }) => {
 
+    const onKeyDown = (e) => {
+        if (e.key !== 'Enter') {
+            return;
+        }
+
+        console.log('on submit');
+    };
+
     const inputIsBlank = value?.length <= 0;
 
     return (
@@ -34,13 +42,14 @@ export const ItemNameInput = ({
                 type="text"
                 value={value}
                 onChange={e => onChange(e.target.value.trimStart())}
+                onKeyDown={onKeyDown}
                 placeholder="Item N&zwnj;ame"
+                autoComplete="off"
+                maxLength={itemValidationConstants.maxNameLength}
                 className={cx(
                     'min-h-[3.5rem] w-full',
                     'rounded border border-gray-300 placeholder-gray-400 [&:not(:focus)]:hover:bg-slate-100 pl-11 pr-10'
                 )}
-                autoComplete="off"
-                maxLength={itemValidationConstants.maxNameLength}
             />
             {/* Clear input Button */}
             <FadeAndPopIn in={!inputIsBlank} unmountOnExit>
