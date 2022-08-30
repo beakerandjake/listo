@@ -83,10 +83,12 @@ export function ListItemEditDrawer({
                         quantity={cachedItem.quantity}
                         onChange={value => onEditItem(cachedItem.id, { quantity: value })}
                         onReset={value => onEditItem(cachedItem.id, { quantity: value })}
+                        desktopPlacement="bottom"
                     />
                     <ItemDueDateMenu
                         dueDate={cachedItem.dueDate}
                         onChange={value => onEditItem(cachedItem.id, { dueDate: value })}
+                        desktopPlacement="bottom"
                     />
 
                     <DebounceInput

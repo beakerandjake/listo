@@ -1,4 +1,4 @@
-import { cloneElement, useRef, useState } from "react";
+import { cloneElement, forwardRef, useRef, useState } from "react";
 import { format, nextMonday, startOfToday, startOfTomorrow } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,14 +31,15 @@ import {
  * @param {number} props.quantity - The quantity.
  * @param {function} props.onClear - Callback invoked when the user clicks the clear button. 
  */
-const DefaultTrigger = ({
+const DefaultTrigger = forwardRef(({
     dueDate,
     onClear,
     ...props
-}) => {
+}, ref) => {
     return (
         <ItemFieldMenuButton
             {...props}
+            ref={ref}
             icon={dueDate ? faCalendarCheck : faCalendarPlus}
             placeholder="Add Due Date"
             clearButtonTitle="Remove Due Date"
@@ -52,7 +53,7 @@ const DefaultTrigger = ({
             {!!dueDate && <span>{formatDueDate(dueDate)}</span>}
         </ItemFieldMenuButton>
     );
-};
+});
 
 /**
  * Responsive menu which allows the user to set or edit the item's due date.

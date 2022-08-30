@@ -1,4 +1,4 @@
-import { cloneElement, useEffect, useState } from "react";
+import { cloneElement, forwardRef, useEffect, useState } from "react";
 import { faMinus, faPlus, faPlusMinus } from "@fortawesome/pro-solid-svg-icons";
 import cx from 'classnames';
 import { useLongPress } from "hooks/useLongPress";
@@ -181,14 +181,15 @@ const QuantitySelector = ({ quantity, onQuantityChange }) => {
  * @param {number} props.quantity - The quantity.
  * @param {function} props.onClear - Callback invoked when the user clicks the clear button. 
  */
-const DefaultTrigger = ({
+const DefaultTrigger = forwardRef(({
     quantity,
     onClear,
     ...props
-}) => {
+}, ref) => {
     return (
         <ItemFieldMenuButton
             {...props}
+            ref={ref}
             icon={faPlusMinus}
             placeholder="Change Quantity"
             clearButtonTitle="Reset Quantity"
@@ -199,7 +200,7 @@ const DefaultTrigger = ({
             {quantity > 1 && <span>Quantity: {quantity}</span>}
         </ItemFieldMenuButton>
     );
-};
+});
 
 /**
  * Responsive menu which allows the user to edit the item quantity.
