@@ -43,7 +43,7 @@ export const EditItemMenuButton = forwardRef(({
             {...props}
             ref={ref}
             className={cx(
-                'h-14 flex justify-between flex-1 w-full cursor-pointer select-none',
+                'h-14 flex justify-between flex-1 w-full cursor-pointer select-none relative',
                 'bg-white hover:bg-slate-100 border-gray-300 border rounded focus:border-indigo-500 form-input pl-3',
             )}
             tabIndex={0}
@@ -66,12 +66,13 @@ export const EditItemMenuButton = forwardRef(({
             </div>
             {/* Reset Value Button */}
             <FadeAndPopIn in={!!children} unmountOnExit>
-                <IconButton
-                    icon={faTimes}
-                    className="w-[10%]"
-                    onClick={() => onClearValue()}
-                    title={clearButtonTitle}
-                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <IconButton
+                        icon={faTimes}
+                        onClick={() => onClearValue()}
+                        title={clearButtonTitle}
+                    />
+                </div>
             </FadeAndPopIn>
         </div>
     )
