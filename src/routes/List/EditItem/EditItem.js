@@ -10,11 +10,12 @@ import {
     ScrollableMenuContent
 } from 'components/Menu';
 import { IconButton } from 'components/IconButton';
-import { ItemCompletedCheckbox } from 'routes/List/Item';
-import { ItemNameLabel } from 'routes/List/Item';
-import { EditItemQuantity } from './EditItemQuantity';
-import { EditItemDudeDate } from './EditItemDueDate';
-
+import {
+    ItemCompletedCheckbox,
+    ItemDueDateMenu,
+    ItemNameLabel,
+    ItemQuantityMenu,
+} from 'routes/List/Item';
 
 
 /**
@@ -78,12 +79,12 @@ export function EditItem({
                 </div>
                 {/* Edit Item Fields */}
                 <div className="flex flex-col space-y-2">
-                    <EditItemQuantity
+                    <ItemQuantityMenu
                         quantity={cachedItem.quantity}
                         onChange={value => onEditItem(cachedItem.id, { quantity: value })}
+                        onReset={value => onEditItem(cachedItem.id, { quantity: value })}
                     />
-
-                    <EditItemDudeDate
+                    <ItemDueDateMenu
                         dueDate={cachedItem.dueDate}
                         onChange={value => onEditItem(cachedItem.id, { dueDate: value })}
                     />
