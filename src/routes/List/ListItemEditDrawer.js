@@ -26,7 +26,7 @@ import {
  * @param {function} props.onEditItem - Callback invoked when the user edits a field of the item. 
  * @param {function} props.onDeleteItem - Callback invoked when the user wants to delete the item. 
  */
-export function EditItem({
+export function ListItemEditDrawer({
     item,
     onClose,
     onEditItem,

@@ -1,17 +1,16 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
-import { sortItems, itemSortingFields, sortingDirections } from 'services/sorting';
-import { ListSkeleton } from './ListSkeleton';
-import { EditItem } from './EditItem';
-import { ListPageHeader } from './ListPageHeader';
+import { itemSortingFields, sortingDirections, sortItems } from 'services/sorting';
 import { ConfirmDialog } from 'components/ConfirmDialog';
-import { ListActionsDropdown } from './ListActionsDropdown';
-import { ListSortingDropdown } from './ListSortingDropdown';
-import { ListItems } from './ListItems';
-import cx from 'classnames';
 import { AddItemMobile } from './AddItem/AddItemMobile';
+import { ListActionsDropdown } from './ListActionsDropdown';
+import { ListItemEditDrawer } from './ListItemEditDrawer';
+import { ListItems } from './ListItems';
+import { ListPageHeader } from './ListPageHeader';
+import { ListSkeleton } from './ListSkeleton';
+import { ListSortingDropdown } from './ListSortingDropdown';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -208,7 +207,7 @@ export function List(props) {
                 </ListPageHeader>
             </div>
 
-            <EditItem
+            <ListItemEditDrawer
                 item={getSelectedItem(selectedItemId)}
                 onClose={() => setSelectedItemId(null)}
                 onDeleteItem={() => confirmDeleteItem(selectedItemId)}
