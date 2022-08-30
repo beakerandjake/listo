@@ -1,6 +1,5 @@
 import { faPlusMinus } from "@fortawesome/pro-solid-svg-icons"
-import { ItemQuantityMenu } from "../Item/ItemQuantityMenu"
-import { EditItemMenuButton } from "./EditItemMenuButton"
+import { ItemQuantityMenu, ItemFieldMenuButton } from 'routes/List/Item';
 
 /**
  * An ItemFieldMenuButton that allows the user to view / edit the item quantity.
@@ -18,7 +17,7 @@ export const EditItemQuantity = ({
             onChange={onChange}
             onReset={onChange}
             trigger={(
-                <EditItemMenuButton
+                <ItemFieldMenuButton
                     icon={faPlusMinus}
                     placeholder="Change Quantity"
                     clearButtonTitle="Reset Quantity"
@@ -27,7 +26,7 @@ export const EditItemQuantity = ({
                     title="Change Quantity"
                 >
                     {quantity > 1 && <span>Quantity: {quantity}</span>}
-                </EditItemMenuButton>
+                </ItemFieldMenuButton>
             )}
             desktopPlacement='bottom'
             desktopOffset={1}

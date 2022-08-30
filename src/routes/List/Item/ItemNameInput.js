@@ -1,8 +1,7 @@
 import { faPencil, faTimes } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
-import { useRef, useState } from 'react';
-import { EditItemMenuButton } from '../EditItem/EditItemMenuButton';
+
 import { itemValidationConstants } from '.';
 import { FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
@@ -12,7 +11,7 @@ export const ItemNameInput = ({
     onChange,
     onSubmit
 }) => {
-
+    // support quick add by notifying of submit.
     const onKeyDown = (e) => {
         if (e.key !== 'Enter') {
             return;

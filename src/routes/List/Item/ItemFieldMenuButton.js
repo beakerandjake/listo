@@ -1,10 +1,10 @@
 import { forwardRef, useRef } from 'react';
+import { mergeRefs } from 'react-merge-refs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { SwitchTransition, FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
-import { mergeRefs } from 'react-merge-refs';
 
 const VARIANT_STYLES = {
     default: 'text-gray-400',
@@ -13,7 +13,9 @@ const VARIANT_STYLES = {
 }
 
 /**
- * An ItemFieldMenuButton that allows the user to view / edit the item quantity.
+ * Component which appears like a standard input field, will render a value or a placeholder. 
+ * Meant to be used with Menus, clicking this component can trigger a menu opening. 
+ * Provides a clear button which allows the value to be reset easily. 
  * @param {Object} props
  * @param {IconDefinition} props.icon - The icon to display.
  * @param {string} props.placeholder - The text to render if no children are provided.
@@ -23,7 +25,7 @@ const VARIANT_STYLES = {
  * @param {string} props.clearButtonTitle - The title to display when hovering the clear button.
  * @param {React.ReactNode} props.children - The child element.  
  */
-export const EditItemMenuButton = forwardRef(({
+export const ItemFieldMenuButton = forwardRef(({
     icon,
     placeholder = '',
     variant = 'default',

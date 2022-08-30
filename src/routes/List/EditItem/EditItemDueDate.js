@@ -1,7 +1,6 @@
 import { faCalendarCheck, faCalendarPlus } from '@fortawesome/pro-solid-svg-icons';
 import { formatDueDate, isOverdue } from 'services/dueDateHelpers';
-import { EditItemMenuButton } from './EditItemMenuButton';
-import { ItemDueDateMenu } from 'routes/List/Item';
+import { ItemDueDateMenu, ItemFieldMenuButton } from 'routes/List/Item';
 
 /**
  * An ItemFieldMenuButton that allows the user to view / edit the item due date.
@@ -17,7 +16,7 @@ export const EditItemDudeDate = ({
             dueDate={dueDate}
             onDueDateChange={onChange}
             trigger={(
-                <EditItemMenuButton
+                <ItemFieldMenuButton
                     icon={dueDate ? faCalendarCheck : faCalendarPlus}
                     placeholder="Add Due Date"
                     clearButtonTitle="Remove Due Date"
@@ -29,7 +28,7 @@ export const EditItemDudeDate = ({
                     title="Change Due Date"
                 >
                     {!!dueDate && <span>{formatDueDate(dueDate)}</span>}
-                </EditItemMenuButton>
+                </ItemFieldMenuButton>
             )}
             desktopPlacement="bottom"
             desktopOffset={1}

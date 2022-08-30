@@ -1,12 +1,14 @@
 import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
-import { ItemNameLabel } from './ItemNameLabel';
 import { ItemDueDateMenu } from './ItemDueDateMenu';
+import { ItemFieldMenuButton } from './ItemFieldMenuButton';
+import { ItemNameLabel } from './ItemNameLabel';
 import { ItemQuantityMenu } from './ItemQuantityMenu';
 
 export {
     ItemCompletedCheckbox,
-    ItemNameLabel,
     ItemDueDateMenu,
+    ItemFieldMenuButton,
+    ItemNameLabel,
     ItemQuantityMenu,
 };
 
