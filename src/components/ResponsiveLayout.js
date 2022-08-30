@@ -62,3 +62,5 @@ export const ResponsiveLayout = ({
         </div>
     )
 };
+
+export const mobileBreakpoint = MOBILE_BREAKPOINT;
