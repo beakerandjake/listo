@@ -1,4 +1,4 @@
-import { DebounceInput } from "react-debounce-input";
+import cx from 'classnames';
 
 /**
  * Text area for editing an items note field.
@@ -11,16 +11,16 @@ export const ItemNoteInput = ({
     onChange
 }) => {
     return (
-        <DebounceInput
-            element="textarea"
+        <textarea
             value={value}
-            onChange={event => onChange(event.target.value)}
-            debounceTimeout={800}
-            forceNotifyByEnter={false}
-            placeholder="Add Note"
-            className="rounded border border-gray-300 keyboard-only-focus-ring placeholder-gray-400 [&:not(:focus)]:hover:bg-slate-100"
+            onChange={e => onChange(e.target.value.trimStart())}
             rows={3}
-            title="Edit Item Note"
+            name="note"
+            className={cx(
+                'resize-none rounded border border-gray-300 keyboard-only-focus-ring focus:border-gray-300',
+                'placeholder-gray-400 [&:not(:focus)]:hover:bg-slate-100'
+            )}
+            placeholder="Add Note"
         />
     )
 };

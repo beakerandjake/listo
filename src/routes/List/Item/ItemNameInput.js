@@ -15,7 +15,7 @@ export const ItemNameInput = ({
             </div>
             <input
                 value={value}
-                onChange={e => onChange(e.target.value)}
+                onChange={e => onChange(e.target.value.trimStart())}
                 placeholder="Item Name"
                 className={cx(
                     'min-h-[3.5rem] w-full keyboard-only-focus-ring',
