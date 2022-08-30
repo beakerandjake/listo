@@ -7,9 +7,9 @@ import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent } from "compon
 import { useState } from "react";
 import { defaultItem, itemCanBeAdded } from "./index.js";
 import { EditItemDudeDate } from "../EditItem/EditItemDueDate";
-import { EditItemQuantity } from "../EditItem/EditItemQuantity";
 import { ItemNoteInput } from "../Item/ItemNoteInput.js";
 import { ItemNameInput } from "../Item/ItemNameInput.js";
+import { ItemQuantityMenu } from "../Item/ItemQuantityMenu.js";
 
 
 
@@ -75,16 +75,15 @@ export const AddItemMobile = ({
                         onChange={value => onItemChange({ name: value })}
                         onSubmit={() => tryToAddItem()}
                     />
-
-                    <EditItemQuantity
+                    <ItemQuantityMenu
                         quantity={item.quantity}
                         onChange={value => onItemChange({ quantity: value })}
+                        onReset={value => onItemChange({ quantity: value })}
                     />
                     <EditItemDudeDate
                         dueDate={item.dueDate}
                         onChange={value => onItemChange({ dueDate: value })}
                     />
-
                     <ItemNoteInput
                         value={item.note}
                         onChange={value => onItemChange({ note: value })}

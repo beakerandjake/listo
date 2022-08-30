@@ -1,5 +1,5 @@
 import { cloneElement, useEffect, useState } from "react";
-import { faMinus, faPlus } from "@fortawesome/pro-solid-svg-icons";
+import { faMinus, faPlus, faPlusMinus } from "@fortawesome/pro-solid-svg-icons";
 import cx from 'classnames';
 import { useLongPress } from "hooks/useLongPress";
 import { IconButton } from "components/IconButton";
@@ -12,6 +12,7 @@ import {
     ScrollableMenuContent,
     StatefulMenu
 } from "components/Menu";
+import { ItemFieldMenuButton } from "./ItemFieldMenuButton";
 
 
 /**
@@ -175,6 +176,32 @@ const QuantitySelector = ({ quantity, onQuantityChange }) => {
 };
 
 /**
+ * If no trigger is provided, this is the default trigger to render.
+ * @param {object} props - The props
+ * @param {number} props.quantity - The quantity.
+ * @param {function} props.onClear - Callback invoked when the user clicks the clear button. 
+ */
+const DefaultTrigger = ({
+    quantity,
+    onClear,
+    ...props
+}) => {
+    return (
+        <ItemFieldMenuButton
+            {...props}
+            icon={faPlusMinus}
+            placeholder="Change Quantity"
+            clearButtonTitle="Reset Quantity"
+            onClearValue={onClear}
+            variant={quantity > 1 ? 'success' : 'default'}
+            title="Change Quantity"
+        >
+            {quantity > 1 && <span>Quantity: {quantity}</span>}
+        </ItemFieldMenuButton>
+    );
+};
+
+/**
  * Responsive menu which allows the user to edit the item quantity.
  * @param {Object} props - The props (spread onto the responsive menu)
  * @param {number} props.quantity - The current quantity.
@@ -190,6 +217,11 @@ export const ItemQuantityMenu = ({
     ...props
 }) => {
 
+    // if custom trigger is not provided, use default trigger.
+    const chosenTrigger = trigger || (
+        <DefaultTrigger quantity={quantity} onClear={() => onChange(1)} />
+    );
+
     return (
         <StatefulMenu>
             {({ open, setOpen }) => (
@@ -197,7 +229,7 @@ export const ItemQuantityMenu = ({
                     {...props}
                     open={open}
                     onClose={() => setOpen(false)}
-                    trigger={cloneElement(trigger, { onClick: () => setOpen(!open) })}
+                    trigger={cloneElement(chosenTrigger, { onClick: () => setOpen(!open) })}
                 >
                     <MenuHeader className="flex items-center justify-center">
                         <MenuTitle>Change Quantity</MenuTitle>
