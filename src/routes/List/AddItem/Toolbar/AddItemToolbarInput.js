@@ -13,17 +13,8 @@ export const AddItemToolbarInput = ({
     value,
     onChange,
     onSubmit,
-    
     onFocus
 }) => {
-    const onKeyDown = e => {
-        if (e.key !== 'Enter') {
-            return;
-        }
-
-        onSubmit();
-    }
-
     return (
         <div className="relative shadow">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
@@ -33,7 +24,7 @@ export const AddItemToolbarInput = ({
                 type="text"
                 value={value}
                 onChange={e => onChange(e.target.value)}
-                onKeyDown={onKeyDown}
+                onKeyDown={e => e.key === 'Enter' && onSubmit()}
                 onFocus={() => onFocus()}
                 className="w-full pl-14 sm:text-sm border-none min-h-[50px] focus:outline-none focus:ring-0 scroll-mt-64"
                 placeholder="Add Item"
