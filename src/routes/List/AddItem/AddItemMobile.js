@@ -31,12 +31,28 @@ const FloatingAddButton = ({ onClick }) => {
     );
 };
 
-export const AddItemMobile = ({ }) => {
+/**
+ * Mobile friendly version of the Add Item component.
+ * @param {object} props - the props
+ * @param {function} props.onAddItem - Callback invoked when the user wants to add a new Item to the list.
+ **/
+export const AddItemMobile = ({
+    onAddItem
+}) => {
     const [open, setOpen] = useState(false);
     const [item, setItem] = useState(defaultItem);
 
     const onItemChange = (changes) => {
         setItem({ ...item, ...changes });
+    };
+
+    const tryToAddItem = () => {
+        if (!itemCanBeAdded(item)) {
+            return;
+        }
+
+        onAddItem(item);
+        setOpen(false);
     };
 
     return (
@@ -87,6 +103,7 @@ export const AddItemMobile = ({ }) => {
                         className="flex-1"
                         variant="success"
                         size="lg"
+                        onClick={tryToAddItem}
                         disabled={!itemCanBeAdded(item)}
                     >
                         Add

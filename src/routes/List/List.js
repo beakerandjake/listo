@@ -189,7 +189,7 @@ export function List(props) {
                     })}
                 />
 
-                <AddItemMobile />
+                <AddItemMobile onAddItem={onAddItem} />
 
                 <ListPageHeader iconName={list.iconName} name={list.name}>
                     <ListActionsDropdown
