@@ -7,5 +7,14 @@ export {
     ItemCompletedCheckbox,
     ItemNameLabel,
     ItemDueDateMenu,
-    ItemQuantityMenu
+    ItemQuantityMenu,
 };
+
+// Constants which help determine if an items fields are valid.
+const VALIDATION_CONSTANTS = {
+    minNameLength: 2,
+    maxNameLength: 50,
+    maxNoteLength: 500
+}
+
+export const itemValidationConstants = { ...VALIDATION_CONSTANTS };
