@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { itemValidationConstants } from '.';
 
 /**
  * Text area for editing an items note field.
@@ -21,6 +22,7 @@ export const ItemNoteInput = ({
                 'placeholder-gray-400 [&:not(:focus)]:hover:bg-slate-100'
             )}
             placeholder="Add Note"
+            maxLength={itemValidationConstants.maxNoteLength}
         />
     )
 };
