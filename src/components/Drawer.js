@@ -170,6 +170,7 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
  * @param {Object} props - The Props.
  * @param {boolean} props.open - Should the drawer currently be opened or closed?
  * @param {function} props.onClose - Callback fired when the user requests to close the drawer
+ * @param {function} props.onExitTransitionComplete - Callback fired when the drawer has closed, and its exit transition has finished.
  * @param {'right'|'left'|'bottom'} props.anchor - The side of the viewport that the Drawer is anchored to. 
  * @param {'xs'|'sm'|'md'|'lg'|'xl'|'full'=} props.size - What is the max amount of the viewport the drawer should take up? 
  * @param {boolean=} props.showCloseButton - Should a default show button be rendered?
@@ -183,6 +184,7 @@ function DefaultCloseButton({ onClick, anchor, icon, title }) {
 export function Drawer({
     open,
     onClose,
+    onExitTransitionComplete,
     anchor,
     size,
     showCloseButton = false,
@@ -215,6 +217,7 @@ export function Drawer({
             onClose={onClose}
             className={className}
             initialFocus={initialFocusRef}
+            onExitTransitionComplete={onExitTransitionComplete}
         >
             <DialogBackdrop
                 open={open}

@@ -32,12 +32,14 @@ export const DialogBackdrop = ({ open = false, classNames = null }) => {
  * @param {Object} props - The Props.
  * @param {boolean} props.open - Should the dialog currently be opened or closed?
  * @param {function} props.onClose - Callback fired when the user requests to close the dialog.
+ * @param {function} props.onExitTransitionComplete - Callback fired when the dialog has closed, and its exit transition has finished.
  * @param {string=} props.className - Additional styles to apply to the root of the Dialog.
  * @param {React.ReactNode} props.children - The content of the Dialog.
  */
 export function Dialog({
   open = false,
   onClose,
+  onExitTransitionComplete,
   className,
   children,
   ...props
@@ -49,6 +51,7 @@ export function Dialog({
       appear
       unmountOnExit
       className={className}
+      onExited={() => onExitTransitionComplete && onExitTransitionComplete()}
     >
       <HeadlessUiDialog
         static
