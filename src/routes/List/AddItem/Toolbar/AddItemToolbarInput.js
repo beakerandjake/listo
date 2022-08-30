@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons';
-import { forwardRef } from 'react';
 
 /**
  * Input field which allows the user to set the name of the Item.
@@ -14,6 +13,7 @@ export const AddItemToolbarInput = ({
     value,
     onChange,
     onSubmit,
+    
     onFocus
 }) => {
     const onKeyDown = e => {
