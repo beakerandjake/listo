@@ -18,7 +18,7 @@ export const ItemNoteInput = ({
             rows={3}
             name="note"
             className={cx(
-                'resize-none rounded border border-gray-300',
+                'min-h-[6rem] resize-none rounded border border-gray-300',
                 'placeholder-gray-400 [&:not(:focus)]:hover:bg-slate-100'
             )}
             placeholder="Add Note"
