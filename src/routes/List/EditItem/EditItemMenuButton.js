@@ -34,7 +34,7 @@ export const EditItemMenuButton = forwardRef(({
     ...props
 }, ref) => {
     const [hasFocus, setHasFocus] = useState(false);
-    
+
     // Allow user to open then menu via keyboard input.
     useKeyDown("Enter", () => onClick(), !hasFocus);
 
@@ -44,7 +44,7 @@ export const EditItemMenuButton = forwardRef(({
             ref={ref}
             className={cx(
                 'min-h-[3.5rem] flex justify-between flex-1 w-full cursor-pointer select-none',
-                'bg-white hover:bg-slate-100 border-gray-300 border rounded keyboard-only-focus-ring',
+                'bg-white hover:bg-slate-100 border-gray-300 border rounded focus:border-indigo-500 form-input pl-3',
             )}
             tabIndex={0}
             onFocus={() => setHasFocus(true)}
@@ -55,10 +55,10 @@ export const EditItemMenuButton = forwardRef(({
                 className={cx(
                     VARIANT_STYLES[variant],
                     'transition-colors duration-150',
-                    'flex-1 py-2 pl-3 flex items-center '
+                    'flex-1 py-2 flex items-center'
                 )}
             >
-                <FontAwesomeIcon icon={icon} fixedWidth className="mx-3" />
+                <FontAwesomeIcon icon={icon} fixedWidth className="mr-3" />
                 {/* Display placeholder if no children */}
                 <SwitchTransition switchKey={!!children} as={FadeAndPopIn}>
                     {!!children ? children : placeholder}
