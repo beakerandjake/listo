@@ -6,10 +6,15 @@ import {
     faCalendarCheck,
     faCalendarDay,
     faCalendarDays,
+    faCalendarPlus,
     faCalendarWeek,
     faChevronRight,
     faTrashAlt
 } from "@fortawesome/pro-solid-svg-icons";
+import { formatDueDate, isOverdue } from "services/dueDateHelpers";
+import { Calendar } from "components/Calendar";
+import { closeReasons } from "components/Menu/ResponsiveMenu";
+import { ItemFieldMenuButton } from "./ItemFieldMenuButton";
 import {
     MenuHeader,
     MenuItem,
@@ -19,22 +24,49 @@ import {
     ResponsiveMenu,
     ScrollableMenuContent
 } from "components/Menu";
-import { Calendar } from "components/Calendar";
-import { closeReasons } from "components/Menu/ResponsiveMenu";
+
+/**
+ * If no trigger is provided, this is the default trigger to render.
+ * @param {object} props - The props
+ * @param {number} props.quantity - The quantity.
+ * @param {function} props.onClear - Callback invoked when the user clicks the clear button. 
+ */
+const DefaultTrigger = ({
+    dueDate,
+    onClear,
+    ...props
+}) => {
+    return (
+        <ItemFieldMenuButton
+            {...props}
+            icon={dueDate ? faCalendarCheck : faCalendarPlus}
+            placeholder="Add Due Date"
+            clearButtonTitle="Remove Due Date"
+            onClearValue={onClear}
+            variant={!dueDate
+                ? 'default'
+                : isOverdue(dueDate) ? 'danger' : 'success'
+            }
+            title="Change Due Date"
+        >
+            {!!dueDate && <span>{formatDueDate(dueDate)}</span>}
+        </ItemFieldMenuButton>
+    );
+};
 
 /**
  * Responsive menu which allows the user to set or edit the item's due date.
  * @param {Object} props - The props (spread onto the responsive menu)
  * @param {ReactElement} props.trigger -  The trigger element to render and position the floating content against.
  * @param {date} props.dueDate - The items due date.
- * @param {function} props.onDueDateChange - Callback fired when the due date changes.
+ * @param {function} props.onChange - Callback fired when the due date changes.
  * @param {'top'| 'top-start'| 'top-end'| 'right'| 'right-start'| 'right-end'| 'bottom'|'bottom-start'|'bottom-end'|'left'|'left-start'|'left-end'=} props.desktopSubMenuPlacement - Where to place the floating element against the trigger.
  * @param {string} subMenuClassName - Additional styles to apply to the sub menu specifically.
  */
 export function ItemDueDateMenu({
     trigger,
     dueDate,
-    onDueDateChange,
+    onChange,
     desktopSubMenuPlacement = 'right-start',
     subMenuClassName,
     ...props
@@ -63,7 +95,7 @@ export function ItemDueDateMenu({
     // Close all menus and notify of due date change.
     const setDueDateAndCloseMenu = (dueDate) => {
         closeMenus();
-        onDueDateChange(dueDate);
+        onChange(dueDate);
     }
 
     // Closes both the main and sub menus.
@@ -103,12 +135,17 @@ export function ItemDueDateMenu({
         }
     }
 
+    // if custom trigger is not provided, use default trigger.
+    const chosenTrigger = trigger || (
+        <DefaultTrigger dueDate={dueDate} onClear={() => onChange(null)} />
+    );
+
     return (
         <ResponsiveMenu
             {...props}
             open={open}
             onClose={onMainMenuClose}
-            trigger={cloneElement(trigger, { onClick: () => setOpen(!open) })}
+            trigger={cloneElement(chosenTrigger, { onClick: () => setOpen(!open) })}
         >
             <MenuHeader className="flex items-center justify-center">
                 <MenuTitle>Add Due Date</MenuTitle>

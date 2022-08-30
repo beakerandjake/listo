@@ -6,10 +6,12 @@ import { Drawer } from "components/Drawer";
 import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent } from "components/Menu";
 import { useState } from "react";
 import { defaultItem, itemCanBeAdded } from "./index.js";
-import { EditItemDudeDate } from "../EditItem/EditItemDueDate";
-import { ItemNoteInput } from "../Item/ItemNoteInput.js";
-import { ItemNameInput } from "../Item/ItemNameInput.js";
-import { ItemQuantityMenu } from "../Item/ItemQuantityMenu.js";
+import {
+    ItemDueDateMenu,
+    ItemNameInput,
+    ItemNoteInput,
+    ItemQuantityMenu,
+} from "../Item";
 
 
 
@@ -80,7 +82,7 @@ export const AddItemMobile = ({
                         onChange={value => onItemChange({ quantity: value })}
                         onReset={value => onItemChange({ quantity: value })}
                     />
-                    <EditItemDudeDate
+                    <ItemDueDateMenu
                         dueDate={item.dueDate}
                         onChange={value => onItemChange({ dueDate: value })}
                     />
