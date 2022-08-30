@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { faCat } from "@fortawesome/pro-solid-svg-icons";
+import { faCat } from "@fortawesome/pro-thin-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import cx from 'classnames';
 import { ListItem } from "./ListItem";
 import { ListCompletedItemsCollapsible } from "./ListCompletedItemsCollapsible";
 import { FadeAndPopIn } from "components/Transition";

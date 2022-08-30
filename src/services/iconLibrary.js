@@ -8,7 +8,7 @@ import {
     faPlus,
     faShoppingCart,
     faStore
-} from '@fortawesome/pro-light-svg-icons';
+} from '@fortawesome/pro-thin-svg-icons';
 
 const icons = [
     faCheck,
