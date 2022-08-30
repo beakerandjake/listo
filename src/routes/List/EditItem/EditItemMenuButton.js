@@ -1,9 +1,10 @@
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { SwitchTransition, FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
+import { mergeRefs } from 'react-merge-refs';
 
 const VARIANT_STYLES = {
     default: 'text-gray-400',
@@ -32,6 +33,7 @@ export const EditItemMenuButton = forwardRef(({
     children,
     ...props
 }, ref) => {
+    const internalRef = useRef(ref);
 
     // allow the user to open the menu via keyboard input.
     const onKeyDown = (e) => {
@@ -45,7 +47,7 @@ export const EditItemMenuButton = forwardRef(({
     return (
         <div
             {...props}
-            ref={ref}
+            ref={mergeRefs([ref, internalRef])}
             className={cx(
                 'h-14 flex justify-between flex-1 w-full cursor-pointer select-none relative',
                 'bg-white hover:bg-slate-100 border-gray-300 border rounded focus:border-indigo-500 form-input pl-3',
@@ -72,7 +74,10 @@ export const EditItemMenuButton = forwardRef(({
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                     <IconButton
                         icon={faTimes}
-                        onClick={() => onClearValue()}
+                        onClick={() => {
+                            onClearValue();
+                            internalRef.current?.blur();
+                        }}
                         title={clearButtonTitle}
                     />
                 </div>
