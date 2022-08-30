@@ -1,10 +1,10 @@
-import { forwardRef, useRef, useState } from 'react';
-import isEqual from 'lodash.isequal';
-import cx from 'classnames';
-import { useOnClickOutside } from 'hooks/useOnClickOutside';
-import { AddItemInput } from './AddItemInput';
-import { AddItemToolbar, elementIsPartOfToolbar } from './AddItemToolbar';
-import { Transition } from 'components/Transition';
+import { useState } from 'react';
+import { isValid } from 'date-fns';
+import MediaQuery from 'react-responsive';
+import { mobileBreakpoint } from "components/ResponsiveLayout";
+import { itemValidationConstants } from 'routes/List/Item';
+import { AddItemDrawer } from './AddItemDrawer';
+import { AddItemToolbar } from './Toolbar';
 
 const DEFAULT_ITEM = {
     name: '',
@@ -14,100 +14,95 @@ const DEFAULT_ITEM = {
 };
 
 /**
- * Allows the user to add a new Item to the list.
- * @param {object} props - the props
- * @param {function} props.onAddItem - Callback invoked when the user adds a new Item to the list.
- * @param {boolean} props.disabled - Should the input be disabled?
- **/
-export const AddItem = forwardRef(({
-    onAddItem,
-    disabled,
-}, ref) => {
-    const containerRef = useRef(null);
-    const [toolbarVisible, setToolbarVisible] = useState(false);
-    const [item, setItem] = useState(DEFAULT_ITEM);
-    const nameValid = item.name && item.name.length > 1;
+ * Are all the fields of the item valid? 
+ * @param {Object} item - The item to validate
+ */
+const itemCanBeAdded = ({ name, dueDate, quantity, note }) => {
+    if (!name || name.length < itemValidationConstants.minNameLength || name.length > itemValidationConstants.maxNameLength) {
+        return false;
+    }
 
-    // Will minimize the toolbar unless the user is interacting with it.
-    const tryToHideToolbar = e => {
-        // If the user is interacting with a toolbar menu, then don't minimize the toolbar. 
-        // This edge case can happen if menu items are portalled they will technically
-        // not be a child of this containerRef, so the useOnClickOutside hook will fire 
-        // even thought the outside element is really "inside" the menu.
-        if (elementIsPartOfToolbar(e.target)) {
-            return;
-        }
+    if (dueDate && !isValid(dueDate)) {
+        return false;
+    }
 
-        // Don't close the toolbar if the user has pending edits to the item.
-        if (!isEqual(item, DEFAULT_ITEM)) {
-            return;
-        }
+    if (quantity < 0) {
+        return false;
+    }
 
-        setToolbarVisible(false);
+    if (note && note.length > itemValidationConstants.maxNoteLength) {
+        return false;
+    }
+
+    return true;
+};
+
+/**
+ * Applies consistent formatting to the item's fields.
+ * @param {Object} item - The item to be format
+ */
+const formatItem = (item) => {
+    const sanitized = {
+        name: item.name.trim(),
+        note: item.note?.trim() || ''
     };
 
-    // Whenever the user clicks outside of this component, try to minimize the toolbar.
-    // Disabled these event listeners if the toolbar isn't visible.
-    useOnClickOutside(tryToHideToolbar, !toolbarVisible, containerRef);
+    return { ...item, ...sanitized };
+}
+
+/**
+ * Allows the user to add a new Item to the list.
+ * @param {object} props - the props
+ * @param {function} props.onAddItem - Callback invoked when the user wants to add a new Item to the list.
+ **/
+export const AddItem = ({ onAddItem }) => {
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [item, setItem] = useState(DEFAULT_ITEM);
+
+    const itemIsValid = itemCanBeAdded(formatItem(item));
 
     // Callback invoked whenever the user makes changes to the item.
-    const onItemChange = changes => {
+    const onItemChange = (changes) => {
         setItem({ ...item, ...changes });
     };
 
-    // Callback invoked when the user submits the item.
+    // Will only invoke our onAddItem callback if the item is valid.
     const tryToAddItem = () => {
-        if (!nameValid || disabled) {
+        if (!itemIsValid) {
             return;
         }
 
-        onAddItem(item);
-        setItem(DEFAULT_ITEM);
+        setDrawerOpen(false);
+        onAddItem(formatItem(item));
     };
 
     return (
-        <div ref={containerRef}>
-            {/* Input bar */}
-            <div
-                className={cx(
-                    { 'rounded-b': !toolbarVisible },
-                    'border rounded-t border-gray-300 shadow',
-                    'transition-[border-radius] duration-300 overflow-hidden'
-                )}
-            >
-                <AddItemInput
-                    ref={ref}
-                    value={item.name}
-                    onChange={name => onItemChange({ name })}
-                    onSubmit={tryToAddItem}
-                    onFocus={() => setToolbarVisible(true)}
+        <>
+            {/* Static Toolbar on Desktop. */}
+            <MediaQuery minWidth={mobileBreakpoint}>
+                <AddItemToolbar
+                    open={drawerOpen}
+                    onOpenChange={setDrawerOpen}
+                    item={item}
+                    itemIsValid={itemIsValid}
+                    onItemChange={onItemChange}
+                    onAddItem={tryToAddItem}
                 />
-            </div>
-            {/* Collapsible toolbar */}
-            <div className="overflow-hidden -mb-3 pb-3 -mx-2 px-2">
-                <Transition
-                    in={toolbarVisible}
-                    unmountOnExit
-                    classNames={{
-                        enter: '-translate-y-full opacity-0',
-                        enterActive: 'transition-[transform,opacity] ease-out duration-300 !translate-y-0 !opacity-100',
-                        exit: 'h-10 opacity-100',
-                        exitActive: 'transition-[height,opacity] ease-in !h-0 !opacity-100'
-                    }}
-                >
-                    {/* Wrap in div to prevent padding issue when animating */}
-                    <div className="shadow rounded-b">
-                        <AddItemToolbar
-                            item={item}
-                            onItemChange={onItemChange}
-                            canAddItem={nameValid}
-                            onAddItem={tryToAddItem}
-                        />
-                    </div>
-                </Transition>
-            </div>
-        </div >
-    )
-});
+            </MediaQuery>
+            {/* Floating Action Button / Drawer on Mobile */}
+            <MediaQuery maxWidth={mobileBreakpoint - 1}>
+                <AddItemDrawer
+                    open={drawerOpen}
+                    onOpenChange={setDrawerOpen}
+                    onCloseTransitionComplete={() => setItem(DEFAULT_ITEM)}
+                    item={item}
+                    itemIsValid={itemIsValid}
+                    onItemChange={onItemChange}
+                    onAddItem={tryToAddItem}
+                />
+            </MediaQuery>
+        </>
+    );
+};
 
 export const defaultItem = { ...DEFAULT_ITEM };

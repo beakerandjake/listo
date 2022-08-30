@@ -7,7 +7,6 @@ import { defaultItem } from '../AddItem';
 import { AddItemToolbarCollapsibleBar, elementIsPartOfToolbar } from './AddItemToolbarCollapsibleBar';
 import { AddItemToolbarInput } from './AddItemToolbarInput'
 
-
 /**
  * Component suited for larger screens which allows users to create a new item
  * @param {Object} props - The props.
