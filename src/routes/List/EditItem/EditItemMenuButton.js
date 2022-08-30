@@ -1,9 +1,10 @@
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { SwitchTransition, FadeAndPopIn } from 'components/Transition';
 import { IconButton } from 'components/IconButton';
+import { useKeyDown } from 'hooks/useKeyDown';
 
 const VARIANT_STYLES = {
     default: 'text-gray-400',
@@ -32,7 +33,10 @@ export const EditItemMenuButton = forwardRef(({
     children,
     ...props
 }, ref) => {
-    const variantStyle = VARIANT_STYLES[variant];
+    const [hasFocus, setHasFocus] = useState(false);
+    
+    // Allow user to open then menu via keyboard input.
+    useKeyDown("Enter", () => onClick(), !hasFocus);
 
     return (
         <div
@@ -40,13 +44,16 @@ export const EditItemMenuButton = forwardRef(({
             ref={ref}
             className={cx(
                 'min-h-[3.5rem] flex justify-between flex-1 w-full cursor-pointer select-none',
-                'bg-white hover:bg-slate-100 border-gray-300 border rounded',
+                'bg-white hover:bg-slate-100 border-gray-300 border rounded keyboard-only-focus-ring',
             )}
+            tabIndex={0}
+            onFocus={() => setHasFocus(true)}
+            onBlur={() => setHasFocus(false)}
         >
             <div
                 onClick={() => onClick()}
                 className={cx(
-                    variantStyle,
+                    VARIANT_STYLES[variant],
                     'transition-colors duration-150',
                     'flex-1 py-2 pl-3 flex items-center '
                 )}
