@@ -67,7 +67,7 @@ export const AddItemMobile = ({
                 onExitTransitionComplete={() => setItem(defaultItem)}
             >
                 <MenuHeader className="flex items-center justify-center">
-                    <MenuTitle title="">Add New Item</MenuTitle>
+                    <MenuTitle>Add New Item</MenuTitle>
                 </MenuHeader>
                 <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-3 bg-gray-50">
                     <ItemNameInput
@@ -93,7 +93,7 @@ export const AddItemMobile = ({
                     <Button
                         title="Cancel"
                         className="flex-1"
-                        size="lg"
+                        size="responsive"
                         onClick={() => setOpen(false)}
                     >
                         Cancel
@@ -102,7 +102,7 @@ export const AddItemMobile = ({
                         title="Add Item"
                         className="flex-1"
                         variant="success"
-                        size="lg"
+                        size="responsive"
                         onClick={tryToAddItem}
                         disabled={!itemCanBeAdded(item)}
                     >

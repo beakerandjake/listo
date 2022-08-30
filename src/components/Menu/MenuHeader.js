@@ -23,7 +23,7 @@ export function MenuHeader({ className, children }) {
  */
 export function MenuTitle({ children, className }) {
     return (
-        <div className={cx('text-md font-semibold text-gray-500 select-none truncate', className)}>
+        <div className={cx('text-lg sm:text-base font-semibold text-gray-500 select-none truncate', className)}>
             {children}
         </div>
     )

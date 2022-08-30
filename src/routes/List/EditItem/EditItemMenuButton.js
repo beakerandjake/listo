@@ -43,7 +43,7 @@ export const EditItemMenuButton = forwardRef(({
             {...props}
             ref={ref}
             className={cx(
-                'min-h-[3.5rem] flex justify-between flex-1 w-full cursor-pointer select-none',
+                'h-14 flex justify-between flex-1 w-full cursor-pointer select-none',
                 'bg-white hover:bg-slate-100 border-gray-300 border rounded focus:border-indigo-500 form-input pl-3',
             )}
             tabIndex={0}

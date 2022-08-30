@@ -13,7 +13,8 @@ const SIZES = {
     sm: 'px-3 py-2 text-sm',
     md: 'px-4 py-2 text-sm',
     lg: 'px-4 py-2 text-base',
-    xl: 'px-6 py-3 text-base'
+    xl: 'px-6 py-3 text-base',
+    responsive: 'px-4 py-2 text-base sm:px-4 sm:py-2 sm:text-sm md:px-3 md:py-2 md:text-sm'
 };
 
 
