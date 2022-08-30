@@ -1,32 +1,30 @@
-import { forwardRef, useRef, useState } from 'react';
+import cx from 'classnames'
 import isEqual from 'lodash.isequal';
-import cx from 'classnames';
-import { useOnClickOutside } from 'hooks/useOnClickOutside';
-import { AddItemInput } from './AddItemInput';
-import { AddItemToolbar, elementIsPartOfToolbar } from './AddItemToolbar';
 import { Transition } from 'components/Transition';
+import { useOnClickOutside } from 'hooks/useOnClickOutside';
+import { useRef } from 'react';
+import { defaultItem } from '../AddItem';
+import { AddItemToolbarCollapsibleBar, elementIsPartOfToolbar } from './AddItemToolbarCollapsibleBar';
+import { AddItemToolbarInput } from './AddItemToolbarInput'
 
-const DEFAULT_ITEM = {
-    name: '',
-    dueDate: null,
-    quantity: 1,
-    note: ''
-};
 
 /**
- * Allows the user to add a new Item to the list.
- * @param {object} props - the props
- * @param {function} props.onAddItem - Callback invoked when the user adds a new Item to the list.
- * @param {boolean} props.disabled - Should the input be disabled?
- **/
-export const AddItem = forwardRef(({
+ * Component suited for larger screens which allows users to create a new item
+ * @param {Object} props - The props.
+ * @param {object} props.item - The item being added.
+ * @param {function} props.onItemChange - Callback invoked when the user changes a property of the item. 
+ * @param {boolean} props.itemIsValid - Is the item in a valid state to be added to the list? 
+ * @param {function} props.onAddItem - Callback invoked when the user clicks the add Item button. 
+ */
+export const AddItemToolbar = ({
+    open,
+    onOpenChange,
+    item,
+    onItemChange,
+    itemIsValid,
     onAddItem,
-    disabled,
-}, ref) => {
+}) => {
     const containerRef = useRef(null);
-    const [toolbarVisible, setToolbarVisible] = useState(false);
-    const [item, setItem] = useState(DEFAULT_ITEM);
-    const nameValid = item.name && item.name.length > 1;
 
     // Will minimize the toolbar unless the user is interacting with it.
     const tryToHideToolbar = e => {
@@ -39,54 +37,38 @@ export const AddItem = forwardRef(({
         }
 
         // Don't close the toolbar if the user has pending edits to the item.
-        if (!isEqual(item, DEFAULT_ITEM)) {
+        if (!isEqual(item, defaultItem)) {
             return;
         }
 
-        setToolbarVisible(false);
+        onOpenChange(false);
     };
 
     // Whenever the user clicks outside of this component, try to minimize the toolbar.
     // Disabled these event listeners if the toolbar isn't visible.
-    useOnClickOutside(tryToHideToolbar, !toolbarVisible, containerRef);
-
-    // Callback invoked whenever the user makes changes to the item.
-    const onItemChange = changes => {
-        setItem({ ...item, ...changes });
-    };
-
-    // Callback invoked when the user submits the item.
-    const tryToAddItem = () => {
-        if (!nameValid || disabled) {
-            return;
-        }
-
-        onAddItem(item);
-        setItem(DEFAULT_ITEM);
-    };
+    useOnClickOutside(tryToHideToolbar, !open, containerRef);
 
     return (
         <div ref={containerRef}>
             {/* Input bar */}
             <div
                 className={cx(
-                    { 'rounded-b': !toolbarVisible },
+                    { 'rounded-b': !open },
                     'border rounded-t border-gray-300 shadow',
                     'transition-[border-radius] duration-300 overflow-hidden'
                 )}
             >
-                <AddItemInput
-                    ref={ref}
+                <AddItemToolbarInput
                     value={item.name}
                     onChange={name => onItemChange({ name })}
-                    onSubmit={tryToAddItem}
-                    onFocus={() => setToolbarVisible(true)}
+                    onSubmit={onAddItem}
+                    onFocus={() => onOpenChange(true)}
                 />
             </div>
             {/* Collapsible toolbar */}
             <div className="overflow-hidden -mb-3 pb-3 -mx-2 px-2">
                 <Transition
-                    in={toolbarVisible}
+                    in={open}
                     unmountOnExit
                     classNames={{
                         enter: '-translate-y-full opacity-0',
@@ -97,17 +79,16 @@ export const AddItem = forwardRef(({
                 >
                     {/* Wrap in div to prevent padding issue when animating */}
                     <div className="shadow rounded-b">
-                        <AddItemToolbar
+                        <AddItemToolbarCollapsibleBar
                             item={item}
                             onItemChange={onItemChange}
-                            canAddItem={nameValid}
-                            onAddItem={tryToAddItem}
+                            canAddItem={itemIsValid}
+                            onAddItem={onAddItem}
                         />
                     </div>
                 </Transition>
             </div>
-        </div >
-    )
-});
+        </div>
 
-export const defaultItem = { ...DEFAULT_ITEM };
+    );
+}

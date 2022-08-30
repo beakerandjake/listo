@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { isValid } from 'date-fns';
 import MediaQuery from 'react-responsive';
 import { mobileBreakpoint } from "components/ResponsiveLayout";
-import { AddItemDrawer } from './AddItemDrawer';
 import { itemValidationConstants } from 'routes/List/Item';
+import { AddItemDrawer } from './AddItemDrawer';
+import { AddItemToolbar } from './Toolbar';
 
 const DEFAULT_ITEM = {
     name: '',
@@ -79,7 +80,14 @@ export const AddItem = ({ onAddItem }) => {
         <>
             {/* Static Toolbar on Desktop. */}
             <MediaQuery minWidth={mobileBreakpoint}>
-                Desktop!
+                <AddItemToolbar
+                    open={drawerOpen}
+                    onOpenChange={setDrawerOpen}
+                    item={item}
+                    itemIsValid={itemIsValid}
+                    onItemChange={onItemChange}
+                    onAddItem={tryToAddItem}
+                />
             </MediaQuery>
             {/* Floating Action Button / Drawer on Mobile */}
             <MediaQuery maxWidth={mobileBreakpoint - 1}>
