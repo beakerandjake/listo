@@ -9,7 +9,8 @@ import { IconButton } from 'components/IconButton';
 
 export const ItemNameInput = ({
     value,
-    onChange
+    onChange,
+    onSubmit
 }) => {
 
     const onKeyDown = (e) => {
@@ -17,7 +18,7 @@ export const ItemNameInput = ({
             return;
         }
 
-        console.log('on submit');
+        onSubmit();
     };
 
     const inputIsBlank = value?.length <= 0;
@@ -46,6 +47,7 @@ export const ItemNameInput = ({
                 placeholder="Item N&zwnj;ame"
                 autoComplete="off"
                 maxLength={itemValidationConstants.maxNameLength}
+                enterKeyHint="done"
                 className={cx(
                     'min-h-[3.5rem] w-full',
                     'rounded border border-gray-300 placeholder-gray-400 [&:not(:focus)]:hover:bg-slate-100 pl-11 pr-10'

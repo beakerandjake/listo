@@ -73,6 +73,7 @@ export const AddItemMobile = ({
                     <ItemNameInput
                         value={item.name}
                         onChange={value => onItemChange({ name: value })}
+                        onSubmit={() => tryToAddItem()}
                     />
 
                     <EditItemQuantity
