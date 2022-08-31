@@ -1,37 +1,35 @@
-import cx from 'classnames';
 import { Badge } from 'components/Badge';
-
-
-const Tab = ({
-    active,
-    name,
-    count
-}) => {
-    return (
-        <div
-            className={cx(
-                active
-                    ? 'bg-green-700 text-white shadow-md'
-                    : 'text-gray-500 hover:text-gray-700',
-                'px-3 py-2 flex gap-2 cursor-pointer rounded-md',
-                'font-medium text-md'
-            )}
-        >
-            <span>{name}</span>
-            <Badge variant={active ? 'inverse' : 'default'} size="lg">{count}</Badge>
-        </div>
-    );
-}
+import { Pill, PillGroup } from 'components/PillGroup';
+import { useState } from 'react';
+import { PopIn, SwitchTransition } from 'components/Transition';
 
 
 export const ListTabGroup = ({ children }) => {
+    const [activePill, setActivePill] = useState('Active');
+    const [items, setItems] = useState([
+        { name: 'Active', count: 7 },
+        { name: 'Complete', count: 4 },
+    ]);
+
     return (
-        <div className="flex items-center justify-between">
-            <div className="flex flex-1 space-x-4">
-                <Tab name="Active" active count={7} />
-                <Tab name="Complete" count={4} />
-            </div>
-            {children}
-        </div>
+        <PillGroup>
+            {items.map(x => (
+                <div key={x.name}>
+                    <SwitchTransition switchKey={x.count} as={PopIn}>
+                        <div>
+                            <Pill key={x.name} active={x.name === activePill} onClick={() => setActivePill(x.name)}>
+                                {x.name}
+                                <Badge
+                                    size="lg"
+                                    variant={x.name === activePill ? 'inverse' : 'default'}
+                                >
+                                    {x.count}
+                                </Badge>
+                            </Pill>
+                        </div>
+                    </SwitchTransition>
+                </div>
+            ))}
+        </PillGroup>
     );
 };

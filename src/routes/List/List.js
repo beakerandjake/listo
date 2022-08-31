@@ -7,10 +7,10 @@ import { AddItem } from './AddItem';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ListActionsDropdown } from './ListActionsDropdown';
 import { ListItemEditDrawer } from './ListItemEditDrawer';
-import { ListItems } from './ListItems';
 import { ListPageHeader } from './ListPageHeader';
 import { ListSkeleton } from './ListSkeleton';
 import { ListSortingDropdown } from './ListSortingDropdown';
+import { ListContents } from './ListContents';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -178,7 +178,7 @@ export function List(props) {
     return (
         <>
             <div className="flex flex-col-reverse gap-2 mb-5">
-                <ListItems
+                <ListContents
                     items={sortedItems}
                     onItemSelected={setSelectedItemId}
                     onItemsChange={editItems}
