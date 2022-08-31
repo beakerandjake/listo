@@ -2,8 +2,8 @@ import classNames from "classnames";
 import { forwardRef } from "react";
 
 const sizes = {
-    lg: 'px-3 py-0.5 text-sm',
-    default: 'px-2.5 py-0.5 text-xs'
+    lg: 'px-3 py-0.5 text-sm font-medium',
+    default: 'px-2.5 py-0.5 text-xs font-medium'
 };
 
 const variants = {

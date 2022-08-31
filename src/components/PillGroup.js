@@ -9,11 +9,10 @@ import cx from 'classnames';
  */
 export const Pill = ({
     active,
+    onClick,
     className,
     children
 }) => {
-    // on click
-    // on enter key
     return (
         <div
             className={cx(
@@ -21,10 +20,12 @@ export const Pill = ({
                     ? 'bg-green-700 text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700',
                 'px-3 py-2 flex gap-2 rounded-md font-medium text-md',
-                'cursor-pointer select-none keyboard-only-focus-ring',
+                'cursor-pointer select-none keyboard-only-focus-ring flex-grow-0',
                 className
             )}
             tabIndex={0}
+            onClick={onClick}
+            onKeyDown={e => e.key === 'Enter' && onClick()}
         >
             {children}
         </div>
