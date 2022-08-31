@@ -1,55 +1,136 @@
-import { PillGroup } from "components/PillGroup";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPartyHorn, faCheckSquare, faCat } from "@fortawesome/pro-light-svg-icons";
+import { Badge } from "components/Badge";
+import { Pill, PillGroup } from "components/PillGroup";
+import { FadeAndPopIn } from "components/Transition";
 import { ListItems } from "./ListItems";
 
-/**
- * Returns all of the items marked as completed.
- * @param {array} items - The items to filter.
- */
-const filterCompletedItems = items => items?.filter(x => x.completed) || [];
+const EmptyGroupDisplay = ({
+    icon,
+    heading,
+    subHeading
+}) => {
+    return (
+        <FadeAndPopIn in={true} appear>
+            <div className="w-full py-20 flex flex-col justify-center items-center gap-2 select-none">
+                <FontAwesomeIcon icon={icon} size="4x" fixedWidth className="text-gray-400" />
+                <h1 className="text-2xl font-bold text-gray-500">{heading}</h1>
+                <h3 className="text-md font-semibold text-gray-400">{subHeading}</h3>
+            </div>
+        </FadeAndPopIn>
+    );
+}
 
 /**
- * Returns all of the items not marked as completed.
- * @param {array} items - The items to filter.
+ * Pill which represents a group of the list items.
+ * @param {Object} props
+ * @param {string} props.name - The name of the group.
+ * @param {number} props.count - How many items are in the group.
+ * @param {boolean} props.active - Is this group currently being displayed?
+ * @param {function} props.onClick - Callback invoked when the user clicks on the group.
  */
-const filterIncompleteItems = items => items?.filter(x => !x.completed) || [];
+const ListGroupPill = ({
+    name,
+    count,
+    active,
+    onClick
+}) => {
+    return (
+        <Pill active={active} onClick={onClick}>
+            {name}
+            <Badge size="lg" variant={active ? 'inverse' : 'default'}>
+                {count}
+            </Badge>
+        </Pill>
+    );
+};
+
+const ITEM_GROUPS = [
+    {
+        key: 'active',
+        displayName: 'Active',
+        filterFn: x => !x.completed,
+        emptyDisplay: {
+            icon: faPartyHorn,
+            heading: 'All Items Complete!',
+            subHeading: 'For now...'
+        }
+    },
+    {
+        key: 'complete',
+        displayName: 'Complete',
+        filterFn: x => !!x.completed,
+        emptyDisplay: {
+            icon: faCheckSquare,
+            heading: 'No Completed Items',
+            subHeading: 'Waiting on you...'
+        }
+    }
+];
 
 /**
- * Renders the items of a list. Divides items between completed and incomplete.
+ * Groups items based on the item group config
+ * @param {array} items - The items to filter.
+ */
+const groupItems = (items) => ITEM_GROUPS.map(({ filterFn, ...group }) => ({
+    ...group,
+    items: items.filter(x => filterFn(x))
+}));
+
+/**
+ * Renders the items of a list, groups items for easier filtering.
  * @param {Object} props
  * @param {array} props.items - All of the items in the list
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
  * @param {function} props.onItemsChange - Callback invoked when the user has made changes to one or more items.
- * @param {function} props.onDeleteItems - Callback invoked when the user wants to delete one or more items.
  */
 export const ListContents = ({
     items,
     onItemSelected,
-    onItemsChange,
-    onDeleteItems
+    onItemsChange
 }) => {
-    const [incompleteItems, setIncompleteItems] = useState(filterIncompleteItems(items));
-    const [completedItems, setCompletedItems] = useState(filterCompletedItems(items));
+    const [activeGroupIndex, setActiveGroupIndex] = useState(0);
+    const [itemGroups, setItemGroups] = useState(groupItems(items));
 
-    // Any time our items list changes, divide the items into completed / incomplete
+    // Any time our items list changes, group the items into their pill sections
     useEffect(() => {
-        const newIncomplete = filterIncompleteItems(items);
-        const newCompleted = filterCompletedItems(items);
-
-        setIncompleteItems(newIncomplete);
-        setCompletedItems(newCompleted);
-
-        // setFlipKey(generateFlipKey(newIncomplete, newCompleted));
+        setItemGroups(groupItems(items));
     }, [items]);
 
+    if (items.length <= 0) {
+        return (
+            <EmptyGroupDisplay
+                icon={faCat}
+                heading="List Is Empty!"
+                subHeading="Add some Items to get started."
+            />
+        )
+    }
+
+    const activeGroup = itemGroups[activeGroupIndex];
+
     return (
-        <>
+        <div className="flex flex-1 flex-col gap-3">
+            <PillGroup>
+                {itemGroups.map((group, index) => (
+                    <ListGroupPill
+                        key={group.key}
+                        active={activeGroupIndex === index}
+                        count={group.items.length}
+                        name={group.displayName}
+                        onClick={() => setActiveGroupIndex(index)}
+                    />
+                ))}
+            </PillGroup>
+
+            {activeGroup.items.length <= 0 && <EmptyGroupDisplay {...activeGroup.emptyDisplay} />}
 
             <ListItems
-                items={incompleteItems}
+                items={itemGroups[activeGroupIndex].items}
                 onItemSelected={onItemSelected}
                 onItemChange={(id, changes) => onItemsChange([{ id, changes }])}
             />
-        </>
+        </div>
     );
 };
