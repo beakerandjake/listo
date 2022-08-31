@@ -20,11 +20,11 @@ const lists = [
                 dueDate: new Date(2022, 8, 15).toISOString(),
                 note: 'one cool note!'
             },
-            { id: 7, name: 'Bananas', quantity: 1, completed: true, created: new Date(2022, 6, 15).toISOString() },
-            { id: 8, name: 'Apples', quantity: 4, completed: true, created: new Date(2022, 5, 22).toISOString() },
-            { id: 9, name: 'Oranges', quantity: 5, completed: false, created: new Date(2022, 6, 29).toISOString() },
-            { id: 10, name: 'Pears', quantity: 2, completed: false, created: new Date(2022, 6, 3).toISOString() },
-            { id: 11, name: 'Bread Flour', quantity: 3, completed: false, created: new Date(2022, 1, 11).toISOString() },
+            { id: 7, name: 'Grapes', quantity: 1, completed: true, created: new Date(2022, 6, 15).toISOString() },
+            { id: 8, name: 'Blueberries', quantity: 4, completed: true, created: new Date(2022, 5, 22).toISOString() },
+            { id: 9, name: 'Water', quantity: 5, completed: false, created: new Date(2022, 6, 29).toISOString() },
+            { id: 10, name: 'Limes', quantity: 2, completed: false, created: new Date(2022, 6, 3).toISOString() },
+            { id: 11, name: 'Lemons', quantity: 3, completed: false, created: new Date(2022, 1, 11).toISOString() },
         ]
     },
     {
