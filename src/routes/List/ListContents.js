@@ -130,13 +130,13 @@ export const ListContents = ({
                 ))}
             </PillGroup>
 
-            {activeGroup.items.length <= 0 && <EmptyGroupDisplay {...activeGroup.emptyDisplay} />}
-
             <ListItems
                 items={itemGroups[activeGroupIndex].items}
                 onItemSelected={onItemSelected}
                 onItemChange={(id, changes) => onItemsChange([{ id, changes }])}
             />
+
+            {activeGroup.items.length <= 0 && <EmptyGroupDisplay {...activeGroup.emptyDisplay} />}
         </div>
     );
 };
