@@ -6,6 +6,13 @@ import { Pill, PillGroup } from "components/PillGroup";
 import { FadeAndPopIn } from "components/Transition";
 import { ListItems } from "./ListItems";
 
+/**
+ * Used to indicate that a group is empty.
+ * @param {Object} props
+ * @param {IconDefinition} props.icon - The FontAwesome icon to render.
+ * @param {string} props.heading - The message to display.
+ * @param {string} props.subHeading - Additional message to display.
+ */
 const EmptyGroupDisplay = ({
     icon,
     heading,
@@ -53,8 +60,7 @@ const ITEM_GROUPS = [
         filterFn: x => !x.completed,
         emptyDisplay: {
             icon: faPartyHorn,
-            heading: 'All Items Complete!',
-            subHeading: 'For now...'
+            heading: 'All Items Complete!'
         }
     },
     {
@@ -63,8 +69,7 @@ const ITEM_GROUPS = [
         filterFn: x => !!x.completed,
         emptyDisplay: {
             icon: faCheckSquare,
-            heading: 'No Completed Items',
-            subHeading: 'Waiting on you...'
+            heading: 'No Items Completed'
         }
     }
 ];
@@ -98,6 +103,7 @@ export const ListContents = ({
         setItemGroups(groupItems(items));
     }, [items]);
 
+    // Render if list is completely empty.
     if (items.length <= 0) {
         return (
             <EmptyGroupDisplay
