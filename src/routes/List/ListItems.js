@@ -1,13 +1,35 @@
 import { Flipper, Flipped, spring } from "react-flip-toolkit"
 import { ListItem } from "./ListItem";
 
-// Callback invoked by react-flip-toolkit, lerps the opacity from 0 to 1 while a Flipped Element is appearing.
+// Callback invoked by react-flip-toolkit, transitions the opacity from 0 to 1 while a Flipped Element is appearing.
 const fadeFlippedElementIn = (el, index) => spring({
+    config:{
+        damping:126,
+        stiffness:3984
+    },
     onUpdate: val => {
         el.style.opacity = val;
     },
-    delay: index * 50
 });
+
+// Callback invoked by react-flip-toolkit, transitions the opacity from 1 to 0 while a Flipped Element is exiting.
+const fadeFlippedElementOut = (el, index, removeElement) => {
+    spring({
+        config:{
+            damping:126,
+            stiffness:3984
+        },
+        onUpdate: val => {
+            el.style.opacity = 1 - val;
+        },
+        onComplete: removeElement
+    });
+
+    return () => {
+        el.style.opacity = "";
+        removeElement();
+    }
+};
 
 /**
  * Renders the items of a list, applies transition effects whenever the order of the items change.
@@ -30,6 +52,7 @@ export const ListItems = ({
                         flipId={x.id}
                         spring="stiff"
                         onAppear={fadeFlippedElementIn}
+                        onExit={fadeFlippedElementOut}
                     >
                         <ListItem
                             item={x}
