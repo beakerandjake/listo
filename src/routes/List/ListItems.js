@@ -3,9 +3,9 @@ import { ListItem } from "./ListItem";
 
 // Callback invoked by react-flip-toolkit, transitions the opacity from 0 to 1 while a Flipped Element is appearing.
 const fadeFlippedElementIn = (el, index) => spring({
-    config:{
-        damping:126,
-        stiffness:3984
+    config: {
+        damping: 126,
+        stiffness: 3984
     },
     onUpdate: val => {
         el.style.opacity = val;
@@ -15,9 +15,9 @@ const fadeFlippedElementIn = (el, index) => spring({
 // Callback invoked by react-flip-toolkit, transitions the opacity from 1 to 0 while a Flipped Element is exiting.
 const fadeFlippedElementOut = (el, index, removeElement) => {
     spring({
-        config:{
-            damping:126,
-            stiffness:3984
+        config: {
+            damping: 126,
+            stiffness: 3984
         },
         onUpdate: val => {
             el.style.opacity = 1 - val;
@@ -54,11 +54,14 @@ export const ListItems = ({
                         onAppear={fadeFlippedElementIn}
                         onExit={fadeFlippedElementOut}
                     >
-                        <ListItem
-                            item={x}
-                            onClick={() => onItemSelected(x.id)}
-                            onItemChange={changes => onItemChange(x.id, changes)}
-                        />
+                        {/* Wrap in DIV so don't have to forward Flipped props to ListItem */}
+                        <div>
+                            <ListItem
+                                item={x}
+                                onClick={() => onItemSelected(x.id)}
+                                onItemChange={changes => onItemChange(x.id, changes)}
+                            />
+                        </div>
                     </Flipped>
                 ))}
             </div>

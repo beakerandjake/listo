@@ -6,7 +6,6 @@ import { Badge } from 'components/Badge';
 import { PopIn, SwitchTransition } from 'components/Transition';
 import { ItemCompletedCheckbox } from './Item/ItemCompletedCheckbox';
 import { ItemNameLabel } from './Item/ItemNameLabel';
-import { forwardRef } from 'react';
 
 /**
  * Used to compactly display the values of various item properties.
@@ -35,17 +34,17 @@ const ItemIndicator = ({
  * @param {function} props.onClick - Callback invoked when the user clicks the button.
  * @param {function} props.onItemChange - Callback invoked when the user makes a change to the item.
  */
-export const ListItem = forwardRef(({
+export const ListItem = ({
     item,
     onClick,
-    onItemChange,
-    ...props
-}, ref) => {
+    onItemChange
+}) => {
     return (
         <div
-            {...props}
-            ref={ref}
-            className="flex items-center py-2 px-3 bg-white hover:bg-slate-100 min-h-[50px] shadow rounded cursor-pointer select-none border-gray-300 border"
+            className={cx(
+                'flex items-center py-2 px-3 min-h-[50px] cursor-pointer select-none',
+                'bg-white hover:bg-slate-100 rounded border border-gray-300 shadow'
+            )}
             onClick={() => onClick(item.id)}
         >
             <ItemCompletedCheckbox
@@ -79,4 +78,4 @@ export const ListItem = forwardRef(({
             </span>
         </div>
     )
-});
+};
