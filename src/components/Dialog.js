@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-import { RemoveScroll } from 'react-remove-scroll';
 import { Dialog as HeadlessUiDialog } from '@headlessui/react'
 import { Transition } from './Transition';
 
@@ -71,11 +70,9 @@ export function Dialog({
  */
 export const DialogContent = forwardRef(({ children, ...props }, ref) => {
   return (
-    <RemoveScroll>
       <HeadlessUiDialog.Panel ref={ref} {...props}>
         {children}
       </HeadlessUiDialog.Panel>
-    </RemoveScroll>
   )
 });
 
