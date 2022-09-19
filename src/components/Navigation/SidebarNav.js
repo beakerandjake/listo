@@ -1,28 +1,48 @@
 import { SidebarNavItem } from "./SidebarNavItem";
 import { SidebarHeader } from './SidebarHeader';
+import { Badge } from "components/Badge";
 
-export function SidebarNav(props) {
-    const lists = props.items.map(item => (
-        <SidebarNavItem key={item.id} to={`/lists/${item.id}`} {...item} />
+/**
+ * SidebarNavItem which allows the user to navigate to a List.
+ * @param {Object} props
+ * @param {array} props.items - The navigation items to render.
+ */
+const ListSidebarNavItem = ({ id, name, iconName, count }) => {
+    return (
+        <SidebarNavItem
+            to={`/lists/${id}`}
+            text={name}
+            iconName={iconName}
+            children={({ isActive }) => (count > 1 && (
+                <Badge size="lg" variant={isActive ? 'success' : 'default'}>
+                    {count}
+                </Badge>
+            ))}
+        />
+    );
+};
+
+/**
+ * Contains SidebarNavItems and allows the user to navigate between pages and lists.
+ * @param {Object} props
+ * @param {array} props.items - The navigation items to render.
+ */
+export function SidebarNav({ lists }) {
+    const listNavItems = lists.map(list => (
+        <ListSidebarNavItem key={list.id} {...list} />
     ));
 
     return (
         <nav className="flex-1">
-            <div className="space-y-3">
-                <SidebarNavItem key="home" to="" name="Dashboard" iconName="house" />
-                <div className="space-y-1">
-                    <SidebarHeader name="Lists" />
-                    <div className="">
-                        {lists}
-                        <SidebarNavItem
-                            key="create"
-                            to="/lists/create"
-                            name="Create New List"
-                            iconName="plus"
-                        />
-                    </div>
-                </div>
-            </div>
+            <SidebarNavItem key="home" to="" text="Dashboard" iconName="house" />
+            <SidebarHeader name="Lists" />
+            {listNavItems}
+            <SidebarNavItem
+                key="create"
+                to="/lists/create"
+                text="Create New List"
+                iconName="plus"
+            />
         </nav>
     );
 }
