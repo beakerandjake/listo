@@ -32,25 +32,19 @@ const AddItemToolbarButton = forwardRef(({
     ...props
 }, ref) => {
     return (
-        <div ref={ref}>
-            <SwitchTransition
-                switchKey={text || ''}
-                as={FadeAndPopIn}
-            >
-                <button
-                    {...props}
-                    className={cx(
-                        'p-1 flex items-center justify-between gap-1 leading-0 keyboard-only-focus-ring',
-                        'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
-                        'rounded border shadow border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
-                        className
-                    )}
-                >
-                    <FontAwesomeIcon icon={icon} fixedWidth />
-                    {text && <span className="text-sm leading-none">{text}</span>}
-                </button>
-            </SwitchTransition>
-        </div>
+        <button
+            ref={ref}
+            {...props}
+            className={cx(
+                'p-1 flex items-center justify-between gap-1 leading-0 keyboard-only-focus-ring',
+                'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+                'rounded border shadow border-gray-300 bg-white enabled:hover:bg-gray-50 text-gray-700',
+                className
+            )}
+        >
+            <FontAwesomeIcon icon={icon} fixedWidth />
+            {text && <span className="text-sm leading-none">{text}</span>}
+        </button>
     )
 });
 
@@ -92,7 +86,7 @@ export function AddItemToolbarCollapsibleBar({
                     )}
                     desktopPlacement="bottom-start"
                 />
-            
+
                 <ItemQuantityMenu
                     className={TOOLBAR_MENU_CLASS}
                     quantity={item.quantity}
