@@ -1,7 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck } from '@fortawesome/pro-solid-svg-icons';
 
-export function Logo(props) {
+
+/**
+ * Displays the listo logo.
+ */
+export function Logo() {
     return (
         <div className="select-none focus:outline-none flex-shrink-0 font-medium text-4xl md:text-4xl text-gray-600 whitespace-nowrap">
             listo

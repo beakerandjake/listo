@@ -3,7 +3,12 @@ import cx from 'classnames';
 import { Button } from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// Styled button which just displays an icon with small amount of padding.
+/**
+ * Styled button which just displays an icon with small amount of padding.
+ * @param {Object} props - The props.
+ * @param {string}  props.className - Additional styles to be applied to the dropdown.
+ * @param {IconDefinition} props.icon - The FontAwesome Icon to display.
+ */
 export const IconButton = forwardRef(({ className, icon, ...props }, ref) => {
 
     return (
