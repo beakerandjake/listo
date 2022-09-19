@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import cx from 'classnames';
 import { Button } from 'components/Button';
 import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/pro-solid-svg-icons";
-import { FadeAndPopIn, SwitchTransition } from "components/Transition";
 import { ItemDueDateMenu } from "routes/List/Item";
 import { ItemQuantityMenu } from "routes/List/Item";
 import { formatDueDate } from "services/dueDateHelpers";

@@ -1,10 +1,14 @@
-import { faChevronDown, faPlus } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faPlus } from "@fortawesome/pro-solid-svg-icons";
 import cx from 'classnames';
 import { Button } from "components/Button";
 import { Drawer } from "components/Drawer";
-import { MenuFooter, MenuHeader, MenuTitle, ScrollableMenuContent, StatefulMenu } from "components/Menu";
-import { formatItem, itemCanBeAdded } from "./index.js";
+import {
+    MenuFooter,
+    MenuHeader,
+    MenuTitle,
+    ScrollableMenuContent
+} from "components/Menu";
 import {
     ItemDueDateMenu,
     ItemNameInput,
