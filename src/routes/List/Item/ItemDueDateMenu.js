@@ -9,8 +9,8 @@ import {
     faCalendarPlus,
     faCalendarWeek,
     faChevronRight,
-    faTrashAlt
-} from "@fortawesome/pro-solid-svg-icons";
+    faTrashCan
+} from "@fortawesome/pro-regular-svg-icons";
 import { formatDueDate, isOverdue } from "services/dueDateHelpers";
 import { Calendar } from "components/Calendar";
 import { closeReasons } from "components/Menu/ResponsiveMenu";
@@ -31,7 +31,7 @@ import {
  * @param {number} props.quantity - The quantity.
  * @param {function} props.onClear - Callback invoked when the user clicks the clear button. 
  */
-const DefaultTrigger = forwardRef(({
+const DefaultMenuTrigger = forwardRef(({
     dueDate,
     onClear,
     ...props
@@ -138,7 +138,7 @@ export function ItemDueDateMenu({
 
     // if custom trigger is not provided, use default trigger.
     const chosenTrigger = trigger || (
-        <DefaultTrigger dueDate={dueDate} onClear={() => onChange(null)} />
+        <DefaultMenuTrigger dueDate={dueDate} onClear={() => onChange(null)} />
     );
 
     return (
@@ -202,7 +202,7 @@ export function ItemDueDateMenu({
                 <span className={!!dueDate && !!open ? 'visible' : 'hidden'}>
                     <MenuSeparator />
                     <MenuItem
-                        icon={faTrashAlt}
+                        icon={faTrashCan}
                         label="Remove Due Date"
                         variant="danger"
                         onClick={() => setDueDateAndCloseMenu(null)}

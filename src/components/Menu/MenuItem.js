@@ -15,7 +15,7 @@ const VARIANT_STYLES = {
     }
 };
 
-const RESPONSIVE_TEXT_STYLES = 'text-xl sm:text-lg md:text-md lg:text-sm';
+const RESPONSIVE_TEXT_STYLES = 'text-xl sm:text-lg md:text-base';
 
 const MenuItemIcon = ({ icon, variant }) => {
     if (!icon) {
@@ -27,7 +27,7 @@ const MenuItemIcon = ({ icon, variant }) => {
     return (
         <FontAwesomeIcon
             icon={icon}
-            className={cx(variantStyle, RESPONSIVE_TEXT_STYLES)}
+            className={cx(variantStyle, RESPONSIVE_TEXT_STYLES, 'text-base')}
             fixedWidth
         />
     )
