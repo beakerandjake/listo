@@ -81,8 +81,6 @@ export const AddItem = ({ onAddItem }) => {
             {/* Static Toolbar on Desktop. */}
             <MediaQuery minWidth={mobileBreakpoint} >
                 <AddItemToolbar
-                    open={drawerOpen}
-                    onOpenChange={setDrawerOpen}
                     item={item}
                     itemIsValid={itemIsValid}
                     onItemChange={onItemChange}
