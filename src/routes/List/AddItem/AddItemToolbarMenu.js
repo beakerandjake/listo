@@ -106,7 +106,7 @@ export function AddItemToolbarMenu({
                             )}
                         >
                             <MenuHeader className="flex items-center justify-center">
-                                <MenuTitle>Item Note</MenuTitle>
+                                <MenuTitle>Add Note</MenuTitle>
                             </MenuHeader>
                             <ScrollableMenuContent className="flex flex-col items-center justify-center">
                                 <div className="p-1">
