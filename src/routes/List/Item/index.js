@@ -5,6 +5,7 @@ import { ItemNameInput } from './ItemNameInput'
 import { ItemNameLabel } from './ItemNameLabel';
 import { ItemNoteInput } from './ItemNoteInput';
 import { ItemQuantityMenu } from './ItemQuantityMenu';
+import { ListItem } from './ListItem';
 
 export {
     ItemCompletedCheckbox,
@@ -14,6 +15,7 @@ export {
     ItemNameLabel,
     ItemNoteInput,
     ItemQuantityMenu,
+    ListItem
 };
 
 // Constants which help determine if an items fields are valid.
