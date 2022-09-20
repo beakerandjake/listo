@@ -4,7 +4,7 @@ import MediaQuery from 'react-responsive';
 import { mobileBreakpoint } from "components/ResponsiveLayout";
 import { itemValidationConstants } from 'routes/List/Item';
 import { AddItemDrawer } from './AddItemDrawer';
-import { AddItemToolbar } from './Toolbar';
+import { AddItemToolbar } from './AddItemToolbar';
 
 const DEFAULT_ITEM = {
     name: '',

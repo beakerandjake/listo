@@ -3,7 +3,7 @@ import isEqual from 'lodash.isequal';
 import { Transition } from 'components/Transition';
 import { useOnClickOutside } from 'hooks/useOnClickOutside';
 import { useRef } from 'react';
-import { defaultItem } from '../AddItem';
+import { defaultItem } from './AddItem';
 import { AddItemToolbarCollapsibleBar, elementIsPartOfToolbar } from './AddItemToolbarCollapsibleBar';
 import { AddItemToolbarInput } from './AddItemToolbarInput'
 
