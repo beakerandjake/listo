@@ -11,7 +11,7 @@ import { mergeRefs } from 'react-merge-refs';
 import cx from 'classnames';
 import FocusLock from 'react-focus-lock';
 import { useKeyDown } from 'hooks/useKeyDown';
-import { Fade, PopIn, Transition } from 'components/Transition';
+import { Transition } from 'components/Transition';
 
 /**
  * Invisible overlay which prevents interaction with anything behind it. 
@@ -56,7 +56,7 @@ export const Dropdown = forwardRef(({
     className,
     children,
 }, forwardedRef) => {
-    const { x, y, reference, floating, strategy, refs, } = useFloating({
+    const { x, y, reference, floating, strategy } = useFloating({
         middleware: [offsetMiddleware(offset), flip(), shift()],
         whileElementsMounted: autoUpdate,
         placement: placement,
