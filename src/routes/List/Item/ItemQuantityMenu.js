@@ -1,5 +1,6 @@
-import { cloneElement, forwardRef, useEffect, useState } from "react";
+import { cloneElement, forwardRef, useCallback, useEffect, useState } from "react";
 import { faMinus, faPlus, faPlusMinus } from "@fortawesome/pro-solid-svg-icons";
+import debounce from 'lodash.debounce';
 import cx from 'classnames';
 import { useLongPress } from "hooks/useLongPress";
 import { IconButton } from "components/IconButton";
@@ -217,6 +218,17 @@ export const ItemQuantityMenu = ({
     trigger,
     ...props
 }) => {
+    // use an internal quantity that reacts to changes instantly
+    // but debounce the public onChange event so updates don't fire
+    // during long presses of the quantity buttons.
+    const [internalQuantity, setInternalQuantity] = useState(quantity);
+    const debouncedOnChange = useCallback(debounce(onChange, 250), []);
+
+    // whenever quantity prop changes, reset internal quantity.
+    useEffect(() => {
+        debouncedOnChange.cancel();
+        setInternalQuantity(quantity);
+    }, [quantity]);
 
     // if custom trigger is not provided, use default trigger.
     const chosenTrigger = trigger || (
@@ -237,7 +249,13 @@ export const ItemQuantityMenu = ({
                     </MenuHeader>
                     <ScrollableMenuContent className="flex flex-col items-center justify-center">
                         <div className="flex w-full items-stretch justify-between min-h-[8rem] md:min-h-[3rem]">
-                            <QuantitySelector quantity={quantity} onQuantityChange={onChange} />
+                            <QuantitySelector
+                                quantity={internalQuantity}
+                                onQuantityChange={(value) => {
+                                    debouncedOnChange(value);
+                                    setInternalQuantity(value);
+                                }}
+                            />
                         </div>
                         <MenuSeparator />
                         <MenuItem
