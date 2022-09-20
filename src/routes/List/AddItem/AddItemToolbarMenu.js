@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import cx from 'classnames';
-import { Button } from 'components/Button';
+import { faComment } from "@fortawesome/pro-regular-svg-icons";
 import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/pro-regular-svg-icons";
-import { ItemDueDateMenu } from "routes/List/Item";
-import { ItemQuantityMenu } from "routes/List/Item";
+import cx from 'classnames';
 import { formatDueDate } from "services/dueDateHelpers";
+import { Button } from 'components/Button';
+import { ItemDueDateMenu, ItemQuantityMenu } from "routes/List/Item";
 
 /**
  * Button styled for the Add Item Toolbar.
@@ -81,6 +81,21 @@ export function AddItemToolbarMenu({
                     trigger={(
                         <AddItemToolbarButton
                             icon={faPlusMinus}
+                            title="Change Quantity"
+                            text={item.quantity > 1 && `Qty: ${item.quantity}`}
+                            className={cx({ 'text-indigo-700': item.quantity > 1 })}
+                        />
+                    )}
+                    desktopPlacement='bottom-start'
+                />
+
+                <ItemQuantityMenu
+                    quantity={item.quantity}
+                    onChange={quantity => onItemChange({ quantity })}
+                    onReset={quantity => onItemChange({ quantity })}
+                    trigger={(
+                        <AddItemToolbarButton
+                            icon={faComment}
                             title="Change Quantity"
                             text={item.quantity > 1 && `Qty: ${item.quantity}`}
                             className={cx({ 'text-indigo-700': item.quantity > 1 })}
