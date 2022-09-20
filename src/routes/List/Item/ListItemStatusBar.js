@@ -16,13 +16,12 @@ const StatusField = ({
     className
 }) => {
     return (
-        <div className={cx("flex items-center gap-1 text-gray-500", className)}>
-            <FontAwesomeIcon icon={icon} size="sm"/>
-            <span className="text-xs font-medium">{text}</span>
+        <div className={className || "text-gray-500"}>
+            <FontAwesomeIcon icon={icon} size="sm" />
+            <span className="text-xs font-medium pl-1">{text}</span>
         </div>
     )
 };
-
 
 /**
  * Displays various fields of the item if they are present.
@@ -40,7 +39,7 @@ export const ListItemStatusBar = ({
     }
 
     return (
-        <span className="flex items-center gap-2 w-full">
+        <div className="flex items-center gap-2">
             {/* Has Due Date Status Field */}
             {dueDate && (
                 <StatusField
@@ -55,7 +54,7 @@ export const ListItemStatusBar = ({
             {/* Status Separator */}
             <span className="last:hidden first:hidden text-gray-400 text-xs font-medium">{"\u2022"}</span>
             {/* Has Note Status Field */}
-            {note && <StatusField icon={faComment} text="Note"/>}
-        </span>
+            {note && <StatusField icon={faComment} text="Note" />}
+        </div>
     );
 };

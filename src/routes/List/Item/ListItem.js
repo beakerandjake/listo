@@ -28,13 +28,13 @@ export const ListItem = ({
                 checked={item.completed}
                 onChange={completed => onItemChange({ completed })}
             />
-            <span className={cx({ 'opacity-50': item.completed }, 'pl-3 w-full flex flex-col gap-1 items-start')}>
-                <span className="w-full flex items-center gap-2">
+            <div className={cx({ 'opacity-50': item.completed }, 'pl-3 flex flex-col')}>
+                <div className="w-full flex items-center gap-2">
                     <ItemNameLabel completed={item.completed} name={item.name} className="text-sm md:text-base" />
                     {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
-                </span>
+                </div>
                 <ListItemStatusBar {...item} />
-            </span>
+            </div>
         </div>
     )
 };
