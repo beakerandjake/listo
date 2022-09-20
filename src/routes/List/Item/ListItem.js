@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import { Badge } from 'components/Badge';
-import { PopIn, SwitchTransition } from 'components/Transition';
 import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
 import { ItemNameLabel } from './ItemNameLabel';
 import { ListItemStatusBar } from './ListItemStatusBar';
@@ -32,9 +31,7 @@ export const ListItem = ({
             <span className={cx({ 'opacity-50': item.completed }, 'pl-3 w-full flex flex-col gap-1 items-start')}>
                 <span className="w-full flex items-center gap-2">
                     <ItemNameLabel completed={item.completed} name={item.name} className="text-sm md:text-base" />
-                    <SwitchTransition switchKey={item.quantity} as={PopIn}>
-                        {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
-                    </SwitchTransition>
+                    {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
                 </span>
                 <ListItemStatusBar {...item} />
             </span>
