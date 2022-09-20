@@ -23,32 +23,6 @@ const StatusField = ({
     )
 };
 
-/**
- * StatusField which displays the Items due date (if any).
- * @param {Object} props
- * @param {Date} props.dueDate - The Items due date.
- * @param {boolean} props.completed - Has the item been completed?
- */
-const DueDateStatusField = ({
-    dueDate,
-    completed
-}) => {
-    if (!dueDate) {
-        return null;
-    }
-
-    return (
-        <StatusField
-            icon={faCalendarCheck}
-            text={formatDueDate(dueDate)}
-            className={cx({
-                'text-indigo-700': !completed && isDueToday(dueDate),
-                'text-red-800': !completed && isOverdue(dueDate)
-            })}
-        />
-    );
-}
-
 
 /**
  * Displays various fields of the item if they are present.
@@ -68,11 +42,20 @@ export const ListItemStatusBar = ({
     return (
         <span className="flex items-center gap-2 w-full">
             {/* Has Due Date Status Field */}
-            <DueDateStatusField completed={completed} dueDate={dueDate} />
+            {dueDate && (
+                <StatusField
+                    icon={faCalendarCheck}
+                    text={formatDueDate(dueDate)}
+                    className={cx({
+                        'text-indigo-700': !completed && isDueToday(dueDate),
+                        'text-red-800': !completed && isOverdue(dueDate)
+                    })}
+                />
+            )}
             {/* Status Separator */}
             <span className="last:hidden first:hidden text-gray-400 text-xs font-medium">{"\u2022"}</span>
             {/* Has Note Status Field */}
-            {note && <StatusField icon={faNoteSticky} text="Note" />}
+            {note && <StatusField icon={faNoteSticky} text="Note"/>}
         </span>
     );
 };
