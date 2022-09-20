@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck, faNoteSticky } from "@fortawesome/pro-light-svg-icons";
+import { faCalendarCheck, faComment } from "@fortawesome/pro-regular-svg-icons";
 import cx from 'classnames';
 import { formatDueDate, isDueToday, isOverdue } from "services/dueDateHelpers";
 
@@ -16,9 +16,9 @@ const StatusField = ({
     className
 }) => {
     return (
-        <div className={cx("flex items-center gap-1 text-gray-500 text-xs font-medium", className)}>
-            <FontAwesomeIcon icon={icon} />
-            <span>{text}</span>
+        <div className={cx("flex items-center gap-1 text-gray-500", className)}>
+            <FontAwesomeIcon icon={icon} size="sm"/>
+            <span className="text-xs font-medium">{text}</span>
         </div>
     )
 };
@@ -55,7 +55,7 @@ export const ListItemStatusBar = ({
             {/* Status Separator */}
             <span className="last:hidden first:hidden text-gray-400 text-xs font-medium">{"\u2022"}</span>
             {/* Has Note Status Field */}
-            {note && <StatusField icon={faNoteSticky} text="Note"/>}
+            {note && <StatusField icon={faComment} text="Note"/>}
         </span>
     );
 };
