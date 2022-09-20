@@ -5,7 +5,8 @@ import { faCalendarCheck, faCalendarPlus, faPlusMinus } from "@fortawesome/pro-r
 import cx from 'classnames';
 import { formatDueDate } from "services/dueDateHelpers";
 import { Button } from 'components/Button';
-import { ItemDueDateMenu, ItemQuantityMenu } from "routes/List/Item";
+import { ItemDueDateMenu, ItemNoteInput, ItemQuantityMenu } from "routes/List/Item";
+import { MenuHeader, MenuItem, MenuSeparator, MenuTitle, ResponsiveMenu, ScrollableMenuContent, StatefulMenu } from "components/Menu";
 
 /**
  * Button styled for the Add Item Toolbar.
@@ -73,7 +74,6 @@ export function AddItemToolbarMenu({
                     )}
                     desktopPlacement="bottom-start"
                 />
-
                 <ItemQuantityMenu
                     quantity={item.quantity}
                     onChange={quantity => onItemChange({ quantity })}
@@ -88,21 +88,48 @@ export function AddItemToolbarMenu({
                     )}
                     desktopPlacement='bottom-start'
                 />
-
-                <ItemQuantityMenu
-                    quantity={item.quantity}
-                    onChange={quantity => onItemChange({ quantity })}
-                    onReset={quantity => onItemChange({ quantity })}
-                    trigger={(
-                        <AddItemToolbarButton
-                            icon={faComment}
-                            title="Change Quantity"
-                            text={item.quantity > 1 && `Qty: ${item.quantity}`}
-                            className={cx({ 'text-indigo-700': item.quantity > 1 })}
-                        />
+                
+                {/* Item Note Menu */}
+                <StatefulMenu>
+                    {({ open, setOpen }) => (
+                        <ResponsiveMenu
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            desktopPlacement="bottom-start"
+                            trigger={(
+                                <AddItemToolbarButton
+                                    icon={faComment}
+                                    title="Add Note"
+                                    className={cx({ 'text-indigo-700': !!item.note })}
+                                    onClick={() => setOpen(!open)}
+                                />
+                            )}
+                        >
+                            <MenuHeader className="flex items-center justify-center">
+                                <MenuTitle>Item Note</MenuTitle>
+                            </MenuHeader>
+                            <ScrollableMenuContent className="flex flex-col items-center justify-center">
+                                <div className="p-1">
+                                    <ItemNoteInput
+                                        value={item.note}
+                                        onChange={value => onItemChange({ note: value })}
+                                    />
+                                </div>
+                                <MenuSeparator />
+                                <MenuItem
+                                    label="Clear"
+                                    variant="danger"
+                                    disabled={!item.note}
+                                    onClick={() => {
+                                        setOpen(false);
+                                        onItemChange({ note: '' });
+                                    }}
+                                    className="text-center"
+                                />
+                            </ScrollableMenuContent>
+                        </ResponsiveMenu>
                     )}
-                    desktopPlacement='bottom-start'
-                />
+                </StatefulMenu>
             </div>
 
             {/* Add item button */}
