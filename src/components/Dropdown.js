@@ -11,7 +11,7 @@ import { mergeRefs } from 'react-merge-refs';
 import cx from 'classnames';
 import FocusLock from 'react-focus-lock';
 import { useKeyDown } from 'hooks/useKeyDown';
-import { Fade, PopIn } from 'components/Transition';
+import { Fade, PopIn, Transition } from 'components/Transition';
 
 /**
  * Invisible overlay which prevents interaction with anything behind it. 
@@ -77,31 +77,37 @@ export const Dropdown = forwardRef(({
 
             {/* Dropdown Content */}
             {createPortal((
-                <Fade in={open} unmountOnExit>
+                <Transition
+                    in={open}
+                    unmountOnExit
+                    classNames={{
+                        enter: 'opacity-0 scale-95',
+                        enterActive: 'transition-[transform,opacity] duration-75 ease-out !opacity-100 !scale-100',
+                        exit: 'opacity-100',
+                        exitActive: 'transition-opacity duration-75 !opacity-0'
+                    }}
+                >
                     {/* Floating parent container */}
                     <div
                         ref={mergeRefs([floating, forwardedRef])}
                         style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}
                         className="top-0 left-0"
                     >
-                        {/* Transforming scale causes issues with floating container, so apply the scale transform inside of it. */}
-                        <PopIn in={open} appear>
-                            {/* Styled Dropdown Container */}
-                            <div
-                                className={cx(
-                                    'min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
-                                    'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
-                                    className
-                                )}
-                            >
-                                {/* Dropdown Content */}
-                                <FocusLock autoFocus={false}>
-                                    {children}
-                                </FocusLock>
-                            </div>
-                        </PopIn>
+                        {/* Styled Dropdown Container */}
+                        <div
+                            className={cx(
+                                'min-w-[14rem] rounded-md shadow-lg shadow-black/40 flex flex-col overflow-hidden',
+                                'bg-white ring-1 ring-offset-1 ring-gray-300 focus:outline-none',
+                                className
+                            )}
+                        >
+                            {/* Dropdown Content */}
+                            <FocusLock autoFocus={false}>
+                                {children}
+                            </FocusLock>
+                        </div>
                     </div>
-                </Fade>
+                </Transition>
             ), document.body)}
         </>
     )
