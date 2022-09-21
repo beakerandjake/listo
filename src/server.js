@@ -5,10 +5,6 @@ import cors from 'cors';
 import routes from './routes/index.js';
 import persistence from './persistence/index.js';
 
-// TODO
-// check await vs return vs return await
-// publish docker image.
-
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -17,21 +13,22 @@ const app = express();
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.options('*', cors());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // register routing
 app.use('/api', routes);
-
-// register error handling
 app.use((req, res) => res.sendStatus(404));
+
+// log errors in development
 if (process.env.NODE_ENV !== 'production') {
   app.use((err, req, res, next) => {
     console.error(err);
     next(err);
   });
 }
+
+// default error handler, just return 500.
 app.use((err, req, res, next) => res.sendStatus(500));
 
 // ensure database is initialized before starting API.

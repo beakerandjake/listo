@@ -105,3 +105,6 @@ dist
 
 # vscode
 .vscode
+
+# ignore local development
+items.db
