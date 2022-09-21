@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import { Badge } from 'components/Badge';
-import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
-import { ItemNameLabel } from './ItemNameLabel';
+import { ItemCompletedCheckbox } from './Item/ItemCompletedCheckbox';
+import { ItemNameLabel } from './Item/ItemNameLabel';
 import { ListItemStatusBar } from './ListItemStatusBar';
 
 /**
