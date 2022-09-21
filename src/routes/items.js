@@ -1,7 +1,13 @@
 import express from 'express';
 import { body, validationResult } from 'express-validator';
 import asyncErrorHandler from 'express-async-handler';
-import persistence from '../persistence/index.js';
+import {
+  getItems,
+  addItem,
+  clearItems,
+  editItemQuantity,
+  removeItem,
+} from '../persistence/sqlite.js';
 
 const router = express.Router();
 
@@ -27,13 +33,13 @@ function validateRequest(validations) {
 
 // Get all items.
 router.get('/', asyncErrorHandler(async (req, res) => {
-  const items = await persistence.getItems();
+  const items = await getItems();
   res.send(items);
 }));
 
 // Delete All Items
 router.delete('/', asyncErrorHandler(async (req, res) => {
-  await persistence.clearItems();
+  await clearItems();
   res.sendStatus(200);
 }));
 
@@ -50,14 +56,14 @@ router.post(
   ]),
   asyncErrorHandler(async (req, res) => {
     const { name } = req.body;
-    const id = await persistence.addItem(name);
+    const id = await addItem(name);
     res.status(200).send({ id, name, quantity: 1 });
   }),
 );
 
 // Delete Item
 router.delete('/:itemId', asyncErrorHandler(async (req, res) => {
-  const deleted = await persistence.removeItem(req.params.itemId);
+  const deleted = await removeItem(req.params.itemId);
   res.sendStatus(deleted ? 200 : 404);
 }));
 
@@ -76,8 +82,8 @@ router.patch(
     const { quantity } = req.body;
 
     const itemFound = quantity < 1
-      ? await persistence.removeItem(itemId)
-      : await persistence.editItemQuantity(itemId, quantity);
+      ? await removeItem(itemId)
+      : await editItemQuantity(itemId, quantity);
 
     res.sendStatus(itemFound ? 200 : 404);
   }),
