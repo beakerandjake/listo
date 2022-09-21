@@ -199,10 +199,7 @@ export function List(props) {
                         <ActionsDropdown
                             items={sortedItems}
                             onSetItemsCompleted={setItemsCompleted}
-                            onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                                title: 'Delete All Items?',
-                                message: 'All Items in this list will be permanently deleted.'
-                            })}
+                            onDeleteItems={confirmDeleteItems}
                         />
                     </div>
                     {/* Only render dropdown if items exist. */}

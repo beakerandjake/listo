@@ -6,11 +6,13 @@ const VARIANT_STYLES = {
     icon: {
         danger: 'text-red-600 group-hover:text-red-700',
         success: 'text-green-700 group-hover:text-green-800',
-        default: 'text-gray-400 group-hover:text-gray-500'
+        default: 'text-gray-400 group-hover:text-gray-500',
+        warning: 'text-yellow-700 group-hover:text-yellow-800',
     },
     label: {
         danger: 'text-red-600',
         success: 'text-green-700',
+        warning: 'text-yellow-700',
         default: 'text-gray-700'
     }
 };

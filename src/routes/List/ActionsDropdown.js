@@ -1,5 +1,4 @@
-import { faCheck, faGear } from "@fortawesome/pro-solid-svg-icons";
-import { faTrashCan } from "@fortawesome/pro-regular-svg-icons";
+import { faCheck, faGear, faRotateLeft, faTrashCheck, faTriangleExclamation } from "@fortawesome/pro-regular-svg-icons";
 import {
     EllipsisMenuTrigger,
     MenuHeader,
@@ -43,7 +42,7 @@ export function ActionsDropdown({
                             <>
                                 <MenuItem
                                     icon={faCheck}
-                                    label="Mark Items Complete"
+                                    label="Mark All Items Complete"
                                     disabled={items.every(x => x.completed)}
                                     onClick={() => {
                                         setOpen(false);
@@ -53,13 +52,47 @@ export function ActionsDropdown({
                                     }}
                                 />
                                 <MenuItem
-                                    icon={faTrashCan}
+                                    icon={faRotateLeft}
+                                    label="Mark All Items Active"
+                                    disabled={items.every(x => !x.completed)}
+                                    onClick={() => {
+                                        setOpen(false);
+                                        onSetItemsCompleted(
+                                            items.filter(x => x.completed).map(x => x.id), false
+                                        );
+                                    }}
+                                />
+                                <MenuSeparator />
+                                <MenuItem
+                                    icon={faTrashCheck}
+                                    variant="warning"
+                                    label="Delete Complete Items"
+                                    disabled={items.every(x => !x.completed)}
+                                    onClick={() => {
+                                        setOpen(false);
+                                        onDeleteItems(
+                                            items.filter(x => x.completed).map(x => x.id),
+                                            {
+                                                title: 'Delete Completed Items?',
+                                                message: 'All Completed Items in this list will be permanently deleted.'
+                                            }
+                                        );
+                                    }}
+                                />
+                                <MenuItem
+                                    icon={faTriangleExclamation}
                                     variant="danger"
                                     label="Delete All Items"
                                     disabled={items.length < 1}
                                     onClick={() => {
                                         setOpen(false);
-                                        onDeleteItems(items.map(x => x.id));
+                                        onDeleteItems(
+                                            items.map(x => x.id),
+                                            {
+                                                title: 'Delete All Items?',
+                                                message: 'All Items in this list will be permanently deleted.'
+                                            }
+                                        );
                                     }}
                                 />
                                 <MenuSeparator />
