@@ -78,7 +78,7 @@ export function SortItemsDropdown({
                             <SwitchTransition switchKey={activeSortingField?.label || ''} as={FadeAndPopIn}>
                                 <Button
                                     border="none"
-                                    className="bg-inherit shadow-none enabled:hover:bg-white"
+                                    className="bg-inherit shadow-none enabled:hover:bg-white px-1"
                                     onClick={() => setOpen(true)}
                                 >
                                     <FontAwesomeIcon icon={faSort} />

@@ -7,10 +7,11 @@ import { AddItem } from './AddItem';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ActionsDropdown } from './ActionsDropdown';
 import { EditItemDrawer } from './EditItemDrawer';
-import { HeaderSection } from './HeaderSection';
 import { LoadingSkeleton } from './LoadingSkeleton';
 import { SortItemsDropdown } from './SortItemsDropdown';
 import { GroupedItemsDisplay } from './GroupedItemsDisplay';
+import { Title } from './Title';
+import { getIcon } from 'services/iconLibrary';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -190,23 +191,23 @@ export function List(props) {
                 />
 
                 <AddItem onAddItem={onAddItem} />
-
-                <HeaderSection iconName={list.iconName} name={list.name}>
-                    <ActionsDropdown
-                        items={sortedItems}
-                        onSetItemsCompleted={setItemsCompleted}
-                        onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
-                            title: 'Delete All Items?',
-                            message: 'All Items in this list will be permanently deleted.'
-                        })}
-                    />
+                    
+                {/* Header Section */}
+                <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
+                    <div className="flex items-center gap-3">
+                        <Title icon={getIcon(list.iconName)} name={list.name} />
+                        <ActionsDropdown
+                            items={sortedItems}
+                            onSetItemsCompleted={setItemsCompleted}
+                            onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
+                                title: 'Delete All Items?',
+                                message: 'All Items in this list will be permanently deleted.'
+                            })}
+                        />
+                    </div>
                     {/* Only render dropdown if items exist. */}
-                    {sortedItems.length > 0 && (
-                        <div className="self-end">
-                            <SortItemsDropdown activeSort={activeSort} onChange={setActiveSort} />
-                        </div>
-                    )}
-                </HeaderSection>
+                    {sortedItems.length > 0 && <SortItemsDropdown activeSort={activeSort} onChange={setActiveSort} />}
+                </div>
             </div>
 
             <EditItemDrawer
