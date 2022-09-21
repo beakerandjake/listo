@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
  * @param {function} props.onSetItemsCompleted - Callback invoked when the user wants to mark all items of the list as completed.
  * @param {function} props.onDeleteItems - Callback invoked when the user wants to delete all of the items in the list.
  */
-export function ListActionsDropdown({
+export function ActionsDropdown({
     items,
     onSetItemsCompleted,
     onDeleteItems

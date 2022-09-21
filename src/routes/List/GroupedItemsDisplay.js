@@ -1,33 +1,9 @@
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPartyHorn, faCheckSquare, faCat } from "@fortawesome/pro-light-svg-icons";
 import { Badge } from "components/Badge";
 import { Pill, PillGroup } from "components/PillGroup";
-import { FadeAndPopIn } from "components/Transition";
-import { ListItems } from "./ListItems";
-
-/**
- * Used to indicate that a group is empty.
- * @param {Object} props
- * @param {IconDefinition} props.icon - The FontAwesome icon to render.
- * @param {string} props.heading - The message to display.
- * @param {string} props.subHeading - Additional message to display.
- */
-const EmptyGroupDisplay = ({
-    icon,
-    heading,
-    subHeading
-}) => {
-    return (
-        <FadeAndPopIn in={true} appear>
-            <div className="w-full py-20 flex flex-col justify-center items-center gap-2 select-none">
-                <FontAwesomeIcon icon={icon} size="4x" fixedWidth className="text-gray-400" />
-                <h1 className="text-2xl font-bold text-gray-500">{heading}</h1>
-                <h3 className="text-md font-semibold text-gray-400">{subHeading}</h3>
-            </div>
-        </FadeAndPopIn>
-    );
-}
+import { Items } from "./Items";
+import { NoItemsDisplay } from "./NoItemsDisplay";
 
 /**
  * Pill which represents a group of the list items.
@@ -90,7 +66,7 @@ const groupItems = (items) => ITEM_GROUPS.map(({ filterFn, ...group }) => ({
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
  * @param {function} props.onItemsChange - Callback invoked when the user has made changes to one or more items.
  */
-export const ListContents = ({
+export const GroupedItemsDisplay = ({
     items,
     onItemSelected,
     onItemsChange
@@ -106,7 +82,7 @@ export const ListContents = ({
     // Render if list is completely empty.
     if (items.length <= 0) {
         return (
-            <EmptyGroupDisplay
+            <NoItemsDisplay
                 icon={faCat}
                 heading="List Is Empty!"
                 subHeading="Add some Items to get started."
@@ -130,13 +106,13 @@ export const ListContents = ({
                 ))}
             </PillGroup>
 
-            <ListItems
+            <Items
                 items={itemGroups[activeGroupIndex].items}
                 onItemSelected={onItemSelected}
                 onItemChange={(id, changes) => onItemsChange([{ id, changes }])}
             />
 
-            {activeGroup.items.length <= 0 && <EmptyGroupDisplay {...activeGroup.emptyDisplay} />}
+            {activeGroup.items.length <= 0 && <NoItemsDisplay {...activeGroup.emptyDisplay} />}
         </div>
     );
 };

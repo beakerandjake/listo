@@ -1,3 +1,4 @@
+import { Item } from './Item';
 import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
 import { ItemDueDateMenu } from './ItemDueDateMenu';
 import { ItemFieldMenuButton } from './ItemFieldMenuButton';
@@ -7,6 +8,7 @@ import { ItemNoteInput } from './ItemNoteInput';
 import { ItemQuantityMenu } from './ItemQuantityMenu';
 
 export {
+    Item,
     ItemCompletedCheckbox,
     ItemDueDateMenu,
     ItemFieldMenuButton,

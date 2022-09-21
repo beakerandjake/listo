@@ -2,7 +2,7 @@
 /**
  * Loading Skeleton for the List route.
  */
-export function ListSkeleton() {
+export function LoadingSkeleton() {
     const items = [...Array(6)].map((_, index) => (
         <div key={index} className="flex justify-between items-center gap-2">
             {/* Checkbox */}

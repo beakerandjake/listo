@@ -10,13 +10,13 @@ import { getIcon } from "services/iconLibrary";
  * @param {function} props.name - Name of the list.
  * @param {React.ReactNode} props.children - Additional items to render in the header.
  */
-export function ListPageHeader({
+export function HeaderSection({
     iconName,
     name,
     children
 }) {
     return (
-        <div className="flex flex-wrap items-center gap-3 mb-1 sm:mb-3">
+        <div className="flex flex-1 flex-wrap items-center gap-3 mb-1 sm:mb-3">
             <FontAwesomeIcon
                 icon={getIcon(iconName)}
                 size="xl"

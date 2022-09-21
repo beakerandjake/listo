@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import { Badge } from 'components/Badge';
-import { ItemCompletedCheckbox } from './Item/ItemCompletedCheckbox';
-import { ItemNameLabel } from './Item/ItemNameLabel';
-import { ListItemStatusBar } from './ListItemStatusBar';
+import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
+import { ItemNameLabel } from './ItemNameLabel';
+import { ItemStatusBar } from './ItemStatusBar';
 
 /**
  * Represents an item in a list. Displayed in a ListItemContainer.
@@ -11,7 +11,7 @@ import { ListItemStatusBar } from './ListItemStatusBar';
  * @param {function} props.onClick - Callback invoked when the user clicks the button.
  * @param {function} props.onItemChange - Callback invoked when the user makes a change to the item.
  */
-export const ListItem = ({
+export const Item = ({
     item,
     onClick,
     onItemChange
@@ -33,7 +33,7 @@ export const ListItem = ({
                     <ItemNameLabel completed={item.completed} name={item.name} className="text-sm md:text-base" />
                     {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
                 </div>
-                <ListItemStatusBar {...item} />
+                <ItemStatusBar {...item} />
             </div>
         </div>
     )

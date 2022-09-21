@@ -28,7 +28,7 @@ const StatusField = ({
  * @param {Object} props
  * @param {Object} props.item - The Item whose fields to display.
  */
-export const ListItemStatusBar = ({
+export const ItemStatusBar = ({
     note,
     dueDate,
     completed

@@ -55,7 +55,7 @@ const getSortingField = ({ itemKey = '', direction = '' } = {}) => SORTING_FIELD
  * @param {object} props.activeSort - The current active sort. 
  * @param {function} props.onChange - Callback invoked when the user selects an active sort from the dropdown. 
  */
-export function ListSortingDropdown({
+export function SortItemsDropdown({
     activeSort,
     onChange
 }) {

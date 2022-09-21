@@ -5,12 +5,12 @@ import { getList, setItemCompleted } from 'services/listService';
 import { itemSortingFields, sortingDirections, sortItems } from 'services/sorting';
 import { AddItem } from './AddItem';
 import { ConfirmDialog } from 'components/ConfirmDialog';
-import { ListActionsDropdown } from './ListActionsDropdown';
-import { ListItemEditDrawer } from './ListItemEditDrawer';
-import { ListPageHeader } from './ListPageHeader';
-import { ListSkeleton } from './ListSkeleton';
-import { ListSortingDropdown } from './ListSortingDropdown';
-import { ListContents } from './ListContents';
+import { ActionsDropdown } from './ActionsDropdown';
+import { EditItemDrawer } from './EditItemDrawer';
+import { HeaderSection } from './HeaderSection';
+import { LoadingSkeleton } from './LoadingSkeleton';
+import { SortItemsDropdown } from './SortItemsDropdown';
+import { GroupedItemsDisplay } from './GroupedItemsDisplay';
 
 const defaultSorting = {
     itemKey: itemSortingFields.created,
@@ -172,13 +172,14 @@ export function List(props) {
     }
 
     if (!initialized) {
-        return <ListSkeleton />;
+        return <LoadingSkeleton />;
     }
 
     return (
         <>
+            {/* Render reverse so flipped Items don't render on top. */}
             <div className="flex flex-col-reverse gap-2 mb-5">
-                <ListContents
+                <GroupedItemsDisplay
                     items={sortedItems}
                     onItemSelected={setSelectedItemId}
                     onItemsChange={editItems}
@@ -190,8 +191,8 @@ export function List(props) {
 
                 <AddItem onAddItem={onAddItem} />
 
-                <ListPageHeader iconName={list.iconName} name={list.name}>
-                    <ListActionsDropdown
+                <HeaderSection iconName={list.iconName} name={list.name}>
+                    <ActionsDropdown
                         items={sortedItems}
                         onSetItemsCompleted={setItemsCompleted}
                         onDeleteItems={itemIds => confirmDeleteItems(itemIds, {
@@ -199,15 +200,16 @@ export function List(props) {
                             message: 'All Items in this list will be permanently deleted.'
                         })}
                     />
+                    {/* Only render dropdown if items exist. */}
                     {sortedItems.length > 0 && (
-                        <div className="flex-shrink-0 ml-auto">
-                            <ListSortingDropdown activeSort={activeSort} onChange={setActiveSort} />
+                        <div className="self-end">
+                            <SortItemsDropdown activeSort={activeSort} onChange={setActiveSort} />
                         </div>
                     )}
-                </ListPageHeader>
+                </HeaderSection>
             </div>
 
-            <ListItemEditDrawer
+            <EditItemDrawer
                 item={getSelectedItem(selectedItemId)}
                 onClose={() => setSelectedItemId(null)}
                 onDeleteItem={() => confirmDeleteItem(selectedItemId)}

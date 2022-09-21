@@ -1,5 +1,5 @@
 import { Flipper, Flipped, spring } from "react-flip-toolkit"
-import { ListItem } from "./ListItem";
+import { Item } from "./Item";
 
 // Callback invoked by react-flip-toolkit, transitions the opacity from 0 to 1 while a Flipped Element is appearing.
 const fadeFlippedElementIn = (el, index) => spring({
@@ -38,7 +38,7 @@ const fadeFlippedElementOut = (el, index, removeElement) => {
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
  * @param {function} props.onItemChange - Callback invoked when the user has made changes to an item.
  */
-export const ListItems = ({
+export const Items = ({
     items,
     onItemSelected,
     onItemChange
@@ -56,7 +56,7 @@ export const ListItems = ({
                     >
                         {/* Wrap in DIV so don't have to forward Flipped props to ListItem */}
                         <div>
-                            <ListItem
+                            <Item
                                 item={x}
                                 onClick={() => onItemSelected(x.id)}
                                 onItemChange={changes => onItemChange(x.id, changes)}
