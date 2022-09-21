@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import routes from './routes/index.js';
-import persistence from './persistence/index.js';
+import { initialize as initializeDatabase } from './persistence/sqlite2.js';
 
 const PORT = process.env.PORT || 3000;
 
@@ -33,7 +33,7 @@ app.use((err, req, res, next) => res.sendStatus(500));
 
 // ensure database is initialized before starting API.
 try {
-  persistence.initialize();
+  initializeDatabase();
 } catch (error) {
   console.error(error);
   process.exit(1);
