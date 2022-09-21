@@ -17,3 +17,7 @@ docker run -v listo:/var/lib/listo/ -p 3000:3000 -it beakerandjake/listo
 
 
 sudo docker run --restart unless-stopped -v listo:/var/lib/listo/ -p 4000:3000 -d beakerandjake/listo
+
+docker exec -it CONTAINER_ID bash
+
+SQLITE_LOCATION=./items.db PORT=4000 npm run dev

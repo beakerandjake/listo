@@ -26,26 +26,31 @@ app.use('/api', routes);
 
 // register error handling
 app.use((req, res) => res.sendStatus(404));
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).send(err.expose && err.message ? err.message : null);
-});
-
-// ensure database is ready, then start server.
-persistence
-  .initialize()
-  .then(() => {
-    app.listen(PORT, () => console.log(`listo running on port ${PORT}`));
-  })
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
+if (process.env.NODE_ENV !== 'production') {
+  app.use((err, req, res, next) => {
+    console.error(err);
+    next(err);
   });
+}
+app.use((err, req, res, next) => res.sendStatus(500));
 
-const shutdown = async () => {
-  await persistence.close();
-  process.exit();
+// ensure database is initialized before starting API.
+try {
+  persistence.initialize();
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}
+
+const server = app.listen(PORT, () => console.log(`listo running on port ${PORT}`));
+
+const gracefulShutdown = () => {
+  server.close(() => {
+    console.log('listo api server closed');
+    process.exit(0);
+  });
 };
 
 // handle shutdown signals
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);

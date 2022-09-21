@@ -35,7 +35,13 @@ export async function initialize() {
       id INTEGER PRIMARY KEY, 
       name TEXT NOT NULL, 
       quantity INTEGER NOT NULL DEFAULT 1
-    )`);
+    );
+    
+    CREATE TABLE IF NOT EXISTS lists (
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      iconName TEXT NOT NULL      
+    );`);
 }
 
 /**
