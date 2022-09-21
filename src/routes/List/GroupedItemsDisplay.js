@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { faPartyHorn, faCheckSquare, faCat } from "@fortawesome/pro-light-svg-icons";
+import { faPartyHorn, faCat, faList } from "@fortawesome/pro-light-svg-icons";
 import { Badge } from "components/Badge";
 import { Pill, PillGroup } from "components/PillGroup";
 import { Items } from "./Items";
@@ -44,7 +44,7 @@ const ITEM_GROUPS = [
         displayName: 'Complete',
         filterFn: x => !!x.completed,
         emptyDisplay: {
-            icon: faCheckSquare,
+            icon: faList,
             heading: 'No Items Completed'
         }
     }
