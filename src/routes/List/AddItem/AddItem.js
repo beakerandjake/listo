@@ -5,6 +5,7 @@ import { mobileBreakpoint } from "components/ResponsiveLayout";
 import { itemValidationConstants } from 'routes/List/Item';
 import { AddItemDrawer } from './AddItemDrawer';
 import { AddItemToolbar } from './AddItemToolbar';
+import { StatefulMenu } from 'components/Menu';
 
 const DEFAULT_ITEM = {
     name: '',
@@ -56,7 +57,6 @@ const formatItem = (item) => {
  * @param {function} props.onAddItem - Callback invoked when the user wants to add a new Item to the list.
  **/
 export const AddItem = ({ onAddItem }) => {
-    const [drawerOpen, setDrawerOpen] = useState(false);
     const [item, setItem] = useState(DEFAULT_ITEM);
 
     const itemIsValid = itemCanBeAdded(formatItem(item));
@@ -91,17 +91,21 @@ export const AddItem = ({ onAddItem }) => {
             </MediaQuery>
             {/* Floating Action Button / Drawer on Mobile */}
             <MediaQuery maxWidth={mobileBreakpoint - 1}>
-                <AddItemDrawer
-                    open={drawerOpen}
-                    onOpenChange={setDrawerOpen}
-                    onCloseTransitionComplete={() => setItem(DEFAULT_ITEM)}
-                    item={item}
-                    itemIsValid={itemIsValid}
-                    onItemChange={onItemChange}
-                    onAddItem={() => {
-                        tryToAddItem() && setDrawerOpen(false);
-                    }}
-                />
+                <StatefulMenu>
+                    {({ open, setOpen }) => (
+                        <AddItemDrawer
+                            open={open}
+                            onOpenChange={setOpen}
+                            onCloseTransitionComplete={() => setItem(DEFAULT_ITEM)}
+                            item={item}
+                            itemIsValid={itemIsValid}
+                            onItemChange={onItemChange}
+                            onAddItem={() => {
+                                tryToAddItem() && setOpen(false);
+                            }}
+                        />
+                    )}
+                </StatefulMenu>
             </MediaQuery>
         </>
     );
