@@ -222,13 +222,13 @@ export const ItemQuantityMenu = ({
     // but debounce the public onChange event so updates don't fire
     // during long presses of the quantity buttons.
     const [internalQuantity, setInternalQuantity] = useState(quantity);
-    const debouncedOnChange = useCallback(debounce(onChange, 250), []);
+    const debouncedOnChange = useCallback(debounce(onChange, 250), [onChange]);
 
     // whenever quantity prop changes, reset internal quantity.
     useEffect(() => {
         debouncedOnChange.cancel();
         setInternalQuantity(quantity);
-    }, [quantity]);
+    }, [quantity, debouncedOnChange]);
 
     // if custom trigger is not provided, use default trigger.
     const chosenTrigger = trigger || (
