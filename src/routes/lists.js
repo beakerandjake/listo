@@ -1,14 +1,13 @@
 import express from 'express';
-import { listRepository } from '../repositories/index.js';
+import { getAllLists } from '../useCases/getAllLists.js';
 // import { body } from 'express-validator';
 // import { validateRequest } from '../middleware/validateRequest.js';
-// import { getDb } from '../persistence/sqlite2.js';
 
 const router = express.Router();
 
 // Get all lists.
 router.get('/', (req, res) => {
-  const results = listRepository.getLists();
+  const results = getAllLists();
   res.send(results);
 });
 

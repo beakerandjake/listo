@@ -1,6 +1,10 @@
 import { getDb } from '../db/sqlite.js';
 
-const getLists = () => getDb()
+/**
+ * Returns all of the lists which have not been marked as deleted.
+ * @returns {Array} - All of the non-deleted lists.
+ */
+export const getLists = () => getDb()
   .prepare(`
       SELECT l.id, l.name, l.iconName, COUNT(i.listId) as itemCount
       FROM lists l
@@ -8,7 +12,3 @@ const getLists = () => getDb()
       GROUP BY l.id, l.name, l.iconName;
     `)
   .all();
-
-export default {
-  getLists,
-};
