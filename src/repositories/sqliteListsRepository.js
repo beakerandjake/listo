@@ -17,9 +17,10 @@ const getLists = () => getDb()
  * Does a list with the given name exist? Case sensitive.
  * @returns {boolean}
  */
-const existsWithName = (name) => {
-  throw new Error('id', name);
-};
+const existsWithName = (name) => getDb()
+  .prepare('SELECT EXISTS(SELECT 1 FROM lists WHERE name = ?)')
+  .pluck()
+  .get(name);
 
 export default {
   getLists,
