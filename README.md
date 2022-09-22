@@ -9,6 +9,9 @@ curl -X DELETE localhost:3000/api/items/1
 
 curl -X POST localhost:3000/api/items -H 'Content-Type: application/json' -d '{"name":"one"}'
 
+curl -X POST localhost:3000/api/lists -H 'Content-Type: application/json' -d '{"name":"trips","iconName":"simpleIcon"}'
+
+
 curl -X PATCH localhost:3000/api/items/1 -H 'Content-Type: application/json' -d '{"quantity":2}'
 
 docker buildx build --platform linux/amd64,linux/arm64 -t beakerandjake/listo --push .
