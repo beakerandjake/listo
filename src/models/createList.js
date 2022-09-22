@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { BadRequestError } from '../errors/index.js';
+import { ValidationError } from '../errors/index.js';
 
 /**
  * @typedef CreateList
@@ -37,7 +37,7 @@ export const buildCreateList = ({ name, iconName }) => {
   const { error, value } = schema.validate({ name, iconName });
 
   if (error) {
-    throw new BadRequestError(error.message);
+    throw new ValidationError(error.message);
   }
 
   return value;

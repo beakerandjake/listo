@@ -5,7 +5,7 @@ import { NotFoundError } from './NotFound.js';
 
 export {
   ApplicationError,
-  ValidationError as BadRequestError,
+  ValidationError,
   ConflictError,
   NotFoundError,
 };
