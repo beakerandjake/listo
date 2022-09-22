@@ -1,5 +1,5 @@
 import express from 'express';
-import { createList, getAllLists } from '../useCases/lists/index.js';
+import { createList, getAllLists, deleteList } from '../useCases/lists/index.js';
 
 const router = express.Router();
 
@@ -13,6 +13,13 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const result = createList(req.body);
   res.send(result);
+});
+
+// Delete list
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  deleteList(id);
+  res.sendStatus(200);
 });
 
 export default router;

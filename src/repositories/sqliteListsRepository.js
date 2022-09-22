@@ -45,8 +45,18 @@ const createList = ({ name, iconName }) => {
   return lastInsertRowid;
 };
 
+/**
+ * Attempts to delete a list.
+ * @param {number} id - The id of the list to delete.
+ * @returns {boolean}
+ */
+const deleteList = (id) => {
+  throw new Error('not implemented', id);
+};
+
 export default {
   getLists,
   existsWithName,
   createList,
+  deleteList,
 };
