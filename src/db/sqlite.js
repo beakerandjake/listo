@@ -1,13 +1,14 @@
 import Database from 'better-sqlite3';
+import config from '../config.js';
 
-const dbLocation = process.env.SQLITE_LOCATION || '/var/lib/listo/items.db';
+const { dbLocation } = config.database.sqlite;
 
 /**
  * Returns a new Database connection object.
  * @returns {Database} The Database connection.
  */
 export const getDb = () => {
-  const options = process.env.SQLITE_VERBOSE
+  const options = config.verbose
     ? { verbose: console.log }
     : {};
 

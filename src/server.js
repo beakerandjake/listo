@@ -3,9 +3,8 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import routes from './routes/index.js';
-import { initialize as initializeDatabase } from './persistence/sqlite2.js';
-
-const PORT = process.env.PORT || 3000;
+import db from './db/index.js';
+import config from './config.js';
 
 const app = express();
 
@@ -33,13 +32,13 @@ app.use((err, req, res, next) => res.sendStatus(500));
 
 // ensure database is initialized before starting API.
 try {
-  initializeDatabase();
+  db.initialize();
 } catch (error) {
   console.error(error);
   process.exit(1);
 }
 
-const server = app.listen(PORT, () => console.log(`listo running on port ${PORT}`));
+const server = app.listen(config.port, () => console.log(`listo running on port ${config.port}`));
 
 const gracefulShutdown = () => {
   server.close(() => {
