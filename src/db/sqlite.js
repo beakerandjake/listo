@@ -27,8 +27,8 @@ export const initialize = () => {
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       iconName TEXT NOT NULL,
-      createdDate INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
-      deletedAt INTEGER     
+      createdDate TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      deletedDate TEXT     
     );
 
     CREATE TABLE IF NOT EXISTS items (
@@ -36,12 +36,12 @@ export const initialize = () => {
         listId INTEGER NOT NULL,
         name TEXT NOT NULL,
         completed INTEGER NOT NULL DEFAULT 0,
-        dueDate INTEGER,
+        dueDate TEXT,
         quantity INTEGER NOT NULL DEFAULT 1,
         note TEXT,
-        createdDate INTEGER NOT NULL DEFAULT (strftime('%s', 'now')),
-        completedDate INTEGER,
-        deletedAt INTEGER,
+        createdDate TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        completedDate TEXT,
+        deletedDate TEXT,
         FOREIGN KEY(listId) REFERENCES lists(id)
     );
 

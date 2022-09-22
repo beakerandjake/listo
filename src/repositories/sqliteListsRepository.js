@@ -8,8 +8,8 @@ const getLists = () => getDb()
   .prepare(`
       SELECT l.id, l.name, l.iconName, COUNT(i.listId) as itemCount
       FROM lists l
-      LEFT JOIN items i on i.listId = l.id AND i.deletedAt IS NULL
-      WHERE l.deletedAt IS NULL
+      LEFT JOIN items i on i.listId = l.id AND i.deletedDate IS NULL
+      WHERE l.deletedDate IS NULL
       GROUP BY l.id, l.name, l.iconName;
     `)
   .all();
@@ -24,7 +24,7 @@ const existsWithName = (name) => getDb()
     SELECT EXISTS(
       SELECT 1 
       FROM lists 
-      WHERE name = ? AND deletedAt IS NULL
+      WHERE name = ? AND deletedDate IS NULL
     );
   `)
   .pluck()
@@ -55,12 +55,12 @@ const deleteList = (id) => {
   const deleteTransition = db.transaction(() => {
     // delete the items in the list
     db
-      .prepare("UPDATE items SET deletedAt = (strftime('%s', 'now')) WHERE listId = ? AND deletedAt IS NULL")
+      .prepare("UPDATE items SET deletedDate = datetime('now') WHERE listId = ? AND deletedDate IS NULL")
       .run(id);
 
     // delete the list itself.
     const { changes } = db
-      .prepare("UPDATE lists SET deletedAt = (strftime('%s', 'now')) WHERE id = ? AND deletedAt IS NULL")
+      .prepare("UPDATE lists SET deletedDate = datetime('now') WHERE id = ? AND deletedDate IS NULL")
       .run(id);
 
     return changes === 1;
