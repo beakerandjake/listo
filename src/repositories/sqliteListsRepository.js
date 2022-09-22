@@ -8,7 +8,8 @@ const getLists = () => getDb()
   .prepare(`
       SELECT l.id, l.name, l.iconName, COUNT(i.listId) as itemCount
       FROM lists l
-      LEFT JOIN items i on i.listId = l.id
+      LEFT JOIN items i on i.listId = l.id AND i.deletedAt IS NULL
+      WHERE l.deletedAt IS NULL
       GROUP BY l.id, l.name, l.iconName;
     `)
   .all();
@@ -18,7 +19,13 @@ const getLists = () => getDb()
  * @returns {boolean}
  */
 const existsWithName = (name) => getDb()
-  .prepare('SELECT EXISTS(SELECT 1 FROM lists WHERE name = ?)')
+  .prepare(`
+    SELECT EXISTS(
+      SELECT 1 
+      FROM lists 
+      WHERE name = ? AND deletedAt IS NULL
+    );
+  `)
   .pluck()
   .get(name);
 
