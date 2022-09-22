@@ -32,6 +32,22 @@ const existsWithName = (name) => getDb()
 
 /**
  * Does a list with the given name exist? Case sensitive.
+ * @param {string} name - The name value to check for.
+ * @returns {boolean}
+ */
+const existsWithId = (id) => getDb()
+  .prepare(`
+  SELECT EXISTS(
+    SELECT 1 
+    FROM lists 
+    WHERE id = ? AND deletedDate IS NULL
+  );
+`)
+  .pluck()
+  .get(id);
+
+/**
+ * Does a list with the given name exist? Case sensitive.
  * @param {object} list
  * @param {string} list.name - The name of the list.
  * @param {string} list.iconName - The name of the icon.
@@ -55,12 +71,12 @@ const deleteList = (id) => {
   const deleteTransition = db.transaction(() => {
     // delete the items in the list
     db
-      .prepare("UPDATE items SET deletedDate = datetime('now') WHERE listId = ? AND deletedDate IS NULL")
+      .prepare("UPDATE items SET deletedDate = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE listId = ? AND deletedDate IS NULL")
       .run(id);
 
     // delete the list itself.
     const { changes } = db
-      .prepare("UPDATE lists SET deletedDate = datetime('now') WHERE id = ? AND deletedDate IS NULL")
+      .prepare("UPDATE lists SET deletedDate = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ? AND deletedDate IS NULL")
       .run(id);
 
     return changes === 1;
@@ -71,6 +87,7 @@ const deleteList = (id) => {
 export default {
   getLists,
   existsWithName,
+  existsWithId,
   createList,
   deleteList,
 };

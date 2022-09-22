@@ -10,12 +10,10 @@ import { listRepository } from '../../repositories/index.js';
 export const createList = ({ name, iconName }) => {
   const createListModel = buildCreateList({ name, iconName });
 
-  // don't allow duplicate named lists to be created.
   if (listRepository.existsWithName(createListModel.name)) {
     throw new ConflictError('A list with that name already exists');
   }
 
-  // insert the new list into the database.
   const result = listRepository.createList(createListModel);
 
   return { id: result };

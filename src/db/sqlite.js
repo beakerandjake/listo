@@ -27,7 +27,7 @@ export const initialize = () => {
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       iconName TEXT NOT NULL,
-      createdDate TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      createdDate TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
       deletedDate TEXT     
     );
 
@@ -39,7 +39,7 @@ export const initialize = () => {
         dueDate TEXT,
         quantity INTEGER NOT NULL DEFAULT 1,
         note TEXT,
-        createdDate TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        createdDate TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
         completedDate TEXT,
         deletedDate TEXT,
         FOREIGN KEY(listId) REFERENCES lists(id)
