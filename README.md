@@ -11,6 +11,7 @@ curl -X POST localhost:3000/api/items -H 'Content-Type: application/json' -d '{"
 
 curl -X POST localhost:3000/api/lists -H 'Content-Type: application/json' -d '{"name":"trips","iconName":"simpleIcon"}'
 
+curl -X POST localhost:3000/api/lists/1/items -H 'Content-Type: application/json' -d '{"name":"apples","quantity":"1","dueDate":"","note":""}'
 
 curl -X PATCH localhost:3000/api/items/1 -H 'Content-Type: application/json' -d '{"quantity":2}'
 
