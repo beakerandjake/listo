@@ -2,9 +2,9 @@ import { getDb } from '../db/sqlite.js';
 
 /**
  * Returns all of the lists which have not been marked as deleted.
- * @returns {Array} - All of the non-deleted lists.
+ * @returns {Array}
  */
-export const getLists = () => getDb()
+const getLists = () => getDb()
   .prepare(`
       SELECT l.id, l.name, l.iconName, COUNT(i.listId) as itemCount
       FROM lists l
@@ -12,3 +12,16 @@ export const getLists = () => getDb()
       GROUP BY l.id, l.name, l.iconName;
     `)
   .all();
+
+/**
+ * Does a list with the given name exist? Case sensitive.
+ * @returns {boolean}
+ */
+const existsWithName = (name) => {
+  throw new Error('id', name);
+};
+
+export default {
+  getLists,
+  existsWithName,
+};

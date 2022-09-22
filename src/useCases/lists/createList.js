@@ -1,4 +1,5 @@
 import joi from 'joi';
+import { listRepository } from '../../repositories/index.js';
 
 /**
  * @typedef CreateList
@@ -32,7 +33,14 @@ const schema = joi.object({
  * @returns {object} - An object containing the id of the newly created list.
  */
 export const createList = (list) => {
+  // validate the schema of the model.
   const value = joi.attempt(list, schema);
+
+  // don't allow duplicate named lists to be created.
+  if (listRepository.existsWithName(value.name)) {
+    throw new Error('A list with that name already exists');
+  }
+
   console.log('result', value);
   // validate model
   // does list already exist with this name?
