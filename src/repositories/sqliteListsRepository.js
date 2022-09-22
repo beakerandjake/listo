@@ -51,7 +51,21 @@ const createList = ({ name, iconName }) => {
  * @returns {boolean}
  */
 const deleteList = (id) => {
-  throw new Error('not implemented', id);
+  const db = getDb();
+  const deleteTransition = db.transaction(() => {
+    // delete the items in the list
+    db
+      .prepare("UPDATE items SET deletedAt = (strftime('%s', 'now')) WHERE listId = ? AND deletedAt IS NULL")
+      .run(id);
+
+    // delete the list itself.
+    const { changes } = db
+      .prepare("UPDATE lists SET deletedAt = (strftime('%s', 'now')) WHERE id = ? AND deletedAt IS NULL")
+      .run(id);
+
+    return changes === 1;
+  });
+  return deleteTransition();
 };
 
 export default {
