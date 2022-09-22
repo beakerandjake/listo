@@ -1,14 +1,5 @@
-import config from '../config.js';
+import { initialize } from './sqlite.js';
 
-let backingStore;
+// could add dynamic support for backing stores here, by loading backing store based on config.
 
-// add support for more data stores here.
-switch (config.database.backingStore) {
-  case 'sqlite':
-    backingStore = await import('./sqlite.js');
-    break;
-  default:
-    throw new Error(`Unsupported Database Backing Store: ${config.database.backingStore}`);
-}
-
-export default { ...backingStore };
+export default { initialize };

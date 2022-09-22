@@ -1,8 +1,6 @@
 import Database from 'better-sqlite3';
 import config from '../config.js';
 
-const { dbLocation } = config.database.sqlite;
-
 /**
  * Returns a new Database connection object.
  * @returns {Database} The Database connection.
@@ -12,7 +10,7 @@ export const getDb = () => {
     ? { verbose: console.log }
     : {};
 
-  return new Database(dbLocation, options);
+  return new Database(config.sqlite.dbLocation, options);
 };
 
 /**
