@@ -20,7 +20,7 @@ app.use('/api', routes);
 app.use((req, res) => res.sendStatus(404));
 
 // log errors in development
-if (process.env.NODE_ENV !== 'production') {
+if (config.environment !== 'production') {
   app.use((err, req, res, next) => {
     console.error(err);
     next(err);

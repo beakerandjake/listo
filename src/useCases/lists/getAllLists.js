@@ -1,4 +1,4 @@
-import { listRepository } from '../repositories/index.js';
+import { listRepository } from '../../repositories/index.js';
 
 /**
  * Returns all of the lists which have not been marked as deleted.
