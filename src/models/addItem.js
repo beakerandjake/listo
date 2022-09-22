@@ -21,12 +21,11 @@ const schema = joi.object({
 
   note: joi.string()
     .allow('', null)
-    .empty(['', null])
-    .default('')
     .trim()
     .max(500),
 
   dueDate: joi.string()
+    .allow('', null)
     .isoDate(),
 });
 
