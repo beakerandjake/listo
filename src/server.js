@@ -5,6 +5,11 @@ import cors from 'cors';
 import routes from './routes/index.js';
 import db from './db/index.js';
 import config from './config.js';
+import {
+  logErrors,
+  notFound,
+  applicationErrorHandler,
+} from './middleware/index.js';
 
 const app = express();
 
@@ -17,17 +22,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // register routing
 app.use('/api', routes);
-app.use((req, res) => res.sendStatus(404));
+app.use(notFound());
 
-// log errors in development
-if (config.environment !== 'production') {
-  app.use((err, req, res, next) => {
-    console.error(err);
-    next(err);
-  });
-}
-
-// default error handler, just return 500.
+// error handling
+app.use(logErrors());
+app.use(applicationErrorHandler());
 app.use((err, req, res, next) => res.sendStatus(500));
 
 // ensure database is initialized before starting API.

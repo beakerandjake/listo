@@ -1,4 +1,5 @@
 import joi from 'joi';
+import { BadRequestError, ConflictError } from '../../errors/index.js';
 import { listRepository } from '../../repositories/index.js';
 
 /**
@@ -34,11 +35,15 @@ const schema = joi.object({
  */
 export const createList = (list) => {
   // validate the schema of the model.
-  const value = joi.attempt(list, schema);
+  const { error, value } = schema.validate(list);
+
+  if (error) {
+    throw new BadRequestError(error.message);
+  }
 
   // don't allow duplicate named lists to be created.
   if (listRepository.existsWithName(value.name)) {
-    throw new Error('A list with that name already exists');
+    throw new ConflictError('A list with that name already exists');
   }
 
   // insert the new list into the database.
