@@ -41,10 +41,8 @@ export const createList = (list) => {
     throw new Error('A list with that name already exists');
   }
 
-  console.log('result', value);
-  // validate model
-  // does list already exist with this name?
-  // insert list
-  // return id
-  return { id: 1 };
+  // insert the new list into the database.
+  const result = listRepository.createList(value);
+
+  return { id: result };
 };

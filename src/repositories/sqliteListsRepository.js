@@ -16,6 +16,7 @@ const getLists = () => getDb()
 
 /**
  * Does a list with the given name exist? Case sensitive.
+ * @param {string} name - The name value to check for.
  * @returns {boolean}
  */
 const existsWithName = (name) => getDb()
@@ -29,7 +30,23 @@ const existsWithName = (name) => getDb()
   .pluck()
   .get(name);
 
+/**
+ * Does a list with the given name exist? Case sensitive.
+ * @param {object} list
+ * @param {string} list.name - The name of the list.
+ * @param {string} list.iconName - The name of the icon.
+ * @returns {number} The id of the newly created list.
+ */
+const createList = ({ name, iconName }) => {
+  const { lastInsertRowid } = getDb()
+    .prepare('INSERT INTO lists (name, iconName) VALUES (?,?)')
+    .run(name, iconName);
+
+  return lastInsertRowid;
+};
+
 export default {
   getLists,
   existsWithName,
+  createList,
 };
