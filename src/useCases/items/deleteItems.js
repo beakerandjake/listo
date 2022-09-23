@@ -5,7 +5,7 @@ import { itemRepository, listRepository } from '../../repositories/index.js';
 import { logger } from '../../logger.js';
 
 export const deleteItems = (listId, filter) => {
-  logger.info('attempting to delete items from: %s with filter: %s', listId, filter);
+  logger.info('deleting items from list: %s with filter: %s', listId, filter);
 
   const deleteModel = deleteItemsModel({ listId, filter });
 

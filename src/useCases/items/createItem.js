@@ -10,7 +10,7 @@ import { itemRepository, listRepository } from '../../repositories/index.js';
  * @returns {object}
  */
 export const createItem = (listId, item) => {
-  logger.info('attempting to add item: %s to list: %s', item, listId);
+  logger.info('creating item: %s to list: %s', item, listId);
 
   const addModel = createItemRequestModel({ listId, ...item });
 
@@ -22,7 +22,7 @@ export const createItem = (listId, item) => {
   const newItemId = itemRepository.createItem(addModel);
   const newItem = itemRepository.getItem(newItemId);
 
-  logger.info('added item: %s to list: %s', newItem, listId);
+  logger.info('created item: %s for list: %s', newItem, listId);
 
   return itemModel(newItem);
 };

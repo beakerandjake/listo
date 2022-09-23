@@ -7,7 +7,7 @@ import { logger } from '../logger.js';
  * @returns {object}
  */
 const createItem = (item) => {
-  logger.debug('inserting item: %s', item);
+  logger.verbose('inserting item: %s', item);
 
   const { lastInsertRowid } = getDb()
     .prepare(`
@@ -16,13 +16,13 @@ const createItem = (item) => {
     `)
     .run(item);
 
-  logger.debug('inserted item: %s', lastInsertRowid);
+  logger.verbose('inserted item: %s', lastInsertRowid);
 
   return lastInsertRowid;
 };
 
 const getItem = (id) => {
-  logger.debug('querying item with id: %s', id);
+  logger.verbose('querying item with id: %s', id);
 
   const item = getDb()
     .prepare(`

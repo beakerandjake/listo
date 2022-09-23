@@ -57,5 +57,7 @@ export const itemModel = (data) => {
     throw new ApplicationError(error.message);
   }
 
+  logger.debug('created itemModel: %s', value);
+
   return value;
 };

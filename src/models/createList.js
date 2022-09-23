@@ -37,15 +37,13 @@ const requestSchema = joi.object({
  * @returns {object}
  */
 export const createListRequestModel = ({ name, iconName }) => {
-  logger.debug('translating createListRequestModel: %s', { name, iconName });
+  logger.debug('create createListRequestModel from: %s', { name, iconName });
 
   const { error, value } = requestSchema.validate({ name, iconName });
 
   if (error) {
     throw new BadRequestError(error.message);
   }
-
-  logger.debug('successfully translated createListRequestModel: %s', value);
 
   return value;
 };
@@ -79,6 +77,8 @@ export const createListModel = (id) => {
   if (error) {
     throw new ApplicationError(error.message);
   }
+
+  logger.debug('created createListModel: %s', value);
 
   return value;
 };

@@ -39,5 +39,7 @@ export const listModel = (data) => {
     throw new ApplicationError(error.message);
   }
 
+  logger.debug('created listModel: %s', value);
+
   return value;
 };
