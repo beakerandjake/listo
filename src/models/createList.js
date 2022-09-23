@@ -72,7 +72,7 @@ const responseSchema = joi.object({
    * @returns {object}
    */
 export const createListModel = (id) => {
-  logger.debug('translating createListModel: %s', { id });
+  logger.debug('create createListModel from: %s', { id });
 
   const { error, value } = responseSchema.validate({ id });
 
@@ -80,7 +80,7 @@ export const createListModel = (id) => {
     throw new ApplicationError(error.message);
   }
 
-  logger.debug('successfully translated createListModel: %s', { id });
+  logger.debug('created createListModel: %s', value);
 
   return value;
 };

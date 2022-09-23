@@ -1,5 +1,6 @@
 import joi from 'joi';
 import { ApplicationError } from '../errors/index.js';
+import { logger } from '../logger.js';
 
 /**
  * @openapi
@@ -48,11 +49,15 @@ const schema = joi.object({
    * @returns {object}
    */
 export const itemModel = (data) => {
+  logger.debug('creating itemModel from: %s', data);
+
   const { error, value } = schema.validate(data);
 
   if (error) {
     throw new ApplicationError(error.message);
   }
+
+  logger.debug('created itemModel: %s', value);
 
   return value;
 };
