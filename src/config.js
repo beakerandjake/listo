@@ -9,7 +9,7 @@ export default {
   sqlite: {
     dbLocation: process.env.SQLITE_LOCATION || '/var/lib/listo/items.db',
   },
-  swagger: {
+  swaggerJSDoc: {
     definition: {
       openapi: '3.0.3',
       info: {
@@ -22,6 +22,11 @@ export default {
       }],
     },
     apis: ['./src/routes/**/*.js', './src/models/**/*.js'],
+  },
+  swaggerUi: {
+    swaggerOptions: {
+      displayRequestDuration: true,
+    },
   },
   validation: {
     inputCharactersRegex: /^[\w\-_\s.,\(\)!@#$&*]+$/, //eslint-disable-line

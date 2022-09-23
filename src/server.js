@@ -23,8 +23,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // register swagger
-const openApiSpecification = swaggerJSDoc(config.swagger);
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
+const openApiSpecification = swaggerJSDoc(config.swaggerJSDoc);
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification, config.swaggerUi));
 
 // register routing
 app.use('/api', routes);
