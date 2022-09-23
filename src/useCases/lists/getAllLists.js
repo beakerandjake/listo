@@ -5,7 +5,6 @@ import { listModel } from '../../models/index.js';
  * Returns all of the lists which have not been marked as deleted.
  * @returns {Array} - All of the non-deleted lists.
  */
-export const getAllLists = () => {
-  const result = listRepository.getLists();
-  return result.map(listModel);
-};
+export const getAllLists = () => listRepository
+  .getLists()
+  .map(listModel);
