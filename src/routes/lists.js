@@ -1,7 +1,7 @@
 import express from 'express';
-import { getAllItems } from '../useCases/items/getAllItems.js';
+import { createItem, getAllItems } from '../useCases/items/index.js';
 import {
-  createList, getAllLists, deleteList, addItemToList,
+  createList, getAllLists, deleteList,
 } from '../useCases/lists/index.js';
 
 const router = express.Router();
@@ -119,7 +119,7 @@ router.delete('/:id', (req, res) => {
  */
 router.post('/:id/items', (req, res) => {
   const { id } = req.params;
-  const result = addItemToList(id, req.body);
+  const result = createItem(id, req.body);
   res.send(result);
 });
 

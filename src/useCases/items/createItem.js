@@ -3,11 +3,12 @@ import { addItemRequestModel, itemModel } from '../../models/index.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 
 /**
- * Adds a new item to the list.
+ * Creates a new Item.
  * @param {number} listId - The id of the list to add Items to.
- * @returns {object} - An object containing the id of the newly created list.
+ * @param {object} item - The item to create.
+ * @returns {object}
  */
-export const addItemToList = (listId, item) => {
+export const createItem = (listId, item) => {
   const addModel = addItemRequestModel({ listId, ...item });
 
   if (!listRepository.existsWithId(addModel.listId)) {
@@ -17,5 +18,6 @@ export const addItemToList = (listId, item) => {
   // TODO update quantity if posting a duplicate.
   const newItemId = itemRepository.createItem(addModel);
   const newItem = itemRepository.getItem(newItemId);
+
   return itemModel(newItem);
 };
