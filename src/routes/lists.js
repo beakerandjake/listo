@@ -20,7 +20,9 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/listModel"
+ *                type: array
+ *                items:
+ *                  $ref: "#/components/schemas/listModel"
  *        5XX:
  *          description: Unexpected Error.
  */
