@@ -7,25 +7,6 @@ const router = express.Router();
 
 /**
  * @openapi
- * components:
- *  schemas:
- *    getAllListsResult:
- *      type: array
- *      items:
- *        type: object
- *        properties:
- *          id:
- *            type: number
- *          name:
- *            type: string
- *          iconName:
- *            type: string
- *          itemCount:
- *            type: number
- */
-
-/**
- * @openapi
  * /lists:
  *    get:
  *      tags: [Lists]
@@ -39,7 +20,7 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/getAllListsResult"
+ *                $ref: "#/components/schemas/getAllListsResponseModel"
  *        5XX:
  *          description: Unexpected Error.
  */
@@ -81,7 +62,27 @@ router.post('/', (req, res) => {
   res.send(result);
 });
 
-// Delete list
+/**
+ * @openapi
+ * /lists/{listId}:
+ *    delete:
+ *      tags: [Lists]
+ *      summary: Delete List
+ *      description: Delete the specified list and all its items.
+ *      parameters:
+ *        - name: listId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            type: number
+ *      responses:
+ *        200:
+ *          description: List successfully deleted.
+ *        404:
+ *          description: List was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
   deleteList(id);
