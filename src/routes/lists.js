@@ -7,6 +7,25 @@ const router = express.Router();
 
 /**
  * @openapi
+ * components:
+ *  schemas:
+ *    getAllLists:
+ *      type: array
+ *      items:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *          name:
+ *            type: string
+ *          iconName:
+ *            type: string
+ *          itemCount:
+ *            type: number
+ */
+
+/**
+ * @openapi
  * /lists:
  *   get:
  *     tags: [Lists]
@@ -20,18 +39,7 @@ const router = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: number
- *                   name:
- *                     type: string
- *                   iconName:
- *                     type: string
- *                   itemCount:
- *                     type: number
+ *              $ref: "#/components/schemas/getAllLists"
  */
 router.get('/', (req, res) => {
   const results = getAllLists();
