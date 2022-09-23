@@ -39,7 +39,6 @@ router.get('/', (req, res) => {
  *      produces:
  *        - application/json
  *      requestBody:
- *        description: 'Create List Model'
  *        required: true
  *        content:
  *          application/json:
@@ -47,11 +46,10 @@ router.get('/', (req, res) => {
  *              $ref: "#/components/schemas/createListRequestModel"
  *      responses:
  *        200:
- *          description: The newly created list id.
  *          content:
  *            application/json:
  *                schema:
- *                  $ref: "#/components/schemas/createListResponseModel"
+ *                  $ref: "#/components/schemas/createListModel"
  *        409:
  *          description: Conflict. A list with that name already exists.
  *        5XX:
@@ -99,7 +97,6 @@ router.delete('/:id', (req, res) => {
  *      produces:
  *        - application/json
  *      requestBody:
- *        description: 'Create Item Model'
  *        required: true
  *        content:
  *          application/json:
@@ -107,7 +104,6 @@ router.delete('/:id', (req, res) => {
  *              $ref: "#/components/schemas/createItemRequestModel"
  *      responses:
  *        200:
- *          description: The newly created Item.
  *          content:
  *            application/json:
  *                schema:
