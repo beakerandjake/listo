@@ -30,7 +30,7 @@ const requestSchema = joi.object({
 });
 
 /**
- * Parses and validates a createList request model from the data.
+ * Parses and validates a model from the data.
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
@@ -61,7 +61,7 @@ const responseSchema = joi.object({
 });
 
 /**
- * Parses and validates a createList response model from the data.
+ * Parses and validates a model from the data.
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
