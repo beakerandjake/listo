@@ -35,7 +35,8 @@
     "sqlite": "^4.1.1",
     "sqlite3": "^5.0.8",
     "swagger-jsdoc": "^6.2.5",
-    "swagger-ui-express": "^4.5.0"
+    "swagger-ui-express": "^4.5.0",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "eslint": "^8.17.0",
