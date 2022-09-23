@@ -29,10 +29,12 @@ const schema = joi.object({
   id: joi.number().required(),
   listId: joi.number().required(),
   name: joi.string().required(),
+  completed: joi.bool().truthy(1).falsy(0).required(),
   quantity: joi.number(),
   note: joi.string().allow('', null),
   dueDate: joi.string().allow('', null),
   createdDate: joi.string().required(),
+  completedDate: joi.string().allow('', null),
 });
 
 /**

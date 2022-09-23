@@ -15,6 +15,7 @@ export const addItemToList = (listId, item) => {
   }
 
   // TODO update quantity if posting a duplicate.
-  const result = itemRepository.createItem(addModel);
-  return itemModel(result);
+  const newItemId = itemRepository.createItem(addModel);
+  const newItem = itemRepository.getItem(newItemId);
+  return itemModel(newItem);
 };
