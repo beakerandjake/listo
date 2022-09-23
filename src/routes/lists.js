@@ -5,7 +5,15 @@ import {
 
 const router = express.Router();
 
-// Get all lists.
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     description: Returns all of the Lists.
+ *     responses:
+ *       200:
+ *         description: An array containing the lists.
+ */
 router.get('/', (req, res) => {
   const results = getAllLists();
   res.send(results);

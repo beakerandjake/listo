@@ -20,6 +20,8 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// register swagger
+
 // register routing
 app.use('/api', routes);
 app.use(notFound());
