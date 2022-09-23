@@ -1,13 +1,18 @@
 import joi from 'joi';
 import { BadRequestError } from '../errors/index.js';
 
+export const filters = {
+  completed: 'completed',
+  active: 'active',
+};
+
 const schema = joi.object({
   listId: joi.number()
     .min(0)
     .required(),
 
   filter: joi.string()
-    .valid('completed', 'active'),
+    .valid(...Object.values(filters)),
 });
 
 export const deleteItemsModel = ({ listId, filter }) => {
