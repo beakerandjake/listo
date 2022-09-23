@@ -37,12 +37,12 @@ const existsWithName = (name) => getDb()
  */
 const existsWithId = (id) => getDb()
   .prepare(`
-  SELECT EXISTS(
-    SELECT 1 
-    FROM lists 
-    WHERE id = ? AND deletedDate IS NULL
-  );
-`)
+    SELECT EXISTS(
+      SELECT 1 
+      FROM lists 
+      WHERE id = ? AND deletedDate IS NULL
+    );
+  `)
   .pluck()
   .get(id);
 
