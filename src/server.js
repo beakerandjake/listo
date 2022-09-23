@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -12,6 +13,7 @@ import {
   notFound,
   applicationErrorHandler,
 } from './middleware/index.js';
+import { logger } from './logger.js';
 
 const app = express();
 
@@ -25,6 +27,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // register swagger
 const openApiSpecification = swaggerJSDoc(config.swaggerJSDoc);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification, config.swaggerUi));
+
+// request logging
+app.use(morgan('common', {
+  stream: {
+    write: (message) => logger.http(message.trim()),
+  },
+  immediate: true,
+}));
 
 // register routing
 app.use('/api', routes);
@@ -43,11 +53,11 @@ try {
   process.exit(1);
 }
 
-const server = app.listen(config.port, () => console.log(`listo running on port ${config.port}`));
+const server = app.listen(config.port, () => logger.info(`listo running on port ${config.port}`));
 
 const gracefulShutdown = () => {
   server.close(() => {
-    console.log('listo api server closed');
+    logger.info('listo api server closed');
     process.exit(0);
   });
 };
