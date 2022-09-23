@@ -9,7 +9,7 @@ import { listRepository } from '../../repositories/index.js';
  * @returns {object} - An object containing the id of the newly created list.
  */
 export const createList = ({ name, iconName }) => {
-  logger.info('attempting to create list: %s', { name, iconName });
+  logger.debug('attempting to create list: %s', { name, iconName });
 
   const requestModel = createListRequestModel({ name, iconName });
 
@@ -18,6 +18,8 @@ export const createList = ({ name, iconName }) => {
   }
 
   const result = listRepository.createList(requestModel);
+
+  logger.info('list created with id: %s', result);
 
   return createListModel(result);
 };

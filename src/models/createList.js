@@ -1,5 +1,6 @@
 import joi from 'joi';
 import config from '../config.js';
+import { logger } from '../logger.js';
 import { ApplicationError, BadRequestError } from '../errors/index.js';
 
 /**
@@ -36,11 +37,15 @@ const requestSchema = joi.object({
  * @returns {object}
  */
 export const createListRequestModel = ({ name, iconName }) => {
+  logger.debug('translating createListRequestModel: %s', { name, iconName });
+
   const { error, value } = requestSchema.validate({ name, iconName });
 
   if (error) {
     throw new BadRequestError(error.message);
   }
+
+  logger.debug('successfully translated createListRequestModel: %s', value);
 
   return value;
 };
@@ -67,11 +72,15 @@ const responseSchema = joi.object({
    * @returns {object}
    */
 export const createListModel = (id) => {
+  logger.debug('translating createListModel: %s', { id });
+
   const { error, value } = responseSchema.validate({ id });
 
   if (error) {
     throw new ApplicationError(error.message);
   }
+
+  logger.debug('successfully translated createListModel: %s', { id });
 
   return value;
 };

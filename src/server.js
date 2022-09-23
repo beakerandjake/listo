@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const openApiSpecification = swaggerJSDoc(config.swaggerJSDoc);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification, config.swaggerUi));
 
-// request logging
+// request / response logging
 app.use(morgan('common', {
   stream: {
     write: (message) => logger.http(message.trim()),

@@ -6,13 +6,18 @@ import { logger } from '../logger.js';
  * Returns a new Database connection object.
  * @returns {Database} The Database connection.
  */
-export const getDb = () => new Database(config.sqlite.dbLocation, { verbose: logger.debug });
+export const getDb = () => {
+  logger.debug('creating db connection');
+  return new Database(config.sqlite.dbLocation, { verbose: logger.silly });
+};
 
 /**
  * Ensures the database is properly initialized with required tables.
  */
 export const initialize = () => {
   const db = getDb();
+
+  logger.debug('initializing database');
 
   db.exec(`
     DROP TABLE IF EXISTS items;
@@ -50,4 +55,6 @@ export const initialize = () => {
     INSERT INTO items (listId, name, quantity)
     VALUES (2, 'apples', 4);
   `);
+
+  logger.debug('database initialized');
 };
