@@ -14,6 +14,8 @@ import { ApplicationError } from '../errors/index.js';
  *          type: number
  *        name:
  *          type: string
+ *        completed:
+ *          type: boolean
  *        quantity:
  *          type: number
  *        note:
@@ -22,6 +24,9 @@ import { ApplicationError } from '../errors/index.js';
  *          type: string
  *          format: date-time
  *        createdDate:
+ *          type: string
+ *          format: date-time
+ *        completedDate:
  *          type: string
  *          format: date-time
  */
