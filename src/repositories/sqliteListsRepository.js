@@ -68,19 +68,23 @@ const createList = ({ name, iconName }) => {
  */
 const deleteList = (id) => {
   const db = getDb();
+
   const deleteTransition = db.transaction(() => {
+    const now = new Date().toISOString();
+
     // delete the items in the list
     db
-      .prepare("UPDATE items SET deletedDate = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE listId = ? AND deletedDate IS NULL")
-      .run(id);
+      .prepare('UPDATE items SET deletedDate = ? WHERE listId = ? AND deletedDate IS NULL')
+      .run(now, id);
 
     // delete the list itself.
     const { changes } = db
-      .prepare("UPDATE lists SET deletedDate = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE id = ? AND deletedDate IS NULL")
-      .run(id);
+      .prepare('UPDATE lists SET deletedDate = ? WHERE id = ? AND deletedDate IS NULL')
+      .run(now, id);
 
     return changes === 1;
   });
+
   return deleteTransition();
 };
 
