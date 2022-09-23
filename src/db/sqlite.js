@@ -1,17 +1,12 @@
 import Database from 'better-sqlite3';
 import config from '../config.js';
+import { logger } from '../logger.js';
 
 /**
  * Returns a new Database connection object.
  * @returns {Database} The Database connection.
  */
-export const getDb = () => {
-  const options = config.verbose
-    ? { verbose: console.log }
-    : {};
-
-  return new Database(config.sqlite.dbLocation, options);
-};
+export const getDb = () => new Database(config.sqlite.dbLocation, { verbose: logger.debug });
 
 /**
  * Ensures the database is properly initialized with required tables.
