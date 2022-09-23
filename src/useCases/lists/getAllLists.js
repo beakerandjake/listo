@@ -7,13 +7,13 @@ import { logger } from '../../logger.js';
  * @returns {Array} - All of the non-deleted lists.
  */
 export const getAllLists = () => {
-  logger.debug('getting all lists');
+  logger.verbose('getting all lists');
 
   const items = listRepository
     .getLists()
     .map(listModel);
 
-  logger.debug('got lists: %j', items);
+  logger.verbose('got lists: %j', items);
 
   return items;
 };
