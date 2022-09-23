@@ -25,3 +25,7 @@ sudo docker run --restart unless-stopped -v listo:/var/lib/listo/ -p 4000:3000 -
 docker exec -it CONTAINER_ID bash
 
 SQLITE_LOCATION=./items.db PORT=4000 npm run dev
+
+
+FIND Process using port: sudo lsof -n -i :3000 | grep LISTEN
+KILL Process: sudo kill -9 PID
