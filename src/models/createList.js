@@ -49,7 +49,7 @@ export const createListRequestModel = ({ name, iconName }) => {
  * @openapi
  * components:
  *  schemas:
- *    createListResponseModel:
+ *    createListModel:
  *      type: object
  *      properties:
  *        id:
@@ -66,7 +66,7 @@ const responseSchema = joi.object({
    * @param {object} data - The data to parse into the model.
    * @returns {object}
    */
-export const createListResponseModel = (id) => {
+export const createListModel = (id) => {
   const { error, value } = responseSchema.validate({ id });
 
   if (error) {
