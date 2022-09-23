@@ -40,43 +40,52 @@ const getAllItems = (listId) => getDb()
 /**
  * Deletes all items in the list marked as completed.
  * @param {number} listId - The id of the list.
+ * @returns {number} The number of items deleted.
  */
 const deleteCompleted = (listId) => {
-  getDb()
+  const { changes } = getDb()
     .prepare(`
       UPDATE items
       SET deletedDate = ?
       WHERE listId = ? AND completedDate IS NOT NULL AND deletedDate IS NULL
     `)
     .run(new Date().toISOString(), listId);
+
+  return changes;
 };
 
 /**
  * Deletes all items in the list not marked as completed.
  * @param {number} listId - The id of the list.
+ * @returns {number} The number of items deleted.
  */
 const deleteActive = (listId) => {
-  getDb()
+  const { changes } = getDb()
     .prepare(`
       UPDATE items
       SET deletedDate = ?
       WHERE listId = ? AND completedDate IS NULL AND deletedDate IS NULL
     `)
     .run(new Date().toISOString(), listId);
+
+  return changes;
 };
 
 /**
  * Deletes all items in the list.
  * @param {number} listId - The id of the list.
+ * @returns {number} The number of items deleted.
  */
 const deleteAll = (listId) => {
-  getDb()
+  const { changes } = getDb()
     .prepare(`
       UPDATE items
       SET deletedDate = ?
       WHERE listId = ? AND deletedDate IS NULL
     `)
     .run(new Date().toISOString(), listId);
+
+  return changes;
 };
 
 export default {
