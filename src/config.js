@@ -21,6 +21,6 @@ export default {
         description: 'Development Server',
       }],
     },
-    apis: ['./src/routes/**/*.js'],
+    apis: ['./src/routes/**/*.js', './src/models/**/*.js'],
   },
 };

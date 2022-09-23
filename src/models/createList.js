@@ -1,7 +1,19 @@
 import joi from 'joi';
 import { ValidationError } from '../errors/index.js';
 
-const schema = joi.object({
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    createListRequestModel:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *        iconName:
+ *          type: string
+ */
+const requestSchema = joi.object({
   name: joi.string()
     .alphanum()
     .trim()
@@ -18,12 +30,43 @@ const schema = joi.object({
 });
 
 /**
- * Parses and validates a createList model from the data.
+ * Parses and validates a createList request model from the data.
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const buildCreateList = ({ name, iconName }) => {
-  const { error, value } = schema.validate({ name, iconName });
+export const createListRequestModel = ({ name, iconName }) => {
+  const { error, value } = requestSchema.validate({ name, iconName });
+
+  if (error) {
+    throw new ValidationError(error.message);
+  }
+
+  return value;
+};
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    createListResponseModel:
+ *      type: object
+ *      properties:
+ *        id:
+ *          type: number
+ */
+const responseSchema = joi.object({
+  id: joi.number()
+    .min(0)
+    .required(),
+});
+
+/**
+ * Parses and validates a createList response model from the data.
+ * @param {object} data - The data to parse into the model.
+ * @returns {object}
+ */
+export const createListResponseModel = ({ id }) => {
+  const { error, value } = responseSchema.validate(id);
 
   if (error) {
     throw new ValidationError(error.message);
