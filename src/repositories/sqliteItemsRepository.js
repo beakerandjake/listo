@@ -29,10 +29,13 @@ const getItem = (id) => getDb()
  * @param {number} listId - The id of the list.
  * @returns {array}
  */
-const getAllItems = (listId) => {
-  console.log('getAllItems', listId);
-  return [];
-};
+const getAllItems = (listId) => getDb()
+  .prepare(`
+    SELECT id, listId, name, completed, dueDate, quantity, note, createdDate, completedDate
+    FROM items
+    WHERE listId = ? AND deletedDate IS NULL
+  `)
+  .all(listId);
 
 export default {
   createItem,
