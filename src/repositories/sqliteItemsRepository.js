@@ -14,9 +14,12 @@ const findByName = (name, listId) => getDb()
   `)
   .get(name, listId);
 
-const createItem = ({
-  listId, name, dueDate, quantity, note,
-}) => {
+/**
+ * Inserts a new item.
+ * @param {object} item - The item to insert.
+ * @returns {object}
+ */
+const createItem = (item) => {
   const db = getDb();
   const insertTransaction = db.transaction(() => {
     // insert the new item
@@ -25,9 +28,7 @@ const createItem = ({
         INSERT INTO items (listId, name, dueDate, quantity, note)
         VALUES (@listId, @name, @dueDate, @quantity, @note)
       `)
-      .run({
-        listId, name, dueDate, quantity, note,
-      });
+      .run(item);
 
     // return the newly inserted row.
     return db
@@ -42,7 +43,18 @@ const createItem = ({
   return insertTransaction();
 };
 
+/**
+ * Returns all of the items in the list.
+ * @param {number} listId - The id of the list.
+ * @returns {array}
+ */
+const getAllItems = (listId) => {
+  console.log('getAllItems', listId);
+  return [];
+};
+
 export default {
   findByName,
   createItem,
+  getAllItems,
 };

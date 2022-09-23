@@ -1,4 +1,5 @@
 import express from 'express';
+import { getAllItems } from '../useCases/items/getAllItems.js';
 import {
   createList, getAllLists, deleteList, addItemToList,
 } from '../useCases/lists/index.js';
@@ -16,7 +17,6 @@ const router = express.Router();
  *        - application/json
  *      responses:
  *        200:
- *          description: An array containing the lists.
  *          content:
  *            application/json:
  *              schema:
@@ -120,6 +120,40 @@ router.delete('/:id', (req, res) => {
 router.post('/:id/items', (req, res) => {
   const { id } = req.params;
   const result = addItemToList(id, req.body);
+  res.send(result);
+});
+
+/**
+ * @openapi
+ * /lists/{listId}/items:
+ *    get:
+ *      tags: [Lists]
+ *      summary: Get all Items in List
+ *      description: Returns all of the Items in the List.
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - name: listId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            type: number
+ *      responses:
+ *        200:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: "#/components/schemas/itemModel"
+ *        400:
+ *          description: Not Found. A list with that Id was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
+router.get('/:id/items', (req, res) => {
+  const { id } = req.params;
+  const result = getAllItems(id);
   res.send(result);
 });
 
