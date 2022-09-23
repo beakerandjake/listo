@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /:
+ * /lists:
  *   get:
  *     description: Returns all of the Lists.
  *     responses:

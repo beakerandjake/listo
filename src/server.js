@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 import routes from './routes/index.js';
 import db from './db/index.js';
 import config from './config.js';
@@ -21,6 +23,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // register swagger
+const openApiSpecification = swaggerJSDoc(config.swagger);
+console.log(JSON.stringify(openApiSpecification));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 
 // register routing
 app.use('/api', routes);
