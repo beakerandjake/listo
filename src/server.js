@@ -49,7 +49,7 @@ app.use((err, req, res, next) => res.sendStatus(500));
 try {
   db.initialize();
 } catch (error) {
-  console.error(error);
+  logger.error(error);
   process.exit(1);
 }
 
