@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // register swagger
 const openApiSpecification = swaggerJSDoc(config.swagger);
-console.log(JSON.stringify(openApiSpecification));
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 
 // register routing

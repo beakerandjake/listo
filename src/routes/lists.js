@@ -9,10 +9,29 @@ const router = express.Router();
  * @openapi
  * /lists:
  *   get:
+ *     tags: [Lists]
+ *     summary: Get all Lists
  *     description: Returns all of the Lists.
+ *     produces:
+ *       - application/json
  *     responses:
  *       200:
  *         description: An array containing the lists.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: number
+ *                   name:
+ *                     type: string
+ *                   iconName:
+ *                     type: string
+ *                   itemCount:
+ *                     type: number
  */
 router.get('/', (req, res) => {
   const results = getAllLists();
