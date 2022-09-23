@@ -47,7 +47,7 @@ const existsWithId = (id) => getDb()
   .get(id);
 
 /**
- * Does a list with the given name exist? Case sensitive.
+ * Creates a new list. 
  * @param {object} list
  * @param {string} list.name - The name of the list.
  * @param {string} list.iconName - The name of the icon.
