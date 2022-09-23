@@ -7,7 +7,7 @@ import { logger } from '../logger.js';
  * @returns {Database} The Database connection.
  */
 export const getDb = () => {
-  logger.debug('creating db connection');
+  logger.silly('creating db connection');
   return new Database(config.sqlite.dbLocation, { verbose: logger.silly });
 };
 

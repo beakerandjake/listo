@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../errors/index.js';
 import { logger } from '../../logger.js';
-import { addItemRequestModel, itemModel } from '../../models/index.js';
+import { createItemRequestModel, itemModel } from '../../models/index.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 
 /**
@@ -12,7 +12,7 @@ import { itemRepository, listRepository } from '../../repositories/index.js';
 export const createItem = (listId, item) => {
   logger.debug('attempting to add item: %s to list: %s', item, listId);
 
-  const addModel = addItemRequestModel({ listId, ...item });
+  const addModel = createItemRequestModel({ listId, ...item });
 
   if (!listRepository.existsWithId(addModel.listId)) {
     throw new NotFoundError('List does not exist');

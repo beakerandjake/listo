@@ -1,4 +1,5 @@
 import { getDb } from '../db/sqlite.js';
+import { logger } from '../logger.js';
 
 /**
  * Inserts a new item.
@@ -6,12 +7,16 @@ import { getDb } from '../db/sqlite.js';
  * @returns {object}
  */
 const createItem = (item) => {
+  logger.debug('inserting item: %s', item);
+
   const { lastInsertRowid } = getDb()
     .prepare(`
       INSERT INTO items (listId, name, dueDate, quantity, note)
       VALUES (@listId, @name, @dueDate, @quantity, @note)   
     `)
     .run(item);
+
+  logger.debug('inserted item: %s', lastInsertRowid);
 
   return lastInsertRowid;
 };
