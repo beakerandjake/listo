@@ -34,7 +34,7 @@ const schema = joi.object({
   id: joi.number().required(),
   listId: joi.number().required(),
   name: joi.string().required(),
-  completed: joi.bool().truthy(1).falsy(0).required(),
+  completed: joi.bool().default((x) => !!x.completedDate),
   quantity: joi.number(),
   note: joi.string().allow('', null),
   dueDate: joi.string().allow('', null),

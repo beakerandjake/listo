@@ -35,11 +35,10 @@ export const initialize = () => {
         id INTEGER PRIMARY KEY,
         listId INTEGER NOT NULL,
         name TEXT NOT NULL,
-        completed INTEGER NOT NULL DEFAULT 0,
-        dueDate TEXT,
         quantity INTEGER NOT NULL DEFAULT 1,
         note TEXT,
         createdDate TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+        dueDate TEXT,
         completedDate TEXT,
         deletedDate TEXT,
         FOREIGN KEY(listId) REFERENCES lists(id)

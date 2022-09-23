@@ -18,7 +18,7 @@ const createItem = (item) => {
 
 const getItem = (id) => getDb()
   .prepare(`
-    SELECT id, listId, name, completed, dueDate, quantity, note, createdDate, completedDate
+    SELECT id, listId, name, dueDate, quantity, note, createdDate, completedDate
     FROM items
     WHERE id = ? AND deletedDate IS NULL
   `)
@@ -31,7 +31,7 @@ const getItem = (id) => getDb()
  */
 const getAllItems = (listId) => getDb()
   .prepare(`
-    SELECT id, listId, name, completed, dueDate, quantity, note, createdDate, completedDate
+    SELECT id, listId, name, dueDate, quantity, note, createdDate, completedDate
     FROM items
     WHERE listId = ? AND deletedDate IS NULL
   `)
