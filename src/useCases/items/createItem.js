@@ -10,7 +10,7 @@ import { itemRepository, listRepository } from '../../repositories/index.js';
  * @returns {object}
  */
 export const createItem = (listId, item) => {
-  logger.debug('attempting to add item: %s to list: %s', item, listId);
+  logger.info('attempting to add item: %s to list: %s', item, listId);
 
   const addModel = createItemRequestModel({ listId, ...item });
 
