@@ -107,4 +107,4 @@ dist
 .vscode
 
 # ignore local development
-items.db
+items.db*
