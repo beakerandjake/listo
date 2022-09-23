@@ -108,3 +108,4 @@ dist
 
 # ignore local development
 items.db*
+*audit.json
