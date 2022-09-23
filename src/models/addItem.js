@@ -106,9 +106,9 @@ const responseModelSchema = joi.object({
   id: joi.number().required(),
   listId: joi.number().required(),
   name: joi.string().required(),
-  quantity: joi.number().required(),
-  note: joi.string().required(),
-  dueDate: joi.string().required(),
+  quantity: joi.number(),
+  note: joi.string().allow('', null),
+  dueDate: joi.string().allow('', null),
   createdDate: joi.string().required(),
 });
 
@@ -118,6 +118,7 @@ const responseModelSchema = joi.object({
  * @returns {object}
  */
 export const addItemResponseModel = (data) => {
+  console.log('validating', data);
   const { error, value } = responseModelSchema.validate(data);
 
   if (error) {
