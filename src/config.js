@@ -23,4 +23,7 @@ export default {
     },
     apis: ['./src/routes/**/*.js', './src/models/**/*.js'],
   },
+  validation: {
+    inputCharactersRegex: /^[\w\-_\s.,\(\)!@#$&*]+$/, //eslint-disable-line
+  },
 };

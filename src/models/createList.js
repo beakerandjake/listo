@@ -1,4 +1,5 @@
 import joi from 'joi';
+import config from '../config.js';
 import { ApplicationError, BadRequestError } from '../errors/index.js';
 
 /**
@@ -25,7 +26,7 @@ const requestSchema = joi.object({
     .trim()
     .min(3)
     .max(100)
-    .pattern(/^[\w-]+$/)
+    .pattern(config.validation.inputCharactersRegex)
     .required(),
 });
 

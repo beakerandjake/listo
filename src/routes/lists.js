@@ -89,7 +89,36 @@ router.delete('/:id', (req, res) => {
   res.sendStatus(200);
 });
 
-// Add New Item to List.
+/**
+ * @openapi
+ * /lists/{listId}/items:
+ *    post:
+ *      tags: [Lists]
+ *      summary: Add Item
+ *      description: Add a new Item to the list.
+ *      produces:
+ *        - application/json
+ *      requestBody:
+ *        description: 'Create Item Model'
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/components/schemas/createItemRequestModel"
+ *      responses:
+ *        200:
+ *          description: The newly created Item.
+ *          content:
+ *            application/json:
+ *                schema:
+ *                  $ref: "#/components/schemas/createItemResponseModel"
+ *        400:
+ *          description: Bad Request. Provided invalid parameters.
+ *        404:
+ *          description: Not Found. A list with that Id was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
 router.post('/:id/items', (req, res) => {
   const { id } = req.params;
   const result = addItemToList(id, req.body);
