@@ -1,7 +1,8 @@
 import { buildAddItem } from './addItem.js';
-import { createListRequestModel } from './createList.js';
+import { createListRequestModel, createListResponseModel } from './createList.js';
 
 export {
-  createListRequestModel as buildCreateListModel,
+  createListRequestModel,
+  createListResponseModel,
   buildAddItem,
 };

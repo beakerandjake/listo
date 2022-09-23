@@ -65,8 +65,8 @@ const responseSchema = joi.object({
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const createListResponseModel = ({ id }) => {
-  const { error, value } = responseSchema.validate(id);
+export const createListResponseModel = (id) => {
+  const { error, value } = responseSchema.validate({ id });
 
   if (error) {
     throw new ApplicationError(error.message);
