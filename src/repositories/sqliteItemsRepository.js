@@ -16,13 +16,18 @@ const createItem = (item) => {
     `)
     .run(item);
 
-  logger.verbose('inserted item: %s', lastInsertRowid);
+  logger.verbose('inserted item, id: %d', lastInsertRowid);
 
   return lastInsertRowid;
 };
 
+/**
+ * Load the item.
+ * @param {number} id - The id of the item.
+ * @returns {object}
+ */
 const getItem = (id) => {
-  logger.verbose('querying item with id: %s', id);
+  logger.verbose('querying item with id: %d', id);
 
   const item = getDb()
     .prepare(`
@@ -32,6 +37,8 @@ const getItem = (id) => {
     `)
     .get(id);
 
+  logger.verbose('got item: %s', item);
+
   return item;
 };
 
@@ -40,13 +47,21 @@ const getItem = (id) => {
  * @param {number} listId - The id of the list.
  * @returns {array}
  */
-const getAllItems = (listId) => getDb()
-  .prepare(`
-    SELECT id, listId, name, dueDate, quantity, note, createdDate, completedDate
-    FROM items
-    WHERE listId = ? AND deletedDate IS NULL
-  `)
-  .all(listId);
+const getAllItems = (listId) => {
+  logger.verbose('querying items for list: %d', listId);
+
+  const items = getDb()
+    .prepare(`
+      SELECT id, listId, name, dueDate, quantity, note, createdDate, completedDate
+      FROM items
+      WHERE listId = ? AND deletedDate IS NULL
+    `)
+    .all(listId);
+
+  logger.verbose('got %d item(s) for list: %d', items.length, listId);
+
+  return items;
+};
 
 /**
  * Deletes all items in the list marked as completed.
@@ -54,6 +69,8 @@ const getAllItems = (listId) => getDb()
  * @returns {number} The number of items deleted.
  */
 const deleteCompleted = (listId) => {
+  logger.verbose('marking completed items for list: %d as deleted', listId);
+
   const { changes } = getDb()
     .prepare(`
       UPDATE items
@@ -61,6 +78,8 @@ const deleteCompleted = (listId) => {
       WHERE listId = ? AND completedDate IS NOT NULL AND deletedDate IS NULL
     `)
     .run(new Date().toISOString(), listId);
+
+  logger.verbose('marked %d item(s) as deleted', changes);
 
   return changes;
 };
@@ -71,6 +90,8 @@ const deleteCompleted = (listId) => {
  * @returns {number} The number of items deleted.
  */
 const deleteActive = (listId) => {
+  logger.verbose('marking active items for list: %d as deleted', listId);
+
   const { changes } = getDb()
     .prepare(`
       UPDATE items
@@ -78,6 +99,8 @@ const deleteActive = (listId) => {
       WHERE listId = ? AND completedDate IS NULL AND deletedDate IS NULL
     `)
     .run(new Date().toISOString(), listId);
+
+  logger.verbose('marked %d item(s) as deleted', changes);
 
   return changes;
 };
@@ -88,6 +111,8 @@ const deleteActive = (listId) => {
  * @returns {number} The number of items deleted.
  */
 const deleteAll = (listId) => {
+  logger.verbose('marking all items for list: %d as deleted', listId);
+
   const { changes } = getDb()
     .prepare(`
       UPDATE items
@@ -95,6 +120,8 @@ const deleteAll = (listId) => {
       WHERE listId = ? AND deletedDate IS NULL
     `)
     .run(new Date().toISOString(), listId);
+
+  logger.verbose('marked %d active item(s) as deleted', changes);
 
   return changes;
 };
