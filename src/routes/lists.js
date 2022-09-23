@@ -96,6 +96,12 @@ router.delete('/:id', (req, res) => {
  *      tags: [Lists]
  *      summary: Add Item
  *      description: Add a new Item to the list.
+ *      parameters:
+ *        - name: listId
+ *          in: path
+ *          required: true
+ *          schema:
+ *          type: number
  *      produces:
  *        - application/json
  *      requestBody:
