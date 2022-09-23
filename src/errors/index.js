@@ -1,11 +1,11 @@
 import { ApplicationError } from './ApplicationError.js';
-import { ValidationError } from './ValidationError.js';
+import { BadRequestError } from './BadRequestError.js';
 import { ConflictError } from './ConflictError.js';
 import { NotFoundError } from './NotFound.js';
 
 export {
   ApplicationError,
-  ValidationError,
+  BadRequestError,
   ConflictError,
   NotFoundError,
 };

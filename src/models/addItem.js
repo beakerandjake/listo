@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { ValidationError } from '../errors/index.js';
+import { BadRequestError } from '../errors/index.js';
 
 const schema = joi.object({
   listId: joi.number()
@@ -42,7 +42,7 @@ export const buildAddItem = ({
   });
 
   if (error) {
-    throw new ValidationError(error.message);
+    throw new BadRequestError(error.message);
   }
 
   return value;

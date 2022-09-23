@@ -1,5 +1,5 @@
 import joi from 'joi';
-import { ValidationError } from '../errors/index.js';
+import { ApplicationError, BadRequestError } from '../errors/index.js';
 
 /**
  * @openapi
@@ -38,7 +38,7 @@ export const createListRequestModel = ({ name, iconName }) => {
   const { error, value } = requestSchema.validate({ name, iconName });
 
   if (error) {
-    throw new ValidationError(error.message);
+    throw new BadRequestError(error.message);
   }
 
   return value;
@@ -69,7 +69,7 @@ export const createListResponseModel = ({ id }) => {
   const { error, value } = responseSchema.validate(id);
 
   if (error) {
-    throw new ValidationError(error.message);
+    throw new ApplicationError(error.message);
   }
 
   return value;
