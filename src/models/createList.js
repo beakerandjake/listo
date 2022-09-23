@@ -80,7 +80,5 @@ export const createListModel = (id) => {
     throw new ApplicationError(error.message);
   }
 
-  logger.debug('created createListModel: %s', value);
-
   return value;
 };

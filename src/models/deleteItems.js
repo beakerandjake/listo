@@ -25,7 +25,5 @@ export const deleteItemsModel = (data) => {
     throw new BadRequestError(error.message);
   }
 
-  logger.debug('created deleteItemsModel: %s', value);
-
   return value;
 };

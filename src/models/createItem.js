@@ -69,7 +69,5 @@ export const createItemRequestModel = (data) => {
     throw new BadRequestError(error.message);
   }
 
-  logger.debug('created createItemRequestModel: %s', value);
-
   return value;
 };

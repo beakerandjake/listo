@@ -21,13 +21,19 @@ const createItem = (item) => {
   return lastInsertRowid;
 };
 
-const getItem = (id) => getDb()
-  .prepare(`
-    SELECT id, listId, name, dueDate, quantity, note, createdDate, completedDate
-    FROM items
-    WHERE id = ? AND deletedDate IS NULL
-  `)
-  .get(id);
+const getItem = (id) => {
+  logger.debug('querying item with id: %s', id);
+
+  const item = getDb()
+    .prepare(`
+      SELECT id, listId, name, dueDate, quantity, note, createdDate, completedDate
+      FROM items
+      WHERE id = ? AND deletedDate IS NULL
+    `)
+    .get(id);
+
+  return item;
+};
 
 /**
  * Returns all of the items in the list.
