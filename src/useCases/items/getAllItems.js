@@ -8,7 +8,7 @@ import { logger } from '../../logger.js';
  * @returns {Array}
  */
 export const getAllItems = (listId) => {
-  logger.verbose('getting all items from list: %s', listId);
+  logger.info('getting all items from list: %s', listId);
 
   if (!listRepository.existsWithId(listId)) {
     throw new NotFoundError('List does not exist');
@@ -18,7 +18,7 @@ export const getAllItems = (listId) => {
     .getAllItems(listId)
     .map(itemModel);
 
-  logger.verbose('got items: %j from list: %s', items, listId);
+  logger.info('got items: %s from list: %s', items, listId);
 
   return items;
 };
