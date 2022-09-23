@@ -4,7 +4,6 @@ const port = process.env.PORT || 3000;
 export default {
   environment: process.env.NODE_ENV,
   port,
-  verbose: !!process.env.VERBOSE,
   version,
   sqlite: {
     dbLocation: process.env.SQLITE_LOCATION || '/var/lib/listo/items.db',
@@ -30,5 +29,8 @@ export default {
   },
   validation: {
     inputCharactersRegex: /^[\w\-_\s.,\(\)!@#$&*]+$/, //eslint-disable-line
+  },
+  logging: {
+    level: process.env.LOG_LEVEL || 'info',
   },
 };
