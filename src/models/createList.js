@@ -16,17 +16,17 @@ import { ApplicationError, BadRequestError } from '../errors/index.js';
  */
 const requestSchema = joi.object({
   name: joi.string()
-    .alphanum()
     .trim()
     .min(3)
     .max(50)
+    .pattern(config.validation.inputCharactersRegex)
     .required(),
 
   iconName: joi.string()
     .trim()
     .min(3)
     .max(100)
-    .pattern(config.validation.inputCharactersRegex)
+    .pattern(/^[\w-]+$/)
     .required(),
 });
 
@@ -62,10 +62,10 @@ const responseSchema = joi.object({
 });
 
 /**
- * Parses and validates a model from the data.
- * @param {object} data - The data to parse into the model.
- * @returns {object}
- */
+   * Parses and validates a model from the data.
+   * @param {object} data - The data to parse into the model.
+   * @returns {object}
+   */
 export const createListResponseModel = (id) => {
   const { error, value } = responseSchema.validate({ id });
 

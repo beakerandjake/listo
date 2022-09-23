@@ -20,7 +20,7 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/getAllListsResponseModel"
+ *                $ref: "#/components/schemas/listModel"
  *        5XX:
  *          description: Unexpected Error.
  */
@@ -111,7 +111,7 @@ router.delete('/:id', (req, res) => {
  *          content:
  *            application/json:
  *                schema:
- *                  $ref: "#/components/schemas/createItemResponseModel"
+ *                  $ref: "#/components/schemas/itemModel"
  *        400:
  *          description: Bad Request. Provided invalid parameters.
  *        404:

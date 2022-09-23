@@ -5,7 +5,7 @@ import { ApplicationError } from '../errors/index.js';
  * @openapi
  * components:
  *  schemas:
- *    getAllListsResponseModel:
+ *    getAllListsModel:
  *      type: object
  *      properties:
  *        id:
@@ -17,7 +17,7 @@ import { ApplicationError } from '../errors/index.js';
  *        count:
  *          type: number
  */
-const responseSchema = joi.array().items(
+const schema = joi.array().items(
   joi.object({
     id: joi.number().required(),
     name: joi.string().required(),
@@ -31,8 +31,8 @@ const responseSchema = joi.array().items(
    * @param {object} data - The data to parse into the model.
    * @returns {object}
    */
-export const getAllListsResponseModel = (data) => {
-  const { error, value } = responseSchema.validate(data);
+export const getAllListsModel = (data) => {
+  const { error, value } = schema.validate(data);
 
   if (error) {
     throw new ApplicationError(error.message);

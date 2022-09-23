@@ -1,6 +1,5 @@
 import { NotFoundError } from '../../errors/index.js';
-import { addItemResponseModel } from '../../models/addItem.js';
-import { addItemRequestModel } from '../../models/index.js';
+import { addItemRequestModel, itemModel } from '../../models/index.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 
 /**
@@ -18,5 +17,5 @@ export const addItemToList = (listId, item) => {
   // TODO update quantity if posting a duplicate.
   const result = itemRepository.createItem(addModel);
 
-  return addItemResponseModel(result);
+  return itemModel(result);
 };

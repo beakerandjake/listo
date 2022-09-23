@@ -1,10 +1,12 @@
 import { addItemRequestModel } from './addItem.js';
 import { createListRequestModel, createListResponseModel } from './createList.js';
-import { getAllListsResponseModel } from './getAllLists.js';
+import { getAllListsModel } from './getAllLists.js';
+import { itemModel } from './item.js';
 
 export {
   createListRequestModel,
   createListResponseModel,
-  getAllListsResponseModel,
+  getAllListsModel,
   addItemRequestModel,
+  itemModel,
 };

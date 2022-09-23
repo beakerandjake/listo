@@ -1,6 +1,6 @@
 import joi from 'joi';
 import config from '../config.js';
-import { ApplicationError, BadRequestError } from '../errors/index.js';
+import { BadRequestError } from '../errors/index.js';
 
 /**
  * @openapi
@@ -72,57 +72,6 @@ export const addItemRequestModel = ({
 
   if (error) {
     throw new BadRequestError(error.message);
-  }
-
-  return value;
-};
-
-/**
- * @openapi
- * components:
- *  schemas:
- *    createItemResponseModel:
- *      type: object
- *      properties:
- *        id:
- *          type: number
- *        listId:
- *          type: number
- *        name:
- *          type: string
- *        quantity:
- *          type: number
- *        note:
- *          type: string
- *        dueDate:
- *          type: string
- *          format: date-time
- *        createdDate:
- *          type: string
- *          format: date-time
- */
-// id, listId, name, dueDate, quantity, note, createdDate
-const responseModelSchema = joi.object({
-  id: joi.number().required(),
-  listId: joi.number().required(),
-  name: joi.string().required(),
-  quantity: joi.number(),
-  note: joi.string().allow('', null),
-  dueDate: joi.string().allow('', null),
-  createdDate: joi.string().required(),
-});
-
-/**
- * Parses and validates a model from the data.
- * @param {object} data - The data to parse into the model.
- * @returns {object}
- */
-export const addItemResponseModel = (data) => {
-  console.log('validating', data);
-  const { error, value } = responseModelSchema.validate(data);
-
-  if (error) {
-    throw new ApplicationError(error.message);
   }
 
   return value;

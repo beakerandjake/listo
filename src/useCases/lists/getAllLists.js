@@ -1,5 +1,5 @@
 import { listRepository } from '../../repositories/index.js';
-import { getAllListsResponseModel } from '../../models/index.js';
+import { getAllListsModel } from '../../models/index.js';
 
 /**
  * Returns all of the lists which have not been marked as deleted.
@@ -7,5 +7,5 @@ import { getAllListsResponseModel } from '../../models/index.js';
  */
 export const getAllLists = () => {
   const result = listRepository.getLists();
-  return getAllListsResponseModel(result);
+  return getAllListsModel(result);
 };
