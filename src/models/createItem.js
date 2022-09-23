@@ -1,6 +1,7 @@
 import joi from 'joi';
 import config from '../config.js';
 import { BadRequestError } from '../errors/index.js';
+import { logger } from '../logger.js';
 
 /**
  * @openapi
@@ -9,10 +10,6 @@ import { BadRequestError } from '../errors/index.js';
  *    createItemRequestModel:
  *      type: object
  *      properties:
- *        listId:
- *          type: number
- *          required: true
- *          default: 1
  *        name:
  *          type: string
  *          required: true
@@ -30,7 +27,7 @@ import { BadRequestError } from '../errors/index.js';
  *          format: date-time
  *          required: false
  */
-const requestModelSchema = joi.object({
+const schema = joi.object({
   listId: joi.number()
     .min(0)
     .required(),
@@ -63,16 +60,16 @@ const requestModelSchema = joi.object({
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const addItemRequestModel = ({
-  listId, name, quantity, note, dueDate,
-}) => {
-  const { error, value } = requestModelSchema.validate({
-    listId, name, quantity, note, dueDate,
-  });
+export const createItemRequestModel = (data) => {
+  logger.debug('create createItemRequestModel from: %s', data);
+
+  const { error, value } = schema.validate(data);
 
   if (error) {
     throw new BadRequestError(error.message);
   }
+
+  logger.debug('created createItemRequestModel: %s', value);
 
   return value;
 };

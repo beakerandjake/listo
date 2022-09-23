@@ -1,4 +1,5 @@
 import { NotFoundError } from '../../errors/index.js';
+import { logger } from '../../logger.js';
 import { addItemRequestModel, itemModel } from '../../models/index.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 
@@ -9,6 +10,8 @@ import { itemRepository, listRepository } from '../../repositories/index.js';
  * @returns {object}
  */
 export const createItem = (listId, item) => {
+  logger.debug('attempting to add item: %s to list: %s', item, listId);
+
   const addModel = addItemRequestModel({ listId, ...item });
 
   if (!listRepository.existsWithId(addModel.listId)) {
@@ -18,6 +21,8 @@ export const createItem = (listId, item) => {
   // TODO update quantity if posting a duplicate.
   const newItemId = itemRepository.createItem(addModel);
   const newItem = itemRepository.getItem(newItemId);
+
+  logger.info('added item: %s to list: %s', newItem, listId);
 
   return itemModel(newItem);
 };
