@@ -1,5 +1,5 @@
 import express from 'express';
-import { createItem, getAllItems } from '../useCases/items/index.js';
+import { createItem, deleteItems, getAllItems } from '../useCases/items/index.js';
 import {
   createList, getAllLists, deleteList,
 } from '../useCases/lists/index.js';
@@ -146,7 +146,7 @@ router.post('/:id/items', (req, res) => {
  *                type: array
  *                items:
  *                  $ref: "#/components/schemas/itemModel"
- *        400:
+ *        404:
  *          description: Not Found. A list with that Id was not found.
  *        5XX:
  *          description: Unexpected Error.
@@ -155,6 +155,44 @@ router.get('/:id/items', (req, res) => {
   const { id } = req.params;
   const result = getAllItems(id);
   res.send(result);
+});
+
+/**
+ * @openapi
+ * /lists/{listId}/items:
+ *    delete:
+ *      tags: [Lists]
+ *      summary: Delete list items
+ *      description: Delete the items in a list.
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - name: listId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            type: number
+ *        - name: filter
+ *          in: query
+ *          required: false
+ *          schema:
+ *            type: string
+ *            enum:
+ *              - completed
+ *              - active
+ *      responses:
+ *        200:
+ *          description: Items were successfully deleted.
+ *        404:
+ *          description: Not Found. A list with that Id was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
+router.delete('/:id/items', (req, res) => {
+  const { id } = req.params;
+  const { filter } = req.query;
+  deleteItems(id, filter);
+  res.sendStatus(200);
 });
 
 export default router;
