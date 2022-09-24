@@ -74,7 +74,7 @@ router.post('/', (req, res) => {
  *          in: path
  *          required: true
  *          schema:
- *            type: number
+ *            $ref: "#/components/schemas/listIdModel"
  *      responses:
  *        200:
  *          description: List successfully deleted.
@@ -101,7 +101,7 @@ router.delete('/:id', (req, res) => {
  *          in: path
  *          required: true
  *          schema:
- *          type: number
+ *            $ref: "#/components/schemas/listIdModel"
  *      produces:
  *        - application/json
  *      requestBody:
@@ -143,7 +143,7 @@ router.post('/:id/items', (req, res) => {
  *          in: path
  *          required: true
  *          schema:
- *            type: number
+ *            $ref: "#/components/schemas/listIdModel"
  *      responses:
  *        200:
  *          content:
