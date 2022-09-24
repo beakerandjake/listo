@@ -1,5 +1,5 @@
 import { itemRepository, listRepository } from '../../repositories/index.js';
-import { itemModel } from '../../models/index.js';
+import { itemModel, listIdModel } from '../../models/index.js';
 import { NotFoundError } from '../../errors/NotFound.js';
 import { logger } from '../../logger.js';
 
@@ -7,8 +7,10 @@ import { logger } from '../../logger.js';
  * Returns all of the items in the list.
  * @returns {Array}
  */
-export const getAllItems = (listId) => {
-  logger.info('getting all items from list: %s', listId);
+export const getAllItems = (id) => {
+  logger.info('getting all items from list: %s', id);
+
+  const listId = listIdModel(id);
 
   if (!listRepository.existsWithId(listId)) {
     throw new NotFoundError('List does not exist');

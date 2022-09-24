@@ -11,7 +11,8 @@ import { parseRequestModel } from './applyJoiSchema.js';
  */
 export const listIdSchema = joi.number()
   .min(0)
-  .required();
+  .required()
+  .label('listId');
 
 /**
  * Parses and validates a model from the data.
