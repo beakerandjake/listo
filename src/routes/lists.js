@@ -93,7 +93,7 @@ router.delete('/:id', (req, res) => {
  * @openapi
  * /lists/{listId}/items:
  *    post:
- *      tags: [Lists]
+ *      tags: [Items]
  *      summary: Add Item
  *      description: Add a new Item to the list.
  *      parameters:
@@ -133,7 +133,7 @@ router.post('/:id/items', (req, res) => {
  * @openapi
  * /lists/{listId}/items:
  *    get:
- *      tags: [Lists]
+ *      tags: [Items]
  *      summary: Get all Items in List
  *      description: Returns all of the Items in the List.
  *      produces:
@@ -167,7 +167,7 @@ router.get('/:id/items', (req, res) => {
  * @openapi
  * /lists/{listId}/items:
  *    delete:
- *      tags: [Lists]
+ *      tags: [Items]
  *      summary: Delete list items
  *      description: Delete the items in a list.
  *      produces:
