@@ -173,22 +173,13 @@ const deleteAll = (listId) => {
 
 // Used to dynamically generate UPDATE statements for item.
 const DYNAMIC_EDIT_ITEM_FIELDS = [
-  {
-    paramName: 'quantity',
-    statement: 'quantity = ?',
-  },
+  { paramName: 'quantity' },
+  { paramName: 'note' },
+  { paramName: 'dueDate' },
   {
     paramName: 'completed',
-    statement: 'completedDate = ?',
+    columnName: 'completedDate',
     valueFn: (changesValue) => (changesValue ? new Date().toISOString() : null),
-  },
-  {
-    paramName: 'note',
-    statement: 'note = ?',
-  },
-  {
-    paramName: 'dueDate',
-    statement: 'dueDate = ?',
   },
 ];
 
@@ -204,8 +195,8 @@ const editItem = (id, edits) => {
   // generate the update statements based on edits object.
   const dynamicUpdates = DYNAMIC_EDIT_ITEM_FIELDS
     .filter(({ paramName }) => Object.hasOwn(edits, paramName))
-    .reduce((acc, { paramName, statement, valueFn }) => {
-      acc.statements.push(statement);
+    .reduce((acc, { paramName, columnName, valueFn }) => {
+      acc.statements.push(`${columnName || paramName} = ?`);
       acc.params.push(valueFn ? valueFn(edits[paramName]) : edits[paramName]);
       return acc;
     }, { statements: [], params: [] });
