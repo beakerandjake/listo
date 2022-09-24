@@ -43,6 +43,12 @@ router.delete('/:id', (req, res) => {
  *          required: true
  *          schema:
  *            $ref: "#/components/schemas/itemIdModel"
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#components/schemas/editItemModel"
  *      responses:
  *        200:
  *          content:
