@@ -15,7 +15,7 @@ const router = express.Router();
  *          in: path
  *          required: true
  *          schema:
- *            $ref: "#/components/schemas/itemIdModel"
+ *            $ref: "#/components/schemas/itemId"
  *      responses:
  *        200:
  *          description: Item successfully deleted.
@@ -42,7 +42,7 @@ router.delete('/:id', (req, res) => {
  *          in: path
  *          required: true
  *          schema:
- *            $ref: "#/components/schemas/itemIdModel"
+ *            $ref: "#/components/schemas/itemId"
  *      requestBody:
  *        required: true
  *        content:
