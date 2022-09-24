@@ -1,4 +1,5 @@
 import express from 'express';
+import { deleteItem } from '../useCases/items/index.js';
 
 const router = express.Router();
 
@@ -23,9 +24,10 @@ const router = express.Router();
  *        5XX:
  *          description: Unexpected Error.
  */
-router.delete('/{id}', (req, res) => {
-  // const results = getAllLists();
-  res.send({});
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  deleteItem(id);
+  res.sendStatus(200);
 });
 
 export default router;

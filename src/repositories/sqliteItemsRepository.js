@@ -64,6 +64,27 @@ const getAllItems = (listId) => {
 };
 
 /**
+ * Deletes an item.
+ * @param {number} itemId - The id of the item to delete.
+ * @returns {boolean}
+ */
+const deleteItem = (itemId) => {
+  logger.verbose('marking item: %s as deleted', itemId);
+
+  const { changes } = getDb()
+    .prepare(`
+      UPDATE items
+      SET deletedDate = ?
+      WHERE id = ? AND deletedDate IS NULL
+    `)
+    .run(new Date().toISOString(), itemId);
+
+  logger.verbose('marked %d item(s) as deleted', changes);
+
+  return changes === 1;
+};
+
+/**
  * Deletes all items in the list marked as completed.
  * @param {number} listId - The id of the list.
  * @returns {number} The number of items deleted.
@@ -130,6 +151,7 @@ export default {
   createItem,
   getAllItems,
   getItem,
+  deleteItem,
   deleteCompleted,
   deleteActive,
   deleteAll,
