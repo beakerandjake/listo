@@ -4,6 +4,11 @@ import { filters } from '../../models/deleteItems.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 import { logger } from '../../logger.js';
 
+/**
+ * Bulk deletes items of the list.
+ * @param {number} id - The id of the list.
+ * @param {string} filter - Filter criteria to change which items get deleted.
+ */
 export const deleteItems = (listId, filter) => {
   logger.info('deleting items from list: %s with filter: %s', listId, filter);
 

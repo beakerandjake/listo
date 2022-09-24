@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteItem } from '../useCases/items/index.js';
+import { deleteItem, editItem } from '../useCases/items/index.js';
 
 const router = express.Router();
 
@@ -28,6 +28,36 @@ router.delete('/:id', (req, res) => {
   const { id } = req.params;
   deleteItem(id);
   res.sendStatus(200);
+});
+
+/**
+ * @openapi
+ * /items/{itemId}:
+ *    patch:
+ *      tags: [Items]
+ *      summary: Edit Item
+ *      description: Edit one or more fields of the item.
+ *      parameters:
+ *        - name: itemId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            $ref: "#/components/schemas/itemIdModel"
+ *      responses:
+ *        200:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/schemas/itemModel"
+ *        404:
+ *          description: Item was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const result = editItem(id, req.body);
+  res.send(result);
 });
 
 export default router;
