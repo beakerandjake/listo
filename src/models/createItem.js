@@ -26,7 +26,7 @@ import { listIdSchema } from './list.js';
 const schema = joi.object({
   listId: listIdSchema.required(),
   name: itemNameSchema.required(),
-  quantity: itemQuantitySchema,
+  quantity: itemQuantitySchema.default(1),
   note: itemNoteSchema,
   dueDate: itemDueDateSchema,
 });

@@ -171,6 +171,65 @@ const deleteAll = (listId) => {
   return changes;
 };
 
+// Used to dynamically generate UPDATE statements for item.
+const DYNAMIC_EDIT_ITEM_FIELDS = [
+  {
+    paramName: 'quantity',
+    statement: 'quantity = ?',
+  },
+  {
+    paramName: 'completed',
+    statement: 'completedDate = ?',
+    valueFn: (changesValue) => (changesValue ? new Date().toISOString() : null),
+  },
+  {
+    paramName: 'note',
+    statement: 'note = ?',
+  },
+  {
+    paramName: 'dueDate',
+    statement: 'dueDate = ?',
+  },
+];
+
+/**
+ * Apply edits to an item
+ * @param {number} id - The id of the item.
+ * @param {object} edits - The changes to apply to the item..
+ * @returns {bool}
+ */
+const editItem = (id, edits) => {
+  logger.verbose('editing item: %s with changes: %s', id, edits);
+
+  // generate the update statements based on edits object.
+  const dynamicUpdates = DYNAMIC_EDIT_ITEM_FIELDS
+    .filter(({ paramName }) => Object.hasOwn(edits, paramName))
+    .reduce((acc, { paramName, statement, valueFn }) => {
+      acc.statements.push(statement);
+      acc.params.push(valueFn ? valueFn(edits[paramName]) : edits[paramName]);
+      return acc;
+    }, { statements: [], params: [] });
+
+  // ensure at least one update statement was generated.
+  if (dynamicUpdates.statements.length === 0) {
+    throw new Error('Could edit item, no supported changes provided');
+  }
+
+  logger.verbose('generated dynamic updates: %s with params: %s', dynamicUpdates.statements, dynamicUpdates.params);
+
+  const { changes } = getDb()
+    .prepare(`
+      UPDATE items
+      SET ${dynamicUpdates.statements.join(', ')}
+      WHERE id = ? AND deletedDate IS NULL
+    `)
+    .run([...dynamicUpdates.params, id]);
+
+  logger.verbose('edited %d item(s)', changes);
+
+  return changes === 1;
+};
+
 export default {
   createItem,
   getAllItems,
@@ -180,4 +239,5 @@ export default {
   deleteActive,
   deleteAll,
   existsWithId,
+  editItem,
 };

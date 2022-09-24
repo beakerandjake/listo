@@ -15,8 +15,7 @@ import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 export const itemQuantitySchema = joi.number()
   .integer()
   .min(1)
-  .max(100)
-  .default(1);
+  .max(100);
 
 /**
  * @openapi

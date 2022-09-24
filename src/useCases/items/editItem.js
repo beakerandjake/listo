@@ -11,9 +11,13 @@ import { itemRepository } from '../../repositories/index.js';
 export const editItem = (id, edits) => {
   logger.info('editing item: %s with changes: %s', id, edits);
 
-  const editModel = editItemModel({ id, ...edits });
+  const { id: itemId, ...editModel } = editItemModel({ id, ...edits });
 
-  if (!itemRepository.existsWithId(editModel.id)) {
-    throw new NotFoundError(`Could not find an Item with id: ${editModel.id}`);
+  const success = itemRepository.editItem(itemId, editModel);
+
+  if (!success) {
+    throw new NotFoundError(`Could not find an Item with id: ${itemId}`);
   }
+
+  logger.info('edited item: %s', itemId);
 };
