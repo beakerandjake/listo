@@ -13,7 +13,7 @@ export const getAllLists = () => {
     .getLists()
     .map(listModel);
 
-  logger.info('got lists: %s', items);
+  logger.info('got %d list(s)', items.length);
 
   return items;
 };

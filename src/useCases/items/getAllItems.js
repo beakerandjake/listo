@@ -18,7 +18,7 @@ export const getAllItems = (listId) => {
     .getAllItems(listId)
     .map(itemModel);
 
-  logger.info('got items: %s from list: %s', items, listId);
+  logger.info('got %d item(s) from list: %s', items.length, listId);
 
   return items;
 };

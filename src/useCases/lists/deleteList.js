@@ -12,8 +12,8 @@ export const deleteList = (id) => {
   const success = listRepository.deleteList(id);
 
   if (!success) {
-    throw new NotFoundError('List not found with that id.');
+    throw new NotFoundError(`Could not find list with id: ${id}.`);
   }
 
-  logger.info('deleted list: %s', id);
+  logger.info('deleted list: %d', id);
 };

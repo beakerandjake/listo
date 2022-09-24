@@ -30,5 +30,5 @@ export const deleteItems = (listId, filter) => {
       break;
   }
 
-  logger.info('deleted %s item(s) from list: %s', deleteCount, deleteModel.listId);
+  logger.info('deleted %d item(s) from list: %s', deleteCount, deleteModel.listId);
 };

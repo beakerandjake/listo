@@ -17,9 +17,9 @@ export const createList = ({ name, iconName }) => {
     throw new ConflictError('A list with that name already exists');
   }
 
-  const result = listRepository.createList(requestModel);
+  const listId = listRepository.createList(requestModel);
 
-  logger.info('created list: %s', result);
+  logger.info('created list: %d', listId);
 
-  return createListModel(result);
+  return createListModel(listId);
 };
