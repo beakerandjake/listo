@@ -48,8 +48,8 @@ const existsWithName = (name) => {
 };
 
 /**
- * Does a list with the given name exist? Case sensitive.
- * @param {string} name - The name value to check for.
+ * Does a list with the given id exist?
+ * @param {number} id - The id to check for.
  * @returns {boolean}
  */
 const existsWithId = (id) => {
