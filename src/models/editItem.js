@@ -1,7 +1,8 @@
 import joi from 'joi';
-import config from '../config.js';
 import { parseRequestModel } from './applyJoiSchema.js';
-import { itemIdSchema } from './itemId.js';
+import {
+  itemDueDateSchema, itemNoteSchema, itemQuantitySchema, itemIdSchema, itemCompletedSchema,
+} from './item.js';
 
 /**
  * @openapi
@@ -28,31 +29,16 @@ import { itemIdSchema } from './itemId.js';
  *          format: date-time
  *          required: false
  */
-const schema = joi.object({
-  id: itemIdSchema,
-
-  name: joi.string()
-    .trim()
-    .min(2)
-    .max(50)
-    .pattern(config.validation.inputCharactersRegex)
-    .required(),
-
-  quantity: joi.number()
-    .integer()
-    .min(1)
-    .max(100)
-    .default(1),
-
-  note: joi.string()
-    .allow('', null)
-    .trim()
-    .max(500),
-
-  dueDate: joi.string()
-    .allow('', null)
-    .isoDate(),
-});
+const schema = joi
+  .object({
+    id: itemIdSchema.required(),
+    quantity: itemQuantitySchema,
+    completed: itemCompletedSchema,
+    note: itemNoteSchema,
+    dueDate: itemDueDateSchema,
+  })
+  .label('edits')
+  .or('quantity', 'completed', 'note', 'dueDate'); // Require at least one item property to be present.
 
 /**
  * Parses and validates a model from the data.

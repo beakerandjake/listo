@@ -19,7 +19,7 @@ export const filters = {
 };
 
 const schema = joi.object({
-  listId: listIdSchema,
+  listId: listIdSchema.required(),
 
   filter: joi.string()
     .valid(...Object.values(filters)),

@@ -1,5 +1,83 @@
 import joi from 'joi';
-import { parseResponseModel } from './applyJoiSchema.js';
+import config from '../config.js';
+import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    itemQuantity:
+ *      type: number
+ *      minimum: 1
+ *      maximum: 100
+ *      default: 1
+ */
+export const itemQuantitySchema = joi.number()
+  .integer()
+  .min(1)
+  .max(100)
+  .default(1);
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    itemNote:
+ *      type: string
+ *      default: ''
+ */
+export const itemNoteSchema = joi.string()
+  .allow('', null)
+  .trim()
+  .max(500);
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    itemDueDate:
+ *      type: string
+ *      format: date-time
+ */
+export const itemDueDateSchema = joi.string()
+  .allow('', null)
+  .isoDate();
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    itemId:
+ *      type: number
+ *      minimum: 0
+ */
+export const itemIdSchema = joi.number()
+  .min(0)
+  .label('itemId');
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    itemName:
+ *      type: string
+ *      minimum: 2
+ *      maximum: 50
+ */
+export const itemNameSchema = joi.string()
+  .trim()
+  .min(2)
+  .max(50)
+  .pattern(config.validation.inputCharactersRegex);
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    itemCompleted:
+ *      type: boolean
+ */
+export const itemCompletedSchema = joi.boolean();
 
 /**
  * @openapi
@@ -30,7 +108,10 @@ import { parseResponseModel } from './applyJoiSchema.js';
  *          type: string
  *          format: date-time
  */
-const schema = joi.object({
+
+// Item will be created from data in the database.
+// So validation isn't as important as when coming from user data.
+const itemModelSchema = joi.object({
   id: joi.number().required(),
   listId: joi.number().required(),
   name: joi.string().required(),
@@ -47,4 +128,11 @@ const schema = joi.object({
    * @param {object} data - The data to parse into the model.
    * @returns {object}
    */
-export const itemModel = (data) => parseResponseModel(data, schema, 'itemModel');
+export const itemModel = (data) => parseResponseModel(data, itemModelSchema, 'itemModel');
+
+/**
+ * Parses and validates a model from the data.
+ * @param {object} data - The data to parse into the model.
+ * @returns {number}
+ */
+export const itemIdModel = (data) => parseRequestModel(data, itemIdSchema, 'itemIdModel');

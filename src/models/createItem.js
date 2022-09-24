@@ -1,6 +1,8 @@
 import joi from 'joi';
-import config from '../config.js';
 import { parseRequestModel } from './applyJoiSchema.js';
+import {
+  itemDueDateSchema, itemNameSchema, itemNoteSchema, itemQuantitySchema,
+} from './item.js';
 import { listIdSchema } from './listId.js';
 
 /**
@@ -11,46 +13,22 @@ import { listIdSchema } from './listId.js';
  *      type: object
  *      properties:
  *        name:
- *          type: string
  *          required: true
- *          default: 'example item name'
+ *          $ref: "#components/schemas/itemName"
  *        quantity:
- *          type: number
+ *          $ref: "#components/schemas/itemQuantity"
  *          required: false
- *          default: 1
  *        note:
- *          type: string
- *          required: false
- *          default: ''
+ *          $ref: "#components/schemas/itemNote"
  *        dueDate:
- *          type: string
- *          format: date-time
- *          required: false
+ *          $ref: "#components/schemas/itemDueDate"
  */
 const schema = joi.object({
-  listId: listIdSchema,
-
-  name: joi.string()
-    .trim()
-    .min(2)
-    .max(50)
-    .pattern(config.validation.inputCharactersRegex)
-    .required(),
-
-  quantity: joi.number()
-    .integer()
-    .min(1)
-    .max(100)
-    .default(1),
-
-  note: joi.string()
-    .allow('', null)
-    .trim()
-    .max(500),
-
-  dueDate: joi.string()
-    .allow('', null)
-    .isoDate(),
+  listId: listIdSchema.required(),
+  name: itemNameSchema.required(),
+  quantity: itemQuantitySchema,
+  note: itemNoteSchema,
+  dueDate: itemDueDateSchema,
 });
 
 /**

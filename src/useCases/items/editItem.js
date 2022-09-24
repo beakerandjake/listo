@@ -1,4 +1,5 @@
 import { logger } from '../../logger.js';
+import { editItemModel } from '../../models/editItem.js';
 
 /**
  * Applies edits to an item.
@@ -7,4 +8,8 @@ import { logger } from '../../logger.js';
  */
 export const editItem = (id, edits) => {
   logger.info('editing item: %s with changes: %s', id, edits);
+
+  const editModel = editItemModel({ id, ...edits });
+
+  return editModel;
 };
