@@ -1,6 +1,6 @@
 import joi from 'joi';
 import { parseRequestModel } from './applyJoiSchema.js';
-import { listIdSchema } from './listId.js';
+import { listIdSchema } from './list.js';
 
 /**
  * @openapi

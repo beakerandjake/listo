@@ -3,7 +3,7 @@ import { parseRequestModel } from './applyJoiSchema.js';
 import {
   itemDueDateSchema, itemNameSchema, itemNoteSchema, itemQuantitySchema,
 } from './item.js';
-import { listIdSchema } from './listId.js';
+import { listIdSchema } from './list.js';
 
 /**
  * @openapi

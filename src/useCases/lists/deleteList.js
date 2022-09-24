@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../errors/index.js';
 import { logger } from '../../logger.js';
-import { listIdModel } from '../../models/listId.js';
+import { listIdModel } from '../../models/index.js';
 import { listRepository } from '../../repositories/index.js';
 
 /**
