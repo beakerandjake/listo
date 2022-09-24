@@ -1,5 +1,6 @@
 import joi from 'joi';
 import { parseRequestModel } from './applyJoiSchema.js';
+import { listIdSchema } from './listId.js';
 
 /**
  * @openapi
@@ -18,9 +19,7 @@ export const filters = {
 };
 
 const schema = joi.object({
-  listId: joi.number()
-    .min(0)
-    .required(),
+  listId: listIdSchema,
 
   filter: joi.string()
     .valid(...Object.values(filters)),

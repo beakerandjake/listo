@@ -9,7 +9,7 @@ import { parseRequestModel } from './applyJoiSchema.js';
  *      type: number
  *      minimum: 0
  */
-const schema = joi.number()
+export const listIdSchema = joi.number()
   .min(0)
   .required();
 
@@ -18,4 +18,4 @@ const schema = joi.number()
  * @param {object} data - The data to parse into the model.
  * @returns {number}
  */
-export const listIdModel = (data) => parseRequestModel(data, schema, 'listIdModel');
+export const listIdModel = (data) => parseRequestModel(data, listIdSchema, 'listIdModel');

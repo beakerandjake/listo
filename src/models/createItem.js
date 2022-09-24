@@ -1,6 +1,7 @@
 import joi from 'joi';
 import config from '../config.js';
 import { parseRequestModel } from './applyJoiSchema.js';
+import { listIdSchema } from './listId.js';
 
 /**
  * @openapi
@@ -27,9 +28,7 @@ import { parseRequestModel } from './applyJoiSchema.js';
  *          required: false
  */
 const schema = joi.object({
-  listId: joi.number()
-    .min(0)
-    .required(),
+  listId: listIdSchema,
 
   name: joi.string()
     .trim()

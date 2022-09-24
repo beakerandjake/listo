@@ -48,9 +48,7 @@ export const createListRequestModel = (data) => parseRequestModel(data, requestS
  *          type: number
  */
 const responseSchema = joi.object({
-  id: joi.number()
-    .min(0)
-    .required(),
+  id: joi.number().required(),
 });
 
 /**
