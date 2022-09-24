@@ -7,7 +7,6 @@ import { parseRequestModel } from './applyJoiSchema.js';
  *  schemas:
  *    listIdModel:
  *      type: number
- *      required: true
  *      minimum: 0
  */
 const schema = joi.number()

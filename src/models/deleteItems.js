@@ -1,6 +1,17 @@
 import joi from 'joi';
 import { parseRequestModel } from './applyJoiSchema.js';
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    deleteItemsFilter:
+ *      type: string
+ *      enum:
+ *        - completed
+ *        - active
+ */
+
 export const filters = {
   completed: 'completed',
   active: 'active',

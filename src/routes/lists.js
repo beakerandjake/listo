@@ -177,15 +177,12 @@ router.get('/:id/items', (req, res) => {
  *          in: path
  *          required: true
  *          schema:
- *            type: number
+ *            $ref: "#/components/schemas/listIdModel"
  *        - name: filter
  *          in: query
  *          required: false
  *          schema:
- *            type: string
- *            enum:
- *              - completed
- *              - active
+ *            $ref: "#/components/schemas/deleteItemsFilter"
  *      responses:
  *        200:
  *          description: Items were successfully deleted.
