@@ -27,7 +27,7 @@ const createItem = (item) => {
  * @returns {object}
  */
 const getItem = (id) => {
-  logger.verbose('querying item with id: %d', id);
+  logger.verbose('querying item with id: %s', id);
 
   const item = getDb()
     .prepare(`
@@ -48,7 +48,7 @@ const getItem = (id) => {
  * @returns {array}
  */
 const getAllItems = (listId) => {
-  logger.verbose('querying items for list: %d', listId);
+  logger.verbose('querying items for list: %s', listId);
 
   const items = getDb()
     .prepare(`
@@ -58,7 +58,7 @@ const getAllItems = (listId) => {
     `)
     .all(listId);
 
-  logger.verbose('got %d item(s) for list: %d', items.length, listId);
+  logger.verbose('got %d item(s) for list: %s', items.length, listId);
 
   return items;
 };
@@ -69,7 +69,7 @@ const getAllItems = (listId) => {
  * @returns {number} The number of items deleted.
  */
 const deleteCompleted = (listId) => {
-  logger.verbose('marking completed items for list: %d as deleted', listId);
+  logger.verbose('marking completed items for list: %s as deleted', listId);
 
   const { changes } = getDb()
     .prepare(`
@@ -90,7 +90,7 @@ const deleteCompleted = (listId) => {
  * @returns {number} The number of items deleted.
  */
 const deleteActive = (listId) => {
-  logger.verbose('marking active items for list: %d as deleted', listId);
+  logger.verbose('marking active items for list: %s as deleted', listId);
 
   const { changes } = getDb()
     .prepare(`
@@ -111,7 +111,7 @@ const deleteActive = (listId) => {
  * @returns {number} The number of items deleted.
  */
 const deleteAll = (listId) => {
-  logger.verbose('marking all items for list: %d as deleted', listId);
+  logger.verbose('marking all items for list: %s as deleted', listId);
 
   const { changes } = getDb()
     .prepare(`

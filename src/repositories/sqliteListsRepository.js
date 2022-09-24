@@ -42,7 +42,7 @@ const existsWithName = (name) => {
     .pluck()
     .get(name);
 
-  logger.verbose('got match: %s', exists ? 'true' : 'false');
+  logger.verbose('got match: %s', exists);
 
   return exists;
 };
@@ -53,7 +53,7 @@ const existsWithName = (name) => {
  * @returns {boolean}
  */
 const existsWithId = (id) => {
-  logger.verbose('querying if list exists with id: %d', id);
+  logger.verbose('querying if list exists with id: %s', id);
 
   const exists = getDb()
     .prepare(`
@@ -94,7 +94,7 @@ const createList = (list) => {
  * @returns {boolean}
  */
 const deleteList = (id) => {
-  logger.verbose('marking list: %d as deleted', id);
+  logger.verbose('marking list: %s as deleted', id);
 
   const db = getDb();
 
