@@ -43,6 +43,30 @@ const getItem = (id) => {
 };
 
 /**
+ * Does an item with the given id exist?
+ * @param {number} id - The id to check for.
+ * @returns {boolean}
+ */
+const existsWithId = (id) => {
+  logger.verbose('querying if item exists with id: %s', id);
+
+  const exists = getDb()
+    .prepare(`
+      SELECT EXISTS(
+        SELECT 1 
+        FROM items 
+        WHERE id = ? AND deletedDate IS NULL
+      );
+    `)
+    .pluck()
+    .get(id);
+
+  logger.verbose('item exists: %s', exists);
+
+  return exists;
+};
+
+/**
  * Returns all of the items in the list.
  * @param {number} listId - The id of the list.
  * @returns {array}
@@ -155,4 +179,5 @@ export default {
   deleteCompleted,
   deleteActive,
   deleteAll,
+  existsWithId,
 };

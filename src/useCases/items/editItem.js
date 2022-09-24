@@ -1,5 +1,7 @@
+import { NotFoundError } from '../../errors/NotFound.js';
 import { logger } from '../../logger.js';
 import { editItemModel } from '../../models/editItem.js';
+import { itemRepository } from '../../repositories/index.js';
 
 /**
  * Applies edits to an item.
@@ -11,5 +13,7 @@ export const editItem = (id, edits) => {
 
   const editModel = editItemModel({ id, ...edits });
 
-  return editModel;
+  if (!itemRepository.existsWithId(editModel.id)) {
+    throw new NotFoundError(`Could not find an Item with id: ${editModel.id}`);
+  }
 };
