@@ -1,8 +1,9 @@
+const environment = process.env.NODE_ENV;
 const version = process.env.VERSION || '0.1.0';
 const port = process.env.PORT || 3000;
 
 export default {
-  environment: process.env.NODE_ENV,
+  environment,
   port,
   version,
   sqlite: {
@@ -31,6 +32,6 @@ export default {
     inputCharactersRegex: /^[\w\-_\s.,\(\)!@#$&*]+$/, //eslint-disable-line
   },
   logging: {
-    level: process.env.LOG_LEVEL || 'verbose',
+    level: process.env.LOG_LEVEL || environment === 'production' ? 'warn' : 'info',
   },
 };
