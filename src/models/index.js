@@ -3,6 +3,7 @@ import { createListRequestModel, createListModel } from './createList.js';
 import { itemModel } from './item.js';
 import { listModel } from './list.js';
 import { deleteItemsModel } from './deleteItems.js';
+import { listIdModel } from './listId.js';
 
 export {
   createListRequestModel,
@@ -11,4 +12,5 @@ export {
   itemModel,
   listModel,
   deleteItemsModel,
+  listIdModel,
 };

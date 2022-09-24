@@ -32,6 +32,6 @@ export default {
     inputCharactersRegex: /^[\w\-_\s.,\(\)!@#$&*]+$/, //eslint-disable-line
   },
   logging: {
-    level: process.env.LOG_LEVEL || environment === 'production' ? 'warn' : 'silly',
+    level: process.env.LOG_LEVEL || environment === 'production' ? 'warn' : 'info',
   },
 };

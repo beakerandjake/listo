@@ -1,7 +1,6 @@
 import joi from 'joi';
 import config from '../config.js';
-import { BadRequestError } from '../errors/index.js';
-import { logger } from '../logger.js';
+import { parseRequestModel } from './applyJoiSchema.js';
 
 /**
  * @openapi
@@ -60,16 +59,4 @@ const schema = joi.object({
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const createItemRequestModel = (data) => {
-  logger.debug('create createItemRequestModel from: %s', data);
-
-  const { error, value } = schema.validate(data);
-
-  if (error) {
-    throw new BadRequestError(error.message);
-  }
-
-  logger.debug('created createItemRequestModel: %s', value, data);
-
-  return value;
-};
+export const createItemRequestModel = (data) => parseRequestModel(data, schema, 'createItemRequestModel');

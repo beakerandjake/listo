@@ -1,7 +1,6 @@
 import joi from 'joi';
 import config from '../config.js';
-import { logger } from '../logger.js';
-import { ApplicationError, BadRequestError } from '../errors/index.js';
+import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 
 /**
  * @openapi
@@ -36,17 +35,7 @@ const requestSchema = joi.object({
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const createListRequestModel = ({ name, iconName }) => {
-  logger.debug('create createListRequestModel from: %s', { name, iconName });
-
-  const { error, value } = requestSchema.validate({ name, iconName });
-
-  if (error) {
-    throw new BadRequestError(error.message);
-  }
-
-  return value;
-};
+export const createListRequestModel = (data) => parseRequestModel(data, requestSchema, 'createListRequestModel');
 
 /**
  * @openapi
@@ -69,16 +58,4 @@ const responseSchema = joi.object({
    * @param {object} data - The data to parse into the model.
    * @returns {object}
    */
-export const createListModel = (id) => {
-  logger.debug('create createListModel from: %s', { id });
-
-  const { error, value } = responseSchema.validate({ id });
-
-  if (error) {
-    throw new ApplicationError(error.message);
-  }
-
-  logger.debug('created createListModel: %s', value);
-
-  return value;
-};
+export const createListModel = (data) => parseResponseModel(data, responseSchema, 'createListModel');
