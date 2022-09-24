@@ -16,6 +16,6 @@ const schema = joi.number()
 /**
  * Parses and validates a model from the data.
  * @param {object} data - The data to parse into the model.
- * @returns {object}
+ * @returns {number}
  */
 export const listIdModel = (data) => parseRequestModel(data, schema, 'listIdModel');
