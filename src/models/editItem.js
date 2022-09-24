@@ -12,22 +12,13 @@ import {
  *      type: object
  *      properties:
  *        completed:
- *          type: boolean
- *          required: false
- *          default: false
+ *          $ref: "#components/schemas/itemCompleted"
  *        quantity:
- *          type: number
- *          required: false
- *          default: 1
- *          minimum: 1
+ *          $ref: "#components/schemas/itemQuantity"
  *        note:
- *          type: string
- *          required: false
- *          default: ''
+ *          $ref: "#components/schemas/itemNote"
  *        dueDate:
- *          type: string
- *          format: date-time
- *          required: false
+ *          $ref: "#components/schemas/itemDueDate"
  */
 const schema = joi
   .object({

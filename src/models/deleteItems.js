@@ -12,7 +12,6 @@ import { listIdSchema } from './list.js';
  *        - completed
  *        - active
  */
-
 export const filters = {
   completed: 'completed',
   active: 'active',
