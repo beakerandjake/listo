@@ -18,7 +18,7 @@ export function Sidebar({ items }) {
                     {/* When no lists exit, only render a nav item for the "create list" page. */}
                     {items?.length
                         ? <SidebarNav lists={items} />
-                        : <SidebarNavItem key="create" to="lists/create" name="Create New List" iconName="plus" />
+                        : <SidebarNavItem key="create" to="lists/create" text="Create New List" iconName="plus" />
                     }
                 </nav>
             </div>
