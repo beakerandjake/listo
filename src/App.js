@@ -4,7 +4,7 @@ import { NotFound } from 'routes/NotFound';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
 import { useErrorHandler } from 'react-error-boundary';
-import { getLists } from './services/listService';
+import { getLists } from './api';
 import { CreateNewList } from 'routes/CreateNewList';
 import { List } from 'routes/List';
 import { Dashboard } from 'routes/Dashboard';
