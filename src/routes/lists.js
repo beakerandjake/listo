@@ -94,7 +94,7 @@ router.delete('/:id', (req, res) => {
  * /lists/{listId}/items:
  *    post:
  *      tags: [Items]
- *      summary: Add Item
+ *      summary: Add Item to List.
  *      description: Add a new Item to the list.
  *      parameters:
  *        - name: listId
@@ -168,7 +168,7 @@ router.get('/:id/items', (req, res) => {
  * /lists/{listId}/items:
  *    delete:
  *      tags: [Items]
- *      summary: Delete list items
+ *      summary: Delete List Items
  *      description: Delete the items in a list.
  *      produces:
  *        - application/json
