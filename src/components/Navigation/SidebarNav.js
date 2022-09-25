@@ -7,15 +7,15 @@ import { Badge } from "components/Badge";
  * @param {Object} props
  * @param {array} props.items - The navigation items to render.
  */
-const ListSidebarNavItem = ({ id, name, iconName, count }) => {
+const ListSidebarNavItem = ({ id, name, iconName, itemCount }) => {
     return (
         <SidebarNavItem
             to={`/lists/${id}`}
             text={name}
             iconName={iconName}
-            children={({ isActive }) => (count > 1 && (
+            children={({ isActive }) => (itemCount > 1 && (
                 <Badge size="lg" variant={isActive ? 'success' : 'default'}>
-                    {count}
+                    {itemCount}
                 </Badge>
             ))}
         />
