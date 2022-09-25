@@ -4,7 +4,7 @@ import { NotFound } from 'routes/NotFound';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
 import { useErrorHandler } from 'react-error-boundary';
-import { getLists } from './api';
+import { listApi } from './api';
 import { CreateNewList } from 'routes/CreateNewList';
 import { List } from 'routes/List';
 import { Dashboard } from 'routes/Dashboard';
@@ -17,7 +17,7 @@ function App() {
   useEffect(handle => {
     async function fetchLists() {
       try {
-        let response = await getLists();
+        let response = await listApi.getLists();
         setLists(response);
         setInitialized(true);
       } catch (error) {

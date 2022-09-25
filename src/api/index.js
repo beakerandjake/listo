@@ -1,7 +1,9 @@
-import { getLists } from "./listApi";
+import { getLists } from './listApi';
 
 // TODO swap based on config
 
-export {
-    getLists    
-}
+const listApi = {
+  getLists,
+};
+
+export { listApi };
