@@ -112,7 +112,9 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
         {item.created && (
           <span className="text-sm font-semibold text-gray-500 select-none">
             Created{' '}
-            {formatDistanceToNow(parseISO(item.created), { addSuffix: true })}
+            {formatDistanceToNow(parseISO(item.created), {
+              addSuffix: true,
+            })}
           </span>
         )}
         <IconButton

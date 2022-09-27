@@ -123,7 +123,10 @@ export function List(props) {
   const deleteItem = async (itemId) => {
     try {
       setSelectedItemId(null);
-      setList({ ...list, items: list.items.filter((x) => x.id !== itemId) });
+      setList({
+        ...list,
+        items: list.items.filter((x) => x.id !== itemId),
+      });
       // await setItemCompleted(id, itemId, completed);
     } catch (error) {
       handleError(error);

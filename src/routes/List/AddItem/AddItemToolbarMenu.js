@@ -82,7 +82,9 @@ export function AddItemToolbarMenu({
               icon={!!item.dueDate ? faCalendarCheck : faCalendarPlus}
               title="Add Due Date"
               text={item.dueDate && formatDueDate(item.dueDate)}
-              className={cx({ 'text-indigo-700': !!item.dueDate })}
+              className={cx({
+                'text-indigo-700': !!item.dueDate,
+              })}
             />
           }
           desktopPlacement="bottom-start"
@@ -96,7 +98,9 @@ export function AddItemToolbarMenu({
               icon={faPlusMinus}
               title="Change Quantity"
               text={item.quantity > 1 && `Qty: ${item.quantity}`}
-              className={cx({ 'text-indigo-700': item.quantity > 1 })}
+              className={cx({
+                'text-indigo-700': item.quantity > 1,
+              })}
             />
           }
           desktopPlacement="bottom-start"
@@ -113,7 +117,9 @@ export function AddItemToolbarMenu({
                 <AddItemToolbarButton
                   icon={faComment}
                   title="Add Note"
-                  className={cx({ 'text-indigo-700': !!item.note })}
+                  className={cx({
+                    'text-indigo-700': !!item.note,
+                  })}
                   onClick={() => setOpen(!open)}
                 />
               }

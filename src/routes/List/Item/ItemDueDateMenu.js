@@ -142,7 +142,9 @@ export function ItemDueDateMenu({
       {...props}
       open={open}
       onClose={onMainMenuClose}
-      trigger={cloneElement(chosenTrigger, { onClick: () => setOpen(!open) })}
+      trigger={cloneElement(chosenTrigger, {
+        onClick: () => setOpen(!open),
+      })}
     >
       <MenuHeader className="flex items-center justify-center">
         <MenuTitle>Add Due Date</MenuTitle>

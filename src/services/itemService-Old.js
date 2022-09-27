@@ -37,7 +37,9 @@ const deleteItem = async (id) => {
 
 const editItem = async (id, quantity) => {
   try {
-    await axios.patch(`${API_ENDPOINT}/items/${id}`, { quantity: quantity });
+    await axios.patch(`${API_ENDPOINT}/items/${id}`, {
+      quantity: quantity,
+    });
   } catch (error) {
     console.error('edit item failed:', error);
     throw new Error('Failed to edit item.');

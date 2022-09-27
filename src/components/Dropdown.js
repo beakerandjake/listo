@@ -99,7 +99,11 @@ export const Dropdown = forwardRef(
             {/* Floating parent container */}
             <div
               ref={mergeRefs([floating, forwardedRef])}
-              style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}
+              style={{
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+              }}
               className="top-0 left-0"
             >
               {/* Styled Dropdown Container */}
