@@ -28,8 +28,12 @@ const ErrorDisplay = () => {
  * @param {React.ReactNode} props.children - The child elements to render.
  */
 export const ErrorBoundary = ({ children }) => {
+  const logError = (error) => {
+    console.error('Unexpected Error:', error);
+  };
+  
   return (
-    <ReactErrorBoundary FallbackComponent={ErrorDisplay}>
+    <ReactErrorBoundary FallbackComponent={ErrorDisplay} onError={logError}>
       {children}
     </ReactErrorBoundary>
   );
