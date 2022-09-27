@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { NotFound } from 'routes/NotFound';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
@@ -36,16 +36,18 @@ function App() {
   }
 
   return (
-    <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="lists">
-          <Route path=":id" element={<List />} />
-          <Route path="create" element={<CreateNewList />} />
-        </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </ResponsiveLayout>
+    <BrowserRouter>
+      <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="lists">
+            <Route path=":id" element={<List />} />
+            <Route path="create" element={<CreateNewList />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ResponsiveLayout>
+    </BrowserRouter>
   );
 }
 
