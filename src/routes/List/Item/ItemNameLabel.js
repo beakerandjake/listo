@@ -7,22 +7,17 @@ import cx from 'classnames';
  * @param {boolean} props.completed - Has the item been marked as completed?
  * @param {string} props.className - Additional styles to apply to the element.
  */
-export const ItemNameLabel = ({
-    name,
-    completed,
-    className,
-    ...props
-}) => {
-    return (
-        <p
-            {...props}
-            className={cx(
-                completed ? 'decoration-auto' : 'decoration-transparent',
-                'transition-colors duration-75 line-through',
-                className
-            )}
-        >
-            {name}
-        </p>
-    )
+export const ItemNameLabel = ({ name, completed, className, ...props }) => {
+  return (
+    <p
+      {...props}
+      className={cx(
+        completed ? 'decoration-auto' : 'decoration-transparent',
+        'transition-colors duration-75 line-through',
+        className
+      )}
+    >
+      {name}
+    </p>
+  );
 };

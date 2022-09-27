@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react';
 
 /**
  * Wrapper component which manages an Open state.
@@ -7,6 +7,6 @@ import { useState } from "react"
  * @param {boolean} props.open - Is the menu currently opened or closed?
  */
 export const StatefulMenu = ({ children }) => {
-    const [open, setOpen] = useState(false);
-    return children({ open, setOpen });
-}
+  const [open, setOpen] = useState(false);
+  return children({ open, setOpen });
+};

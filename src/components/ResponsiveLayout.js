@@ -11,22 +11,22 @@ const MOBILE_BREAKPOINT = 768;
  * @param {React.ReactNode} props.children - The sidebar.
  */
 const MobileSidebar = ({ children }) => {
-    const [open, setOpen] = useState(false);
-    const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
-    // close the sidebar any time navigation takes place. 
-    useEffect(() => {
-        setOpen(false);
-    }, [location]);
+  // close the sidebar any time navigation takes place.
+  useEffect(() => {
+    setOpen(false);
+  }, [location]);
 
-    return (
-        <>
-            <Navbar onClickMenuButton={() => setOpen(!open)} />
-            <CollapsibleSidebarContainer open={open} onClose={() => setOpen(false)}>
-                {children}
-            </CollapsibleSidebarContainer>
-        </>
-    );
+  return (
+    <>
+      <Navbar onClickMenuButton={() => setOpen(!open)} />
+      <CollapsibleSidebarContainer open={open} onClose={() => setOpen(false)}>
+        {children}
+      </CollapsibleSidebarContainer>
+    </>
+  );
 };
 
 /**
@@ -35,32 +35,25 @@ const MobileSidebar = ({ children }) => {
  * @param {React.ReactNode} props.sidebar - The content of the sidebar.
  * @param {React.ReactNode} props.children - The content of the page.
  */
-export const ResponsiveLayout = ({
-    sidebar,
-    children
-}) => {
-    return (
-        <div className="flex flex-col-reverse">
-            {/* Main Content */}
-            <div className="md:ml-64 flex flex-col flex-1">
-                <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
-                    {children}
-                </main>
-            </div>
-            {/* Static Sidebar on Desktop. */}
-            <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-                <div className="fixed inset-y-0 flex flex-col w-64">
-                    {sidebar}
-                </div>
-            </MediaQuery>
-            {/* Navbar / Sidebar drawer on Mobile */}
-            <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
-                <MobileSidebar>
-                    {sidebar}
-                </MobileSidebar>
-            </MediaQuery>
-        </div>
-    )
+export const ResponsiveLayout = ({ sidebar, children }) => {
+  return (
+    <div className="flex flex-col-reverse">
+      {/* Main Content */}
+      <div className="md:ml-64 flex flex-col flex-1">
+        <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
+          {children}
+        </main>
+      </div>
+      {/* Static Sidebar on Desktop. */}
+      <MediaQuery minWidth={MOBILE_BREAKPOINT}>
+        <div className="fixed inset-y-0 flex flex-col w-64">{sidebar}</div>
+      </MediaQuery>
+      {/* Navbar / Sidebar drawer on Mobile */}
+      <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
+        <MobileSidebar>{sidebar}</MobileSidebar>
+      </MediaQuery>
+    </div>
+  );
 };
 
 export const mobileBreakpoint = MOBILE_BREAKPOINT;

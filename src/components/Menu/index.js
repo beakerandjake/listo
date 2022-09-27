@@ -8,14 +8,14 @@ import { ScrollableMenuContent } from './ScrollableMenuContent';
 import { StatefulMenu } from './StatefulMenu';
 
 export {
-    EllipsisMenuTrigger,
-    MenuFooter,
-    MenuHeader,
-    MenuItem,
-    MenuItemLabel,
-    MenuSeparator,
-    MenuTitle,
-    ResponsiveMenu,
-    ScrollableMenuContent,
-    StatefulMenu
+  EllipsisMenuTrigger,
+  MenuFooter,
+  MenuHeader,
+  MenuItem,
+  MenuItemLabel,
+  MenuSeparator,
+  MenuTitle,
+  ResponsiveMenu,
+  ScrollableMenuContent,
+  StatefulMenu,
 };

@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
-import { Dialog as HeadlessUiDialog } from '@headlessui/react'
+import { Dialog as HeadlessUiDialog } from '@headlessui/react';
 import { Transition } from './Transition';
-
 
 /**
  * Full screen backdrop which can sit over content but behind the Dialog.
@@ -14,17 +13,22 @@ export const DialogBackdrop = ({ open = false, classNames = null }) => {
     <Transition
       in={open}
       appear
-      classNames={classNames || {
-        appear: 'opacity-0',
-        appearActive: 'transition-opacity ease-in duration-300 !opacity-100',
-        exit: 'opacity-100',
-        exitActive: 'transition-opacity ease-in duration-300 !opacity-0',
-      }}
+      classNames={
+        classNames || {
+          appear: 'opacity-0',
+          appearActive: 'transition-opacity ease-in duration-300 !opacity-100',
+          exit: 'opacity-100',
+          exitActive: 'transition-opacity ease-in duration-300 !opacity-0',
+        }
+      }
     >
-      <div className='fixed inset-0 bg-black bg-opacity-80 transition-opacity' tabIndex={-1} />
+      <div
+        className="fixed inset-0 bg-black bg-opacity-80 transition-opacity"
+        tabIndex={-1}
+      />
     </Transition>
-  )
-}
+  );
+};
 
 /**
  * Parent container for a modal Dialog.
@@ -60,20 +64,20 @@ export function Dialog({
       >
         {children}
       </HeadlessUiDialog>
-    </Transition >
-  )
+    </Transition>
+  );
 }
 
 /**
  * Container for the content of the dialog. Clicking outside of this element
- * will cause the onClose event of the parent Dialog to fire. 
+ * will cause the onClose event of the parent Dialog to fire.
  */
 export const DialogContent = forwardRef(({ children, ...props }, ref) => {
   return (
-      <HeadlessUiDialog.Panel ref={ref} {...props}>
-        {children}
-      </HeadlessUiDialog.Panel>
-  )
+    <HeadlessUiDialog.Panel ref={ref} {...props}>
+      {children}
+    </HeadlessUiDialog.Panel>
+  );
 });
 
 /**

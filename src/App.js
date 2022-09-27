@@ -14,22 +14,25 @@ function App() {
   const [lists, setLists] = useState([]);
   const handleError = useErrorHandler();
 
-  useEffect(handle => {
-    async function fetchLists() {
-      try {
-        let response = await listApi.getLists();
-        setLists(response);
-        setInitialized(true);
-      } catch (error) {
-        handleError(error);
+  useEffect(
+    (handle) => {
+      async function fetchLists() {
+        try {
+          let response = await listApi.getLists();
+          setLists(response);
+          setInitialized(true);
+        } catch (error) {
+          handleError(error);
+        }
       }
-    }
 
-    fetchLists();
-  }, [setLists, handleError]);
+      fetchLists();
+    },
+    [setLists, handleError]
+  );
 
   if (!initialized) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (

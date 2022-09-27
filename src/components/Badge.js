@@ -1,16 +1,16 @@
-import classNames from "classnames";
-import { forwardRef } from "react";
+import classNames from 'classnames';
+import { forwardRef } from 'react';
 
 const sizes = {
-    lg: 'px-3 py-0.5 text-sm font-medium',
-    default: 'px-2.5 py-0.5 text-xs font-medium'
+  lg: 'px-3 py-0.5 text-sm font-medium',
+  default: 'px-2.5 py-0.5 text-xs font-medium',
 };
 
 const variants = {
-    success: 'bg-green-700 text-green-100',
-    default: 'bg-gray-300 text-gray-800',
-    inverse: 'bg-green-100 text-green-700'
-}
+  success: 'bg-green-700 text-green-100',
+  default: 'bg-gray-300 text-gray-800',
+  inverse: 'bg-green-100 text-green-700',
+};
 
 /**
  * Content Badge.
@@ -18,20 +18,22 @@ const variants = {
  * @param {'lg'|'default'} props.size - The pre-defined size of the badge.
  * @param {'default'|'success'|'danger'} props.variant - The variant style of the button.
  */
-export const Badge = forwardRef(({
-    size = 'default',
-    variant = 'default',
-    children
-}, ref) => {
+export const Badge = forwardRef(
+  ({ size = 'default', variant = 'default', children }, ref) => {
     const sizeClasses = sizes[size];
     const colorClasses = variants[variant];
 
     return (
-        <span
-            ref={ref}
-            className={classNames(sizeClasses, colorClasses, "inline-flex items-center rounded-full font-medium ")}
-        >
-            {children}
-        </span>
-    )
-});
+      <span
+        ref={ref}
+        className={classNames(
+          sizeClasses,
+          colorClasses,
+          'inline-flex items-center rounded-full font-medium '
+        )}
+      >
+        {children}
+      </span>
+    );
+  }
+);

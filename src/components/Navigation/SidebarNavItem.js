@@ -12,35 +12,38 @@ import { getIcon } from 'services/iconLibrary';
  * @param {function} props.children - Render function which provides information on if the current item is active.
  */
 export const SidebarNavItem = ({
-    text,
-    iconName,
-    to,
-    children = ({ isActive }) => { }
+  text,
+  iconName,
+  to,
+  children = ({ isActive }) => {},
 }) => {
-    const icon = getIcon(iconName);
+  const icon = getIcon(iconName);
 
-    return (
-        <NavLink
-            to={to}
-            className={({ isActive }) => classNames(
-                { 'bg-green-50 border-green-700 text-gray-900': isActive },
-                { 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900': !isActive },
-                'group flex items-center px-3 py-3 md:py-2 border-l-4 keyboard-only-focus-ring'
-            )}
-            children={({ isActive }) => (
-                <>
-                    <FontAwesomeIcon
-                        icon={icon}
-                        fixedWidth
-                        size="lg"
-                        className="text-black mr-3 flex-shrink-0"
-                    />
-                    <span className="flex-1 text-md font-medium">
-                        {text}
-                    </span>
-                    {children({ isActive })}
-                </>
-            )}
-        />
-    );
-}
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        classNames(
+          { 'bg-green-50 border-green-700 text-gray-900': isActive },
+          {
+            'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900':
+              !isActive,
+          },
+          'group flex items-center px-3 py-3 md:py-2 border-l-4 keyboard-only-focus-ring'
+        )
+      }
+      children={({ isActive }) => (
+        <>
+          <FontAwesomeIcon
+            icon={icon}
+            fixedWidth
+            size="lg"
+            className="text-black mr-3 flex-shrink-0"
+          />
+          <span className="flex-1 text-md font-medium">{text}</span>
+          {children({ isActive })}
+        </>
+      )}
+    />
+  );
+};
