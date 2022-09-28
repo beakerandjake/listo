@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { isValid } from 'date-fns';
 import MediaQuery from 'react-responsive';
 import { mobileBreakpoint } from 'components/ResponsiveLayout';
 import { itemValidationConstants } from 'routes/List/Item';
 import { AddItemDrawer } from './AddItemDrawer';
 import { AddItemToolbar } from './AddItemToolbar';
 import { StatefulMenu } from 'components/Menu';
+import { isValidDate } from 'services/dueDateHelpers';
 
 const DEFAULT_ITEM = {
   name: '',
@@ -27,7 +27,7 @@ const itemCanBeAdded = ({ name, dueDate, quantity, note }) => {
     return false;
   }
 
-  if (dueDate && !isValid(dueDate)) {
+  if (dueDate && !isValidDate(dueDate)) {
     return false;
   }
 
@@ -44,12 +44,14 @@ const itemCanBeAdded = ({ name, dueDate, quantity, note }) => {
 
 /**
  * Applies consistent formatting to the item's fields.
- * @param {Object} item - The item to be format
+ * @param {object} item - The item to be format
+ * @returns {object}
  */
 const formatItem = (item) => {
   const sanitized = {
     name: item.name.trim(),
-    note: item.note?.trim() || '',
+    note: item.note?.trim() || null,
+    dueDate: item.dueDate?.toISOString() || null,
   };
 
   return { ...item, ...sanitized };

@@ -67,22 +67,15 @@ export function List(props) {
     return sortItems(items, activeSort.itemKey, activeSort.direction);
   }, [items, activeSort]);
 
-  const onAddItem = async (item) => {
-    // try {
-    //   const defaultValues = {
-    //     id: items.length ? Math.max(...items.map((x) => x.id)) + 1 : 0,
-    //     completed: false,
-    //     created: new Date().toISOString(),
-    //     note: null,
-    //   };
-
-      console.log('adding new item', item);
-    //   const newItem = { ...defaultValues, ...item };
-    //   setItems([...items, newItem]);
-    // } catch (error) {
-    //   handleError(error);
-    // }
-  };
+  /**
+   * Add a new item to the list.
+   * @param {object} item - The item to add to the list.
+   **/
+  const addItem = async (item) =>
+    itemApi
+      .addItem(list.id, item)
+      .then((newItem) => setItems([...items, newItem]))
+      .catch(handleError);
 
   const onSetItemCompleted = async (itemId, completed) => {
     try {
@@ -107,7 +100,7 @@ export function List(props) {
   const confirmDeleteItem = (itemId) => {
     setConfirmModalData({
       open: true,
-      onConfirm: async () => await deleteItem(itemId),
+      onConfirm: () => deleteItem(itemId),
       props: {
         variant: 'danger',
         title: 'Delete Item?',
@@ -117,14 +110,14 @@ export function List(props) {
     });
   };
 
-  const deleteItem = async (itemId) => {
-    try {
-      setSelectedItemId(null);
-      setItems(items.filter((x) => x.id !== itemId));
-      // await setItemCompleted(id, itemId, completed);
-    } catch (error) {
-      handleError(error);
-    }
+  /**
+   * Deletes an item from the list.
+   * @param {number} itemId - The item to delete from the list.
+   **/
+  const deleteItem = (itemId) => {
+    setSelectedItemId(null);
+    setItems(items.filter((x) => x.id !== itemId));
+    itemApi.deleteItem(itemId).catch(handleError);
   };
 
   const confirmDeleteItems = (itemIds = [], props) => {
@@ -162,6 +155,7 @@ export function List(props) {
   };
 
   const editItems = (changes) => {
+    console.log('changes', changes);
     try {
       const newItems = items.map((item) => {
         const changeForItem = changes.find((change) => change.id === item.id);
@@ -200,7 +194,7 @@ export function List(props) {
           }
         />
 
-        <AddItem onAddItem={onAddItem} />
+        <AddItem onAddItem={addItem} />
 
         {/* Header Section */}
         <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">

@@ -7,7 +7,7 @@ const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;
 
 /**
  * Loads all of the items in a list.
- * @param {listId} - The id of the list to load items for.
+ * @param {number} listId - The id of the list to load items for.
  * @returns {Promise<object[]>}
  **/
 const getItems = async (listId) => {
@@ -15,8 +15,30 @@ const getItems = async (listId) => {
   return data;
 };
 
+/**
+ * Add a new item to the list.
+ * @param {number} listId - The id of the list.
+ * @param {object} item - The item to add to the list.
+ * @returns {Promise<object>}
+ **/
+const addItem = async (listId, item) => {
+  const { data } = await axios.post(listItemsUrl(listId), item);
+  return data;
+};
+
+/**
+ * Deletes an item from the list.
+ * @param {number} listId - The id of the list.
+ * @param {object} item - The item to delete from the list.
+ **/
+const deleteItem = async (itemId) => {
+  await axios.delete(itemBaseUrl(itemId));
+};
+
 const api = {
   getItems,
+  addItem,
+  deleteItem,
 };
 
 export default api;

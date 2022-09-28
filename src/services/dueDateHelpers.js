@@ -61,3 +61,12 @@ export function isDueToday(date) {
 
   return differenceInCalendarDays(parsed, new Date()) === 0;
 }
+
+/**
+ * Is the given date valid?
+ * @param {Date|string} date - The date to test.
+ * @returns {boolean}
+ */
+export const isValidDate = (date) => {
+  return isDate(date) || parseISO(date);
+};
