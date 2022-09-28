@@ -60,12 +60,12 @@ const groupItems = (items) =>
  * @param {Object} props
  * @param {array} props.items - All of the items in the list
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
- * @param {function} props.onItemsChange - Callback invoked when the user has made changes to one or more items.
+ * @param {function} props.onItemChange - Callback invoked when the user has made changes to an item.
  */
 export const GroupedItemsDisplay = ({
   items,
   onItemSelected,
-  onItemsChange,
+  onItemChange,
 }) => {
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const [itemGroups, setItemGroups] = useState(groupItems(items));
@@ -105,7 +105,7 @@ export const GroupedItemsDisplay = ({
       <Items
         items={itemGroups[activeGroupIndex].items}
         onItemSelected={onItemSelected}
-        onItemChange={(id, changes) => onItemsChange([{ id, changes }])}
+        onItemChange={onItemChange}
       />
 
       {activeGroup.items.length <= 0 && (

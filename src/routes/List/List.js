@@ -103,15 +103,6 @@ export function List(props) {
       })
       .catch(handleError);
 
-  const onSetItemCompleted = async (itemId, completed) => {
-    try {
-      setItems(items.map((x) => (x.id === itemId ? { ...x, completed } : x)));
-      await setItemCompleted(id, itemId, completed);
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
   // todo, can probably merge with onSetItemComplete and just take array.
   const setItemsCompleted = async (itemIds, completed) => {
     try {
@@ -162,25 +153,6 @@ export function List(props) {
     return items.find((x) => x.id === itemId);
   };
 
-  const editItems = (changes) => {
-    console.log('changes', changes);
-    try {
-      const newItems = items.map((item) => {
-        const changeForItem = changes.find((change) => change.id === item.id);
-
-        if (!changeForItem) {
-          return item;
-        }
-
-        return { ...item, ...changeForItem.changes };
-      });
-
-      setItems(newItems);
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
   if (!list) {
     return <LoadingSkeleton />;
   }
@@ -192,7 +164,7 @@ export function List(props) {
         <GroupedItemsDisplay
           items={sortedItems}
           onItemSelected={setSelectedItemId}
-          onItemsChange={editItems}
+          onItemChange={editItem}
         />
 
         <AddItem onAddItem={addItem} />
