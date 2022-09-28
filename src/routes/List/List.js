@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
-import { getList, setItemCompleted } from 'services/listService';
 import { itemApi, listApi } from 'api';
 import {
   itemSortingFields,
@@ -66,6 +65,10 @@ export function List(props) {
     }
     return sortItems(items, activeSort.itemKey, activeSort.direction);
   }, [items, activeSort]);
+
+  const getSelectedItem = (itemId) => {
+    return items.find((x) => x.id === itemId);
+  };
 
   /**
    * Add a new item to the list.
@@ -147,10 +150,6 @@ export function List(props) {
     } catch (error) {
       handleError(error);
     }
-  };
-
-  const getSelectedItem = (itemId) => {
-    return items.find((x) => x.id === itemId);
   };
 
   if (!list) {
