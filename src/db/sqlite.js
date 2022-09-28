@@ -45,9 +45,17 @@ export const initialize = () => {
     );
 
     INSERT INTO lists (name, iconName)
-    VALUES ('todo', 'testIcon');
+    VALUES ('Todo', 'list-check');
+
     INSERT INTO lists (name, iconName)
-    VALUES ('grocery', 'testIcon');
+    VALUES ('Grocery', 'cart-shopping');
+
+    INSERT INTO lists (name, iconName)
+    VALUES ('Trips', 'plane');
+
+    INSERT INTO lists (name, iconName)
+    VALUES ('Purchases', 'dollar-sign');
+
     INSERT INTO items (listId, name)
     VALUES (1, 'get groceries');
     INSERT INTO items (listId, name, note)
