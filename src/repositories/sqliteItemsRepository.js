@@ -37,7 +37,7 @@ const getItem = (id) => {
     `)
     .get(id);
 
-  logger.verbose('got item: %s', item);
+  logger.verbose('got item: %s', !!item);
 
   return item;
 };
