@@ -68,20 +68,20 @@ export function List(props) {
   }, [items, activeSort]);
 
   const onAddItem = async (item) => {
-    try {
-      const defaultValues = {
-        id: items.length ? Math.max(...items.map((x) => x.id)) + 1 : 0,
-        completed: false,
-        created: new Date().toISOString(),
-        note: null,
-      };
+    // try {
+    //   const defaultValues = {
+    //     id: items.length ? Math.max(...items.map((x) => x.id)) + 1 : 0,
+    //     completed: false,
+    //     created: new Date().toISOString(),
+    //     note: null,
+    //   };
 
-      const newItem = { ...defaultValues, ...item };
-      console.log('new item', newItem);
-      setItems([...items, newItem]);
-    } catch (error) {
-      handleError(error);
-    }
+      console.log('adding new item', item);
+    //   const newItem = { ...defaultValues, ...item };
+    //   setItems([...items, newItem]);
+    // } catch (error) {
+    //   handleError(error);
+    // }
   };
 
   const onSetItemCompleted = async (itemId, completed) => {

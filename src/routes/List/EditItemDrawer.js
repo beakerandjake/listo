@@ -109,10 +109,10 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
           title="Close Item Details"
           onClick={() => setOpen(false)}
         />
-        {item.created && (
+        {item.createdDate && (
           <span className="text-sm font-semibold text-gray-500 select-none">
             Created{' '}
-            {formatDistanceToNow(parseISO(item.created), {
+            {formatDistanceToNow(parseISO(item.createdDate), {
               addSuffix: true,
             })}
           </span>
