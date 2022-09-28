@@ -77,6 +77,19 @@ export function List(props) {
       .then((newItem) => setItems([...items, newItem]))
       .catch(handleError);
 
+  /**
+   * Edit the item.
+   * @param {number} itemId - The id of the item to edit.
+   * @param {object} changes - The changes to apply to the item.
+   **/
+  const editItem = async (itemId, changes) =>
+    itemApi
+      .editItem(itemId, changes)
+      .then((newItem) =>
+        setItems(items.map((x) => (x.id === itemId ? newItem : x)))
+      )
+      .catch(handleError);
+
   const onSetItemCompleted = async (itemId, completed) => {
     try {
       setItems(items.map((x) => (x.id === itemId ? { ...x, completed } : x)));
@@ -137,14 +150,6 @@ export function List(props) {
   const deleteItems = async (itemIds) => {
     try {
       setItems(items.filter((x) => !itemIds.includes(x.id)));
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const editItem = (itemId, changes) => {
-    try {
-      setItems(items.map((x) => (x.id === itemId ? { ...x, ...changes } : x)));
     } catch (error) {
       handleError(error);
     }
