@@ -4,7 +4,7 @@ const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/lists`;
 
 /**
  * Loads all of the lists.
- * @returns {array}
+ * @returns {Promise<object[]>}
  **/
 export async function getLists() {
   const { data } = await axios.get(baseUrl);
