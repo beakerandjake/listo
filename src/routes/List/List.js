@@ -90,6 +90,19 @@ export function List(props) {
       )
       .catch(handleError);
 
+  /**
+   * Deletes an item from the list.
+   * @param {number} itemId - The item to delete from the list.
+   **/
+  const deleteItem = (itemId) =>
+    itemApi
+      .deleteItem(itemId)
+      .then(() => {
+        setSelectedItemId(null);
+        setItems(items.filter((x) => x.id !== itemId));
+      })
+      .catch(handleError);
+
   const onSetItemCompleted = async (itemId, completed) => {
     try {
       setItems(items.map((x) => (x.id === itemId ? { ...x, completed } : x)));
@@ -121,16 +134,6 @@ export function List(props) {
         confirmButtonText: 'Delete',
       },
     });
-  };
-
-  /**
-   * Deletes an item from the list.
-   * @param {number} itemId - The item to delete from the list.
-   **/
-  const deleteItem = (itemId) => {
-    setSelectedItemId(null);
-    setItems(items.filter((x) => x.id !== itemId));
-    itemApi.deleteItem(itemId).catch(handleError);
   };
 
   const confirmDeleteItems = (itemIds = [], props) => {
