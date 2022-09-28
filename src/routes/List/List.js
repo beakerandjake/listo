@@ -24,7 +24,6 @@ const defaultSorting = {
 };
 
 export function List(props) {
-  const [initialized, setInitialized] = useState(false);
   const [list, setList] = useState(null);
   const [items, setItems] = useState(null);
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -50,13 +49,11 @@ export function List(props) {
         setItems(values[0]);
         setList(values[1]);
         setActiveSort(defaultSorting);
-        setInitialized(true);
       })
       .catch((error) => handleError(error));
 
     return () => {
       clearTimeout(skeletonMinDisplayTimerId);
-      setInitialized(false);
       setList(null);
       setItems(null);
     };
@@ -182,7 +179,7 @@ export function List(props) {
     }
   };
 
-  if (!initialized) {
+  if (!list) {
     return <LoadingSkeleton />;
   }
 
