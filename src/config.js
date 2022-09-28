@@ -24,6 +24,7 @@ export default {
     apis: ['./src/routes/**/*.js', './src/models/**/*.js'],
   },
   swaggerUi: {
+    customSiteTitle: 'listo api',
     swaggerOptions: {
       displayRequestDuration: true,
     },
