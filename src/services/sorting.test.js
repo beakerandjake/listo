@@ -9,7 +9,7 @@ const createRandomItem = () => {
     name: faker.commerce.productName(),
     quantity: faker.datatype.number({ min: 1, max: 25 }),
     completed: faker.datatype.boolean(),
-    created: faker.date.past(),
+    createdDate: faker.date.past(),
     dueDate:
       faker.helpers.maybe(() =>
         faker.date.between(

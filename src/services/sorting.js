@@ -9,7 +9,7 @@ const ITEM_SORTING_FIELDS = {
   name: 'name',
   dueDate: 'dueDate',
   quantity: 'quantity',
-  created: 'created',
+  created: 'createdDate',
 };
 
 const CUSTOM_SORTING_FUNCTIONS = [
