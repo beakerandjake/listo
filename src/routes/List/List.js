@@ -193,13 +193,6 @@ export function List(props) {
           items={sortedItems}
           onItemSelected={setSelectedItemId}
           onItemsChange={editItems}
-          onDeleteItems={(itemIds) =>
-            confirmDeleteItems(itemIds, {
-              title: 'Delete Completed Items?',
-              message:
-                'All Items marked as completed will be permanently deleted.',
-            })
-          }
         />
 
         <AddItem onAddItem={addItem} />
