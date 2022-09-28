@@ -1,7 +1,14 @@
 import express from 'express';
-import { createItem, deleteItems, getAllItems } from '../useCases/items/index.js';
 import {
-  createList, getAllLists, deleteList,
+  createItem,
+  deleteItems,
+  getAllItems,
+} from '../useCases/items/index.js';
+import {
+  createList,
+  getAllLists,
+  deleteList,
+  getList,
 } from '../useCases/lists/index.js';
 
 const router = express.Router();
@@ -59,6 +66,36 @@ router.get('/', (req, res) => {
  */
 router.post('/', (req, res) => {
   const result = createList(req.body);
+  res.send(result);
+});
+
+/**
+ * @openapi
+ * /lists/{listId}:
+ *    get:
+ *      tags: [Lists]
+ *      summary: Get List
+ *      description: Get the specified list.
+ *      parameters:
+ *        - name: listId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            $ref: "#/components/schemas/listIdModel"
+ *      responses:
+ *        200:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: "#/components/schemas/listModel"
+ *        404:
+ *          description: List was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  const result = getList(id);
   res.send(result);
 });
 
