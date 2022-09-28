@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { getList, setItemCompleted } from 'services/listService';
+import { itemApi, listApi } from 'api';
 import {
   itemSortingFields,
   sortingDirections,
@@ -25,6 +26,7 @@ const defaultSorting = {
 export function List(props) {
   const [initialized, setInitialized] = useState(false);
   const [list, setList] = useState(null);
+  const [items, setItems] = useState(null);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [confirmModalData, setConfirmModalData] = useState({ open: false });
   const [activeSort, setActiveSort] = useState(defaultSorting);
@@ -39,9 +41,14 @@ export function List(props) {
       skeletonMinDisplayTimerId = setTimeout(resolve, 500);
     });
 
-    Promise.all([getList(id), skeletonMinDisplayTimer])
+    Promise.all([
+      itemApi.getItems(id),
+      listApi.getList(id),
+      skeletonMinDisplayTimer,
+    ])
       .then((values) => {
-        setList(values[0]);
+        setItems(values[0]);
+        setList(values[1]);
         setActiveSort(defaultSorting);
         setInitialized(true);
       })
@@ -51,23 +58,22 @@ export function List(props) {
       clearTimeout(skeletonMinDisplayTimerId);
       setInitialized(false);
       setList(null);
+      setItems(null);
     };
   }, [id, handleError]);
 
   // whenever the list items or the active sort changes, update the sortedItems list.
   const sortedItems = useMemo(() => {
-    if (!list?.items) {
+    if (!items) {
       return [];
     }
-    return sortItems(list.items, activeSort.itemKey, activeSort.direction);
-  }, [list, activeSort]);
+    return sortItems(items, activeSort.itemKey, activeSort.direction);
+  }, [items, activeSort]);
 
   const onAddItem = async (item) => {
     try {
       const defaultValues = {
-        id: list.items.length
-          ? Math.max(...list.items.map((x) => x.id)) + 1
-          : 0,
+        id: items.length ? Math.max(...items.map((x) => x.id)) + 1 : 0,
         completed: false,
         created: new Date().toISOString(),
         note: null,
@@ -75,7 +81,7 @@ export function List(props) {
 
       const newItem = { ...defaultValues, ...item };
       console.log('new item', newItem);
-      setList({ ...list, items: [...list.items, newItem] });
+      setItems([...items, newItem]);
     } catch (error) {
       handleError(error);
     }
@@ -83,12 +89,7 @@ export function List(props) {
 
   const onSetItemCompleted = async (itemId, completed) => {
     try {
-      setList({
-        ...list,
-        items: list.items.map((x) =>
-          x.id === itemId ? { ...x, completed } : x
-        ),
-      });
+      setItems(items.map((x) => (x.id === itemId ? { ...x, completed } : x)));
       await setItemCompleted(id, itemId, completed);
     } catch (error) {
       handleError(error);
@@ -98,10 +99,9 @@ export function List(props) {
   // todo, can probably merge with onSetItemComplete and just take array.
   const setItemsCompleted = async (itemIds, completed) => {
     try {
-      const updatedItems = list.items.map((x) =>
-        itemIds.includes(x.id) ? { ...x, completed } : x
+      setItems(
+        items.map((x) => (itemIds.includes(x.id) ? { ...x, completed } : x))
       );
-      setList({ ...list, items: updatedItems });
     } catch (error) {
       handleError(error);
     }
@@ -123,10 +123,7 @@ export function List(props) {
   const deleteItem = async (itemId) => {
     try {
       setSelectedItemId(null);
-      setList({
-        ...list,
-        items: list.items.filter((x) => x.id !== itemId),
-      });
+      setItems(items.filter((x) => x.id !== itemId));
       // await setItemCompleted(id, itemId, completed);
     } catch (error) {
       handleError(error);
@@ -149,8 +146,7 @@ export function List(props) {
   // todo, can probably merge with onDeleteItem and just take array.
   const deleteItems = async (itemIds) => {
     try {
-      const updatedItems = list.items.filter((x) => !itemIds.includes(x.id));
-      setList({ ...list, items: updatedItems });
+      setItems(items.filter((x) => !itemIds.includes(x.id)));
     } catch (error) {
       handleError(error);
     }
@@ -158,24 +154,19 @@ export function List(props) {
 
   const editItem = (itemId, changes) => {
     try {
-      setList({
-        ...list,
-        items: list.items.map((x) =>
-          x.id === itemId ? { ...x, ...changes } : x
-        ),
-      });
+      setItems(items.map((x) => (x.id === itemId ? { ...x, ...changes } : x)));
     } catch (error) {
       handleError(error);
     }
   };
 
   const getSelectedItem = (itemId) => {
-    return list.items.find((x) => x.id === itemId);
+    return items.find((x) => x.id === itemId);
   };
 
   const editItems = (changes) => {
     try {
-      const newItems = list.items.map((item) => {
+      const newItems = items.map((item) => {
         const changeForItem = changes.find((change) => change.id === item.id);
 
         if (!changeForItem) {
@@ -185,7 +176,7 @@ export function List(props) {
         return { ...item, ...changeForItem.changes };
       });
 
-      setList({ ...list, items: newItems });
+      setItems(newItems);
     } catch (error) {
       handleError(error);
     }

@@ -10,28 +10,16 @@ import { List } from 'routes/List';
 import { Dashboard } from 'routes/Dashboard';
 
 function App() {
-  const [initialized, setInitialized] = useState(false);
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState(null);
   const handleError = useErrorHandler();
 
-  useEffect(
-    (handle) => {
-      async function fetchLists() {
-        try {
-          let response = await listApi.getLists();
-          setLists(response);
-          setInitialized(true);
-        } catch (error) {
-          handleError(error);
-        }
-      }
+  useEffect(() => {
+    listApi.getLists()
+      .then(setLists)
+      .catch(handleError);
+  }, [handleError]);
 
-      fetchLists();
-    },
-    [setLists, handleError]
-  );
-
-  if (!initialized) {
+  if (!lists) {
     return <div>Loading...</div>;
   }
 

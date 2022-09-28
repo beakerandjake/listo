@@ -10,7 +10,13 @@ const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;
  * @param {listId} - The id of the list to load items for.
  * @returns {Promise<object[]>}
  **/
-export const getItems = async (listId) => {
+const getItems = async (listId) => {
   const { data } = await axios.get(listItemsUrl(listId));
   return data;
 };
+
+const api = {
+  getItems,
+};
+
+export default api;
