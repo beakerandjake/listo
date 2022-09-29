@@ -110,7 +110,7 @@ export function List(props) {
    **/
   const bulkDeleteItems = (filter) =>
     itemApi
-      .bulkDeleteItems(filter)
+      .bulkDeleteItems(list.id, filter)
       .then(() => {
         setItems(
           items.filter((x) => {

@@ -47,10 +47,11 @@ const editItem = async (itemId, changes) => {
 
 /**
  * Deletes many items from the list.
+ * @param {number} listId - The id of the list.
  * @param {string} filter - Optional filtering to change which items get deleted.
  **/
-const bulkDeleteItems = async (filter) => {
-  console.log('bulk delete', filter);
+const bulkDeleteItems = async (listId, filter) => {
+  await axios.delete(listItemsUrl(listId), { params: { filter } });
 };
 
 const api = {
