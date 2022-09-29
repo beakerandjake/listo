@@ -1,5 +1,5 @@
 import { NotFoundError } from '../../errors/NotFound.js';
-import { deleteItemsModel } from '../../models/index.js';
+import { deleteItemsModel, listIdModel } from '../../models/index.js';
 import { filters } from '../../models/deleteItems.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 import { logger } from '../../logger.js';
@@ -9,9 +9,10 @@ import { logger } from '../../logger.js';
  * @param {number} id - The id of the list.
  * @param {string} filter - Filter criteria to change which items get deleted.
  */
-export const deleteItems = (listId, filter) => {
-  logger.info('deleting items from list: %s with filter: %s', listId, filter);
+export const deleteItems = (id, filter) => {
+  logger.info('deleting items from list: %s with filter: %s', id, filter);
 
+  const listId = listIdModel(id);
   const deleteModel = deleteItemsModel({ listId, filter });
 
   if (!listRepository.existsWithId(listId)) {
