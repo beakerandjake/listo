@@ -8,7 +8,6 @@ import {
   sortItems,
 } from 'services/sorting';
 import { AddItem } from './AddItem';
-import { ConfirmDialog } from 'components/ConfirmDialog';
 import { ActionsDropdown } from './ActionsDropdown';
 import { EditItemDrawer } from './EditItemDrawer';
 import { LoadingSkeleton } from './LoadingSkeleton';
@@ -26,7 +25,6 @@ export function List(props) {
   const [list, setList] = useState(null);
   const [items, setItems] = useState(null);
   const [selectedItemId, setSelectedItemId] = useState(null);
-  const [confirmModalData, setConfirmModalData] = useState({ open: false });
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const { id } = useParams();
   const handleError = useErrorHandler();
@@ -106,47 +104,16 @@ export function List(props) {
       })
       .catch(handleError);
 
+  const bulkDeleteItems = (filter) => {
+    console.log('bulk delete!', filter);
+  };
+
   // todo, can probably merge with onSetItemComplete and just take array.
   const setItemsCompleted = async (itemIds, completed) => {
     try {
       setItems(
         items.map((x) => (itemIds.includes(x.id) ? { ...x, completed } : x))
       );
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const confirmDeleteItem = (itemId) => {
-    setConfirmModalData({
-      open: true,
-      onConfirm: () => deleteItem(itemId),
-      props: {
-        variant: 'danger',
-        title: 'Delete Item?',
-        message: 'This item will be permanently deleted.',
-        confirmButtonText: 'Delete',
-      },
-    });
-  };
-
-  const confirmDeleteItems = (itemIds = [], props) => {
-    const defaultProps = {
-      variant: 'danger',
-      confirmButtonText: 'Delete',
-    };
-
-    setConfirmModalData({
-      open: true,
-      onConfirm: async () => await deleteItems(itemIds),
-      props: { ...defaultProps, ...props },
-    });
-  };
-
-  // todo, can probably merge with onDeleteItem and just take array.
-  const deleteItems = async (itemIds) => {
-    try {
-      setItems(items.filter((x) => !itemIds.includes(x.id)));
     } catch (error) {
       handleError(error);
     }
@@ -175,7 +142,7 @@ export function List(props) {
             <ActionsDropdown
               items={sortedItems}
               onSetItemsCompleted={setItemsCompleted}
-              onDeleteItems={confirmDeleteItems}
+              onBulkDelete={bulkDeleteItems}
             />
           </div>
           {/* Only render dropdown if items exist. */}
@@ -191,20 +158,8 @@ export function List(props) {
       <EditItemDrawer
         item={getSelectedItem(selectedItemId)}
         onClose={() => setSelectedItemId(null)}
-        onDeleteItem={() => confirmDeleteItem(selectedItemId)}
+        onDeleteItem={() => deleteItem(selectedItemId)}
         onEditItem={editItem}
-      />
-
-      <ConfirmDialog
-        open={confirmModalData?.open || false}
-        onDismiss={() =>
-          setConfirmModalData({ ...confirmModalData, open: false })
-        }
-        onConfirm={async () => {
-          setConfirmModalData({ ...confirmModalData, open: false });
-          await confirmModalData.onConfirm();
-        }}
-        {...confirmModalData?.props}
       />
     </>
   );
