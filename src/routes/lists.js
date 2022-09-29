@@ -3,6 +3,7 @@ import {
   createItem,
   deleteItems,
   getAllItems,
+  editItems,
 } from '../useCases/items/index.js';
 import {
   createList,
@@ -205,8 +206,8 @@ router.get('/:id/items', (req, res) => {
  * /lists/{listId}/items:
  *    delete:
  *      tags: [Items]
- *      summary: Delete List Items
- *      description: Delete the items in a list.
+ *      summary: Bulk Delete List Items
+ *      description: Bulk delete the items in a list.
  *      produces:
  *        - application/json
  *      parameters:
@@ -232,6 +233,40 @@ router.delete('/:id/items', (req, res) => {
   const { id } = req.params;
   const { filter } = req.query;
   deleteItems(id, filter);
+  res.sendStatus(200);
+});
+
+/**
+ * @openapi
+ * /lists/{listId}/items:
+ *    patch:
+ *      tags: [Items]
+ *      summary: Bulk Edit List Items
+ *      description: Bulk Edit the items in a list.
+ *      produces:
+ *        - application/json
+ *      parameters:
+ *        - name: listId
+ *          in: path
+ *          required: true
+ *          schema:
+ *            $ref: "#/components/schemas/listIdModel"
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/components/schemas/editItemsModel"
+ *      responses:
+ *        200:
+ *          description: Items were successfully edited.
+ *        404:
+ *          description: Not Found. A list with that Id was not found.
+ *        5XX:
+ *          description: Unexpected Error.
+ */
+router.patch('/:id/items', (req, res) => {
+  editItems(req.params.id, req.body);
   res.sendStatus(200);
 });
 

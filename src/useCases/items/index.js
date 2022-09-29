@@ -3,6 +3,7 @@ import { createItem } from './createItem.js';
 import { deleteItems } from './deleteItems.js';
 import { deleteItem } from './deleteItem.js';
 import { editItem } from './editItem.js';
+import { editItems } from './editItems.js';
 
 export {
   getAllItems,
@@ -10,4 +11,5 @@ export {
   deleteItems,
   deleteItem,
   editItem,
+  editItems,
 };

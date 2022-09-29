@@ -235,8 +235,7 @@ export const editItems = (listId, edits) => {
   let statement = `
     UPDATE items
     SET completedDate = ?
-    WHERE listId = ? AND deletedDate IS NULL
-  `;
+    WHERE listId = ? AND deletedDate IS NULL`;
 
   // If setting all items to completed, don't overwrite completedDate of already completed items.
   if (edits.completed) {
