@@ -104,9 +104,27 @@ export function List(props) {
       })
       .catch(handleError);
 
-  const bulkDeleteItems = (filter) => {
-    console.log('bulk delete!', filter);
-  };
+  /**
+   * Deletes many items from the list.
+   * @param {string} filter - Optional filtering to change which items get deleted.
+   **/
+  const bulkDeleteItems = (filter) =>
+    itemApi
+      .bulkDeleteItems(filter)
+      .then(() => {
+        setItems(
+          items.filter((x) => {
+            // When bulk deleting with no filter, keep no items.
+            if (!filter) {
+              return false;
+            }
+
+            // When bulk deleting with completed filter, only keep active items.
+            return filter === 'completed' && !x.completed;
+          })
+        );
+      })
+      .catch(handleError);
 
   // todo, can probably merge with onSetItemComplete and just take array.
   const setItemsCompleted = async (itemIds, completed) => {

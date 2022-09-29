@@ -45,11 +45,20 @@ const editItem = async (itemId, changes) => {
   return data;
 };
 
+/**
+ * Deletes many items from the list.
+ * @param {string} filter - Optional filtering to change which items get deleted.
+ **/
+const bulkDeleteItems = async (filter) => {
+  console.log('bulk delete', filter);
+};
+
 const api = {
   getItems,
   addItem,
   deleteItem,
   editItem,
+  bulkDeleteItems,
 };
 
 export default api;
