@@ -64,10 +64,6 @@ export function List(props) {
     return sortItems(items, activeSort.itemKey, activeSort.direction);
   }, [items, activeSort]);
 
-  const getSelectedItem = (itemId) => {
-    return items.find((x) => x.id === itemId);
-  };
-
   /**
    * Add a new item to the list.
    * @param {object} item - The item to add to the list.
@@ -138,6 +134,16 @@ export function List(props) {
       .then(setItems)
       .catch(handleError);
 
+  /**
+   * Returns the currently selected item (if any)
+   * @param {number} itemId - The if of the selected item (if any)
+   * @returns {object}
+   **/
+  const getSelectedItem = (itemId) => {
+    return items.find((x) => x.id === itemId);
+  };
+
+  // Render skeleton if still loading.
   if (!list) {
     return <LoadingSkeleton />;
   }
@@ -178,7 +184,7 @@ export function List(props) {
         item={getSelectedItem(selectedItemId)}
         onClose={() => setSelectedItemId(null)}
         onDeleteItem={() => deleteItem(selectedItemId)}
-        onEditItem={editItem}
+        onEditItem={(changes) => editItem(selectedItemId, changes)}
       />
     </>
   );

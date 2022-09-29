@@ -67,7 +67,7 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
             <div className="-ml-2">
               <ItemCompletedCheckbox
                 checked={item.completed}
-                onChange={(completed) => onEditItem(item.id, { completed })}
+                onChange={(completed) => onEditItem({ completed })}
               />
             </div>
             <ItemNameLabel
@@ -75,7 +75,7 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
               name={item.name}
               className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
               onClick={() =>
-                onEditItem(item.id, { completed: !item.completed })
+                onEditItem({ completed: !item.completed })
               }
             />
           </div>
@@ -83,13 +83,13 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
           <div className="flex flex-col space-y-2">
             <ItemQuantityMenu
               quantity={item.quantity}
-              onChange={(value) => onEditItem(item.id, { quantity: value })}
-              onReset={(value) => onEditItem(item.id, { quantity: value })}
+              onChange={(value) => onEditItem({ quantity: value })}
+              onReset={(value) => onEditItem({ quantity: value })}
               desktopPlacement="bottom"
             />
             <ItemDueDateMenu
               dueDate={item.dueDate}
-              onChange={(value) => onEditItem(item.id, { dueDate: value })}
+              onChange={(value) => onEditItem({ dueDate: value })}
               desktopPlacement="bottom"
             />
 
@@ -97,7 +97,7 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
               element="textarea"
               value={item.note}
               onChange={(event) =>
-                onEditItem(item.id, { note: event.target.value })
+                onEditItem({ note: event.target.value })
               }
               debounceTimeout={800}
               forceNotifyByEnter={false}
