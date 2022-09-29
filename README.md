@@ -15,6 +15,7 @@ curl -X POST localhost:3000/api/lists/1/items -H 'Content-Type: application/json
 
 curl -X PATCH localhost:3000/api/items/1 -H 'Content-Type: application/json' -d '{"quantity":2}'
 
+docker run --privileged --rm tonistiigi/binfmt --install all
 docker buildx build --platform linux/amd64,linux/arm64 -t beakerandjake/listo --push .
 
 docker run -v listo:/var/lib/listo/ -p 3000:3000 -it beakerandjake/listo
