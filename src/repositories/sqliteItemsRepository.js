@@ -221,6 +221,39 @@ const editItem = (id, edits) => {
   return changes === 1;
 };
 
+/**
+ * Bulk edits items of the list.
+ * @param {number} listId - The id of the list.
+ * @param {object} edits - Changes to apply to all items of the list.
+ * @returns {number} - The number of items edited.
+ */
+export const editItems = (listId, edits) => {
+  logger.verbose('bulk editing all items for list: %s with edits: %s', listId, edits);
+
+  // Todo, need more elegant solution if supporting more fields than just 'completed'
+
+  let statement = `
+    UPDATE items
+    SET completedDate = ?
+    WHERE listId = ? AND deletedDate IS NULL
+  `;
+
+  // If setting all items to completed, don't overwrite completedDate of already completed items.
+  if (edits.completed) {
+    statement += ' AND completedDate IS NULL';
+  }
+
+  logger.verbose(statement);
+
+  // const { changes } = getDb()
+  //   .prepare(statement)
+  //   .run(edits.completed ? new Date().toISOString() : null, listId);
+
+  // logger.verbose('edited %d active item(s)', changes);
+
+  return 0;
+};
+
 export default {
   createItem,
   getAllItems,
@@ -231,4 +264,5 @@ export default {
   deleteAll,
   existsWithId,
   editItem,
+  editItems,
 };
