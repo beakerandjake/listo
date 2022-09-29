@@ -61,23 +61,32 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
           />
           <MenuTitle title="">Item Details</MenuTitle>
         </MenuHeader>
-        <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-6 bg-gray-50">
+        <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-3 bg-gray-50">
           {/* Item Name / Checkbox */}
-          <div className="flex items-center">
-            <div className="-ml-2">
-              <ItemCompletedCheckbox
-                checked={item.completed}
-                onChange={(completed) => onEditItem({ completed })}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center">
+              <div className="-ml-2">
+                <ItemCompletedCheckbox
+                  checked={item.completed}
+                  onChange={(completed) => onEditItem({ completed })}
+                />
+              </div>
+              <ItemNameLabel
+                completed={item.completed}
+                name={item.name}
+                className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
+                onClick={() => onEditItem({ completed: !item.completed })}
               />
             </div>
-            <ItemNameLabel
-              completed={item.completed}
-              name={item.name}
-              className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
-              onClick={() =>
-                onEditItem({ completed: !item.completed })
-              }
-            />
+            {/* Completed date */}
+            {item.completedDate && (
+              <span className="text-xs font-semibold text-gray-500 select-none">
+                Completed{' '}
+                {formatDistanceToNow(parseISO(item.completedDate), {
+                  addSuffix: true,
+                })}
+              </span>
+            )}
           </div>
           {/* Edit Item Fields */}
           <div className="flex flex-col space-y-2">
@@ -96,9 +105,7 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
             <DebounceInput
               element="textarea"
               value={item.note}
-              onChange={(event) =>
-                onEditItem({ note: event.target.value })
-              }
+              onChange={(event) => onEditItem({ note: event.target.value })}
               debounceTimeout={800}
               forceNotifyByEnter={false}
               placeholder="Add Note"
