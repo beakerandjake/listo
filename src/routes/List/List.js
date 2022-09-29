@@ -29,10 +29,11 @@ export function List(props) {
   const { id } = useParams();
   const handleError = useErrorHandler();
 
-  // whenever the id changes, load the list.
+  // whenever the id changes, load the list and its items.
   useEffect(() => {
     let skeletonMinDisplayTimerId;
 
+    // To prevent flash, ensure the loading skeleton renders for a minimum amount of time.
     const skeletonMinDisplayTimer = new Promise((resolve) => {
       skeletonMinDisplayTimerId = setTimeout(resolve, 500);
     });
@@ -47,7 +48,7 @@ export function List(props) {
         setList(values[1]);
         setActiveSort(defaultSorting);
       })
-      .catch((error) => handleError(error));
+      .catch(handleError);
 
     return () => {
       clearTimeout(skeletonMinDisplayTimerId);
