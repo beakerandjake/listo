@@ -242,15 +242,13 @@ export const editItems = (listId, edits) => {
     statement += ' AND completedDate IS NULL';
   }
 
-  logger.verbose(statement);
+  const { changes } = getDb()
+    .prepare(statement)
+    .run(edits.completed ? new Date().toISOString() : null, listId);
 
-  // const { changes } = getDb()
-  //   .prepare(statement)
-  //   .run(edits.completed ? new Date().toISOString() : null, listId);
+  logger.verbose('edited %d active item(s)', changes);
 
-  // logger.verbose('edited %d active item(s)', changes);
-
-  return 0;
+  return changes;
 };
 
 export default {
