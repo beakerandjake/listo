@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi, listApi } from 'api';
@@ -126,16 +126,17 @@ export function List(props) {
       })
       .catch(handleError);
 
-  // todo, can probably merge with onSetItemComplete and just take array.
-  const setItemsCompleted = async (itemIds, completed) => {
-    try {
-      setItems(
-        items.map((x) => (itemIds.includes(x.id) ? { ...x, completed } : x))
-      );
-    } catch (error) {
-      handleError(error);
-    }
-  };
+  /**
+   * Bulk action to set the complete field of all items in the list.
+   * @param {boolean} completed
+   **/
+  const bulkEditItems = (changes) =>
+    itemApi
+      .bulkEditItems(list.id, changes)
+      // Reload all items after a bulk edit.
+      .then(() => itemApi.getItems(id))
+      .then(setItems)
+      .catch(handleError);
 
   if (!list) {
     return <LoadingSkeleton />;
@@ -159,7 +160,7 @@ export function List(props) {
             <Title icon={getIcon(list.iconName)} name={list.name} />
             <ActionsDropdown
               items={sortedItems}
-              onSetItemsCompleted={setItemsCompleted}
+              onBulkEdit={bulkEditItems}
               onBulkDelete={bulkDeleteItems}
             />
           </div>

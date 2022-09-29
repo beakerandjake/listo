@@ -35,10 +35,10 @@ const bulkDeleteDialogConfigs = {
  * Dropdown menu which contains list wide actions.
  * @param {Object} props - The props.
  * @param {Array} props.items - The items of the list.
- * @param {function} props.onSetItemsCompleted - Callback invoked when the user wants to mark all items of the list as completed.
+ * @param {function} props.onBulkEdit - Callback invoked when the user wants to perform a bulk edit of items in the list.
  * @param {function} props.onBulkDelete - Callback invoked when the user wants to perform a bulk delete of items in the list.
  */
-export function ActionsDropdown({ items, onSetItemsCompleted, onBulkDelete }) {
+export function ActionsDropdown({ items, onBulkEdit, onBulkDelete }) {
   const [open, setOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogConfig, setConfirmDialogConfig] = useState(null);
@@ -64,10 +64,7 @@ export function ActionsDropdown({ items, onSetItemsCompleted, onBulkDelete }) {
                 disabled={items.every((x) => x.completed)}
                 onClick={() => {
                   setOpen(false);
-                  onSetItemsCompleted(
-                    items.filter((x) => !x.completed).map((x) => x.id),
-                    true
-                  );
+                  onBulkEdit({ completed: true });
                 }}
               />
               <MenuItem
@@ -76,10 +73,7 @@ export function ActionsDropdown({ items, onSetItemsCompleted, onBulkDelete }) {
                 disabled={items.every((x) => !x.completed)}
                 onClick={() => {
                   setOpen(false);
-                  onSetItemsCompleted(
-                    items.filter((x) => x.completed).map((x) => x.id),
-                    false
-                  );
+                  onBulkEdit({ completed: false });
                 }}
               />
               <MenuSeparator />

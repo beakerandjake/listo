@@ -54,12 +54,22 @@ const bulkDeleteItems = async (listId, filter) => {
   await axios.delete(listItemsUrl(listId), { params: { filter } });
 };
 
+/**
+ * Edits many items from the list.
+ * @param {number} listId - The id of the list.
+ * @param {object} changes - Edits to apply to all items in the list.
+ **/
+const bulkEditItems = async (listId, changes) => {
+  await axios.patch(listItemsUrl(listId), changes);
+};
+
 const api = {
   getItems,
   addItem,
   deleteItem,
   editItem,
   bulkDeleteItems,
+  bulkEditItems,
 };
 
 export default api;
