@@ -17,6 +17,7 @@ import {
  * @param {boolean} props.open - Should the Dialog currently be opened or closed?
  * @param {function} props.onDismiss - Callback fired when the user cancels the action.
  * @param {function} props.onconfirm - Callback fired when the user confirms the action.
+ * @param {function} props.onExitTransitionComplete - Callback fired when the dialog has closed, and its exit transition has finished.
  * @param {string} props.title - The title of the dialog.
  * @param {string} props.message - The message of the dialog.
  * @param {string=} props.cancelButtonText - Override text of the cancel button .
@@ -27,6 +28,7 @@ export function ConfirmDialog({
   open,
   onDismiss,
   onConfirm,
+  onExitTransitionComplete = () => {},
   title,
   message,
   cancelButtonText = 'Cancel',
@@ -34,7 +36,11 @@ export function ConfirmDialog({
   variant,
 }) {
   return (
-    <Dialog open={open} onClose={onDismiss}>
+    <Dialog
+      open={open}
+      onClose={onDismiss}
+      onExitTransitionComplete={onExitTransitionComplete}
+    >
       <DialogBackdrop
         open={open}
         classNames={{
