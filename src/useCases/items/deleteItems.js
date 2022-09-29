@@ -1,5 +1,5 @@
 import { NotFoundError } from '../../errors/NotFound.js';
-import { deleteItemsModel, listIdModel } from '../../models/index.js';
+import { deleteItemsModel } from '../../models/index.js';
 import { filters } from '../../models/deleteItems.js';
 import { itemRepository, listRepository } from '../../repositories/index.js';
 import { logger } from '../../logger.js';
@@ -12,10 +12,9 @@ import { logger } from '../../logger.js';
 export const deleteItems = (id, filter) => {
   logger.info('deleting items from list: %s with filter: %s', id, filter);
 
-  const listId = listIdModel(id);
-  const deleteModel = deleteItemsModel({ listId, filter });
+  const deleteModel = deleteItemsModel({ id, filter });
 
-  if (!listRepository.existsWithId(listId)) {
+  if (!listRepository.existsWithId(deleteModel.listId)) {
     throw new NotFoundError('List does not exist');
   }
 
