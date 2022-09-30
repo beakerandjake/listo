@@ -1,7 +1,9 @@
 # syntax=docker/dockerfile:1
 
 FROM node:16-alpine
-ENV NODE_ENV production
+ENV NODE_ENV=production
+ENV PORT=3000
+
 WORKDIR /usr/src/listo
 COPY package*.json ./
 RUN npm ci --only=production
@@ -10,7 +12,7 @@ RUN npm ci --only=production
 RUN mkdir /var/lib/listo && chown node /var/lib/listo
 RUN chown node:node /usr/src/listo
 
-COPY ./src ./
-EXPOSE 3000
+COPY ./src ./src
+EXPOSE $PORT
 USER node
-CMD ["node","server.js"]
+CMD ["node","./src/server.js"]
