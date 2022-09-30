@@ -10,10 +10,12 @@ RUN npm config set "//npm.fontawesome.com/:_authToken" $FONT_AWESOME_NPM_AUTH_TO
 # install npm packages as own layer. 
 COPY package*.json ./
 RUN npm ci
+
 # copy app contents, taking advantage of layers for things less likely to change. 
 COPY *.config.js .env jsconfig.json ./
 COPY ./public ./public
 COPY ./src ./src
+
 # build the react app.
 RUN npm run build
 
@@ -22,5 +24,6 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 # remove default assets shipped with nginx
 RUN rm -rf ./*
-# copy our build react app from the build layer. 
+# copy our built react app from the build layer. 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/listo/build .

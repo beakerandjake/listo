@@ -68,3 +68,28 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+### Running on Host Machine
+
+Stop the current image.
+
+```
+docker ps
+docker stop <contianer>
+docker rm <container>
+```
+
+Pull the latest image 
+
+```
+docker pull beakerandjake/listo-frontend
+```
+
+Run the container
+
+```
+docker run --restart unless-stopped -p 4000:80 -d beakerandjake/listo-frontend
+```
