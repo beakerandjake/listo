@@ -17,8 +17,8 @@ export default {
         version,
       },
       servers: [{
-        url: `http://localhost:${port}/api`,
-        description: 'Development Server',
+        url: `http://${process.env.PRODUCTION_SERVER_URL || 'localhost'}:${port}/api`,
+        description: 'API',
       }],
     },
     apis: ['./src/routes/**/*.js', './src/models/**/*.js'],
