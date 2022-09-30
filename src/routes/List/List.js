@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi, listApi } from 'api';
 import {
@@ -27,6 +27,7 @@ export function List(props) {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const { id } = useParams();
+  const navigate = useNavigate();
   const handleError = useErrorHandler();
 
   // whenever the id changes, load the list and its items.
@@ -48,14 +49,20 @@ export function List(props) {
         setList(values[1]);
         setActiveSort(defaultSorting);
       })
-      .catch(handleError);
+      .catch((error) => {
+        if (error?.response?.status !== 404) {
+          handleError(error);
+          return;
+        }
+        navigate('/errors/404');
+      });
 
     return () => {
       clearTimeout(skeletonMinDisplayTimerId);
       setList(null);
       setItems(null);
     };
-  }, [id, handleError]);
+  }, [id, handleError, navigate]);
 
   // whenever the list items or the active sort changes, update the sortedItems list.
   const sortedItems = useMemo(() => {
