@@ -20,9 +20,6 @@ export const initialize = () => {
   logger.debug('initializing database');
 
   db.exec(`
-    DROP TABLE IF EXISTS items;
-    DROP TABLE IF EXISTS lists;
-
     CREATE TABLE IF NOT EXISTS lists (
       id INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
@@ -43,25 +40,6 @@ export const initialize = () => {
         deletedDate TEXT,
         FOREIGN KEY(listId) REFERENCES lists(id)
     );
-
-    INSERT INTO lists (name, iconName)
-    VALUES ('Todo', 'list-check');
-
-    INSERT INTO lists (name, iconName)
-    VALUES ('Grocery', 'cart-shopping');
-
-    INSERT INTO lists (name, iconName)
-    VALUES ('Trips', 'plane');
-
-    INSERT INTO lists (name, iconName)
-    VALUES ('Purchases', 'dollar-sign');
-
-    INSERT INTO items (listId, name)
-    VALUES (1, 'get groceries');
-    INSERT INTO items (listId, name, note)
-    VALUES (1, 'pick weeds', 'a cool note');
-    INSERT INTO items (listId, name, quantity)
-    VALUES (2, 'apples', 4);
   `);
 
   logger.debug('database initialized');
