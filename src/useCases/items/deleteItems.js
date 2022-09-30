@@ -9,10 +9,10 @@ import { logger } from '../../logger.js';
  * @param {number} id - The id of the list.
  * @param {string} filter - Filter criteria to change which items get deleted.
  */
-export const deleteItems = (id, filter) => {
-  logger.info('deleting items from list: %s with filter: %s', id, filter);
+export const deleteItems = (listId, filter) => {
+  logger.info('deleting items from list: %s with filter: %s', listId, filter);
 
-  const deleteModel = deleteItemsModel({ id, filter });
+  const deleteModel = deleteItemsModel({ listId, filter });
 
   if (!listRepository.existsWithId(deleteModel.listId)) {
     throw new NotFoundError('List does not exist');
