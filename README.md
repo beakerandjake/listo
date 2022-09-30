@@ -30,3 +30,32 @@ SQLITE_LOCATION=./items.db PORT=4000 npm run dev
 
 FIND Process using port: sudo lsof -n -i :3000 | grep LISTEN
 KILL Process: sudo kill -9 PID
+
+
+### Running on Host Machine
+
+Stop the current image.
+
+```
+docker ps
+docker stop <contianer>
+docker rm <container>
+```
+
+Pull the latest image 
+
+```
+docker pull beakerandjake/listo
+```
+
+Run the container
+
+```
+docker run \
+    --restart unless-stopped \
+    -e EXTERNAL_PORT=4001 \
+    -e PRODUCTION_SERVER_URL=192.168.0.10 \
+    -v listo:/var/lib/listo/ \
+    -p 4001:3000 \
+    -d beakerandjake/listo
+```
