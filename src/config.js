@@ -1,5 +1,10 @@
 const environment = process.env.NODE_ENV;
 const version = process.env.VERSION || '0.1.0';
+
+// This is the port that express will to request on.
+// When running in a container this is the port of the container
+// That gets exposed, however it is not necessarily the port that the
+// hose uses for communication.
 const port = process.env.PORT || 3000;
 
 export default {
@@ -17,7 +22,8 @@ export default {
         version,
       },
       servers: [{
-        url: `http://${process.env.PRODUCTION_SERVER_URL || 'localhost'}:${port}/api`,
+        // When running in a container swagger needs to use the host port not the "internal" port.
+        url: `http://${process.env.PRODUCTION_SERVER_URL || 'localhost'}:${process.env.EXTERNAL_PORT || port}/api`,
         description: 'API',
       }],
     },

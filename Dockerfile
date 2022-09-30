@@ -2,7 +2,6 @@
 
 FROM node:16-alpine
 ENV NODE_ENV=production
-ENV PORT=3000
 
 WORKDIR /usr/src/listo
 COPY package*.json ./
@@ -13,6 +12,6 @@ RUN mkdir /var/lib/listo && chown node /var/lib/listo
 RUN chown node:node /usr/src/listo
 
 COPY ./src ./src
-EXPOSE $PORT
+EXPOSE 3000
 USER node
 CMD ["node","./src/server.js"]
