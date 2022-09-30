@@ -45,7 +45,9 @@ jobs:
           images: ${{ env.IMAGE_NAME }}
         
       - name: Build & Publish Image
-        run: docker buildx build --platform linux/amd64,linux/arm64 -t ${{ env.IMAGE_NAME }} --push .
-        env:
-          FONT_AWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }}
-          
+        run: |
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --build-arg FONT_AWESOME_NPM_AUTH_TOKEN=${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }} \
+            -t ${{ env.IMAGE_NAME }} \
+            --push .        
