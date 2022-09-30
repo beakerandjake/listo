@@ -11,7 +11,7 @@ RUN npm config set "//npm.fontawesome.com/:_authToken" $FONT_AWESOME_NPM_AUTH_TO
 COPY package*.json ./
 RUN npm ci
 # copy app contents, taking advantage of layers for things less likely to change. 
-COPY *.config.js .env ./
+COPY *.config.js .env jsconfig.json ./
 COPY ./public ./public
 COPY ./src ./src
 # build the react app.
