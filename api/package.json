@@ -1,7 +1,7 @@
 {
-  "name": "listo",
+  "name": "listo-api",
   "version": "0.1.0",
-  "description": "It's a grocery list so I don't forget things. ",
+  "description": "The API for listo.",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
@@ -15,7 +15,8 @@
   "keywords": [
     "list",
     "shopping",
-    "grocery"
+    "grocery",
+    "todo"
   ],
   "author": "jake",
   "license": "SEE LICENCE IN LICENSE",

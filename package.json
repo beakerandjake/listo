@@ -4,8 +4,9 @@
   "description": "Helps you remember things.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run start:api",
+    "start": "npm run start:api & npm run start:client",
     "start:api": "cd ./api && npm run dev",
+    "start:client": "cd ./client && npm run start",
     "postinstall": "(cd api && npm install) && (cd client && npm install)"
   },
   "repository": {
