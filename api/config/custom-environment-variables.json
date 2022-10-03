@@ -3,6 +3,9 @@
   "logging": {
     "level": "API_LOGGING_LEVEL"
   },
+  "sqlite": {
+    "dbLocation": "API_SQLITE_LOCATION"
+  },
   "swagger": {
     "jsDoc": {
       "definition": {
