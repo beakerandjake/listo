@@ -21,5 +21,5 @@ export const createList = ({ name, iconName }) => {
 
   logger.info('created list: %d', listId);
 
-  return createListModel(listId);
+  return createListModel({ id: listId });
 };
