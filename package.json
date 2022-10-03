@@ -7,9 +7,10 @@
     "client"
   ],
   "scripts": {
-    "test": "npm run test:api && npm run test:client",
-    "test:api": "npm run test --workspace=api --if-present",
-    "test:client": "npm run test --workspace=client --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "build:client": "npm run build --workspace=client",
+    "test": "npm run test --workspaces --if-present",
+    "test:client": "npm run test --workspace=client",
     "dev": "npm run dev:api & npm run dev:client",
     "dev:api": "npm run dev --workspace=api",
     "dev:client": "npm run dev --workspace=client"
