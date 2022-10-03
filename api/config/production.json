@@ -1,6 +1,20 @@
 {
-  "logging": "warn",
+  "logging": {
+    "level": "warn"
+  },
   "sqlite": {
     "dbLocation": "/var/lib/listo/items.db"
+  },
+  "swagger": {
+    "jsDoc": {
+      "definition": {
+        "servers": [
+          {
+            "url": "http://192.168.0.1:4001/api",
+            "description": "api"
+          }
+        ]
+      }
+    }
   }
 }

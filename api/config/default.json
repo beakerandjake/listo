@@ -2,5 +2,23 @@
   "port": 3001,
   "validation": {
     "inputCharactersRegex": "/^[\\w\\-_\\s.,\\(\\)!@#$&*]+$/"
+  },
+  "swagger": {
+    "jsDoc":{
+      "definition": {
+        "openapi": "3.0.3",
+        "info": {
+          "title": "listo api",
+          "version": ""
+        }
+      },
+      "apis": ["./src/routes/**/*.js", "./src/models/**/*.js"]
+    },
+    "ui":{
+      "customSiteTitle": "listo api",
+      "swaggerOptions": {
+        "displayRequestDuration": true
+      }
+    }
   }
 }

@@ -1,6 +1,26 @@
 {
-  "logging": "debug",
+  "logging": {
+    "level": "debug"
+  },
   "sqlite": {
     "dbLocation": "./items.db"
+  },
+  "swagger": {
+    "jsDoc": {
+      "definition": {
+        "info": {
+          "title": "list api - dev"
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3001/api",
+            "description": "dev"
+          }
+        ]
+      }
+    },
+    "ui": {
+      "customSiteTitle": "list api - dev"
+    }
   }
 }
