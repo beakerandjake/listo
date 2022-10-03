@@ -1,3 +1,6 @@
 {
-  "port": 3001
+  "port": 3001,
+  "validation": {
+    "inputCharactersRegex": "/^[\\w\\-_\\s.,\\(\\)!@#$&*]+$/"
+  }
 }

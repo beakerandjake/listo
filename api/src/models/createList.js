@@ -1,5 +1,5 @@
 import joi from 'joi';
-import config from '../config.js';
+import config from 'config';
 import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 
 /**
@@ -19,7 +19,7 @@ const requestSchema = joi.object({
     .trim()
     .min(3)
     .max(50)
-    .pattern(config.validation.inputCharactersRegex)
+    .pattern(new RegExp(config.get('validation').inputCharactersRegex))
     .required(),
 
   iconName: joi.string()
