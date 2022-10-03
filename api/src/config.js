@@ -5,7 +5,7 @@ const version = process.env.VERSION || '0.1.0';
 // When running in a container this is the port of the container
 // That gets exposed, however it is not necessarily the port that the
 // hose uses for communication.
-const port = process.env.PORT || 4001;
+const port = process.env.PORT || 3001;
 
 export default {
   environment,
