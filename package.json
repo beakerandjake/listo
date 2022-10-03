@@ -8,9 +8,9 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run start --workspaces",
-    "start:api": "npm run start  --workspace=api",
-    "start:client": "npm run start  --workspace=client"
+    "dev": "npm run dev --workspaces --parallel",
+    "dev:api": "npm run dev --workspace=api",
+    "dev:client": "npm run dev --workspace=client"
   },
   "repository": {
     "type": "git",
