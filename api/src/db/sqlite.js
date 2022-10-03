@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import config from '../config.js';
+import config from 'config';
 import { logger } from '../logger.js';
 
 /**
@@ -8,7 +8,7 @@ import { logger } from '../logger.js';
  */
 export const getDb = () => {
   logger.silly('creating db connection');
-  return new Database(config.sqlite.dbLocation, { verbose: logger.silly });
+  return new Database(config.get('sqlite').dbLocation, { verbose: logger.silly });
 };
 
 /**

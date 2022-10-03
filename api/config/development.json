@@ -1,1 +1,5 @@
-{}
+{
+  "sqlite": {
+    "dbLocation": "./items.db"
+  }
+}
