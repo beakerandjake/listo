@@ -67,7 +67,7 @@ export const itemNameSchema = joi.string()
   .trim()
   .min(2)
   .max(50)
-  .pattern(new RegExp(config.get('validation').inputCharactersRegex));
+  .pattern(new RegExp(config.get('validation.inputCharactersRegex')));
 
 /**
  * @openapi

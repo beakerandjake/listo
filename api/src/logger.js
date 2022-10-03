@@ -3,7 +3,7 @@ import 'winston-daily-rotate-file';
 import config from 'config';
 
 export const logger = createLogger({
-  level: config.get('logging').level,
+  level: config.get('logging.level'),
   format: format.combine(
     format.timestamp(),
     format.splat(),

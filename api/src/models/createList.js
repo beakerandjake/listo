@@ -19,7 +19,7 @@ const requestSchema = joi.object({
     .trim()
     .min(3)
     .max(50)
-    .pattern(new RegExp(config.get('validation').inputCharactersRegex))
+    .pattern(new RegExp(config.get('validation.inputCharactersRegex')))
     .required(),
 
   iconName: joi.string()
