@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /items/{itemId}:
+ * /api/items/{itemId}:
  *    delete:
  *      tags: [Items]
  *      summary: Delete Item
@@ -32,7 +32,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @openapi
- * /items/{itemId}:
+ * /api/items/{itemId}:
  *    patch:
  *      tags: [Items]
  *      summary: Edit Item

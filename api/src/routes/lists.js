@@ -16,7 +16,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /lists:
+ * /api/lists:
  *    get:
  *      tags: [Lists]
  *      summary: Get all Lists
@@ -41,7 +41,7 @@ router.get('/', (req, res) => {
 
 /**
  * @openapi
- * /lists:
+ * /api/lists:
  *    post:
  *      tags: [Lists]
  *      summary: Create List
@@ -72,7 +72,7 @@ router.post('/', (req, res) => {
 
 /**
  * @openapi
- * /lists/{listId}:
+ * /api/lists/{listId}:
  *    get:
  *      tags: [Lists]
  *      summary: Get List
@@ -102,7 +102,7 @@ router.get('/:id', (req, res) => {
 
 /**
  * @openapi
- * /lists/{listId}:
+ * /api/lists/{listId}:
  *    delete:
  *      tags: [Lists]
  *      summary: Delete List
@@ -129,7 +129,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @openapi
- * /lists/{listId}/items:
+ * /api/lists/{listId}/items:
  *    post:
  *      tags: [Items]
  *      summary: Add Item to List.
@@ -169,7 +169,7 @@ router.post('/:id/items', (req, res) => {
 
 /**
  * @openapi
- * /lists/{listId}/items:
+ * /api/lists/{listId}/items:
  *    get:
  *      tags: [Items]
  *      summary: Get all Items in List
@@ -203,7 +203,7 @@ router.get('/:id/items', (req, res) => {
 
 /**
  * @openapi
- * /lists/{listId}/items:
+ * /api/lists/{listId}/items:
  *    delete:
  *      tags: [Items]
  *      summary: Bulk Delete List Items
@@ -238,7 +238,7 @@ router.delete('/:id/items', (req, res) => {
 
 /**
  * @openapi
- * /lists/{listId}/items:
+ * /api/lists/{listId}/items:
  *    patch:
  *      tags: [Items]
  *      summary: Bulk Edit List Items
