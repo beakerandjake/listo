@@ -1,12 +1,19 @@
 {
   "name": "listo",
-  "version": "0.1.0",
-  "description": "It's a grocery list so I don't forget things. ",
-  "type": "module",
-  "main": "src/server.js",
+  "version": "1.0.0",
+  "description": "Helps you remember things.",
+  "workspaces": [
+    "api",
+    "client"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --inspect=0.0.0.0:9229 src/server.js"
+    "build": "npm run build --workspaces --if-present",
+    "build:client": "npm run build --workspace=client",
+    "test": "npm run test --workspaces --if-present",
+    "test:client": "npm run test --workspace=client",
+    "dev": "npm run dev:api & npm run dev:client",
+    "dev:api": "npm run dev --workspace=api",
+    "dev:client": "npm run dev --workspace=client"
   },
   "repository": {
     "type": "git",
@@ -15,35 +22,13 @@
   "keywords": [
     "list",
     "shopping",
-    "grocery"
+    "grocery",
+    "todo"
   ],
   "author": "jake",
-  "license": "SEE LICENCE IN LICENSE",
+  "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/beakerandjake/listo/issues"
   },
-  "homepage": "https://github.com/beakerandjake/listo#readme",
-  "dependencies": {
-    "better-sqlite3": "^7.6.2",
-    "body-parser": "^1.20.0",
-    "cors": "^2.8.5",
-    "express": "^4.18.1",
-    "express-async-handler": "^1.2.0",
-    "express-validator": "^6.14.1",
-    "helmet": "^5.1.0",
-    "joi": "^17.6.1",
-    "morgan": "^1.10.0",
-    "sqlite": "^4.1.1",
-    "sqlite3": "^5.0.8",
-    "swagger-jsdoc": "^6.2.5",
-    "swagger-ui-express": "^4.5.0",
-    "winston": "^3.8.2",
-    "winston-daily-rotate-file": "^4.7.1"
-  },
-  "devDependencies": {
-    "eslint": "^8.17.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "nodemon": "^2.0.16"
-  }
+  "homepage": "https://github.com/beakerandjake/listo#readme"
 }
