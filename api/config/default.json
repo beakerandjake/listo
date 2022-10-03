@@ -6,7 +6,7 @@
         "openapi": "3.0.3",
         "info": {
           "title": "listo api",
-          "version": ""
+          "version": "1.0.0"
         }
       },
       "apis": ["./src/routes/**/*.js", "./src/models/**/*.js"]

@@ -1,0 +1,15 @@
+{
+  "port": "API_PORT",
+  "logging": {
+    "level": "API_LOGGING_LEVEL"
+  },
+  "swagger": {
+    "jsDoc": {
+      "definition": {
+        "info": {
+          "version": "LISTO_VERSION"
+        }
+      }
+    }
+  }
+}
