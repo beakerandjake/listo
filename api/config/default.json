@@ -1,8 +1,5 @@
 {
   "port": 3001,
-  "validation": {
-    "inputCharactersRegex": "/^[\\w\\-_\\s.,\\(\\)!@#$&*]+$/"
-  },
   "swagger": {
     "jsDoc":{
       "definition": {
@@ -20,5 +17,8 @@
         "displayRequestDuration": true
       }
     }
+  },
+  "validation": {
+    "inputCharactersRegex": "/^[\\w\\-_\\s.,\\(\\)!@#$&*]+$/"
   }
 }

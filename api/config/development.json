@@ -4,18 +4,5 @@
   },
   "sqlite": {
     "dbLocation": "./items.db"
-  },
-  "swagger": {
-    "jsDoc": {
-      "definition": {
-        "info": {
-          "title": "listo api - dev"
-        }
-      }
-    },
-    "ui": {
-      "customSiteTitle": "listo api - dev"
-    }
   }
-
 }
