@@ -1,0 +1,24 @@
+{
+  "port": 3001,
+  "swagger": {
+    "jsDoc":{
+      "definition": {
+        "openapi": "3.0.3",
+        "info": {
+          "title": "listo api",
+          "version": "1.0.0"
+        }
+      },
+      "apis": ["./src/routes/**/*.js", "./src/models/**/*.js"]
+    },
+    "ui":{
+      "customSiteTitle": "listo api",
+      "swaggerOptions": {
+        "displayRequestDuration": true
+      }
+    }
+  },
+  "validation": {
+    "inputCharactersRegex": "^[\\w\\-_\\s.,\\(\\)!@#$&*]+$"
+  }
+}

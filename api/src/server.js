@@ -5,9 +5,9 @@ import helmet from 'helmet';
 import cors from 'cors';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import config from 'config';
 import routes from './routes/index.js';
 import db from './db/index.js';
-import config from './config.js';
 import {
   logErrors,
   notFound,
@@ -25,8 +25,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // register swagger
-const openApiSpecification = swaggerJSDoc(config.swaggerJSDoc);
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification, config.swaggerUi));
+const openApiSpecification = swaggerJSDoc(config.get('swagger.jsDoc'));
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification, config.get('swagger.ui')));
 
 // request / response logging
 app.use(morgan('common', {
@@ -53,7 +53,7 @@ try {
   process.exit(1);
 }
 
-const server = app.listen(config.port, () => logger.info(`listo running on port ${config.port}`));
+const server = app.listen(config.get('port'), () => logger.info(`listo running on port ${config.get('port')}`));
 
 const gracefulShutdown = () => {
   server.close(() => {

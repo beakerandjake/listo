@@ -1,5 +1,5 @@
 import joi from 'joi';
-import config from '../config.js';
+import config from 'config';
 import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 
 /**
@@ -67,7 +67,7 @@ export const itemNameSchema = joi.string()
   .trim()
   .min(2)
   .max(50)
-  .pattern(config.validation.inputCharactersRegex);
+  .pattern(new RegExp(config.get('validation.inputCharactersRegex')));
 
 /**
  * @openapi

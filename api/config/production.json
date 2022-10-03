@@ -1,0 +1,8 @@
+{
+  "logging": {
+    "level": "warn"
+  },
+  "sqlite": {
+    "dbLocation": "/var/lib/listo/items.db"
+  }
+}

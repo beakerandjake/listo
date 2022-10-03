@@ -1,0 +1,18 @@
+{
+  "port": "API_PORT",
+  "logging": {
+    "level": "API_LOGGING_LEVEL"
+  },
+  "sqlite": {
+    "dbLocation": "API_SQLITE_LOCATION"
+  },
+  "swagger": {
+    "jsDoc": {
+      "definition": {
+        "info": {
+          "version": "LISTO_VERSION"
+        }
+      }
+    }
+  }
+}
