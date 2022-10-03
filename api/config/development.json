@@ -9,18 +9,13 @@
     "jsDoc": {
       "definition": {
         "info": {
-          "title": "list api - dev"
-        },
-        "servers": [
-          {
-            "url": "http://localhost:3001/api",
-            "description": "dev"
-          }
-        ]
+          "title": "listo api - dev"
+        }
       }
     },
     "ui": {
-      "customSiteTitle": "list api - dev"
+      "customSiteTitle": "listo api - dev"
     }
   }
+
 }
