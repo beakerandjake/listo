@@ -1,9 +1,9 @@
 import { createLogger, format, transports } from 'winston';
 import 'winston-daily-rotate-file';
-import config from './config.js';
+import config from 'config';
 
 export const logger = createLogger({
-  level: config.logging.level,
+  level: config.get('logging').level,
   format: format.combine(
     format.timestamp(),
     format.splat(),
@@ -13,7 +13,7 @@ export const logger = createLogger({
 });
 
 // log to console in development.
-if (config.environment !== 'production') {
+if (config.util.getEnv('NODE_ENV') !== 'production') {
   logger.add(new transports.Console({
     format: format.combine(
       format.simple(),
@@ -23,7 +23,7 @@ if (config.environment !== 'production') {
 }
 
 // log to file in production.
-if (config.environment === 'production') {
+if (config.util.getEnv('NODE_ENV') === 'production') {
   logger.add(new transports.DailyRotateFile({
     filename: 'listo-%DATE%.log',
     datePattern: 'YYYY-MM-DD-HH',
