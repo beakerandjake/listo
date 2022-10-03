@@ -19,6 +19,6 @@
     }
   },
   "validation": {
-    "inputCharactersRegex": "/^[\\w\\-_\\s.,\\(\\)!@#$&*]+$/"
+    "inputCharactersRegex": "^[\\w\\-_\\s.,\\(\\)!@#$&*]+$"
   }
 }
