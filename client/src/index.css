@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+    .keyboard-only-focus-ring:focus:not(:focus-visible) {
+        @apply focus:outline-none focus:ring-0 focus:ring-offset-0;
+    }
+
+    .keyboard-only-focus-ring:focus-visible {
+        @apply outline-none ring-2 ring-offset-2 ring-indigo-500;
+    }
+
+    .focus-none {
+        @apply focus:outline-none focus:ring-0 focus:ring-offset-0
+    }
+
+    .group-focus-none {
+        @apply focus-none
+    }
+
+
+}
+
+/* Remove Up and Down Arrows from number inputs. */
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

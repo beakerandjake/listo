@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Universal styles */
+.react-calendar {
+    @apply w-full h-full p-2
+}
+
+.react-calendar button {
+    @apply m-0 border-0 outline-none enabled:hover:cursor-pointer   
+}
+
+/* HEADER SECTION */
+.react-calendar__navigation {
+    @apply flex items-center justify-between py-4 gap-4 -my-2
+}
+
+.react-calendar__navigation__label {
+    @apply text-xl
+}
+
+.react-calendar__navigation button,
+.react-calendar__navigation button {
+    @apply disabled:opacity-50 disabled:cursor-not-allowed rounded
+}
+
+.react-calendar__navigation__arrow {
+    @apply px-5 py-1
+}
+
+/* WEEK DAYS SECTION */
+.react-calendar__month-view__weekdays {
+    @apply flex items-center uppercase font-semibold text-gray-500 text-sm select-none my-2
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    @apply flex items-center justify-center
+}
+
+.react-calendar__month-view__weekdays abbr {
+    @apply no-underline border-none
+}
+
+
+/* DAYS VIEW */
+.react-calendar__month-view__days {
+    @apply !grid grid-cols-7 gap-2
+}
+
+.react-calendar__month-view__days__day {
+    @apply p-2
+}
+
+
+.react-calendar__month-view__days__day--neighboringMonth {
+    @apply text-gray-400 no-underline
+}
+
+.react-calendar__tile {
+    @apply enabled:hover:bg-gray-200 rounded max-w-full text-center leading-4
+}
+
+.react-calendar__tile--now {
+    @apply font-extrabold
+}
+
+.react-calendar__tile--active, .react-calendar__tile--hasActive {
+    @apply bg-green-700 text-white enabled:hover:bg-green-800
+}
+
+.react-calendar__tile:disabled {
+    @apply bg-gray-300 opacity-50 cursor-not-allowed;
+}
+
+
+/* YEAR VIEW */
+.react-calendar__year-view .react-calendar__tile {
+    @apply py-8 px-2;
+}
