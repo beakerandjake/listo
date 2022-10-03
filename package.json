@@ -2,12 +2,15 @@
   "name": "listo",
   "version": "1.0.0",
   "description": "Helps you remember things.",
+  "workspaces": [
+    "api",
+    "client"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run start:api & npm run start:client",
-    "start:api": "cd ./api && npm run dev",
-    "start:client": "cd ./client && npm run start",
-    "postinstall": "(cd api && npm install) && (cd client && npm install)"
+    "start": "npm run start --workspaces",
+    "start:api": "npm run start  --workspace=api",
+    "start:client": "npm run start  --workspace=client"
   },
   "repository": {
     "type": "git",
