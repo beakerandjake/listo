@@ -1,6 +1,6 @@
 # Build the image and publish to docker hub.
 
-name: Publish to Docker
+name: Publish API to Docker
 
 # Controls when the workflow will run
 on:
