@@ -1,6 +1,7 @@
 {
+  "port": 3000,
   "logging": {
-    "level": "warn"
+    "level": "debug"
   },
   "sqlite": {
     "dbLocation": "/var/lib/listo/items.db"
