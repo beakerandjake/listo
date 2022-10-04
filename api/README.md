@@ -49,7 +49,6 @@ Run the container
 ```
 docker run \
     --restart unless-stopped \
-    -e API_PORT=4001 \
     -e API_SQLITE_LOCATION=/var/lib/listo/items.db \
     -v listo:/var/lib/listo/ \
     -p 4001:3000 \
