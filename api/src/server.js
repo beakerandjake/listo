@@ -6,12 +6,15 @@ import cors from 'cors';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import config from 'config';
+import url from 'url';
+import path from 'path';
 import routes from './routes/index.js';
 import db from './db/index.js';
 import {
   logErrors,
   notFound,
   applicationErrorHandler,
+  serveFrontend,
 } from './middleware/index.js';
 import { logger } from './logger.js';
 
@@ -36,8 +39,17 @@ app.use(morgan('common', {
   immediate: true,
 }));
 
-// register routing
+// register api routing
 app.use('/api', routes);
+
+// if running in production, then serve the static frontend website.
+if (config.util.getEnv('NODE_ENV') === 'production') {
+  const dirName = path.dirname(url.fileURLToPath(import.meta.url));
+  const publicFolderPath = path.join(dirName, '..', 'public');
+  app.use(serveFrontend(publicFolderPath));
+}
+
+// handle any unknown routes by returning 404.
 app.use(notFound());
 
 // error handling
