@@ -47,7 +47,7 @@ jobs:
       - name: Build & Publish Image
         run: |
           docker buildx build \
-            --file ./api/Dockerfile \
+            --file ./api.Dockerfile \
             --platform linux/amd64,linux/arm64 \
             -t ${{ env.IMAGE_NAME }} \
             --push .
