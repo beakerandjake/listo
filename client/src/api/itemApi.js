@@ -28,8 +28,20 @@ const getItems = async (listId) => {
  * @returns {Promise<object>}
  **/
 const addItem = async (listId, item) => {
-  const { data } = await axios.post(listItemsUrl(listId), item);
-  return data;
+  const response = await fetch(listItemsUrl(listId), {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(item)
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 /**
