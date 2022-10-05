@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import { Navbar, CollapsibleSidebarContainer } from 'components/Navigation';
 
@@ -12,12 +12,14 @@ const MOBILE_BREAKPOINT = 768;
  */
 const MobileSidebar = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const location = useLocation();
+  const { state: navigationState } = useNavigation();
 
   // close the sidebar any time navigation takes place.
   useEffect(() => {
-    setOpen(false);
-  }, [location]);
+    if (navigationState === 'loading') {
+      setOpen(false);
+    }
+  }, [navigationState]);
 
   return (
     <>
