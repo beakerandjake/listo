@@ -1,6 +1,6 @@
 # Build the image and publish to docker hub.
 
-name: Publish API to Docker
+name: Publish to Docker
 
 # Controls when the workflow will run
 on:
@@ -47,7 +47,7 @@ jobs:
       - name: Build & Publish Image
         run: |
           docker buildx build \
-            --file ./api.Dockerfile \
+            --build-arg FONT_AWESOME_NPM_AUTH_TOKEN=${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }} \
             --platform linux/amd64,linux/arm64 \
             -t ${{ env.IMAGE_NAME }} \
             --push .
