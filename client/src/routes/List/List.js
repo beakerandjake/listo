@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigation } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
 import {
@@ -22,6 +22,7 @@ const defaultSorting = {
 };
 
 export function List(props) {
+  const navigation = useNavigation();
   const loaderData = useLoaderData();
   const [list, setList] = useState(null);
   const [items, setItems] = useState(null);
@@ -29,7 +30,7 @@ export function List(props) {
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const handleError = useErrorHandler();
 
-  // whenever our loader data changes reset our state. 
+  // whenever our loader data changes reset our state.
   // this ensures that the data stays current whenever the route changes.
   useEffect(() => {
     setList(loaderData.list);
@@ -126,7 +127,7 @@ export function List(props) {
   };
 
   // Render skeleton if still loading.
-  if (!list) {
+  if (!list || navigation.state === 'loading') {
     return <LoadingSkeleton />;
   }
 
