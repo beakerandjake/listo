@@ -49,7 +49,13 @@ const addItem = async (listId, item) => {
  * @param {number} itemId - The id of the item.
  **/
 const deleteItem = async (itemId) => {
-  await axios.delete(itemBaseUrl(itemId));
+  const response = await fetch(itemBaseUrl(itemId), {
+    method:'DELETE'
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
 };
 
 /**
@@ -59,8 +65,20 @@ const deleteItem = async (itemId) => {
  * @returns {Promise<object>}
  **/
 const editItem = async (itemId, changes) => {
-  const { data } = await axios.patch(itemBaseUrl(itemId), changes);
-  return data;
+  const response = await fetch(itemBaseUrl(itemId), {
+    method: 'PATCH',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(changes)
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 /**
