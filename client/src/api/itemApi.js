@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { ApiError } from 'api';
 
 const apiBaseUrl = process.env.REACT_APP_API_ENDPOINT;
 
@@ -11,8 +11,13 @@ const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;
  * @returns {Promise<object[]>}
  **/
 const getItems = async (listId) => {
-  const { data } = await axios.get(listItemsUrl(listId));
-  return data;
+  const response = await fetch(listItemsUrl(listId));
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 /**
@@ -22,8 +27,20 @@ const getItems = async (listId) => {
  * @returns {Promise<object>}
  **/
 const addItem = async (listId, item) => {
-  const { data } = await axios.post(listItemsUrl(listId), item);
-  return data;
+  const response = await fetch(listItemsUrl(listId), {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(item)
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 /**
@@ -31,7 +48,13 @@ const addItem = async (listId, item) => {
  * @param {number} itemId - The id of the item.
  **/
 const deleteItem = async (itemId) => {
-  await axios.delete(itemBaseUrl(itemId));
+  const response = await fetch(itemBaseUrl(itemId), {
+    method:'DELETE'
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
 };
 
 /**
@@ -41,8 +64,20 @@ const deleteItem = async (itemId) => {
  * @returns {Promise<object>}
  **/
 const editItem = async (itemId, changes) => {
-  const { data } = await axios.patch(itemBaseUrl(itemId), changes);
-  return data;
+  const response = await fetch(itemBaseUrl(itemId), {
+    method: 'PATCH',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(changes)
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 /**
@@ -51,7 +86,17 @@ const editItem = async (itemId, changes) => {
  * @param {string} filter - Optional filtering to change which items get deleted.
  **/
 const bulkDeleteItems = async (listId, filter) => {
-  await axios.delete(listItemsUrl(listId), { params: { filter } });
+  let url = listItemsUrl(listId);
+
+  if(filter) {
+    url = url.concat('?', new URLSearchParams({filter}));
+  }
+
+  const response = await fetch(url, { method:'DELETE' });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
 };
 
 /**
@@ -60,7 +105,18 @@ const bulkDeleteItems = async (listId, filter) => {
  * @param {object} changes - Edits to apply to all items in the list.
  **/
 const bulkEditItems = async (listId, changes) => {
-  await axios.patch(listItemsUrl(listId), changes);
+  const response = await fetch(listItemsUrl(listId), {
+    method: 'PATCH',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(changes)
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
 };
 
 const api = {

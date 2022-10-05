@@ -50,7 +50,7 @@ export function List(props) {
         setActiveSort(defaultSorting);
       })
       .catch((error) => {
-        if (error?.response?.status !== 404) {
+        if (error?.statusCode !== 404) {
           handleError(error);
           return;
         }
