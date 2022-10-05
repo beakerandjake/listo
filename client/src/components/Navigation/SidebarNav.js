@@ -36,7 +36,7 @@ export function SidebarNav({ lists }) {
 
   return (
     <nav className="flex-1">
-      <SidebarNavItem key="home" to="" text="Dashboard" iconName="house" />
+      <SidebarNavItem key="home" to="" text="Dashboard" iconName="house" end />
       <SidebarHeader name="Lists" />
       {listNavItems}
       <SidebarNavItem

@@ -16,11 +16,13 @@ export const SidebarNavItem = ({
   iconName,
   to,
   children = ({ isActive }) => {},
+  ...props
 }) => {
   const icon = getIcon(iconName);
 
   return (
     <NavLink
+      {...props}
       to={to}
       className={({ isActive }) =>
         classNames(
