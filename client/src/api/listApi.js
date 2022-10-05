@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { ApiError } from 'api';
 
 const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/lists`;
 
@@ -7,8 +7,13 @@ const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/lists`;
  * @returns {Promise<object[]>}
  **/
 const getLists = async () => {
-  const { data } = await axios.get(baseUrl);
-  return data;
+  const response = await fetch(baseUrl);
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 /**
@@ -17,8 +22,13 @@ const getLists = async () => {
  * @returns {Promise<object>}
  **/
 const getList = async (id) => {
-  const { data } = await axios.get(`${baseUrl}/${id}`);
-  return data;
+  const response = await fetch(`${baseUrl}/${id}`);
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
+
+  return await response.json();
 };
 
 const api = {

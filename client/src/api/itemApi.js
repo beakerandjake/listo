@@ -1,5 +1,4 @@
 import { ApiError } from 'api';
-import axios from 'axios';
 
 const apiBaseUrl = process.env.REACT_APP_API_ENDPOINT;
 
@@ -87,7 +86,17 @@ const editItem = async (itemId, changes) => {
  * @param {string} filter - Optional filtering to change which items get deleted.
  **/
 const bulkDeleteItems = async (listId, filter) => {
-  await axios.delete(listItemsUrl(listId), { params: { filter } });
+  let url = listItemsUrl(listId);
+
+  if(filter) {
+    url = url.concat('?', new URLSearchParams({filter}));
+  }
+
+  const response = await fetch(url, { method:'DELETE' });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
 };
 
 /**
@@ -96,7 +105,18 @@ const bulkDeleteItems = async (listId, filter) => {
  * @param {object} changes - Edits to apply to all items in the list.
  **/
 const bulkEditItems = async (listId, changes) => {
-  await axios.patch(listItemsUrl(listId), changes);
+  const response = await fetch(listItemsUrl(listId), {
+    method: 'PATCH',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type':'application/json',
+    },
+    body: JSON.stringify(changes)
+  });
+
+  if(!response.ok){
+    throw ApiError.createFromFetchResponse(response);
+  }
 };
 
 const api = {
