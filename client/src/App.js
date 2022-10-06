@@ -6,37 +6,37 @@ import { CreateNewList, Dashboard, Error, List, NotFound } from 'routes';
 import { listLoader } from 'routes/List';
 import { LoadingSpinner } from 'components/LoadingSpinner';
 
-function App() {
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      id: 'root',
-      element: <ResponsiveLayout />,
-      loader: async () => await listApi.getLists(),
-      children: [
-        {
-          index: true,
-          element: <Dashboard />,
-        },
-        {
-          path: 'lists/:id',
-          element: <List />,
-          loader: listLoader,
-          errorElement: <NotFound />,
-        },
-        {
-          path: 'lists/create',
-          element: <CreateNewList />,
-        },
-        {
-          path: '*',
-          element: <NotFound />,
-        },
-      ],
-      errorElement: <Error />,
-    },
-  ]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    id: 'root',
+    element: <ResponsiveLayout />,
+    loader: async () => await listApi.getLists(),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: 'lists/:id',
+        element: <List />,
+        loader: listLoader,
+        errorElement: <NotFound />,
+      },
+      {
+        path: 'lists/create',
+        element: <CreateNewList />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
+    errorElement: <Error />,
+  },
+]);
 
+function App() {
   return (
     <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
   );
