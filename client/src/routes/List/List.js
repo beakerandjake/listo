@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
@@ -25,27 +25,27 @@ const defaultSorting = {
  * Component which allows CRUD operations on a List.
  */
 export const List = () => {
-  const { list, items: initialItems } = useLoaderData();
-  const [items, setItems] = useState(initialItems);
+  const { list, items: loaderItems } = useLoaderData();
+  const [items, setItems] = useState(loaderItems);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
-  const [sortedItems, setSortedItems] = useState(
-    sortItems(items, activeSort.itemKey, activeSort.direction)
-  );
   const handleError = useErrorHandler();
 
-  // whenever the loader gives us new data,
+  // whenever the loader gives us new items,
   // be sure to reset our internal state.
   useEffect(() => {
-    setItems(initialItems);
+    setItems(loaderItems);
     setSelectedItemId(null);
     setActiveSort(defaultSorting);
-  }, [initialItems]);
+  }, [loaderItems]);
 
   // whenever the items or the active sort changes, update the sortedItems list.
   // this ensures items are always sorted according to the activeSort.
-  useEffect(() => {
-    setSortedItems(sortItems(items, activeSort.itemKey, activeSort.direction));
+  const sortedItems = useMemo(() => {
+    if (!items) {
+      return [];
+    }
+    return sortItems(items, activeSort.itemKey, activeSort.direction);
   }, [items, activeSort]);
 
   /**
