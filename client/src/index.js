@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ErrorBoundary } from 'components/ErrorBoundary';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Error } from 'routes';
 import App from './App';
 
 import './index.css';
@@ -8,8 +9,8 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
-        <App />
+    <ErrorBoundary FallbackComponent={<Error />}>
+      <App />
     </ErrorBoundary>
   </React.StrictMode>
 );

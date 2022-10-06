@@ -1,3 +1,4 @@
 import { List } from './List';
+import { listLoader } from './listLoader';
 
-export { List };
+export { List, listLoader };

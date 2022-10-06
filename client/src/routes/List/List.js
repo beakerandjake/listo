@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
-import { itemApi, listApi } from 'api';
+import { itemApi } from 'api';
 import {
   itemSortingFields,
   sortingDirections,
@@ -10,61 +10,37 @@ import {
 import { AddItem } from './AddItem';
 import { ActionsDropdown } from './ActionsDropdown';
 import { EditItemDrawer } from './EditItemDrawer';
-import { LoadingSkeleton } from './LoadingSkeleton';
 import { SortItemsDropdown } from './SortItemsDropdown';
 import { GroupedItemsDisplay } from './GroupedItemsDisplay';
 import { Title } from './Title';
 import { getIcon } from 'services/iconLibrary';
 
+// Defines the default field to sort a list on.
 const defaultSorting = {
   itemKey: itemSortingFields.created,
   direction: sortingDirections.asc,
 };
 
-export function List(props) {
-  const [list, setList] = useState(null);
-  const [items, setItems] = useState(null);
+/**
+ * Component which allows CRUD operations on a List.
+ */
+export const List = () => {
+  const { list, items: loaderItems } = useLoaderData();
+  const [items, setItems] = useState(loaderItems);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
-  const { id } = useParams();
-  const navigate = useNavigate();
   const handleError = useErrorHandler();
 
-  // whenever the id changes, load the list and its items.
+  // whenever the loader gives us new items,
+  // be sure to reset our internal state.
   useEffect(() => {
-    let skeletonMinDisplayTimerId;
+    setItems(loaderItems);
+    setSelectedItemId(null);
+    setActiveSort(defaultSorting);
+  }, [loaderItems]);
 
-    // To prevent flash, ensure the loading skeleton renders for a minimum amount of time.
-    const skeletonMinDisplayTimer = new Promise((resolve) => {
-      skeletonMinDisplayTimerId = setTimeout(resolve, 500);
-    });
-
-    Promise.all([
-      itemApi.getItems(id),
-      listApi.getList(id),
-      skeletonMinDisplayTimer,
-    ])
-      .then((values) => {
-        setItems(values[0]);
-        setList(values[1]);
-        setActiveSort(defaultSorting);
-      })
-      .catch((error) => {
-        if (error?.statusCode !== 404) {
-          handleError(error);
-          return;
-        }
-        navigate('/errors/404');
-      });
-
-    return () => {
-      clearTimeout(skeletonMinDisplayTimerId);
-      setList(null);
-      setItems(null);
-    };
-  }, [id, handleError, navigate]);
-
-  // whenever the list items or the active sort changes, update the sortedItems list.
+  // whenever the items or the active sort changes, update the sortedItems list.
+  // this ensures items are always sorted according to the activeSort.
   const sortedItems = useMemo(() => {
     if (!items) {
       return [];
@@ -138,7 +114,7 @@ export function List(props) {
     itemApi
       .bulkEditItems(list.id, changes)
       // Reload all items after a bulk edit.
-      .then(() => itemApi.getItems(id))
+      .then(() => itemApi.getItems(list.id))
       .then(setItems)
       .catch(handleError);
 
@@ -148,13 +124,11 @@ export function List(props) {
    * @returns {object}
    **/
   const getSelectedItem = (itemId) => {
+    if (!list) {
+      return null;
+    }
     return items.find((x) => x.id === itemId);
   };
-
-  // Render skeleton if still loading.
-  if (!list) {
-    return <LoadingSkeleton />;
-  }
 
   return (
     <>
@@ -196,4 +170,4 @@ export function List(props) {
       />
     </>
   );
-}
+};

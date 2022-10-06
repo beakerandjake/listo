@@ -13,8 +13,8 @@ const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;
 const getItems = async (listId) => {
   const response = await fetch(listItemsUrl(listId));
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 
   return await response.json();
@@ -31,13 +31,13 @@ const addItem = async (listId, item) => {
     method: 'POST',
     cache: 'no-cache',
     headers: {
-      'Content-Type':'application/json',
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(item)
+    body: JSON.stringify(item),
   });
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 
   return await response.json();
@@ -49,11 +49,11 @@ const addItem = async (listId, item) => {
  **/
 const deleteItem = async (itemId) => {
   const response = await fetch(itemBaseUrl(itemId), {
-    method:'DELETE'
+    method: 'DELETE',
   });
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 };
 
@@ -68,13 +68,13 @@ const editItem = async (itemId, changes) => {
     method: 'PATCH',
     cache: 'no-cache',
     headers: {
-      'Content-Type':'application/json',
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(changes)
+    body: JSON.stringify(changes),
   });
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 
   return await response.json();
@@ -88,14 +88,14 @@ const editItem = async (itemId, changes) => {
 const bulkDeleteItems = async (listId, filter) => {
   let url = listItemsUrl(listId);
 
-  if(filter) {
-    url = url.concat('?', new URLSearchParams({filter}));
+  if (filter) {
+    url = url.concat('?', new URLSearchParams({ filter }));
   }
 
-  const response = await fetch(url, { method:'DELETE' });
+  const response = await fetch(url, { method: 'DELETE' });
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 };
 
@@ -109,13 +109,13 @@ const bulkEditItems = async (listId, changes) => {
     method: 'PATCH',
     cache: 'no-cache',
     headers: {
-      'Content-Type':'application/json',
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(changes)
+    body: JSON.stringify(changes),
   });
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 };
 

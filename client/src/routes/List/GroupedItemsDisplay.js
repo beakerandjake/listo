@@ -75,8 +75,8 @@ export const GroupedItemsDisplay = ({
     setItemGroups(groupItems(items));
   }, [items]);
 
-  // Render if list is completely empty.
-  if (items.length <= 0) {
+  // Render an empty display if all groups are empty.
+  if (itemGroups?.every((x) => !x.items.length)) {
     return (
       <NoItemsDisplay
         icon={faCat}

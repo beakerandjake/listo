@@ -4,18 +4,10 @@ import itemApi from './itemApi';
 // TODO swap based on config
 
 class ApiError extends Error {
-    constructor(message, statusCode) {
-        super(message)
-        this.statusCode = statusCode;
-    }
-    
-    static createFromFetchResponse({statusText, statusCode}) {
-        return new ApiError(statusText, statusCode);
-    }
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+  }
 }
 
-export { 
-    listApi, 
-    itemApi,
-    ApiError
-};
+export { listApi, itemApi, ApiError };

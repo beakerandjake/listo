@@ -1,41 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { NotFound } from 'routes/NotFound';
+import React from 'react';
+import {
+  createBrowserRouter,
+  Outlet,
+  RouterProvider,
+  useLoaderData,
+} from 'react-router-dom';
+import { listApi } from './api';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
-import { useErrorHandler } from 'react-error-boundary';
-import { listApi } from './api';
-import { CreateNewList } from 'routes/CreateNewList';
-import { List } from 'routes/List';
-import { Dashboard } from 'routes/Dashboard';
+import { CreateNewList, Dashboard, Error, List, NotFound } from 'routes';
+import { listLoader } from 'routes/List';
+import { LoadingSpinner } from 'components/LoadingSpinner';
 
-function App() {
-  const [lists, setLists] = useState(null);
-  const handleError = useErrorHandler();
-
-  useEffect(() => {
-    listApi.getLists()
-      .then(setLists)
-      .catch(handleError);
-  }, [handleError]);
-
-  if (!lists) {
-    return <div>Loading...</div>;
-  }
+/**
+ * Root element used for routing, renders all child routes in its outlet.
+ */
+const Root = () => {
+  const lists = useLoaderData();
 
   return (
-    <BrowserRouter>
-      <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="lists">
-            <Route path=":id" element={<List />} />
-            <Route path="create" element={<CreateNewList />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </ResponsiveLayout>
-    </BrowserRouter>
+    <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
+      <Outlet />
+    </ResponsiveLayout>
+  );
+};
+
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Root />,
+      loader: async () => await listApi.getLists(),
+      children: [
+        {
+          index: true,
+          element: <Dashboard />,
+        },
+        {
+          path: 'lists/:id',
+          element: <List />,
+          loader: listLoader,
+          errorElement: <NotFound />,
+        },
+        {
+          path: 'lists/create',
+          element: <CreateNewList />,
+        },
+        {
+          path: '*',
+          element: <NotFound />,
+        },
+      ],
+      errorElement: <Error />,
+    },
+  ]);
+
+  return (
+    <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
   );
 }
 
