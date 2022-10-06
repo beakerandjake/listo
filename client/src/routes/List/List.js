@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useLoaderData, useNavigation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
 import {
@@ -10,41 +10,42 @@ import {
 import { AddItem } from './AddItem';
 import { ActionsDropdown } from './ActionsDropdown';
 import { EditItemDrawer } from './EditItemDrawer';
-import { LoadingSkeleton } from './LoadingSkeleton';
 import { SortItemsDropdown } from './SortItemsDropdown';
 import { GroupedItemsDisplay } from './GroupedItemsDisplay';
 import { Title } from './Title';
 import { getIcon } from 'services/iconLibrary';
 
+// Defines the default field to sort a list on.
 const defaultSorting = {
   itemKey: itemSortingFields.created,
   direction: sortingDirections.asc,
 };
 
-export function List(props) {
-  const navigation = useNavigation();
-  const loaderData = useLoaderData();
-  const [list, setList] = useState(null);
-  const [items, setItems] = useState(null);
+/**
+ * Component which allows CRUD operations on a List.
+ */
+export const List = () => {
+  const { list, items: initialItems } = useLoaderData();
+  const [items, setItems] = useState(initialItems);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
+  const [sortedItems, setSortedItems] = useState(
+    sortItems(items, activeSort.itemKey, activeSort.direction)
+  );
   const handleError = useErrorHandler();
 
-  // whenever our loader data changes reset our state.
-  // this ensures that the data stays current whenever the route changes.
+  // whenever the loader gives us new data,
+  // be sure to reset our internal state.
   useEffect(() => {
-    setList(loaderData.list);
-    setItems(loaderData.items);
+    setItems(initialItems);
+    setSelectedItemId(null);
     setActiveSort(defaultSorting);
-  }, [loaderData]);
+  }, [initialItems]);
 
-  // whenever the list items or the active sort changes, update the sortedItems list.
-  // this ensures list items are always sorted according to the activeSort.
-  const sortedItems = useMemo(() => {
-    if (!items) {
-      return [];
-    }
-    return sortItems(items, activeSort.itemKey, activeSort.direction);
+  // whenever the items or the active sort changes, update the sortedItems list.
+  // this ensures items are always sorted according to the activeSort.
+  useEffect(() => {
+    setSortedItems(sortItems(items, activeSort.itemKey, activeSort.direction));
   }, [items, activeSort]);
 
   /**
@@ -123,13 +124,11 @@ export function List(props) {
    * @returns {object}
    **/
   const getSelectedItem = (itemId) => {
+    if (!list) {
+      return null;
+    }
     return items.find((x) => x.id === itemId);
   };
-
-  // Render skeleton if still loading.
-  if (!list || navigation.state === 'loading') {
-    return <LoadingSkeleton />;
-  }
 
   return (
     <>
@@ -171,4 +170,4 @@ export function List(props) {
       />
     </>
   );
-}
+};
