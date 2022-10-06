@@ -1,58 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import { useErrorHandler } from 'react-error-boundary';
+import React from 'react';
+import {
+  createBrowserRouter,
+  Outlet,
+  RouterProvider,
+  useLoaderData,
+} from 'react-router-dom';
 import { listApi } from './api';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
 import { CreateNewList, Dashboard, Error, List, NotFound } from 'routes';
 import { listLoader } from 'routes/List';
+import { AppLoadingSpinner } from 'routes/AppLoadingSpinner';
+
+const Root = () => {
+  const lists = useLoaderData();
+
+  return (
+    <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
+      <Outlet />
+    </ResponsiveLayout>
+  );
+};
 
 function App() {
-  const [lists, setLists] = useState(null);
-  const handleError = useErrorHandler();
-
-  useEffect(() => {
-    listApi.getLists().then(setLists).catch(handleError);
-  }, [handleError]);
-
-  if (!lists) {
-    return <div>Loading...</div>;
-  }
-
   const router = createBrowserRouter([
     {
       path: '/',
-      element: (
-        <ResponsiveLayout sidebar={<Sidebar items={lists} />}>
-          <Outlet />
-        </ResponsiveLayout>
-      ),
+      element: <Root />,
+      loader: async () => await listApi.getLists(),
       children: [
         {
-          path: '',
-          element: <Dashboard />,
+          errorElement: <Error />,
+          children: [
+            {
+              index: true,
+              element: <Dashboard />,
+            },
+          ],
         },
         {
-          path: 'lists/:id',
-          element: <List />,
-          loader: listLoader,
-          errorElement: <NotFound />,
+          errorElement: <Error />,
+          children: [
+            {
+              path: 'lists/:id',
+              element: <List />,
+              loader: listLoader,
+              errorElement: <NotFound />,
+            },
+          ],
         },
-        { path: 'lists/create', element: <CreateNewList /> },
         {
-          path: 'coolguy',
-          element: <NotFound />,
+          errorElement: <Error />,
+          children: [
+            {
+              path: 'lists/create',
+              element: <CreateNewList />,
+            },
+          ],
         },
         {
-          path: '*',
-          element: <NotFound />,
+          errorElement: <Error />,
+          children: [
+            {
+              path: '*',
+              element: <NotFound />,
+            },
+          ],
         },
       ],
       errorElement: <Error />,
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router} fallbackElement={<AppLoadingSpinner />} />
+  );
 }
 
 export default App;
