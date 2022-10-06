@@ -1,5 +1,5 @@
 import { PageHeader } from 'components/PageHeader';
-import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
+import { useRouteError } from 'react-router-dom';
 
 export function NotFound() {
   const error = useRouteError();
@@ -7,7 +7,7 @@ export function NotFound() {
   // If the error is coming from a react-router-dom loader
   // check to see if the error status is actually a 404.
   // If it's not a 404, re-throw the error so a different error handler can handle it.
-  if (error?.statusCode && error.statusCode !== 404) {
+  if (error && error?.statusCode !== 404) {
     throw error;
   }
 
