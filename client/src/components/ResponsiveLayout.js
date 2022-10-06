@@ -43,11 +43,8 @@ const MobileSidebar = ({ children }) => {
 
 /**
  * Layout which adjusts content based on the width of the viewport..
- * @param {Object} props - The Props.
- * @param {React.ReactNode} props.sidebar - The content of the sidebar.
- * @param {React.ReactNode} props.children - The content of the page.
  */
-export const ResponsiveLayout = ({ sidebar, children }) => {
+export const ResponsiveLayout = () => {
   return (
     <div className="flex flex-col-reverse">
       {/* Main Content */}
