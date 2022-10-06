@@ -9,8 +9,8 @@ const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/lists`;
 const getLists = async () => {
   const response = await fetch(baseUrl);
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 
   return await response.json();
@@ -24,8 +24,8 @@ const getLists = async () => {
 const getList = async (id) => {
   const response = await fetch(`${baseUrl}/${id}`);
 
-  if(!response.ok){
-    throw ApiError.createFromFetchResponse(response);
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
   }
 
   return await response.json();
