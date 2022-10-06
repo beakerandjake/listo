@@ -8,7 +8,7 @@ import { FadeAndPopIn } from 'components/Transition';
  * Assumes the app will load and initialize quickly and has a delay built in before rendering.
  * That way there isn't a quick flash of content.
  */
-export const AppLoadingSpinner = () => {
+export const LoadingSpinner = () => {
   return (
     <DelayedRender>
       <FadeAndPopIn in appear>

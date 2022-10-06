@@ -10,8 +10,11 @@ import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { Sidebar } from 'components/Navigation/Sidebar';
 import { CreateNewList, Dashboard, Error, List, NotFound } from 'routes';
 import { listLoader } from 'routes/List';
-import { AppLoadingSpinner } from 'routes/AppLoadingSpinner';
+import { LoadingSpinner } from 'components/LoadingSpinner';
 
+/**
+ * Root element used for routing, renders all child routes in its outlet.
+ */
 const Root = () => {
   const lists = useLoaderData();
 
@@ -30,42 +33,22 @@ function App() {
       loader: async () => await listApi.getLists(),
       children: [
         {
-          errorElement: <Error />,
-          children: [
-            {
-              index: true,
-              element: <Dashboard />,
-            },
-          ],
+          index: true,
+          element: <Dashboard />,
         },
         {
-          errorElement: <Error />,
-          children: [
-            {
-              path: 'lists/:id',
-              element: <List />,
-              loader: listLoader,
-              errorElement: <NotFound />,
-            },
-          ],
+          path: 'lists/:id',
+          element: <List />,
+          loader: listLoader,
+          errorElement: <NotFound />,
         },
         {
-          errorElement: <Error />,
-          children: [
-            {
-              path: 'lists/create',
-              element: <CreateNewList />,
-            },
-          ],
+          path: 'lists/create',
+          element: <CreateNewList />,
         },
         {
-          errorElement: <Error />,
-          children: [
-            {
-              path: '*',
-              element: <NotFound />,
-            },
-          ],
+          path: '*',
+          element: <NotFound />,
         },
       ],
       errorElement: <Error />,
@@ -73,7 +56,7 @@ function App() {
   ]);
 
   return (
-    <RouterProvider router={router} fallbackElement={<AppLoadingSpinner />} />
+    <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
   );
 }
 
