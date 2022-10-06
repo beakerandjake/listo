@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import { Navbar, CollapsibleSidebarContainer } from 'components/Navigation';
+import {
+  Navbar,
+  CollapsibleSidebarContainer,
+  Sidebar,
+} from 'components/Navigation';
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -49,16 +53,22 @@ export const ResponsiveLayout = ({ sidebar, children }) => {
       {/* Main Content */}
       <div className="md:ml-64 flex flex-col flex-1">
         <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
-          {children}
+          <Outlet />
         </main>
       </div>
+
       {/* Static Sidebar on Desktop. */}
       <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-        <div className="fixed inset-y-0 flex flex-col w-64">{sidebar}</div>
+        <div className="fixed inset-y-0 flex flex-col w-64">
+          <Sidebar />
+        </div>
       </MediaQuery>
+
       {/* Navbar / Sidebar drawer on Mobile */}
       <MediaQuery maxWidth={MOBILE_BREAKPOINT - 1}>
-        <MobileSidebar>{sidebar}</MobileSidebar>
+        <MobileSidebar>
+          <Sidebar />
+        </MobileSidebar>
       </MediaQuery>
     </div>
   );
