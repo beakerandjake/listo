@@ -3,6 +3,7 @@ import { createContext, useContext, useReducer } from 'react';
 export const sidebarItemsActions = {
   increment: 'SIDEBAR_INCREMENT_LIST_ITEM_COUNT',
   decrement: 'SIDEBAR_DECREMENT_LIST_ITEM_COUNT',
+  update: 'SIDEBAR_UPDATE_LIST_ITEM_COUNT',
 };
 
 const reducer = (state, action) => {
@@ -18,6 +19,10 @@ const reducer = (state, action) => {
         x.id === action.id
           ? { ...x, itemCount: x.itemCount - action.amount }
           : x
+      );
+    case sidebarItemsActions.update:
+      return state.map((x) =>
+        x.id === action.id ? { ...x, itemCount: action.itemCount } : x
       );
     default:
       return state;
