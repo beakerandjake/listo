@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
@@ -14,6 +14,10 @@ import { SortItemsDropdown } from './SortItemsDropdown';
 import { GroupedItemsDisplay } from './GroupedItemsDisplay';
 import { Title } from './Title';
 import { getIcon } from 'services/iconLibrary';
+import {
+  sidebarItemsActions,
+  useSidebarItemsDispatch,
+} from 'context/SidebarItemsContext';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -29,6 +33,8 @@ export const List = () => {
   const [items, setItems] = useState(loaderItems);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
+  const sidebarItemsDispatch = useSidebarItemsDispatch();
+  const skipDispatch = useRef();
   const handleError = useErrorHandler();
 
   // whenever the loader gives us new items,
@@ -37,7 +43,19 @@ export const List = () => {
     setItems(loaderItems);
     setSelectedItemId(null);
     setActiveSort(defaultSorting);
+    skipDispatch.current = true;
   }, [loaderItems]);
+
+  // // whenever the items change, update the item count in the sidebar.
+  useEffect(() => {
+    sidebarItemsDispatch({
+      type: sidebarItemsActions.update,
+      id: list.id,
+      itemCount: items.filter((x) => !x.completed).length,
+    });
+    // okay to exclude list.id temporarily, because it changes before items does
+    // so items will always be for list.id.
+  }, [items, sidebarItemsDispatch]);
 
   // whenever the items or the active sort changes, update the sortedItems list.
   // this ensures items are always sorted according to the activeSort.

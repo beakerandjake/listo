@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigation } from 'react-router-dom';
+import { useLocation, useNavigation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import {
   Navbar,
@@ -44,13 +44,13 @@ const MobileSidebar = ({ children }) => {
 /**
  * Layout which adjusts content based on the width of the viewport..
  */
-export const ResponsiveLayout = () => {
+export const ResponsiveLayout = ({ children }) => {
   return (
     <div className="flex flex-col-reverse">
       {/* Main Content */}
       <div className="md:ml-64 flex flex-col flex-1">
         <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
-          <Outlet />
+         {children}
         </main>
       </div>
 

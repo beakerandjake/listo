@@ -1,16 +1,16 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { listApi } from './api';
-import { ResponsiveLayout } from 'components/ResponsiveLayout';
 import { CreateNewList, Dashboard, Error, List, NotFound } from 'routes';
 import { listLoader } from 'routes/List';
 import { LoadingSpinner } from 'components/LoadingSpinner';
+import { Root, routeId as rootRouteId } from 'routes/Root';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    id: 'root',
-    element: <ResponsiveLayout />,
+    id: rootRouteId,
+    element: <Root />,
     loader: async () => await listApi.getLists(),
     children: [
       {
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: 'lists/:id',
+        path: 'lists/:listId',
         element: <List />,
         loader: listLoader,
         errorElement: <NotFound />,

@@ -35,7 +35,7 @@ const getLists = () => {
     .prepare(`
       SELECT l.id, l.name, l.iconName, COUNT(i.listId) as itemCount
       FROM lists l
-      LEFT JOIN items i on i.listId = l.id AND i.deletedDate IS NULL
+      LEFT JOIN items i on i.listId = l.id AND i.deletedDate IS NULL AND i.completedDate IS NULL
       WHERE l.deletedDate IS NULL
       GROUP BY l.id, l.name, l.iconName;
     `)

@@ -1,5 +1,5 @@
 import { NavLogo } from 'components/Navigation/NavLogo';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useSidebarItems } from 'context/SidebarItemsContext';
 import { SidebarNav } from './SidebarNav';
 import { SidebarNavItem } from './SidebarNavItem';
 
@@ -7,7 +7,7 @@ import { SidebarNavItem } from './SidebarNavItem';
  * Sidebar which allows the user to navigate between pages and lists.
  */
 export function Sidebar() {
-  const lists = useRouteLoaderData('root');
+  const lists = useSidebarItems();
 
   return (
     <div className="flex flex-col flex-grow border-r border-gray-200 bg-white overflow-y-auto">
