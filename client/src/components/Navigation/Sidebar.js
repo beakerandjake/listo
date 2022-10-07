@@ -1,5 +1,5 @@
 import { NavLogo } from 'components/Navigation/NavLogo';
-import { useSidebarItems } from 'context/SidebarContext';
+import { useSidebarItems } from 'context/SidebarItemsContext';
 import { SidebarNav } from './SidebarNav';
 import { SidebarNavItem } from './SidebarNavItem';
 

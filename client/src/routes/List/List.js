@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
@@ -17,7 +17,7 @@ import { getIcon } from 'services/iconLibrary';
 import {
   sidebarItemsActions,
   useSidebarItemsDispatch,
-} from 'context/SidebarContext';
+} from 'context/SidebarItemsContext';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {

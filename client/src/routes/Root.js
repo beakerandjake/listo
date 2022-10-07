@@ -1,6 +1,6 @@
 import { Outlet, useRouteLoaderData } from 'react-router-dom';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
-import { SidebarItemsProvider } from 'context/SidebarContext';
+import { SidebarItemsProvider } from 'context/SidebarItemsContext';
 
 export const routeId = 'root';
 
