@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
-        path: 'lists/:id',
+        path: 'lists/:listId',
         element: <List />,
         loader: listLoader,
         errorElement: <NotFound />,

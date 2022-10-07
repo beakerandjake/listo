@@ -8,8 +8,8 @@ import { itemApi, listApi } from 'api';
  */
 export const listLoader = async ({ params }) => {
   const [list, items] = await Promise.all([
-    listApi.getList(params.id),
-    itemApi.getItems(params.id),
+    listApi.getList(params.listId),
+    itemApi.getItems(params.listId),
   ]);
 
   return { list, items };
