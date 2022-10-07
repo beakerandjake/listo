@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
@@ -18,6 +18,7 @@ import {
   sidebarItemsActions,
   useSidebarItemsDispatch,
 } from 'context/SidebarItemsContext';
+import { listItemsActions, listItemsReducer } from 'reducers/listItemsReducer';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -29,36 +30,38 @@ const defaultSorting = {
  * Component which allows CRUD operations on a List.
  */
 export const List = () => {
-  const { list, items: loaderItems } = useLoaderData();
-  const [items, setItems] = useState(loaderItems);
+  const loaderData = useLoaderData();
+  const [list, setList] = useState(loaderData.list);
+  const [items, listItemsDispatch] = useReducer(
+    listItemsReducer,
+    loaderData.items
+  );
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const sidebarItemsDispatch = useSidebarItemsDispatch();
-  const skipDispatch = useRef();
   const handleError = useErrorHandler();
 
-  // whenever the loader gives us new items,
-  // be sure to reset our internal state.
-  useEffect(() => {
-    setItems(loaderItems);
-    setSelectedItemId(null);
-    setActiveSort(defaultSorting);
-    skipDispatch.current = true;
-  }, [loaderItems]);
-
-  // // whenever the items change, update the item count in the sidebar.
+  // ensure the sidebar item count stays in sync with this lists item count.
   useEffect(() => {
     sidebarItemsDispatch({
       type: sidebarItemsActions.update,
       id: list.id,
       itemCount: items.filter((x) => !x.completed).length,
     });
-    // okay to exclude list.id temporarily, because it changes before items does
-    // so items will always be for list.id.
-  }, [items, sidebarItemsDispatch]);
+  }, [items, list.id, sidebarItemsDispatch]);
 
-  // whenever the items or the active sort changes, update the sortedItems list.
-  // this ensures items are always sorted according to the activeSort.
+  // reset internal state whenever a new list route is navigated to.
+  useEffect(() => {
+    setSelectedItemId(null);
+    setActiveSort(defaultSorting);
+    listItemsDispatch({
+      type: listItemsActions.replace,
+      items: loaderData.items,
+    });
+    setList(loaderData.list);
+  }, [loaderData]);
+
+  // sort items only when required to prevent unnecessary work. 
   const sortedItems = useMemo(() => {
     if (!items) {
       return [];
@@ -72,8 +75,10 @@ export const List = () => {
    **/
   const addItem = async (item) =>
     itemApi
-      .addItem(list.id, item)
-      .then((newItem) => setItems([...items, newItem]))
+      .addItem(loaderData.list.id, item)
+      .then((newItem) =>
+        listItemsDispatch({ type: listItemsActions.add, item: newItem })
+      )
       .catch(handleError);
 
   /**
@@ -85,7 +90,7 @@ export const List = () => {
     itemApi
       .editItem(itemId, changes)
       .then((newItem) =>
-        setItems(items.map((x) => (x.id === itemId ? newItem : x)))
+        listItemsDispatch({ type: listItemsActions.edit, item: newItem })
       )
       .catch(handleError);
 
@@ -98,7 +103,7 @@ export const List = () => {
       .deleteItem(itemId)
       .then(() => {
         setSelectedItemId(null);
-        setItems(items.filter((x) => x.id !== itemId));
+        listItemsDispatch({ type: listItemsActions.delete, id: itemId });
       })
       .catch(handleError);
 
@@ -108,19 +113,14 @@ export const List = () => {
    **/
   const bulkDeleteItems = (filter) =>
     itemApi
-      .bulkDeleteItems(list.id, filter)
+      .bulkDeleteItems(loaderData.list.id, filter)
       .then(() => {
-        setItems(
-          items.filter((x) => {
-            // When bulk deleting with no filter, keep no items.
-            if (!filter) {
-              return false;
-            }
+        const action =
+          filter === 'completed'
+            ? listItemsActions.deleteCompleted
+            : listItemsActions.deleteAll;
 
-            // When bulk deleting with completed filter, only keep active items.
-            return filter === 'completed' && !x.completed;
-          })
-        );
+        listItemsDispatch({ type: action });
       })
       .catch(handleError);
 
@@ -130,10 +130,12 @@ export const List = () => {
    **/
   const bulkEditItems = (changes) =>
     itemApi
-      .bulkEditItems(list.id, changes)
+      .bulkEditItems(loaderData.list.id, changes)
       // Reload all items after a bulk edit.
-      .then(() => itemApi.getItems(list.id))
-      .then(setItems)
+      .then(() => itemApi.getItems(loaderData.list.id))
+      .then((result) =>
+        listItemsDispatch({ type: listItemsActions.replace, items: result })
+      )
       .catch(handleError);
 
   /**
@@ -142,9 +144,6 @@ export const List = () => {
    * @returns {object}
    **/
   const getSelectedItem = (itemId) => {
-    if (!list) {
-      return null;
-    }
     return items.find((x) => x.id === itemId);
   };
 
@@ -163,7 +162,10 @@ export const List = () => {
         {/* Header Section */}
         <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
           <div className="flex items-center gap-3">
-            <Title icon={getIcon(list.iconName)} name={list.name} />
+            <Title
+              icon={getIcon(loaderData.list.iconName)}
+              name={loaderData.list.name}
+            />
             <ActionsDropdown
               items={sortedItems}
               onBulkEdit={bulkEditItems}
