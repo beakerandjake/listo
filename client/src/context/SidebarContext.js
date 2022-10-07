@@ -1,26 +1,20 @@
 import { createContext, useContext, useReducer } from 'react';
 
 export const sidebarItemsActions = {
-  increment: 'SIDEBAR_INCREMENT_LIST_ITEM_COUNT',
-  decrement: 'SIDEBAR_DECREMENT_LIST_ITEM_COUNT',
   update: 'SIDEBAR_UPDATE_LIST_ITEM_COUNT',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case sidebarItemsActions.increment:
-      return state.map((x) =>
-        x.id === action.id
-          ? { ...x, itemCount: x.itemCount + action.amount }
-          : x
-      );
-    case sidebarItemsActions.decrement:
-      return state.map((x) =>
-        x.id === action.id
-          ? { ...x, itemCount: x.itemCount - action.amount }
-          : x
-      );
     case sidebarItemsActions.update:
+      const match = state.find((x) => x.id === action.id);
+
+      // bail out of change if id is bad or itemCount is unchanged.
+      if (!match || match.itemCount === action.itemCount) {
+        return state;
+      }
+
+      // update the item count for the specified list.
       return state.map((x) =>
         x.id === action.id ? { ...x, itemCount: action.itemCount } : x
       );
