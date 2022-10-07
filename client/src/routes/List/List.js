@@ -46,16 +46,16 @@ export const List = () => {
     skipDispatch.current = true;
   }, [loaderItems]);
 
-  // whenever the items change, update the item count in the sidebar.
-  useEffect(() => {
-    sidebarItemsDispatch({
-      type: sidebarItemsActions.update,
-      id: list.id,
-      itemCount: items.filter((x) => !x.completed).length,
-    });
-    // okay to exclude list.id temporarily, because it changes before items does
-    // so items will always be for list.id.
-  }, [items, sidebarItemsDispatch]);
+  // // whenever the items change, update the item count in the sidebar.
+  // useEffect(() => {
+  //   sidebarItemsDispatch({
+  //     type: sidebarItemsActions.update,
+  //     id: list.id,
+  //     itemCount: items.filter((x) => !x.completed).length,
+  //   });
+  //   // okay to exclude list.id temporarily, because it changes before items does
+  //   // so items will always be for list.id.
+  // }, [items, sidebarItemsDispatch]);
 
   // whenever the items or the active sort changes, update the sortedItems list.
   // this ensures items are always sorted according to the activeSort.
