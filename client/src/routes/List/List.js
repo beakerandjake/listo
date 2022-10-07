@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
@@ -14,6 +14,7 @@ import { SortItemsDropdown } from './SortItemsDropdown';
 import { GroupedItemsDisplay } from './GroupedItemsDisplay';
 import { Title } from './Title';
 import { getIcon } from 'services/iconLibrary';
+import { SidebarContext } from 'context/SidebarContext';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -29,6 +30,7 @@ export const List = () => {
   const [items, setItems] = useState(loaderItems);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
+  const sidebarContext = useContext(SidebarContext);
   const handleError = useErrorHandler();
 
   // whenever the loader gives us new items,
@@ -47,6 +49,14 @@ export const List = () => {
     }
     return sortItems(items, activeSort.itemKey, activeSort.direction);
   }, [items, activeSort]);
+
+  // whenever the items change, update the active item count.
+  useEffect(() => {
+    sidebarContext.updateItemCount(
+      list.id,
+      items.filter((x) => !x.completed).length
+    );
+  }, [items]);
 
   /**
    * Add a new item to the list.
