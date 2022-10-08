@@ -62,18 +62,6 @@ export const List = () => {
   }, [loaderData]);
 
   /**
-   * Add a new item to the list.
-   * @param {object} item - The item to add to the list.
-   **/
-  const addItem = async (item) =>
-    itemApi
-      .addItem(loaderData.list.id, item)
-      .then((newItem) =>
-        listItemsDispatch({ type: listItemsActions.add, item: newItem })
-      )
-      .catch(handleError);
-
-  /**
    * Edit the item.
    * @param {number} itemId - The id of the item to edit.
    * @param {object} changes - The changes to apply to the item.
@@ -151,7 +139,7 @@ export const List = () => {
           onItemChange={editItem}
         />
 
-        <AddItem onAddItem={addItem} />
+        <AddItem listId={list.id} />
 
         {/* Header Section */}
         <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
