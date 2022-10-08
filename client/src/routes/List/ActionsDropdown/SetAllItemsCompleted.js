@@ -22,7 +22,7 @@ export const SetAllItemsCompleted = ({ listId, setCompletedTo, ...props }) => {
 
   // re-calculate our disabled state any time the items change.
   useEffect(() => {
-    // if every item is completed then there isn't anything we can do.
+    // if every item is already set to our completed value then there isn't anything we can do.
     setDisabled(items.every((x) => x.completed === setCompletedTo));
   }, [items, setCompletedTo]);
 
