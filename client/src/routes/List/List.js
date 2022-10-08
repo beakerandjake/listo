@@ -2,11 +2,7 @@ import { useEffect, useMemo, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { useErrorHandler } from 'react-error-boundary';
 import { itemApi } from 'api';
-import {
-  itemSortingFields,
-  sortingDirections,
-  sortItems,
-} from 'services/sorting';
+import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { AddItem } from './AddItem';
 import { ActionsDropdown } from './ActionsDropdown';
 import { EditItemDrawer } from './EditItemDrawer';
@@ -64,14 +60,6 @@ export const List = () => {
     });
     setList(loaderData.list);
   }, [loaderData]);
-
-  // sort items only when required to prevent unnecessary work.
-  const sortedItems = useMemo(() => {
-    if (!items) {
-      return [];
-    }
-    return sortItems(items, activeSort.itemKey, activeSort.direction);
-  }, [items, activeSort]);
 
   /**
    * Add a new item to the list.
@@ -156,7 +144,9 @@ export const List = () => {
       {/* Render reverse so flipped Items don't render on top. */}
       <div className="flex flex-col-reverse gap-2 mb-5">
         <GroupedItemsDisplay
-          items={sortedItems}
+          items={items}
+          sortingKey={activeSort.itemKey}
+          sortingDirection={activeSort.direction}
           onItemSelected={setSelectedItemId}
           onItemChange={editItem}
         />
@@ -171,13 +161,13 @@ export const List = () => {
               name={loaderData.list.name}
             />
             <ActionsDropdown
-              items={sortedItems}
+              items={items}
               onBulkEdit={bulkEditItems}
               onBulkDelete={bulkDeleteItems}
             />
           </div>
           {/* Only render dropdown if items exist. */}
-          {sortedItems.length > 0 && (
+          {items.length > 0 && (
             <SortItemsDropdown
               activeSort={activeSort}
               onChange={setActiveSort}
