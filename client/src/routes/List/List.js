@@ -89,37 +89,6 @@ export const List = () => {
       .catch(handleError);
 
   /**
-   * Deletes many items from the list.
-   * @param {string} filter - Optional filtering to change which items get deleted.
-   **/
-  const bulkDeleteItems = (filter) =>
-    itemApi
-      .bulkDeleteItems(loaderData.list.id, filter)
-      .then(() => {
-        const action =
-          filter === 'completed'
-            ? listItemsActions.deleteCompleted
-            : listItemsActions.deleteAll;
-
-        listItemsDispatch({ type: action });
-      })
-      .catch(handleError);
-
-  /**
-   * Bulk action to set the complete field of all items in the list.
-   * @param {boolean} completed
-   **/
-  const bulkEditItems = (changes) =>
-    itemApi
-      .bulkEditItems(loaderData.list.id, changes)
-      // Reload all items after a bulk edit.
-      .then(() => itemApi.getItems(loaderData.list.id))
-      .then((result) =>
-        listItemsDispatch({ type: listItemsActions.replace, items: result })
-      )
-      .catch(handleError);
-
-  /**
    * Returns the currently selected item (if any)
    * @param {number} itemId - The if of the selected item (if any)
    * @returns {object}
@@ -150,12 +119,7 @@ export const List = () => {
                 icon={getIcon(loaderData.list.iconName)}
                 name={loaderData.list.name}
               />
-              <ActionsDropdown
-                listId={list.id}
-                items={items}
-                onBulkEdit={bulkEditItems}
-                onBulkDelete={bulkDeleteItems}
-              />
+              <ActionsDropdown listId={list.id} />
             </div>
             {/* Only render dropdown if items exist. */}
             {items.length > 0 && (
