@@ -35,8 +35,14 @@ export const listItemsReducer = (state, action) => {
 };
 
 export const ListItemsDispatchContext = createContext(() => {});
+export const ListItemsContext = createContext([]);
 
 /**
  * Context which allows actions to be dispatched to the listItemsReducer.
  */
 export const useListItemsDispatch = () => useContext(ListItemsDispatchContext);
+
+/**
+ * Context which provides access to the List items.
+ */
+export const useListItems = () => useContext(ListItemsContext);
