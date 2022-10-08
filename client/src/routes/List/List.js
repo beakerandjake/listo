@@ -76,19 +76,6 @@ export const List = () => {
       .catch(handleError);
 
   /**
-   * Deletes an item from the list.
-   * @param {number} itemId - The item to delete from the list.
-   **/
-  const deleteItem = (itemId) =>
-    itemApi
-      .deleteItem(itemId)
-      .then(() => {
-        setSelectedItemId(null);
-        listItemsDispatch({ type: listItemsActions.delete, id: itemId });
-      })
-      .catch(handleError);
-
-  /**
    * Returns the currently selected item (if any)
    * @param {number} itemId - The if of the selected item (if any)
    * @returns {object}
@@ -131,11 +118,13 @@ export const List = () => {
           </div>
         </div>
 
-        <EditItemDrawer
-          item={getSelectedItem(selectedItemId)}
-          onClose={() => setSelectedItemId(null)}
-          onDeleteItem={() => deleteItem(selectedItemId)}
-        />
+        {/* Drawer will open when an item is selected */}
+        {selectedItemId && (
+          <EditItemDrawer
+            item={getSelectedItem(selectedItemId)}
+            onClose={() => setSelectedItemId(null)}
+          />
+        )}
       </ListItemsDispatchContext.Provider>
     </ListItemsContext.Provider>
   );

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import {
   faArrowLeft,
   faArrowRightFromBracket,
 } from '@fortawesome/pro-solid-svg-icons';
 import { DebounceInput } from 'react-debounce-input';
+import { itemApi } from 'api';
 import { Drawer } from 'components/Drawer';
 import { IconButton } from 'components/IconButton';
 import {
@@ -20,25 +22,39 @@ import {
   ItemQuantityMenu,
 } from 'routes/List/Item';
 import { DeleteItem } from './DeleteItem';
+import {
+  listItemsActions,
+  useListItemsDispatch,
+} from 'context/ListItemsContext';
 
 /**
  * Drawer which allows the user to edit fields of an Item.
  * @param {Object} props
  * @param {Object} props.item - The item which can be edited.
  * @param {function} props.onClose - Callback invoked when the drawer is to be closed.
- * @param {function} props.onEditItem - Callback invoked when the user edits a field of the item.
  */
-export function EditItemDrawer({ item, onClose, onEditItem }) {
+export function EditItemDrawer({ item, onClose }) {
   const [open, setOpen] = useState(false);
+  const dispatch = useListItemsDispatch();
+  const handleError = useErrorHandler();
 
   // open the drawer when an item is provided.
   useEffect(() => {
     setOpen(!!item);
   }, [item]);
 
-  if (!item) {
-    return null;
-  }
+  /**
+   * Edit the item.
+   * @param {number} itemId - The id of the item to edit.
+   * @param {object} changes - The changes to apply to the item.
+   **/
+  const editItem = async (changes) =>
+    itemApi
+      .editItem(item.id, changes)
+      .then((newItem) =>
+        dispatch({ type: listItemsActions.edit, item: newItem })
+      )
+      .catch(handleError);
 
   return (
     <>
@@ -65,14 +81,14 @@ export function EditItemDrawer({ item, onClose, onEditItem }) {
               <div className="-ml-2">
                 <ItemCompletedCheckbox
                   checked={item.completed}
-                  onChange={(completed) => onEditItem({ completed })}
+                  onChange={(completed) => editItem({ completed })}
                 />
               </div>
               <ItemNameLabel
                 completed={item.completed}
                 name={item.name}
                 className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
-                onClick={() => onEditItem({ completed: !item.completed })}
+                onClick={() => editItem({ completed: !item.completed })}
               />
             </div>
             {/* Completed date */}
@@ -89,20 +105,20 @@ export function EditItemDrawer({ item, onClose, onEditItem }) {
           <div className="flex flex-col space-y-2">
             <ItemQuantityMenu
               quantity={item.quantity}
-              onChange={(value) => onEditItem({ quantity: value })}
-              onReset={(value) => onEditItem({ quantity: value })}
+              onChange={(value) => editItem({ quantity: value })}
+              onReset={(value) => editItem({ quantity: value })}
               desktopPlacement="bottom"
             />
             <ItemDueDateMenu
               dueDate={item.dueDate}
-              onChange={(value) => onEditItem({ dueDate: value })}
+              onChange={(value) => editItem({ dueDate: value })}
               desktopPlacement="bottom"
             />
 
             <DebounceInput
               element="textarea"
               value={item.note}
-              onChange={(event) => onEditItem({ note: event.target.value })}
+              onChange={(event) => editItem({ note: event.target.value })}
               debounceTimeout={800}
               forceNotifyByEnter={false}
               placeholder="Add Note"
