@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { AddItem } from './AddItem';
