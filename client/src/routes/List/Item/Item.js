@@ -1,5 +1,11 @@
+import { useErrorHandler } from 'react-error-boundary';
 import cx from 'classnames';
+import { itemApi } from 'api';
 import { Badge } from 'components/Badge';
+import {
+  listItemsActions,
+  useListItemsDispatch,
+} from 'context/ListItemsContext';
 import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
 import { ItemNameLabel } from './ItemNameLabel';
 import { ItemStatusBar } from './ItemStatusBar';
@@ -9,9 +15,21 @@ import { ItemStatusBar } from './ItemStatusBar';
  * @param {Object} props
  * @param {object} props.item - The item.
  * @param {function} props.onClick - Callback invoked when the user clicks the button.
- * @param {function} props.onItemChange - Callback invoked when the user makes a change to the item.
  */
-export const Item = ({ item, onClick, onItemChange }) => {
+export const Item = ({ item, onClick }) => {
+  const dispatch = useListItemsDispatch();
+  const handleError = useErrorHandler();
+
+  /**
+   * Edit the item.
+   * @param {object} changes - The changes to apply to the item.
+   **/
+  const editItem = (changes) =>
+    itemApi
+      .editItem(item.id, changes)
+      .then((result) => dispatch({ type: listItemsActions.edit, item: result }))
+      .catch(handleError);
+
   return (
     <div
       className={cx(
@@ -22,7 +40,7 @@ export const Item = ({ item, onClick, onItemChange }) => {
     >
       <ItemCompletedCheckbox
         checked={item.completed}
-        onChange={(completed) => onItemChange({ completed })}
+        onChange={(completed) => editItem({ completed })}
       />
       <div
         className={cx({ 'opacity-50': item.completed }, 'pl-3 flex flex-col')}

@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { useState } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import {
   faArrowLeft,
   faArrowRightFromBracket,
-  faTrashCan,
 } from '@fortawesome/pro-solid-svg-icons';
 import { DebounceInput } from 'react-debounce-input';
+import { itemApi } from 'api';
 import { Drawer } from 'components/Drawer';
 import { IconButton } from 'components/IconButton';
-import { ConfirmDialog } from 'components/ConfirmDialog';
 import {
   MenuFooter,
   MenuHeader,
@@ -18,37 +17,46 @@ import {
 import {
   ItemCompletedCheckbox,
   ItemDueDateMenu,
+  ItemFormattedDateLabel,
   ItemNameLabel,
   ItemQuantityMenu,
 } from 'routes/List/Item';
+import { DeleteItem } from './DeleteItem';
+import {
+  listItemsActions,
+  useListItemsDispatch,
+} from 'context/ListItemsContext';
 
 /**
  * Drawer which allows the user to edit fields of an Item.
  * @param {Object} props
  * @param {Object} props.item - The item which can be edited.
- * @param {function} props.onClose - Callback invoked when the drawer is to be closed.
- * @param {function} props.onEditItem - Callback invoked when the user edits a field of the item.
- * @param {function} props.onDeleteItem - Callback invoked when the user wants to delete the item.
+ * @param {function} props.onClosed - Callback invoked when the drawer closed.
  */
-export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
-  const [open, setOpen] = useState(false);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+export function EditItemDrawer({ item, onClosed }) {
+  const [open, setOpen] = useState(true);
+  const dispatch = useListItemsDispatch();
+  const handleError = useErrorHandler();
 
-  // open the drawer when an item is provided.
-  useEffect(() => {
-    setOpen(!!item);
-  }, [item]);
-
-  if (!item) {
-    return null;
-  }
+  /**
+   * Edit the item.
+   * @param {number} itemId - The id of the item to edit.
+   * @param {object} changes - The changes to apply to the item.
+   **/
+  const editItem = async (changes) =>
+    itemApi
+      .editItem(item.id, changes)
+      .then((newItem) =>
+        dispatch({ type: listItemsActions.edit, item: newItem })
+      )
+      .catch(handleError);
 
   return (
     <>
       <Drawer
         open={open}
         onClose={() => setOpen(false)}
-        onExitTransitionComplete={() => onClose()}
+        onExitTransitionComplete={() => onClosed()}
         anchor="right"
         size="full"
         contentClassName="max-w-md"
@@ -68,44 +76,39 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
               <div className="-ml-2">
                 <ItemCompletedCheckbox
                   checked={item.completed}
-                  onChange={(completed) => onEditItem({ completed })}
+                  onChange={(completed) => editItem({ completed })}
                 />
               </div>
               <ItemNameLabel
                 completed={item.completed}
                 name={item.name}
                 className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
-                onClick={() => onEditItem({ completed: !item.completed })}
+                onClick={() => editItem({ completed: !item.completed })}
               />
             </div>
-            {/* Completed date */}
-            {item.completedDate && (
-              <span className="text-xs font-semibold text-gray-500 select-none">
-                Completed{' '}
-                {formatDistanceToNow(parseISO(item.completedDate), {
-                  addSuffix: true,
-                })}
-              </span>
-            )}
+            <ItemFormattedDateLabel
+              date={item.completedDate}
+              prefix="Completed"
+              className="text-xs font-semibold text-gray-500 select-none"
+            />
           </div>
           {/* Edit Item Fields */}
           <div className="flex flex-col space-y-2">
             <ItemQuantityMenu
               quantity={item.quantity}
-              onChange={(value) => onEditItem({ quantity: value })}
-              onReset={(value) => onEditItem({ quantity: value })}
+              onChange={(value) => editItem({ quantity: value })}
+              onReset={(value) => editItem({ quantity: value })}
               desktopPlacement="bottom"
             />
             <ItemDueDateMenu
               dueDate={item.dueDate}
-              onChange={(value) => onEditItem({ dueDate: value })}
+              onChange={(value) => editItem({ dueDate: value })}
               desktopPlacement="bottom"
             />
-
             <DebounceInput
               element="textarea"
               value={item.note}
-              onChange={(event) => onEditItem({ note: event.target.value })}
+              onChange={(event) => editItem({ note: event.target.value })}
               debounceTimeout={800}
               forceNotifyByEnter={false}
               placeholder="Add Note"
@@ -121,35 +124,14 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
             title="Close Item Details"
             onClick={() => setOpen(false)}
           />
-          {item.createdDate && (
-            <span className="text-sm font-semibold text-gray-500 select-none">
-              Created{' '}
-              {formatDistanceToNow(parseISO(item.createdDate), {
-                addSuffix: true,
-              })}
-            </span>
-          )}
-          <IconButton
-            icon={faTrashCan}
-            title="Delete Item"
-            onClick={() => setConfirmDialogOpen(true)}
+          <ItemFormattedDateLabel
+            date={item.createdDate}
+            prefix="Created"
+            className="text-sm font-semibold text-gray-500 select-none"
           />
+          <DeleteItem itemId={item.id} />
         </MenuFooter>
       </Drawer>
-
-      {/* Get users confirmation when deleting an item */}
-      <ConfirmDialog
-        open={confirmDialogOpen}
-        onDismiss={() => setConfirmDialogOpen(false)}
-        onConfirm={() => {
-          setConfirmDialogOpen(false);
-          onDeleteItem();
-        }}
-        variant="danger"
-        confirmButtonText="Delete"
-        title="Delete Item?"
-        message="This item will be permanently deleted."
-      />
     </>
   );
 }

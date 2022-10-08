@@ -4,6 +4,7 @@ import { Badge } from 'components/Badge';
 import { Pill, PillGroup } from 'components/PillGroup';
 import { Items } from './Items';
 import { NoItemsDisplay } from './NoItemsDisplay';
+import { sortItems } from 'services/sorting';
 
 /**
  * Pill which represents a group of the list items.
@@ -29,19 +30,15 @@ const ITEM_GROUPS = [
     key: 'active',
     displayName: 'Active',
     filterFn: (x) => !x.completed,
-    emptyDisplay: {
-      icon: faPartyHorn,
-      heading: 'All Items Complete!',
-    },
+    emptyDisplay: (
+      <NoItemsDisplay icon={faPartyHorn} heading="All Items Complete!" />
+    ),
   },
   {
     key: 'complete',
     displayName: 'Complete',
     filterFn: (x) => !!x.completed,
-    emptyDisplay: {
-      icon: faList,
-      heading: 'No Items Completed',
-    },
+    emptyDisplay: <NoItemsDisplay icon={faList} heading="No Items Completed" />,
   },
 ];
 
@@ -49,10 +46,14 @@ const ITEM_GROUPS = [
  * Groups items based on the item group config
  * @param {array} items - The items to filter.
  */
-const groupItems = (items) =>
+const groupAndSortItems = (items, sortingKey, sortingDirection) =>
   ITEM_GROUPS.map(({ filterFn, ...group }) => ({
     ...group,
-    items: items.filter((x) => filterFn(x)),
+    items: sortItems(
+      items.filter((x) => filterFn(x)),
+      sortingKey,
+      sortingDirection
+    ),
   }));
 
 /**
@@ -60,20 +61,24 @@ const groupItems = (items) =>
  * @param {Object} props
  * @param {array} props.items - All of the items in the list
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
- * @param {function} props.onItemChange - Callback invoked when the user has made changes to an item.
+ * @param {string} props.sortingKey - The key to sort the items by.
+ * @param {string} props.sortingDirection - The direction to sort the items.
  */
 export const GroupedItemsDisplay = ({
   items,
+  sortingKey,
+  sortingDirection,
   onItemSelected,
-  onItemChange,
 }) => {
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
-  const [itemGroups, setItemGroups] = useState(groupItems(items));
+  const [itemGroups, setItemGroups] = useState(
+    groupAndSortItems(items, sortingKey, sortingDirection)
+  );
 
-  // Any time our items list changes, group the items into their pill sections
+  // Any time our items or the sorting changes, re calculate the groups
   useEffect(() => {
-    setItemGroups(groupItems(items));
-  }, [items]);
+    setItemGroups(groupAndSortItems(items, sortingKey, sortingDirection));
+  }, [items, sortingKey, sortingDirection]);
 
   // Render an empty display if all groups are empty.
   if (itemGroups?.every((x) => !x.items.length)) {
@@ -105,12 +110,10 @@ export const GroupedItemsDisplay = ({
       <Items
         items={itemGroups[activeGroupIndex].items}
         onItemSelected={onItemSelected}
-        onItemChange={onItemChange}
       />
 
-      {activeGroup.items.length <= 0 && (
-        <NoItemsDisplay {...activeGroup.emptyDisplay} />
-      )}
+      {/* Show the groups empty display if it has no items. */}
+      {activeGroup.items.length <= 0 && activeGroup.emptyDisplay}
     </div>
   );
 };

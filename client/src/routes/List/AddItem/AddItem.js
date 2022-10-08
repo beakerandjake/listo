@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import MediaQuery from 'react-responsive';
 import { mobileBreakpoint } from 'components/ResponsiveLayout';
 import { itemValidationConstants } from 'routes/List/Item';
@@ -6,6 +6,12 @@ import { AddItemDrawer } from './AddItemDrawer';
 import { AddItemToolbar } from './AddItemToolbar';
 import { StatefulMenu } from 'components/Menu';
 import { isValidDate } from 'services/dueDateHelpers';
+import { itemApi } from 'api';
+import {
+  listItemsActions,
+  useListItemsDispatch,
+} from 'context/ListItemsContext';
+import { useErrorHandler } from 'react-error-boundary';
 
 const DEFAULT_ITEM = {
   name: '',
@@ -60,27 +66,30 @@ const formatItem = (item) => {
 /**
  * Allows the user to add a new Item to the list.
  * @param {object} props - the props
- * @param {function} props.onAddItem - Callback invoked when the user wants to add a new Item to the list.
+ * @param {number} props.listId - The id of the list to add items to.
  **/
-export const AddItem = ({ onAddItem }) => {
+export const AddItem = ({ listId }) => {
   const [item, setItem] = useState(DEFAULT_ITEM);
+  const dispatch = useListItemsDispatch();
+  const handleError = useErrorHandler();
 
-  const itemIsValid = itemCanBeAdded(formatItem(item));
+  // is the item in a state where it can be added? re-calculated any time item changes.
+  const itemIsValid = useMemo(() => itemCanBeAdded(formatItem(item)), [item]);
 
-  // Callback invoked whenever the user makes changes to the item.
-  const onItemChange = (changes) => {
+  // update the item with the changes.
+  const applyChanges = (changes) => {
     setItem({ ...item, ...changes });
   };
 
-  // Will only invoke our onAddItem callback if the item is valid.
-  const tryToAddItem = () => {
-    if (!itemIsValid) {
-      return false;
-    }
-
-    onAddItem(formatItem(item));
-    return true;
-  };
+  /**
+   * Adds the item to the list.
+   * @returns {Promise}
+   */
+  const addItem = () =>
+    itemApi
+      .addItem(listId, formatItem(item))
+      .then((result) => dispatch({ type: listItemsActions.add, item: result }))
+      .catch(handleError);
 
   return (
     <>
@@ -89,9 +98,10 @@ export const AddItem = ({ onAddItem }) => {
         <AddItemToolbar
           item={item}
           itemIsValid={itemIsValid}
-          onItemChange={onItemChange}
+          onItemChange={applyChanges}
           onAddItem={() => {
-            tryToAddItem() && setItem(DEFAULT_ITEM);
+            itemIsValid && addItem();
+            setItem(DEFAULT_ITEM);
           }}
         />
       </MediaQuery>
@@ -105,9 +115,10 @@ export const AddItem = ({ onAddItem }) => {
               onCloseTransitionComplete={() => setItem(DEFAULT_ITEM)}
               item={item}
               itemIsValid={itemIsValid}
-              onItemChange={onItemChange}
+              onItemChange={applyChanges}
               onAddItem={() => {
-                tryToAddItem() && setOpen(false);
+                itemIsValid && addItem();
+                setOpen(false);
               }}
             />
           )}
@@ -116,5 +127,3 @@ export const AddItem = ({ onAddItem }) => {
     </>
   );
 };
-
-export const defaultItem = { ...DEFAULT_ITEM };
