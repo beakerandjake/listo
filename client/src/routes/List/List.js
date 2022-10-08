@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { AddItem } from './AddItem';
@@ -39,7 +39,7 @@ export const List = () => {
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const sidebarItemsDispatch = useSidebarItemsDispatch();
 
-  // ensure the sidebar item count stays in sync with this lists active item count.
+  // update the sidebar active item count any time the items change.
   useEffect(() => {
     sidebarItemsDispatch({
       type: sidebarItemsActions.update,
@@ -59,14 +59,11 @@ export const List = () => {
     setList(loaderData.list);
   }, [loaderData]);
 
-  /**
-   * Returns the currently selected item (if any)
-   * @param {number} itemId - The if of the selected item (if any)
-   * @returns {object}
-   **/
-  const getSelectedItem = (itemId) => {
-    return items.find((x) => x.id === itemId);
-  };
+  // ensure the selected item reference stays current with changes.
+  const selectedItem = useMemo(
+    () => items.find((x) => x.id === selectedItemId),
+    [selectedItemId, items]
+  );
 
   return (
     <ListItemsContext.Provider value={items}>
@@ -102,9 +99,9 @@ export const List = () => {
         </div>
 
         {/* Render drawer when an item is selected */}
-        {selectedItemId && (
+        {selectedItem && (
           <EditItemDrawer
-            item={getSelectedItem(selectedItemId)}
+            item={selectedItem}
             onClosed={() => setSelectedItemId(null)}
           />
         )}
