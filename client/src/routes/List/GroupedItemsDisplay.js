@@ -29,19 +29,15 @@ const ITEM_GROUPS = [
     key: 'active',
     displayName: 'Active',
     filterFn: (x) => !x.completed,
-    emptyDisplay: {
-      icon: faPartyHorn,
-      heading: 'All Items Complete!',
-    },
+    emptyDisplay: (
+      <NoItemsDisplay icon={faPartyHorn} heading="All Items Complete!" />
+    ),
   },
   {
     key: 'complete',
     displayName: 'Complete',
     filterFn: (x) => !!x.completed,
-    emptyDisplay: {
-      icon: faList,
-      heading: 'No Items Completed',
-    },
+    emptyDisplay: <NoItemsDisplay icon={faList} heading="No Items Completed" />,
   },
 ];
 
@@ -108,9 +104,8 @@ export const GroupedItemsDisplay = ({
         onItemChange={onItemChange}
       />
 
-      {activeGroup.items.length <= 0 && (
-        <NoItemsDisplay {...activeGroup.emptyDisplay} />
-      )}
+      {/* Show the groups empty display if it has no items. */}
+      {activeGroup.items.length <= 0 && activeGroup.emptyDisplay}
     </div>
   );
 };
