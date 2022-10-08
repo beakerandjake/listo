@@ -3,12 +3,10 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import {
   faArrowLeft,
   faArrowRightFromBracket,
-  faTrashCan,
 } from '@fortawesome/pro-solid-svg-icons';
 import { DebounceInput } from 'react-debounce-input';
 import { Drawer } from 'components/Drawer';
 import { IconButton } from 'components/IconButton';
-import { ConfirmDialog } from 'components/ConfirmDialog';
 import {
   MenuFooter,
   MenuHeader,
@@ -21,6 +19,7 @@ import {
   ItemNameLabel,
   ItemQuantityMenu,
 } from 'routes/List/Item';
+import { DeleteItem } from './DeleteItem';
 
 /**
  * Drawer which allows the user to edit fields of an Item.
@@ -28,11 +27,9 @@ import {
  * @param {Object} props.item - The item which can be edited.
  * @param {function} props.onClose - Callback invoked when the drawer is to be closed.
  * @param {function} props.onEditItem - Callback invoked when the user edits a field of the item.
- * @param {function} props.onDeleteItem - Callback invoked when the user wants to delete the item.
  */
-export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
+export function EditItemDrawer({ item, onClose, onEditItem }) {
   const [open, setOpen] = useState(false);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   // open the drawer when an item is provided.
   useEffect(() => {
@@ -129,27 +126,9 @@ export function EditItemDrawer({ item, onClose, onEditItem, onDeleteItem }) {
               })}
             </span>
           )}
-          <IconButton
-            icon={faTrashCan}
-            title="Delete Item"
-            onClick={() => setConfirmDialogOpen(true)}
-          />
+          <DeleteItem itemId={item.id} />
         </MenuFooter>
       </Drawer>
-
-      {/* Get users confirmation when deleting an item */}
-      <ConfirmDialog
-        open={confirmDialogOpen}
-        onDismiss={() => setConfirmDialogOpen(false)}
-        onConfirm={() => {
-          setConfirmDialogOpen(false);
-          onDeleteItem();
-        }}
-        variant="danger"
-        confirmButtonText="Delete"
-        title="Delete Item?"
-        message="This item will be permanently deleted."
-      />
     </>
   );
 }

@@ -135,7 +135,6 @@ export const List = () => {
           item={getSelectedItem(selectedItemId)}
           onClose={() => setSelectedItemId(null)}
           onDeleteItem={() => deleteItem(selectedItemId)}
-          onEditItem={(changes) => editItem(selectedItemId, changes)}
         />
       </ListItemsDispatchContext.Provider>
     </ListItemsContext.Provider>
