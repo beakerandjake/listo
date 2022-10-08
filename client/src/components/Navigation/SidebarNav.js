@@ -14,7 +14,7 @@ const ListSidebarNavItem = ({ id, name, iconName, itemCount }) => {
       text={name}
       iconName={iconName}
       children={({ isActive }) =>
-        itemCount > 1 && (
+        itemCount > 0 && (
           <Badge size="lg" variant={isActive ? 'success' : 'default'}>
             {itemCount}
           </Badge>
