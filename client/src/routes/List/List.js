@@ -118,7 +118,7 @@ export const List = () => {
           </div>
         </div>
 
-        {/* Drawer will open when an item is selected */}
+        {/* Render drawer when an item is selected */}
         {selectedItemId && (
           <EditItemDrawer
             item={getSelectedItem(selectedItemId)}
