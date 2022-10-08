@@ -35,7 +35,7 @@ export const List = () => {
     listItemsReducer,
     loaderData.items
   );
-  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const sidebarItemsDispatch = useSidebarItemsDispatch();
 
@@ -50,7 +50,7 @@ export const List = () => {
 
   // reset internal state whenever a new list route is navigated to.
   useEffect(() => {
-    setSelectedItemId(null);
+    setSelectedItem(null);
     setActiveSort(defaultSorting);
     listItemsDispatch({
       type: listItemsActions.replace,
@@ -59,11 +59,10 @@ export const List = () => {
     setList(loaderData.list);
   }, [loaderData]);
 
-  // ensure the selected item reference stays current with changes.
-  const selectedItem = useMemo(
-    () => items.find((x) => x.id === selectedItemId),
-    [selectedItemId, items]
-  );
+  // update the selected item any time items change
+  useEffect(() => {
+    setSelectedItem((previous) => items.find((x) => x.id === previous?.id));
+  }, [items]);
 
   return (
     <ListItemsContext.Provider value={items}>
@@ -74,7 +73,7 @@ export const List = () => {
             items={items}
             sortingKey={activeSort.itemKey}
             sortingDirection={activeSort.direction}
-            onItemSelected={setSelectedItemId}
+            onItemSelected={setSelectedItem}
           />
 
           <AddItem listId={list.id} />
@@ -102,7 +101,7 @@ export const List = () => {
         {selectedItem && (
           <EditItemDrawer
             item={selectedItem}
-            onClosed={() => setSelectedItemId(null)}
+            onClosed={() => setSelectedItem(null)}
           />
         )}
       </ListItemsDispatchContext.Provider>
