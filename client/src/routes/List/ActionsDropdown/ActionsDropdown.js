@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   faCheck,
@@ -27,11 +27,19 @@ import { DeleteAllItems } from './DeleteAllItems';
 export function ActionsDropdown({ listId }) {
   const [open, setOpen] = useState(false);
 
+  const toggleMenu = useCallback(() => {
+    setOpen((previous) => !previous);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   return (
     <ResponsiveMenu
       open={open}
-      onClose={() => setOpen(false)}
-      trigger={<EllipsisMenuTrigger onClick={() => setOpen(!open)} />}
+      onClose={closeMenu}
+      trigger={<EllipsisMenuTrigger onClick={toggleMenu} />}
       desktopPlacement="bottom-start"
     >
       <MenuHeader className="flex items-center justify-center">
@@ -43,18 +51,18 @@ export function ActionsDropdown({ listId }) {
           setCompletedTo={true}
           label="Mark All Items Complete"
           icon={faCheck}
-          onClick={() => setOpen(false)}
+          onClick={closeMenu}
         />
         <SetAllItemsCompleted
           listId={listId}
           setCompletedTo={false}
           label="Mark All Items Active"
           icon={faRotateLeft}
-          onClick={() => setOpen(false)}
+          onClick={closeMenu}
         />
         <MenuSeparator />
-        <DeleteCompletedItems listId={listId} onClick={() => setOpen(false)} />
-        <DeleteAllItems listId={listId} onClick={() => setOpen(false)} />
+        <DeleteCompletedItems listId={listId} onClick={closeMenu} />
+        <DeleteAllItems listId={listId} onClick={closeMenu} />
         <MenuSeparator />
         <Link to="edit">
           <MenuItem icon={faGear} label="Settings" />
