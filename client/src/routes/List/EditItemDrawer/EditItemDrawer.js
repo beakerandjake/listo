@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import {
@@ -31,17 +31,12 @@ import {
  * Drawer which allows the user to edit fields of an Item.
  * @param {Object} props
  * @param {Object} props.item - The item which can be edited.
- * @param {function} props.onClose - Callback invoked when the drawer is to be closed.
+ * @param {function} props.onClosed - Callback invoked when the drawer closed.
  */
-export function EditItemDrawer({ item, onClose }) {
-  const [open, setOpen] = useState(false);
+export function EditItemDrawer({ item, onClosed }) {
+  const [open, setOpen] = useState(true);
   const dispatch = useListItemsDispatch();
   const handleError = useErrorHandler();
-
-  // open the drawer when an item is provided.
-  useEffect(() => {
-    setOpen(!!item);
-  }, [item]);
 
   /**
    * Edit the item.
@@ -61,7 +56,7 @@ export function EditItemDrawer({ item, onClose }) {
       <Drawer
         open={open}
         onClose={() => setOpen(false)}
-        onExitTransitionComplete={() => onClose()}
+        onExitTransitionComplete={() => onClosed()}
         anchor="right"
         size="full"
         contentClassName="max-w-md"

@@ -42,7 +42,7 @@ export const List = () => {
   const sidebarItemsDispatch = useSidebarItemsDispatch();
   const handleError = useErrorHandler();
 
-  // ensure the sidebar item count stays in sync with this lists item count.
+  // ensure the sidebar item count stays in sync with this lists active item count.
   useEffect(() => {
     sidebarItemsDispatch({
       type: sidebarItemsActions.update,
@@ -122,7 +122,7 @@ export const List = () => {
         {selectedItemId && (
           <EditItemDrawer
             item={getSelectedItem(selectedItemId)}
-            onClose={() => setSelectedItemId(null)}
+            onClosed={() => setSelectedItemId(null)}
           />
         )}
       </ListItemsDispatchContext.Provider>
