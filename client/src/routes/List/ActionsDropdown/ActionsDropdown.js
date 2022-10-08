@@ -17,6 +17,7 @@ import {
   ResponsiveMenu,
   ScrollableMenuContent,
 } from 'components/Menu';
+import { SetAllItemsCompleted } from './SetAllItemsCompleted';
 
 const bulkDeleteDialogConfigs = {
   completed: {
@@ -34,11 +35,12 @@ const bulkDeleteDialogConfigs = {
 /**
  * Dropdown menu which contains list wide actions.
  * @param {Object} props - The props.
+ * @param {number} props.listId - The id of the list.
  * @param {Array} props.items - The items of the list.
  * @param {function} props.onBulkEdit - Callback invoked when the user wants to perform a bulk edit of items in the list.
  * @param {function} props.onBulkDelete - Callback invoked when the user wants to perform a bulk delete of items in the list.
  */
-export function ActionsDropdown({ items, onBulkEdit, onBulkDelete }) {
+export function ActionsDropdown({ listId, items, onBulkEdit, onBulkDelete }) {
   const [open, setOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogConfig, setConfirmDialogConfig] = useState(null);
@@ -58,23 +60,19 @@ export function ActionsDropdown({ items, onBulkEdit, onBulkDelete }) {
           {/* List Actions, only show if there actually is items. */}
           {items?.length > 0 && (
             <>
-              <MenuItem
-                icon={faCheck}
+              <SetAllItemsCompleted
+                listId={listId}
+                setCompletedTo={true}
                 label="Mark All Items Complete"
-                disabled={items.every((x) => x.completed)}
-                onClick={() => {
-                  setOpen(false);
-                  onBulkEdit({ completed: true });
-                }}
+                icon={faCheck}
+                onClick={() => setOpen(false)}
               />
-              <MenuItem
-                icon={faRotateLeft}
+              <SetAllItemsCompleted
+                listId={listId}
+                setCompletedTo={false}
                 label="Mark All Items Active"
-                disabled={items.every((x) => !x.completed)}
-                onClick={() => {
-                  setOpen(false);
-                  onBulkEdit({ completed: false });
-                }}
+                icon={faRotateLeft}
+                onClick={() => setOpen(false)}
               />
               <MenuSeparator />
               <MenuItem

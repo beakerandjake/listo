@@ -18,6 +18,7 @@ import {
   listItemsActions,
   listItemsReducer,
   ListItemsDispatchContext,
+  ListItemsContext,
 } from 'context/ListItemsContext';
 
 // Defines the default field to sort a list on.
@@ -128,48 +129,51 @@ export const List = () => {
   };
 
   return (
-    <ListItemsDispatchContext.Provider value={listItemsDispatch}>
-      {/* Render reverse so flipped Items don't render on top. */}
-      <div className="flex flex-col-reverse gap-2 mb-5">
-        <GroupedItemsDisplay
-          items={items}
-          sortingKey={activeSort.itemKey}
-          sortingDirection={activeSort.direction}
-          onItemSelected={setSelectedItemId}
-          onItemChange={editItem}
-        />
+    <ListItemsContext.Provider value={items}>
+      <ListItemsDispatchContext.Provider value={listItemsDispatch}>
+        {/* Render reverse so flipped Items don't render on top. */}
+        <div className="flex flex-col-reverse gap-2 mb-5">
+          <GroupedItemsDisplay
+            items={items}
+            sortingKey={activeSort.itemKey}
+            sortingDirection={activeSort.direction}
+            onItemSelected={setSelectedItemId}
+            onItemChange={editItem}
+          />
 
-        <AddItem listId={list.id} />
+          <AddItem listId={list.id} />
 
-        {/* Header Section */}
-        <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
-          <div className="flex items-center gap-3">
-            <Title
-              icon={getIcon(loaderData.list.iconName)}
-              name={loaderData.list.name}
-            />
-            <ActionsDropdown
-              items={items}
-              onBulkEdit={bulkEditItems}
-              onBulkDelete={bulkDeleteItems}
-            />
+          {/* Header Section */}
+          <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
+            <div className="flex items-center gap-3">
+              <Title
+                icon={getIcon(loaderData.list.iconName)}
+                name={loaderData.list.name}
+              />
+              <ActionsDropdown
+                listId={list.id}
+                items={items}
+                onBulkEdit={bulkEditItems}
+                onBulkDelete={bulkDeleteItems}
+              />
+            </div>
+            {/* Only render dropdown if items exist. */}
+            {items.length > 0 && (
+              <SortItemsDropdown
+                activeSort={activeSort}
+                onChange={setActiveSort}
+              />
+            )}
           </div>
-          {/* Only render dropdown if items exist. */}
-          {items.length > 0 && (
-            <SortItemsDropdown
-              activeSort={activeSort}
-              onChange={setActiveSort}
-            />
-          )}
         </div>
-      </div>
 
-      <EditItemDrawer
-        item={getSelectedItem(selectedItemId)}
-        onClose={() => setSelectedItemId(null)}
-        onDeleteItem={() => deleteItem(selectedItemId)}
-        onEditItem={(changes) => editItem(selectedItemId, changes)}
-      />
-    </ListItemsDispatchContext.Provider>
+        <EditItemDrawer
+          item={getSelectedItem(selectedItemId)}
+          onClose={() => setSelectedItemId(null)}
+          onDeleteItem={() => deleteItem(selectedItemId)}
+          onEditItem={(changes) => editItem(selectedItemId, changes)}
+        />
+      </ListItemsDispatchContext.Provider>
+    </ListItemsContext.Provider>
   );
 };
