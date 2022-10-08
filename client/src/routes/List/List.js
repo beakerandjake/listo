@@ -18,7 +18,11 @@ import {
   sidebarItemsActions,
   useSidebarItemsDispatch,
 } from 'context/SidebarItemsContext';
-import { listItemsActions, listItemsReducer } from 'reducers/listItemsReducer';
+import {
+  listItemsActions,
+  listItemsReducer,
+  ListItemsDispatchContext,
+} from 'context/ListItemsContext';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -61,7 +65,7 @@ export const List = () => {
     setList(loaderData.list);
   }, [loaderData]);
 
-  // sort items only when required to prevent unnecessary work. 
+  // sort items only when required to prevent unnecessary work.
   const sortedItems = useMemo(() => {
     if (!items) {
       return [];
@@ -148,7 +152,7 @@ export const List = () => {
   };
 
   return (
-    <>
+    <ListItemsDispatchContext.Provider value={listItemsDispatch}>
       {/* Render reverse so flipped Items don't render on top. */}
       <div className="flex flex-col-reverse gap-2 mb-5">
         <GroupedItemsDisplay
@@ -188,6 +192,6 @@ export const List = () => {
         onDeleteItem={() => deleteItem(selectedItemId)}
         onEditItem={(changes) => editItem(selectedItemId, changes)}
       />
-    </>
+    </ListItemsDispatchContext.Provider>
   );
 };
