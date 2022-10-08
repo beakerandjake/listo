@@ -26,6 +26,7 @@ import {
   listItemsActions,
   useListItemsDispatch,
 } from 'context/ListItemsContext';
+import { ItemCreatedDate } from './ItemCreatedDate';
 
 /**
  * Drawer which allows the user to edit fields of an Item.
@@ -109,7 +110,6 @@ export function EditItemDrawer({ item, onClosed }) {
               onChange={(value) => editItem({ dueDate: value })}
               desktopPlacement="bottom"
             />
-
             <DebounceInput
               element="textarea"
               value={item.note}
@@ -129,14 +129,7 @@ export function EditItemDrawer({ item, onClosed }) {
             title="Close Item Details"
             onClick={() => setOpen(false)}
           />
-          {item.createdDate && (
-            <span className="text-sm font-semibold text-gray-500 select-none">
-              Created{' '}
-              {formatDistanceToNow(parseISO(item.createdDate), {
-                addSuffix: true,
-              })}
-            </span>
-          )}
+          <ItemCreatedDate createdDate={item.createdDate} />
           <DeleteItem itemId={item.id} />
         </MenuFooter>
       </Drawer>
