@@ -1,7 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { useErrorHandler } from 'react-error-boundary';
-import { itemApi } from 'api';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { AddItem } from './AddItem';
 import { ActionsDropdown } from './ActionsDropdown';
@@ -40,7 +38,6 @@ export const List = () => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
   const sidebarItemsDispatch = useSidebarItemsDispatch();
-  const handleError = useErrorHandler();
 
   // ensure the sidebar item count stays in sync with this lists active item count.
   useEffect(() => {
@@ -63,19 +60,6 @@ export const List = () => {
   }, [loaderData]);
 
   /**
-   * Edit the item.
-   * @param {number} itemId - The id of the item to edit.
-   * @param {object} changes - The changes to apply to the item.
-   **/
-  const editItem = async (itemId, changes) =>
-    itemApi
-      .editItem(itemId, changes)
-      .then((newItem) =>
-        listItemsDispatch({ type: listItemsActions.edit, item: newItem })
-      )
-      .catch(handleError);
-
-  /**
    * Returns the currently selected item (if any)
    * @param {number} itemId - The if of the selected item (if any)
    * @returns {object}
@@ -94,7 +78,6 @@ export const List = () => {
             sortingKey={activeSort.itemKey}
             sortingDirection={activeSort.direction}
             onItemSelected={setSelectedItemId}
-            onItemChange={editItem}
           />
 
           <AddItem listId={list.id} />
@@ -108,7 +91,7 @@ export const List = () => {
               />
               <ActionsDropdown listId={list.id} />
             </div>
-            {/* Only render dropdown if items exist. */}
+            {/* Only render sorting dropdown if items exist. */}
             {items.length > 0 && (
               <SortItemsDropdown
                 activeSort={activeSort}

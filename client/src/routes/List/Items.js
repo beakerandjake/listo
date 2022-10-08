@@ -37,7 +37,6 @@ const fadeFlippedElementOut = (el, index, removeElement) => {
  * @param {Object} props
  * @param {array} props.items - The items to render.
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
- * @param {function} props.onItemChange - Callback invoked when the user has made changes to an item.
  */
 export const Items = ({ items, onItemSelected, onItemChange }) => {
   return (
@@ -56,7 +55,6 @@ export const Items = ({ items, onItemSelected, onItemChange }) => {
               <Item
                 item={x}
                 onClick={() => onItemSelected(x.id)}
-                onItemChange={(changes) => onItemChange(x.id, changes)}
               />
             </div>
           </Flipped>

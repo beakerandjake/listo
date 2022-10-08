@@ -61,7 +61,6 @@ const groupAndSortItems = (items, sortingKey, sortingDirection) =>
  * @param {Object} props
  * @param {array} props.items - All of the items in the list
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
- * @param {function} props.onItemChange - Callback invoked when the user has made changes to an item.
  * @param {string} props.sortingKey - The key to sort the items by.
  * @param {string} props.sortingDirection - The direction to sort the items.
  */
@@ -70,7 +69,6 @@ export const GroupedItemsDisplay = ({
   sortingKey,
   sortingDirection,
   onItemSelected,
-  onItemChange,
 }) => {
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const [itemGroups, setItemGroups] = useState(
@@ -112,7 +110,6 @@ export const GroupedItemsDisplay = ({
       <Items
         items={itemGroups[activeGroupIndex].items}
         onItemSelected={onItemSelected}
-        onItemChange={onItemChange}
       />
 
       {/* Show the groups empty display if it has no items. */}
