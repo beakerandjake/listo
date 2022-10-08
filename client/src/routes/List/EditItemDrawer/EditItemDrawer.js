@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
-import { formatDistanceToNow, parseISO } from 'date-fns';
 import {
   faArrowLeft,
   faArrowRightFromBracket,
@@ -18,6 +17,7 @@ import {
 import {
   ItemCompletedCheckbox,
   ItemDueDateMenu,
+  ItemFormattedDateLabel,
   ItemNameLabel,
   ItemQuantityMenu,
 } from 'routes/List/Item';
@@ -26,7 +26,6 @@ import {
   listItemsActions,
   useListItemsDispatch,
 } from 'context/ListItemsContext';
-import { ItemCreatedDate } from './ItemCreatedDate';
 
 /**
  * Drawer which allows the user to edit fields of an Item.
@@ -87,15 +86,11 @@ export function EditItemDrawer({ item, onClosed }) {
                 onClick={() => editItem({ completed: !item.completed })}
               />
             </div>
-            {/* Completed date */}
-            {item.completedDate && (
-              <span className="text-xs font-semibold text-gray-500 select-none">
-                Completed{' '}
-                {formatDistanceToNow(parseISO(item.completedDate), {
-                  addSuffix: true,
-                })}
-              </span>
-            )}
+            <ItemFormattedDateLabel
+              date={item.completedDate}
+              prefix="Completed"
+              className="text-xs font-semibold text-gray-500 select-none"
+            />
           </div>
           {/* Edit Item Fields */}
           <div className="flex flex-col space-y-2">
@@ -129,7 +124,11 @@ export function EditItemDrawer({ item, onClosed }) {
             title="Close Item Details"
             onClick={() => setOpen(false)}
           />
-          <ItemCreatedDate createdDate={item.createdDate} />
+          <ItemFormattedDateLabel
+            date={item.createdDate}
+            prefix="Created"
+            className="text-sm font-semibold text-gray-500 select-none"
+          />
           <DeleteItem itemId={item.id} />
         </MenuFooter>
       </Drawer>
