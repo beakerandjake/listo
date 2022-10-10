@@ -1,5 +1,5 @@
 import { CreateNewList } from './CreateNewList';
-import { Dashboard } from './Dashboard';
+import { Dashboard } from './Dashboard/Dashboard';
 import { Error } from './Error';
 import { List } from './List';
 import { NotFound } from './NotFound';
