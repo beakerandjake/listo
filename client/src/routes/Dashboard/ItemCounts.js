@@ -1,4 +1,13 @@
+import { useMemo } from 'react';
 import { StatCard } from './StatCard';
+
+const toPercentString = (numerator, denominator) => {
+  if (denominator === 0) {
+    return '0';
+  }
+
+  return `${Math.round((numerator / denominator) * 100)}%`;
+};
 
 /**
  * Container which displays StatCards for the item counts.
@@ -14,12 +23,39 @@ export const ItemCounts = ({
   completed = 0,
   overdue = 0,
 }) => {
+  const percentOverdue = useMemo(
+    () => toPercentString(overdue, total),
+    [total, overdue]
+  );
+
+  const percentCompleted = useMemo(
+    () => toPercentString(completed, total),
+    [total, completed]
+  );
+
+  const percentActive = useMemo(
+    () => toPercentString(active, total),
+    [total, active]
+  );
+
   return (
-    <dl className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <dl className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard name="Total Items" stat={total} />
-      <StatCard name="Active Items" stat={active} variant="secondary" />
-      <StatCard name="Completed Items" stat={completed} variant="primary" />
-      <StatCard name="Overdue Items" stat={overdue} variant="danger" />
+      <StatCard
+        name="Active"
+        stat={percentActive}
+        variant="secondary"
+      />
+      <StatCard
+        name="Overdue"
+        stat={percentOverdue}
+        variant="danger"
+      />
+      <StatCard
+        name="Completed"
+        stat={percentCompleted}
+        variant="primary"
+      />
     </dl>
   );
 };
