@@ -13,14 +13,14 @@ const getItemCounts = () => {
     .prepare(`
       SELECT 
         COUNT(*) as total,
-        SUM(CASE WHEN i.completedDate IS NULL THEN 1 ELSE 0 END) AS active,
-        SUM(CASE WHEN i.completedDate IS NULL THEN 0 ELSE 1 END) AS completed,
-        SUM(
+        IFNULL(SUM(CASE WHEN i.completedDate IS NULL THEN 1 ELSE 0 END), 0) AS active,
+        IFNULL(SUM(CASE WHEN i.completedDate IS NOT NULL THEN 1 ELSE 0 END), 0) AS completed,
+        IFNULL(SUM(
           CASE WHEN i.completedDate IS NULL 
           AND i.dueDate IS NOT NULL 
           AND date(i.dueDate) < date('now') 
             THEN 1 ELSE 0 end
-        ) AS overdue
+        ), 0) AS overdue
       FROM items i
       WHERE i.deletedDate IS NULL;
     `)
