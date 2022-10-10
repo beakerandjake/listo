@@ -39,7 +39,7 @@ export const ItemCounts = ({
   );
 
   return (
-    <dl className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    <dl className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4">
       <StatCard name="Total Items" stat={total} />
       <StatCard
         name="Active"
