@@ -6,22 +6,23 @@ import { logger } from '../logger.js';
  * @returns {object}
  */
 const getItemCounts = () => {
-  // logger.verbose('querying for list: %s', listId);
+  logger.verbose('querying for item count stats');
 
-  // const result = getDb()
-  //   .prepare(`
-  //     SELECT l.id, l.name, l.iconName, COUNT(i.listId) as itemCount
-  //     FROM lists l
-  //     LEFT JOIN items i on i.listId = l.id AND i.deletedDate IS NULL
-  //     WHERE l.id = ? AND l.deletedDate IS NULL
-  //     GROUP BY l.id, l.name, l.iconName;
-  //   `)
-  //   .get(listId);
+  const result = getDb()
+    .prepare(`
+      SELECT 
+        COUNT(*) as total,
+        SUM(CASE WHEN i.completedDate IS NULL THEN 1 ELSE 0 END) AS active,
+        SUM(CASE WHEN i.completedDate IS NULL THEN 0 ELSE 1 END) AS completed,
+        SUM(CASE WHEN i.completedDate IS NULL AND i.dueDate IS NOT NULL THEN 1 ELSE 0 end) AS overdue
+      FROM items i
+      WHERE i.deletedDate IS NULL;
+    `)
+    .get();
 
-  // logger.verbose('query for list success: %s', !!result);
+  logger.verbose('query for item count stats got: %s', result);
 
-  // return result;
-  return {};
+  return result;
 };
 
 export default {
