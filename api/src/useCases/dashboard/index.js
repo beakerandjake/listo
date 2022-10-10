@@ -1,3 +1,4 @@
 import { getItemCounts } from './getItemCounts.js';
+import { getItemsDueToday } from './getItemsDueToday.js';
 
-export { getItemCounts };
+export { getItemCounts, getItemsDueToday };
