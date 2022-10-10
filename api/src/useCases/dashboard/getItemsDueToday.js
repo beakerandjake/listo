@@ -1,5 +1,6 @@
+import { startOfToday, endOfToday } from 'date-fns';
 import { logger } from '../../logger.js';
-import { createItemCountStats } from '../../models/itemCountStats.js';
+import { itemModel } from '../../models/index.js';
 import { sqliteDashboardRepository } from '../../repositories/index.js';
 
 /**
@@ -7,11 +8,14 @@ import { sqliteDashboardRepository } from '../../repositories/index.js';
  * @returns {object}
  */
 export const getItemsDueToday = () => {
-  logger.info('getting item count stats');
+  logger.info('getting items due today');
 
-  const result = sqliteDashboardRepository.getItemCounts();
+  const result = sqliteDashboardRepository.getItemsByDueDateRange(
+    startOfToday().toISOString(),
+    endOfToday().toISOString(),
+  );
 
-  logger.info('got item count stats');
+  logger.info('got: %d item(s) due today', result.length);
 
-  return createItemCountStats(result);
+  return result.map(itemModel);
 };

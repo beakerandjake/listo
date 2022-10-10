@@ -14,7 +14,7 @@ const ITEM_SELECT_FIELDS = [
  * @param {string} alias - Optional alias used to prefix item fields when using an alias in select.
  * @returns {string}
  */
-const getItemFieldsForSelectStatement = (alias = '') => {
+export const getItemFieldsForSelectStatement = (alias = '') => {
   const prefix = !alias || alias.trim() === '' ? '' : `${alias}.`;
   return ITEM_SELECT_FIELDS.map((field) => `${prefix}${field}`).join(',');
 };
@@ -269,16 +269,6 @@ export const editItems = (listId, edits) => {
   return changes;
 };
 
-/**
- * Returns all of the active, non-deleted items which have a due date between the specified range.
- * @param {string} startDate - ISO8601 formatted date string of the earliest due date.
- * @param {string} endDate - ISO8601 formatted date string of the latest due date.
- * @returns {object[]}
- */
-const getItemsByDueDateRange = (startDate, endDate) => {
-  logger.verbose('querying for all items due between: %s and %s', startDate, endDate);
-};
-
 export default {
   createItem,
   getAllItems,
@@ -290,5 +280,4 @@ export default {
   existsWithId,
   editItem,
   editItems,
-  getItemsByDueDateRange,
 };

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getItemCounts } from '../useCases/dashboard/index.js';
+import { getItemCounts, getItemsDueToday } from '../useCases/dashboard/index.js';
 
 const router = express.Router();
 
@@ -47,7 +47,7 @@ router.get('/item-counts', (req, res) => {
  *          description: Unexpected Error.
  */
 router.get('/due-today', (req, res) => {
-  const results = getItemCounts();
+  const results = getItemsDueToday();
   res.send(results);
 });
 
