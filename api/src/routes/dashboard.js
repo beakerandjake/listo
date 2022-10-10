@@ -28,10 +28,10 @@ router.get('/item-counts', (req, res) => {
 
 /**
  * @openapi
- * /api/dashboard/today-summary:
+ * /api/dashboard/due-today:
  *    get:
  *      tags: [Dashboard]
- *      summary: Get Today Summary
+ *      summary: Get Today's Items
  *      description: Get the items that are due today.
  *      produces:
  *        - application/json
@@ -40,11 +40,13 @@ router.get('/item-counts', (req, res) => {
  *          content:
  *            application/json:
  *              schema:
- *                  $ref: "#/components/schemas/itemCountStats"
+ *                type: array
+ *                items:
+ *                  $ref: "#/components/schemas/itemModel"
  *        5XX:
  *          description: Unexpected Error.
  */
-router.get('/today-summary', (req, res) => {
+router.get('/due-today', (req, res) => {
   const results = getItemCounts();
   res.send(results);
 });
