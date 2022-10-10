@@ -2,7 +2,6 @@ import { PageHeader } from 'components/PageHeader';
 import { Suspense } from 'react';
 import { Await, useLoaderData } from 'react-router-dom';
 import { ItemCounts } from './ItemCounts';
-import { StatCard } from './StatCard';
 
 export function Dashboard(props) {
   const loaderData = useLoaderData();
