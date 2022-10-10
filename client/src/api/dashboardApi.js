@@ -16,8 +16,23 @@ const getItemCounts = async () => {
   return await response.json();
 };
 
+/**
+ * Returns all of the items due today across all lists.
+ * @returns {Promise<object>}
+ **/
+const getItemsDueToday = async () => {
+  const response = await fetch(`${baseUrl}/due-today`);
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
 const api = {
   getItemCounts,
+  getItemsDueToday,
 };
 
 export default api;
