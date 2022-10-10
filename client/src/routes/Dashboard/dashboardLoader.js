@@ -1,4 +1,4 @@
-import { statsApi } from 'api';
+import { dashboardApi } from 'api';
 import { defer } from 'react-router-dom';
 
 /**
@@ -8,7 +8,7 @@ import { defer } from 'react-router-dom';
  * @param {number} props.id - The id of the list.
  */
 export const dashboardLoader = async () => {
-  const itemCounts = statsApi.getItemCounts();
+  const itemCounts = dashboardApi.getItemCounts();
 
   return defer({ itemCounts });
 };
