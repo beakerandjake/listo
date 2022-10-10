@@ -3,7 +3,7 @@ import { createItemCountStats } from '../../models/itemCountStats.js';
 import { sqliteDashboardRepository } from '../../repositories/index.js';
 
 /**
- * Returns counts of current non-deleted items for all lists.
+ * Returns items due today.
  * @returns {object}
  */
 export const getItemCounts = () => {

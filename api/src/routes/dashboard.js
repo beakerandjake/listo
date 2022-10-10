@@ -44,7 +44,7 @@ router.get('/item-counts', (req, res) => {
  *        5XX:
  *          description: Unexpected Error.
  */
-router.get('/', (req, res) => {
+router.get('/today-summary', (req, res) => {
   const results = getItemCounts();
   res.send(results);
 });
