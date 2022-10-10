@@ -5,7 +5,6 @@ import {
 } from 'context/ListItemsContext';
 import { useReducer } from 'react';
 import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
-import { Items } from 'routes/List/Items';
 
 /**
  * Shows items across all lists which are due soon.
