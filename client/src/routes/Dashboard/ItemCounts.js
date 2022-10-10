@@ -1,12 +1,12 @@
 import { StatCard } from './StatCard';
 
 /**
- *
+ * Container which displays StatCards for the item counts.
  * @param {object} props
- * @param {number} total - The total number of items
- * @param {number} total - The total number of items
- * @param {number} total - The total number of items
- * @param {number} total - The total number of items
+ * @param {number} total - The total number of items.
+ * @param {number} active - The total number of active items.
+ * @param {number} completed - The total number of completed items.
+ * @param {number} overdue - The total number of overdue items.
  */
 export const ItemCounts = ({
   total = 0,
