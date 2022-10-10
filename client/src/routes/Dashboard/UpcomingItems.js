@@ -4,6 +4,7 @@ import {
   listItemsReducer,
 } from 'context/ListItemsContext';
 import { useReducer } from 'react';
+import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
 import { Items } from 'routes/List/Items';
 
 /**
@@ -22,7 +23,11 @@ export const UpcomingItems = ({ items: initialItems }) => {
       </div>
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatch}>
-          <Items items={items} />
+          <GroupedItemsDisplay
+            sortingDirection="asc"
+            sortingKey="dueDate"
+            items={items}
+          />
         </ListItemsDispatchContext.Provider>
       </ListItemsContext.Provider>
     </div>
