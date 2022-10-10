@@ -45,7 +45,7 @@ const getItemsByDueDateRange = (startDate, endDate) => {
       SELECT ${getItemFieldsForSelectStatement()}
       FROM items
       WHERE 
-        deletedDate IS NULL AND completedDate IS NULL AND dueDate BETWEEN ? AND ?
+        deletedDate IS NULL AND dueDate BETWEEN ? AND ?
     `)
     .all(startDate, endDate);
 
