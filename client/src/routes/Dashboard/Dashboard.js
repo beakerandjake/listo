@@ -9,7 +9,7 @@ export function Dashboard(props) {
 
   return (
     <div className="flex-1 flex flex-col gap-2">
-      <PageHeader name="Dashboard" className="mb-5" />
+      <PageHeader name="Dashboard"/>
       <Suspense fallback={<p>Loading Dashboard...</p>}>
         <Await resolve={loaderData.itemCounts}>
           {(itemCounts) => <ItemCounts {...itemCounts} />}
