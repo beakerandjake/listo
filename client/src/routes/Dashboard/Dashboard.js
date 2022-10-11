@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { Await, useLoaderData } from 'react-router-dom';
 import { dashboardApi } from 'api';
@@ -10,23 +10,21 @@ import { ItemsDueToday } from './ItemsDueToday';
 export const Dashboard = () => {
   const handleError = useErrorHandler();
   const loaderData = useLoaderData();
-  
+
   // because the item count stats are reloaded whenever
   // the user edits items, handle this portion outside of the loader.
   const [itemCounts, setItemCounts] = useState(null);
 
   // query api for the latest item count statistics.
-  const updateItemCounts = useCallback(() => {
+  const updateItemCounts = () => {
     dashboardApi
       .getItemCounts()
       .then((result) => setItemCounts(result))
       .catch(handleError);
-  }, [handleError]);
+  };
 
-  // get item counts on load.
-  useEffect(() => {
-    updateItemCounts();
-  }, [updateItemCounts]);
+  // get item counts on page load.
+  useEffect(updateItemCounts, [handleError]);
 
   return (
     <>
@@ -42,7 +40,7 @@ export const Dashboard = () => {
               {(itemsDueToday) => (
                 <ItemsDueToday
                   items={itemsDueToday}
-                  onItemChange={updateItemCounts}
+                  onItemChange={() => updateItemCounts()}
                 />
               )}
             </Await>
