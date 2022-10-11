@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  deleteItem, editItem, getItemsDueToday, getOverdueItems,
+  deleteItem, editItem, getAllItems,
 } from '../useCases/items/index.js';
 
 const router = express.Router();
@@ -70,13 +70,19 @@ router.patch('/:id', (req, res) => {
 
 /**
  * @openapi
- * /api/items/due-today:
+ * /api/items:
  *    get:
  *      tags: [Items]
- *      summary: Get Items Due Today
- *      description: Get the items that are due today across all lists.
+ *      summary: Get all Items
+ *      description: Get all items across all lists according to filter criteria.
  *      produces:
  *        - application/json
+ *      parameters:
+ *        - name: filter
+ *          in: query
+ *          required: true
+ *          schema:
+ *            $ref: "#/components/schemas/getItemsFilter"
  *      responses:
  *        200:
  *          content:
@@ -88,33 +94,9 @@ router.patch('/:id', (req, res) => {
  *        5XX:
  *          description: Unexpected Error.
  */
-router.get('/due-today', (req, res) => {
-  const results = getItemsDueToday();
-  res.send(results);
-});
-
-/**
- * @openapi
- * /api/items/overdue:
- *    get:
- *      tags: [Items]
- *      summary: Get Overdue Items
- *      description: Get the items that are currently overdue across all lists.
- *      produces:
- *        - application/json
- *      responses:
- *        200:
- *          content:
- *            application/json:
- *              schema:
- *                type: array
- *                items:
- *                  $ref: "#/components/schemas/itemModel"
- *        5XX:
- *          description: Unexpected Error.
- */
-router.get('/overdue', (req, res) => {
-  const results = getOverdueItems();
+router.get('/', (req, res) => {
+  const { filter } = req.params;
+  const results = getAllItems(filter);
   res.send(results);
 });
 

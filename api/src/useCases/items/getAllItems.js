@@ -1,26 +1,21 @@
-import { itemRepository, listRepository } from '../../repositories/index.js';
-import { itemModel, listIdModel } from '../../models/index.js';
-import { NotFoundError } from '../../errors/NotFound.js';
+import { startOfToday, endOfToday } from 'date-fns';
 import { logger } from '../../logger.js';
+import { itemModel } from '../../models/index.js';
+import { itemRepository } from '../../repositories/index.js';
 
 /**
- * Returns all of the items in the list.
- * @returns {Array}
+ * Returns items due today across all lists.
+ * @returns {object}
  */
-export const getAllItems = (id) => {
-  logger.info('getting all items from list: %s', id);
+export const getAllItems = () => {
+  logger.info('getting items due today');
 
-  const listId = listIdModel(id);
+  const result = itemRepository.getItemsByDueDateRange(
+    startOfToday().toISOString(),
+    endOfToday().toISOString(),
+  );
 
-  if (!listRepository.existsWithId(listId)) {
-    throw new NotFoundError('List does not exist');
-  }
+  logger.info('got: %d item(s) due today', result.length);
 
-  const items = itemRepository
-    .getAllItems(listId)
-    .map(itemModel);
-
-  logger.info('got %d item(s) from list: %s', items.length, listId);
-
-  return items;
+  return result.map(itemModel);
 };
