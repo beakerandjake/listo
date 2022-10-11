@@ -11,8 +11,10 @@ import { itemSortingFields, sortingDirections } from 'services/sorting';
 /**
  * Shows items across all lists which are due soon.
  * @param {object} props
+ * @param {object[]} props.items - The items which are due today.
+ * @param {function} props.onItemChange - Callback invoked when the user changes an item.
  */
-export const UpcomingItems = ({ items: initialItems }) => {
+export const UpcomingItems = ({ items: initialItems, onItemChange }) => {
   const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
   const sidebarItemsDispatch = useUpdateSidebarItems();
 
@@ -23,26 +25,20 @@ export const UpcomingItems = ({ items: initialItems }) => {
     (arg) => {
       listItemsDispatch(arg);
       sidebarItemsDispatch();
+      onItemChange();
     },
-    [listItemsDispatch, sidebarItemsDispatch]
+    [listItemsDispatch, sidebarItemsDispatch, onItemChange]
   );
 
   return (
-    <div>
-      <div className="border-b border-gray-200 pb-3 mb-4">
-        <h3 className="text-xl font-medium leading-6 text-gray-900">
-          Items Due Today
-        </h3>
-      </div>
-      <ListItemsContext.Provider value={items}>
-        <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
-          <GroupedItemsDisplay
-            sortingDirection={sortingDirections.asc}
-            sortingKey={itemSortingFields.dueDate}
-            items={items}
-          />
-        </ListItemsDispatchContext.Provider>
-      </ListItemsContext.Provider>
-    </div>
+    <ListItemsContext.Provider value={items}>
+      <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
+        <GroupedItemsDisplay
+          sortingDirection={sortingDirections.asc}
+          sortingKey={itemSortingFields.dueDate}
+          items={items}
+        />
+      </ListItemsDispatchContext.Provider>
+    </ListItemsContext.Provider>
   );
 };
