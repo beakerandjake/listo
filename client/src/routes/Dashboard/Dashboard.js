@@ -5,7 +5,7 @@ import { dashboardApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { SectionHeading } from './SectionHeading';
-import { UpcomingItems } from './UpcomingItems';
+import { ItemsDueToday } from './ItemsDueToday';
 
 export const Dashboard = () => {
   const handleError = useErrorHandler();
@@ -40,7 +40,7 @@ export const Dashboard = () => {
           <Suspense fallback={<p>Loading due today...</p>}>
             <Await resolve={loaderData.itemsDueToday}>
               {(itemsDueToday) => (
-                <UpcomingItems
+                <ItemsDueToday
                   items={itemsDueToday}
                   onItemChange={updateItemCounts}
                 />

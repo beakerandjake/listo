@@ -16,7 +16,7 @@ import { itemSortingFields, sortingDirections } from 'services/sorting';
  * @param {object[]} props.items - The items which are due today.
  * @param {function} props.onItemChange - Callback invoked when the user changes an item.
  */
-export const UpcomingItems = ({ items: initialItems, onItemChange }) => {
+export const ItemsDueToday = ({ items: initialItems, onItemChange }) => {
   const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
   const sidebarItemsDispatch = useUpdateSidebarItems();
 
