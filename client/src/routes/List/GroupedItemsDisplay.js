@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { faPartyHorn, faCat, faList } from '@fortawesome/pro-light-svg-icons';
+import { faPartyHorn, faList } from '@fortawesome/pro-light-svg-icons';
 import { Badge } from 'components/Badge';
 import { Pill, PillGroup } from 'components/PillGroup';
 import { Items } from './Items';
@@ -63,12 +63,14 @@ const groupAndSortItems = (items, sortingKey, sortingDirection) =>
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
  * @param {string} props.sortingKey - The key to sort the items by.
  * @param {string} props.sortingDirection - The direction to sort the items.
+ * @param {React.ReactNode} props.noItemsDisplay - What to render when there are no items.
  */
 export const GroupedItemsDisplay = ({
   items,
   sortingKey,
   sortingDirection,
   onItemSelected = () => {},
+  noItemsDisplay,
 }) => {
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const [itemGroups, setItemGroups] = useState(
@@ -82,13 +84,7 @@ export const GroupedItemsDisplay = ({
 
   // Render an empty display if all groups are empty.
   if (itemGroups?.every((x) => !x.items.length)) {
-    return (
-      <NoItemsDisplay
-        icon={faCat}
-        heading="List Is Empty!"
-        subHeading="Add some Items to get started."
-      />
-    );
+    return noItemsDisplay;
   }
 
   const activeGroup = itemGroups[activeGroupIndex];
