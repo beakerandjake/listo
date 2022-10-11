@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { faCat } from '@fortawesome/pro-light-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
-import { AddItem } from './AddItem';
-import { ActionsDropdown } from './ActionsDropdown';
-import { EditItemDrawer } from './EditItemDrawer';
-import { SortItemsDropdown } from './SortItemsDropdown';
-import { GroupedItemsDisplay } from './GroupedItemsDisplay';
-import { Title } from './Title';
 import { getIcon } from 'services/iconLibrary';
 import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
 import {
@@ -15,6 +10,13 @@ import {
   ListItemsDispatchContext,
   ListItemsContext,
 } from 'context/ListItemsContext';
+import { AddItem } from './AddItem';
+import { ActionsDropdown } from './ActionsDropdown';
+import { EditItemDrawer } from './EditItemDrawer';
+import { SortItemsDropdown } from './SortItemsDropdown';
+import { GroupedItemsDisplay } from './GroupedItemsDisplay';
+import { Title } from './Title';
+import { NoItemsDisplay } from './NoItemsDisplay';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -37,7 +39,7 @@ export const List = () => {
   const updateSidebarItems = useUpdateSidebarItems();
 
   // create a wrapper around the listItemsDispatch that
-  // will also update the sidebar items, this will keep the 
+  // will also update the sidebar items, this will keep the
   // sidebar item count in sync anytime our items change.
   const listItemsDispatchWrapper = useCallback(
     (args) => {
@@ -73,6 +75,13 @@ export const List = () => {
             sortingKey={activeSort.itemKey}
             sortingDirection={activeSort.direction}
             onItemSelected={setSelectedItem}
+            noItemsDisplay={
+              <NoItemsDisplay
+                icon={faCat}
+                heading="List Is Empty!"
+                subHeading="Add some Items to get started."
+              />
+            }
           />
 
           <AddItem listId={list.id} />
