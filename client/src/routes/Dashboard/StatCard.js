@@ -57,7 +57,7 @@ export const StatCard = ({ name, stat, icon, variant = 'default' }) => {
         </dd>
       </div>
       {icon && (
-        <FontAwesomeIcon icon={icon} className={cx('hidden sm:block sm:text-3xl', classNames.icon)} />
+        <FontAwesomeIcon icon={icon} className={cx('text-2xl sm:text-3xl', classNames.icon)} />
       )}
     </div>
   );
