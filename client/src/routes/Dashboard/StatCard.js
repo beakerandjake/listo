@@ -54,8 +54,8 @@ export const StatCard = ({ name, stat, icon, variant = 'default' }) => {
             classNames.stat
           )}
         >
-          <SwitchTransition switchKey={stat || ''} as={FadeQuick}>
-            <span>{stat || '-'}</span>
+          <SwitchTransition switchKey={stat} as={FadeQuick}>
+            <span>{stat === null || stat === undefined ? '-' : stat}</span>
           </SwitchTransition>
         </dd>
       </div>

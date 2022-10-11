@@ -8,8 +8,12 @@ import { useMemo } from 'react';
 import { StatCard } from './StatCard';
 
 const toPercentString = (numerator, denominator) => {
-  if (!denominator) {
+  if (denominator === null || denominator === undefined) {
     return null;
+  }
+
+  if (denominator === 0) {
+    return '0';
   }
 
   return `${Math.round((numerator / denominator) * 100)}%`;
