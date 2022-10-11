@@ -1,4 +1,5 @@
 import {
+  listItemsActions,
   ListItemsContext,
   ListItemsDispatchContext,
   listItemsReducer,
@@ -7,7 +8,7 @@ import {
   sidebarItemsActions,
   useSidebarItemsDispatch,
 } from 'context/SidebarItemsContext';
-import { useEffect, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 
@@ -19,31 +20,26 @@ export const UpcomingItems = ({ items: initialItems }) => {
   const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
   const sidebarItemsDispatch = useSidebarItemsDispatch();
 
-  // any time the items change, dispatch updates to the sidebar items context.
-  useEffect(() => {
-    // group the items by list id and calculate the active item count.
-    const groups = items.reduce((acc, value) => {
-      const key = `list_${value.listId}`;
-
-      if (!acc[key]) {
-        acc[key] = { id: value.listId, itemCount: 0 };
+  // create wrapper around the listItemsDispatch function 
+  const listItemsDispatchWrapper = useCallback(
+    (arg) => {
+      // whenever the user edits the completed status of the item
+      // dispatch sidebarItems action to update the active item count
+      // of that list in the sidebar. 
+      if (arg.type === listItemsActions.edit) {
+        sidebarItemsDispatch({
+          id: arg.item.listId,
+          type: arg.item.completed
+            ? sidebarItemsActions.increment
+            : sidebarItemsActions.decrement,
+          value: 1,
+        });
       }
 
-      if (!value.completed) {
-        acc[key].itemCount += 1;
-      }
-
-      return acc;
-    }, {});
-
-    // dispatch a sidebar update for each list
-    Object.values(groups).forEach((group) => {
-      sidebarItemsDispatch({
-        type: sidebarItemsActions.update,
-        ...group,
-      });
-    });
-  }, [items, sidebarItemsDispatch]);
+      listItemsDispatch(arg);
+    },
+    [listItemsDispatch, sidebarItemsDispatch]
+  );
 
   return (
     <div>
@@ -53,7 +49,7 @@ export const UpcomingItems = ({ items: initialItems }) => {
         </h3>
       </div>
       <ListItemsContext.Provider value={items}>
-        <ListItemsDispatchContext.Provider value={listItemsDispatch}>
+        <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
           <GroupedItemsDisplay
             sortingDirection={sortingDirections.asc}
             sortingKey={itemSortingFields.dueDate}
