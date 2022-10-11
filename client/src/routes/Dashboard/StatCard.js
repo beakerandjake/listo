@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
-import { Fade, SwitchTransition } from 'components/Transition';
+import { FadeQuick, SwitchTransition } from 'components/Transition';
 
 const VARIANTS = {
   default: {
@@ -53,7 +53,7 @@ export const StatCard = ({ name, stat, icon, variant = 'default' }) => {
             classNames.stat
           )}
         >
-          <SwitchTransition switchKey={stat || ''} as={Fade}>
+          <SwitchTransition switchKey={stat || ''} as={FadeQuick}>
             <span>{stat || '-'}</span>
           </SwitchTransition>
         </dd>
