@@ -30,9 +30,24 @@ const getItemsDueToday = async () => {
   return await response.json();
 };
 
+/**
+ * Returns all of the items currently overdue.
+ * @returns {Promise<object>}
+ **/
+const getOverdueItems = async () => {
+  const response = await fetch(`${baseUrl}/overdue-items`);
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
 const api = {
   getItemCounts,
   getItemsDueToday,
+  getOverdueItems,
 };
 
 export default api;
