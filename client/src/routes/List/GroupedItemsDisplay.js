@@ -68,7 +68,7 @@ export const GroupedItemsDisplay = ({
   items,
   sortingKey,
   sortingDirection,
-  onItemSelected,
+  onItemSelected = () => {},
 }) => {
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const [itemGroups, setItemGroups] = useState(
