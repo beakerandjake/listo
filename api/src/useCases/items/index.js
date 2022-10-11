@@ -4,6 +4,8 @@ import { deleteItems } from './deleteItems.js';
 import { deleteItem } from './deleteItem.js';
 import { editItem } from './editItem.js';
 import { editItems } from './editItems.js';
+import { getItemsDueToday } from './getItemsDueToday.js';
+import { getOverdueItems } from './getOverdueItems.js';
 
 export {
   getAllItems,
@@ -12,4 +14,6 @@ export {
   deleteItem,
   editItem,
   editItems,
+  getItemsDueToday,
+  getOverdueItems,
 };
