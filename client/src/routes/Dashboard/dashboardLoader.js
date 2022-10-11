@@ -8,8 +8,7 @@ import { defer } from 'react-router-dom';
  * @param {number} props.id - The id of the list.
  */
 export const dashboardLoader = async () => {
-  const itemCounts = dashboardApi.getItemCounts();
   const itemsDueToday = dashboardApi.getItemsDueToday();
 
-  return defer({ itemCounts, itemsDueToday });
+  return defer({ itemsDueToday });
 };
