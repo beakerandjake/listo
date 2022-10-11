@@ -74,8 +74,8 @@ const getOverdueItems = (dueDate) => {
       FROM items
       WHERE 
         deletedDate IS NULL AND 
-        completedDate IS NULL AND 
-        completedDate < ?
+        completedDate IS NULL AND
+        dueDate IS NOT NULL AND dueDate < ?
     `)
     .all(dueDate);
 
