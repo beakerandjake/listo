@@ -20,6 +20,7 @@ export const Root = () => {
   const [sidebarItems, setSidebarItems] = useState(loaderData);
   const handleError = useErrorHandler();
 
+  // Update item counts by querying the api for the latest data.
   const updateSidebarItems = useCallback(() => {
     listApi
       .getLists()
