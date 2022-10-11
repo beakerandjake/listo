@@ -8,7 +8,7 @@ import {
   sidebarItemsActions,
   useSidebarItemsDispatch,
 } from 'context/SidebarItemsContext';
-import { useCallback, useEffect, useReducer } from 'react';
+import { useCallback, useReducer } from 'react';
 import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 
@@ -33,8 +33,8 @@ export const UpcomingItems = ({ items: initialItems }) => {
         sidebarItemsDispatch({
           id: arg.item.listId,
           type: arg.item.completed
-            ? sidebarItemsActions.increment
-            : sidebarItemsActions.decrement,
+            ? sidebarItemsActions.decrement
+            : sidebarItemsActions.increment,
           value: 1,
         });
       }
