@@ -1,3 +1,4 @@
+import { faCalendarDay } from '@fortawesome/pro-regular-svg-icons';
 import {
   ListItemsContext,
   ListItemsDispatchContext,
@@ -6,6 +7,7 @@ import {
 import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
 import { useCallback, useReducer } from 'react';
 import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
+import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 
 /**
@@ -37,6 +39,12 @@ export const UpcomingItems = ({ items: initialItems, onItemChange }) => {
           sortingDirection={sortingDirections.asc}
           sortingKey={itemSortingFields.dueDate}
           items={items}
+          noItemsDisplay={
+            <NoItemsDisplay
+              icon={faCalendarDay}
+              heading="No Items Due Today!"
+            />
+          }
         />
       </ListItemsDispatchContext.Provider>
     </ListItemsContext.Provider>
