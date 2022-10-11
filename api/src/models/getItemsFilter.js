@@ -18,6 +18,7 @@ export const filters = {
 
 const schema = joi.string()
   .valid(...Object.values(filters))
-  .required();
+  .required()
+  .label('filter');
 
 export const getItemsFilter = (data) => parseRequestModel(data, schema, 'getItemsFilter');
