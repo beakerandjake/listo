@@ -1,3 +1,9 @@
+import {
+  faCheck,
+  faList,
+  faAlarmExclamation,
+  faListCheck,
+} from '@fortawesome/pro-regular-svg-icons';
 import { useMemo } from 'react';
 import { StatCard } from './StatCard';
 
@@ -40,21 +46,19 @@ export const ItemCounts = ({
 
   return (
     <dl className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-      <StatCard name="Total Items" stat={total} />
-      <StatCard
-        name="Active"
-        stat={percentActive}
-        variant="secondary"
-      />
+      <StatCard name="Total Items" stat={total} icon={faListCheck} />
+      <StatCard name="Active" stat={percentActive} variant="secondary" icon={faList} />
       <StatCard
         name="Overdue"
         stat={percentOverdue}
         variant="danger"
+        icon={faAlarmExclamation}
       />
       <StatCard
         name="Completed"
         stat={percentCompleted}
         variant="primary"
+        icon={faCheck}
       />
     </dl>
   );
