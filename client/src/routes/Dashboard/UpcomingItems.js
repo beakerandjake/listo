@@ -21,11 +21,14 @@ export const UpcomingItems = ({ items: initialItems }) => {
   const sidebarItemsDispatch = useSidebarItemsDispatch();
 
   // create wrapper around the listItemsDispatch function 
+  // to also dispatch updates to the sidebar to keep the
+  // active item count in sync.
   const listItemsDispatchWrapper = useCallback(
     (arg) => {
-      // whenever the user edits the completed status of the item
-      // dispatch sidebarItems action to update the active item count
-      // of that list in the sidebar. 
+    // assuming that any changes dispatched by children will be
+    // setting the completed flag, if children start to edit more than that
+    // this will need additional logic to detect if the edit was actually
+    // modifying completed or not.
       if (arg.type === listItemsActions.edit) {
         sidebarItemsDispatch({
           id: arg.item.listId,
