@@ -1,13 +1,9 @@
 import {
-  listItemsActions,
   ListItemsContext,
   ListItemsDispatchContext,
   listItemsReducer,
 } from 'context/ListItemsContext';
-import {
-  sidebarItemsActions,
-  useSidebarItemsDispatch,
-} from 'context/SidebarItemsContext';
+import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
 import { useCallback, useReducer } from 'react';
 import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
@@ -18,28 +14,15 @@ import { itemSortingFields, sortingDirections } from 'services/sorting';
  */
 export const UpcomingItems = ({ items: initialItems }) => {
   const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
-  const sidebarItemsDispatch = useSidebarItemsDispatch();
+  const sidebarItemsDispatch = useUpdateSidebarItems();
 
-  // create wrapper around the listItemsDispatch function 
+  // create wrapper around the listItemsDispatch function
   // to also dispatch updates to the sidebar to keep the
-  // active item count in sync.
+  // active item count in sync whenever list items change.
   const listItemsDispatchWrapper = useCallback(
     (arg) => {
-    // assuming that any changes dispatched by children will be
-    // setting the completed flag, if children start to edit more than that
-    // this will need additional logic to detect if the edit was actually
-    // modifying completed or not.
-      if (arg.type === listItemsActions.edit) {
-        sidebarItemsDispatch({
-          id: arg.item.listId,
-          type: arg.item.completed
-            ? sidebarItemsActions.decrement
-            : sidebarItemsActions.increment,
-          value: 1,
-        });
-      }
-
       listItemsDispatch(arg);
+      sidebarItemsDispatch();
     },
     [listItemsDispatch, sidebarItemsDispatch]
   );

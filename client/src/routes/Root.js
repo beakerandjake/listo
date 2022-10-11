@@ -1,6 +1,12 @@
 import { Outlet, useRouteLoaderData } from 'react-router-dom';
 import { ResponsiveLayout } from 'components/ResponsiveLayout';
-import { SidebarItemsProvider } from 'context/SidebarItemsContext';
+import {
+  SidebarItemsContext,
+  UpdateSidebarItemsContext,
+} from 'context/SidebarItemsContext';
+import { useCallback, useState } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
+import { listApi } from 'api';
 
 export const routeId = 'root';
 
@@ -10,13 +16,24 @@ export const routeId = 'root';
  * as well as rendering the current route via outlet.
  */
 export const Root = () => {
-  const sidebarItems = useRouteLoaderData(routeId);
+  const loaderData = useRouteLoaderData(routeId);
+  const [sidebarItems, setSidebarItems] = useState(loaderData);
+  const handleError = useErrorHandler();
+
+  const updateSidebarItems = useCallback(() => {
+    listApi
+      .getLists()
+      .then((results) => setSidebarItems(results))
+      .catch(handleError);
+  }, [handleError]);
 
   return (
-    <SidebarItemsProvider initialItems={sidebarItems}>
-      <ResponsiveLayout>
-        <Outlet />
-      </ResponsiveLayout>
-    </SidebarItemsProvider>
+    <SidebarItemsContext.Provider value={sidebarItems}>
+      <UpdateSidebarItemsContext.Provider value={updateSidebarItems}>
+        <ResponsiveLayout>
+          <Outlet />
+        </ResponsiveLayout>
+      </UpdateSidebarItemsContext.Provider>
+    </SidebarItemsContext.Provider>
   );
 };
