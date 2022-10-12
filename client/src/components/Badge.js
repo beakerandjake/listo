@@ -10,6 +10,7 @@ const variants = {
   success: 'bg-green-700 text-green-100',
   default: 'bg-gray-300 text-gray-800',
   inverse: 'bg-green-100 text-green-700',
+  danger: 'bg-red-100 text-red-800'
 };
 
 /**
