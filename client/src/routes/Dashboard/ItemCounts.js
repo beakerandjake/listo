@@ -44,7 +44,7 @@ export const ItemCounts = ({ total, active, completed, overdue }) => {
   );
 
   return (
-    <dl className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <dl className="my-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
       <StatCard name="Total Items" stat={total} icon={faListCheck} />
       <StatCard
         name="Overdue"
