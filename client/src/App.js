@@ -40,7 +40,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} fallbackElement={<LoadingSpinner />} />
+    <RouterProvider
+      router={router}
+      fallbackElement={<LoadingSpinner renderDelayMs={500} />}
+    />
   );
 }
 
