@@ -1,25 +1,16 @@
 import { useCallback, useReducer } from 'react';
 import { faFaceParty } from '@fortawesome/pro-regular-svg-icons';
-import { Badge } from 'components/Badge';
-import { CollapsibleCard } from 'components/CollapsibleCard';
 import {
   listItemsActions,
   ListItemsContext,
   ListItemsDispatchContext,
   listItemsReducer,
 } from 'context/ListItemsContext';
-import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
+import { CollapsibleCard } from 'components/CollapsibleCard';
 import { Items } from 'routes/List/Items';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
-
-const ItemCardTitle = ({ title, itemCount, variant }) => {
-  return (
-    <div className="flex">
-      <p className="mr-2">{title}</p>
-      <Badge variant={variant}>{itemCount}</Badge>
-    </div>
-  );
-};
+import { ItemPanelHeader } from './ItemsPanelHeader';
+import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
 
 /**
  * Shows items across all lists which are due soon.
@@ -54,7 +45,7 @@ export const OverdueItems = ({
   return (
     <CollapsibleCard
       title={
-        <ItemCardTitle
+        <ItemPanelHeader
           title="Overdue Items"
           itemCount={items.length}
           variant={items.length > 0 ? 'danger' : 'default'}
