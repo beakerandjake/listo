@@ -4,7 +4,8 @@ import { Await, useLoaderData } from 'react-router-dom';
 import { dashboardApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
-import { SectionHeading } from './SectionHeading';
+import { OverdueItems } from './OverdueItems';
+import { ItemsPanelSkeleton } from './ItemsPanelSkeleton';
 import { ItemsDueToday } from './ItemsDueToday';
 
 export const Dashboard = () => {
@@ -32,20 +33,28 @@ export const Dashboard = () => {
       <div className="flex-1 flex flex-col gap-7">
         {/* Item Counts */}
         <ItemCounts {...itemCounts} />
-        {/* Item Due Today */}
-        <div>
-          <SectionHeading title="Items Due Today" />
-          <Suspense fallback={<p>Loading due today...</p>}>
-            <Await resolve={loaderData.itemsDueToday}>
-              {(itemsDueToday) => (
-                <ItemsDueToday
-                  items={itemsDueToday}
-                  onItemChange={() => updateItemCounts()}
-                />
-              )}
-            </Await>
-          </Suspense>
-        </div>
+        {/* Items Due Today */}
+        <Suspense fallback={<ItemsPanelSkeleton />}>
+          <Await resolve={loaderData.itemsDueToday}>
+            {(items) => (
+              <ItemsDueToday
+                items={items}
+                onItemCompleted={() => updateItemCounts()}
+              />
+            )}
+          </Await>
+        </Suspense>
+        {/* Overdue Items */}
+        <Suspense fallback={<ItemsPanelSkeleton collapsed={true} />}>
+          <Await resolve={loaderData.overdueItems}>
+            {(items) => (
+              <OverdueItems
+                items={items}
+                onItemCompleted={() => updateItemCounts()}
+              />
+            )}
+          </Await>
+        </Suspense>
       </div>
     </>
   );
