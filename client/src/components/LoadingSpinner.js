@@ -6,12 +6,12 @@ import { FadeAndPopIn } from 'components/Transition';
 
 const SIZES = {
   default: {
+    icon: '2x',
+    message: 'text-base',
+  },
+  xl: {
     icon: '5x',
     message: 'text-xl',
-  },
-  sm: {
-    icon: '3x',
-    message: 'text-lg',
   },
 };
 
@@ -19,7 +19,7 @@ const SIZES = {
  * Loading Spinner to indicate an operation is taking place.
  * @param {object} props
  * @param {IconDefinition} props.icon - Callback invoked when the user changes an item.
- * @param {'default'|'sm'} props.size - Predefined size of the component.
+ * @param {'default'|'xl'} props.size - Predefined size of the component.
  * @param {string} props.message - Message to display.
  * @param {number} props.renderDelayMs - Optional amount of time to delay rendering to prevent content flashes on quick finishing actions
  */
