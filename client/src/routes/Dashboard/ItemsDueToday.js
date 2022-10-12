@@ -1,16 +1,15 @@
+import { useCallback, useMemo, useReducer } from 'react';
 import { faCalendarDay } from '@fortawesome/pro-regular-svg-icons';
-import { CollapsibleCard } from 'components/CollapsibleCard';
 import {
   ListItemsContext,
   ListItemsDispatchContext,
   listItemsReducer,
 } from 'context/ListItemsContext';
 import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
-import { useCallback, useReducer } from 'react';
 import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
-import { ItemPanelHeader } from './ItemsPanelHeader';
+import { CollapsibleSection } from './CollapsibleSection';
 
 /**
  * Shows items across all lists which are due soon.
@@ -37,17 +36,14 @@ export const ItemsDueToday = ({
     [listItemsDispatch, sidebarItemsDispatch, onItemChange]
   );
 
+  // calculate the number of active items any time the items change.
+  const activeCount = useMemo(
+    () => items.filter((x) => !x.completed).length,
+    [items]
+  );
+
   return (
-    <CollapsibleCard
-      title={
-        <ItemPanelHeader
-          title="Items Due Today"
-          itemCount={items.length}
-          variant={items.length > 0 ? 'success' : 'default'}
-        />
-      }
-      defaultOpen={items.length > 0}
-    >
+    <CollapsibleSection badgeCount={activeCount} title="Due Today">
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
           <GroupedItemsDisplay
@@ -63,6 +59,6 @@ export const ItemsDueToday = ({
           />
         </ListItemsDispatchContext.Provider>
       </ListItemsContext.Provider>
-    </CollapsibleCard>
+    </CollapsibleSection>
   );
 };

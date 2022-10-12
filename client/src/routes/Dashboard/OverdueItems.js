@@ -6,11 +6,10 @@ import {
   ListItemsDispatchContext,
   listItemsReducer,
 } from 'context/ListItemsContext';
-import { CollapsibleCard } from 'components/CollapsibleCard';
 import { Items } from 'routes/List/Items';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
-import { ItemPanelHeader } from './ItemsPanelHeader';
 import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
+import { CollapsibleSection } from './CollapsibleSection';
 
 /**
  * Shows items across all lists which are due soon.
@@ -43,16 +42,7 @@ export const OverdueItems = ({
   );
 
   return (
-    <CollapsibleCard
-      title={
-        <ItemPanelHeader
-          title="Overdue Items"
-          itemCount={items.length}
-          variant={items.length > 0 ? 'danger' : 'default'}
-        />
-      }
-      defaultOpen={items.length > 0}
-    >
+    <CollapsibleSection badgeCount={items.length} title="Overdue">
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
           {items.length < 1 ? (
@@ -62,6 +52,6 @@ export const OverdueItems = ({
           )}
         </ListItemsDispatchContext.Provider>
       </ListItemsContext.Provider>
-    </CollapsibleCard>
+    </CollapsibleSection>
   );
 };
