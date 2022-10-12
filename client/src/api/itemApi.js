@@ -125,7 +125,9 @@ const bulkEditItems = async (listId, changes) => {
  * @returns {Promise<object>}
  **/
 const getItemsDueToday = async () => {
-  const response = await fetch(`${itemsBaseUrl}/due-today`);
+  const response = await fetch(
+    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'due-today' }))
+  );
 
   if (!response.ok) {
     throw new ApiError(response.statusText, response.status);
@@ -139,7 +141,9 @@ const getItemsDueToday = async () => {
  * @returns {Promise<object>}
  **/
 const getOverdueItems = async () => {
-  const response = await fetch(`${itemsBaseUrl}/overdue`);
+  const response = await fetch(
+    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'overdue' }))
+  );
 
   if (!response.ok) {
     throw new ApiError(response.statusText, response.status);
