@@ -34,18 +34,16 @@ export const LoadingSpinner = ({
   return (
     <DelayedRender delayMs={renderDelayMs}>
       <FadeAndPopIn in appear>
-        <div className="items-center flex h-screen justify-center">
-          <div className="text-center">
-            <FontAwesomeIcon
-              icon={icon}
-              spin
-              size={sizes.icon}
-              className="text-gray-600"
-            />
-            <p className={cx('mt-4 font-medium text-gray-500', sizes.message)}>
-              {message}
-            </p>
-          </div>
+        <div className="text-center">
+          <FontAwesomeIcon
+            icon={icon}
+            spin
+            size={sizes.icon}
+            className="text-gray-600"
+          />
+          <p className={cx('mt-4 font-medium text-gray-500', sizes.message)}>
+            {message}
+          </p>
         </div>
       </FadeAndPopIn>
     </DelayedRender>

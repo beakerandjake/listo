@@ -42,7 +42,11 @@ function App() {
   return (
     <RouterProvider
       router={router}
-      fallbackElement={<LoadingSpinner renderDelayMs={500} />}
+      fallbackElement={
+        <div className="items-center flex h-screen justify-center">
+          <LoadingSpinner renderDelayMs={500} />
+        </div>
+      }
     />
   );
 }
