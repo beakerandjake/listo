@@ -1,7 +1,7 @@
 import { Disclosure } from '@headlessui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
  * Header section of the card
@@ -10,10 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  * @param {boolean} props.open - Is the parent collapsible currently open?
  * @param {ReactNode} props.children - Additional elements to render in the header.
  */
-const CardHeader = ({ title, open, children }) => {
+const CardHeader = ({ title, open }) => {
   return (
     <div
-      className={cx('px-4 py-5 sm:px-6', {
+      className={cx('px-4 py-5 sm:px-6 cursor-pointer', {
         'border-b border-gray-300': open,
       })}
     >
@@ -23,7 +23,12 @@ const CardHeader = ({ title, open, children }) => {
             {title}
           </h3>
         </div>
-        <div className="ml-4 mt-2 flex-shrink-0">{children}</div>
+        <div className="ml-4 mt-2 flex-shrink-0">
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className={cx('transition-transform', { 'rotate-180': open })}
+          />
+        </div>
       </div>
     </div>
   );
@@ -36,26 +41,18 @@ const CardHeader = ({ title, open, children }) => {
  * @param {boolean} props.defaultOpenState - Should the card default to being opened?
  * @param {ReactNode} props.children - The child element to render.
  */
-export const CollapsibleCard = ({
-  title,
-  defaultOpenState = false,
-  children,
-}) => {
+export const CollapsibleCard = ({ title, defaultOpen = false, children }) => {
   return (
     <Disclosure
       as="div"
+      defaultOpen={defaultOpen}
       className="overflow-hidden rounded-lg bg-white shadow border border-gray-300"
     >
       {({ open }) => (
         <>
-          <CardHeader title={title} open={open}>
-            <Disclosure.Button title={open ? 'Close Panel' : 'Open Panel'}>
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                className={cx('transition-transform', { 'rotate-180': open })}
-              />
-            </Disclosure.Button>
-          </CardHeader>
+          <Disclosure.Button title={open ? 'Close Panel' : 'Open Panel'} className="w-full">
+            <CardHeader title={title} open={open}></CardHeader>
+          </Disclosure.Button>
           <Disclosure.Panel className="bg-gray-50 px-4 py-5 sm:p-6">
             {children}
           </Disclosure.Panel>
