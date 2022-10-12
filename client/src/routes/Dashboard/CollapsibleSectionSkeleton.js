@@ -2,11 +2,11 @@ import cx from 'classnames';
 import { DelayedRender } from 'components/DelayedRender';
 
 /**
- * Skeleton placeholder for an items panel
+ * Skeleton placeholder for a collapsible section
  * @param {object} props
- * @param {boolean} props.collapsed - Should the skeleton mimic a collapsed or expanded panel?
+ * @param {boolean} props.collapsed - Should the skeleton mimic a collapsed or expanded section?
  */
-export const ItemsPanelSkeleton = ({ collapsed }) => {
+export const CollapsibleSectionSkeleton = ({ collapsed }) => {
   return (
     <DelayedRender>
       <div

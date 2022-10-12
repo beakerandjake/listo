@@ -5,7 +5,7 @@ import { dashboardApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { OverdueItems } from './OverdueItems';
-import { ItemsPanelSkeleton } from './ItemsPanelSkeleton';
+import { CollapsibleSectionSkeleton } from './CollapsibleSectionSkeleton';
 import { ItemsDueToday } from './ItemsDueToday';
 
 export const Dashboard = () => {
@@ -34,7 +34,7 @@ export const Dashboard = () => {
         {/* Item Counts */}
         <ItemCounts {...itemCounts} />
         {/* Items Due Today */}
-        <Suspense fallback={<ItemsPanelSkeleton />}>
+        <Suspense fallback={<CollapsibleSectionSkeleton />}>
           <Await resolve={loaderData.itemsDueToday}>
             {(items) => (
               <ItemsDueToday
@@ -45,7 +45,7 @@ export const Dashboard = () => {
           </Await>
         </Suspense>
         {/* Overdue Items */}
-        <Suspense fallback={<ItemsPanelSkeleton collapsed={true} />}>
+        <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
           <Await resolve={loaderData.overdueItems}>
             {(items) => (
               <OverdueItems
