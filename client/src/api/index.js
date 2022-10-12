@@ -1,5 +1,6 @@
 import listApi from './listApi';
 import itemApi from './itemApi';
+import dashboardApi from './dashboardApi';
 
 // TODO swap based on config
 
@@ -10,4 +11,4 @@ class ApiError extends Error {
   }
 }
 
-export { listApi, itemApi, ApiError };
+export { listApi, itemApi, dashboardApi, ApiError };

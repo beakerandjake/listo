@@ -5,6 +5,7 @@ import { listModel, listIdModel } from './list.js';
 import { deleteItemsModel } from './deleteItems.js';
 import { editItemModel } from './editItem.js';
 import { editItemsModel } from './editItems.js';
+import { getItemsFilter } from './getItemsFilter.js';
 
 export {
   createListRequestModel,
@@ -17,4 +18,5 @@ export {
   itemIdModel,
   editItemModel,
   editItemsModel,
+  getItemsFilter,
 };

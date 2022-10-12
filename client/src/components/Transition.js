@@ -129,6 +129,25 @@ export const Fade = (props) => {
 };
 
 /**
+ * Transition which Fades in and out.
+ **/
+ export const FadeQuick = (props) => {
+  return (
+    <Transition
+      {...props}
+      classNames={{
+        appear: 'opacity-0',
+        appearActive: 'transition-opacity ease-in duration-75 !opacity-100',
+        enter: 'opacity-0',
+        enterActive: 'transition-opacity ease-in duration-75 !opacity-100',
+        exit: 'opacity-100',
+        exitActive: 'transition-opacity ease-out duration-75 !opacity-0',
+      }}
+    />
+  );
+};
+
+/**
  * Transition which Pops in.
  **/
 export const PopIn = (props) => {

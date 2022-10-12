@@ -2,7 +2,7 @@ import express from 'express';
 import {
   createItem,
   deleteItems,
-  getAllItems,
+  getAllItemsInList,
   editItems,
 } from '../useCases/items/index.js';
 import {
@@ -197,7 +197,7 @@ router.post('/:id/items', (req, res) => {
  */
 router.get('/:id/items', (req, res) => {
   const { id } = req.params;
-  const result = getAllItems(id);
+  const result = getAllItemsInList(id);
   res.send(result);
 });
 

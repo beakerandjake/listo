@@ -2,7 +2,8 @@ import { ApiError } from 'api';
 
 const apiBaseUrl = process.env.REACT_APP_API_ENDPOINT;
 
-const itemBaseUrl = (itemId) => `${apiBaseUrl}/items/${itemId}`;
+const itemsBaseUrl = `${apiBaseUrl}/items`;
+const urlForItem = (itemId) => `${itemsBaseUrl}/${itemId}`;
 const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;
 
 /**
@@ -48,7 +49,7 @@ const addItem = async (listId, item) => {
  * @param {number} itemId - The id of the item.
  **/
 const deleteItem = async (itemId) => {
-  const response = await fetch(itemBaseUrl(itemId), {
+  const response = await fetch(urlForItem(itemId), {
     method: 'DELETE',
   });
 
@@ -64,7 +65,7 @@ const deleteItem = async (itemId) => {
  * @returns {Promise<object>}
  **/
 const editItem = async (itemId, changes) => {
-  const response = await fetch(itemBaseUrl(itemId), {
+  const response = await fetch(urlForItem(itemId), {
     method: 'PATCH',
     cache: 'no-cache',
     headers: {
@@ -119,6 +120,38 @@ const bulkEditItems = async (listId, changes) => {
   }
 };
 
+/**
+ * Returns all of the items due today across all lists.
+ * @returns {Promise<object>}
+ **/
+const getItemsDueToday = async () => {
+  const response = await fetch(
+    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'due-today' }))
+  );
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
+/**
+ * Returns all of the items currently overdue.
+ * @returns {Promise<object>}
+ **/
+const getOverdueItems = async () => {
+  const response = await fetch(
+    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'overdue' }))
+  );
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
 const api = {
   getItems,
   addItem,
@@ -126,6 +159,8 @@ const api = {
   editItem,
   bulkDeleteItems,
   bulkEditItems,
+  getItemsDueToday,
+  getOverdueItems,
 };
 
 export default api;

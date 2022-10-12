@@ -1,26 +1,37 @@
-import { itemRepository, listRepository } from '../../repositories/index.js';
-import { itemModel, listIdModel } from '../../models/index.js';
-import { NotFoundError } from '../../errors/NotFound.js';
+import { startOfToday, endOfToday } from 'date-fns';
 import { logger } from '../../logger.js';
+import { getItemsFilter, itemModel } from '../../models/index.js';
+import { itemRepository } from '../../repositories/index.js';
+import { filters } from '../../models/getItemsFilter.js';
+import { ApplicationError } from '../../errors/ApplicationError.js';
 
 /**
- * Returns all of the items in the list.
- * @returns {Array}
+ * Returns items across all lists based on a filter criteria.
+ * @returns {object}
  */
-export const getAllItems = (id) => {
-  logger.info('getting all items from list: %s', id);
+export const getAllItems = (filter) => {
+  logger.info('getting items according to filter: %s', filter);
 
-  const listId = listIdModel(id);
+  const filterModel = getItemsFilter(filter);
+  let result;
 
-  if (!listRepository.existsWithId(listId)) {
-    throw new NotFoundError('List does not exist');
+  switch (filterModel) {
+    case filters.overdue:
+      result = itemRepository.getOverdueItems(
+        startOfToday().toISOString(),
+      );
+      break;
+    case filters.dueToday:
+      result = itemRepository.getItemsByDueDateRange(
+        startOfToday().toISOString(),
+        endOfToday().toISOString(),
+      );
+      break;
+    default:
+      throw new ApplicationError(`getAllItems got unimplemented filter: ${filter}`);
   }
 
-  const items = itemRepository
-    .getAllItems(listId)
-    .map(itemModel);
+  logger.info('got: %d item(s) according to filter: %s', result.length, filter);
 
-  logger.info('got %d item(s) from list: %s', items.length, listId);
-
-  return items;
+  return result.map(itemModel);
 };

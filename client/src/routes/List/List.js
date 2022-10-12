@@ -1,23 +1,22 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { faCat } from '@fortawesome/pro-light-svg-icons';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
-import { AddItem } from './AddItem';
-import { ActionsDropdown } from './ActionsDropdown';
-import { EditItemDrawer } from './EditItemDrawer';
-import { SortItemsDropdown } from './SortItemsDropdown';
-import { GroupedItemsDisplay } from './GroupedItemsDisplay';
-import { Title } from './Title';
 import { getIcon } from 'services/iconLibrary';
-import {
-  sidebarItemsActions,
-  useSidebarItemsDispatch,
-} from 'context/SidebarItemsContext';
+import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
 import {
   listItemsActions,
   listItemsReducer,
   ListItemsDispatchContext,
   ListItemsContext,
 } from 'context/ListItemsContext';
+import { AddItem } from './AddItem';
+import { ActionsDropdown } from './ActionsDropdown';
+import { EditItemDrawer } from './EditItemDrawer';
+import { SortItemsDropdown } from './SortItemsDropdown';
+import { GroupedItemsDisplay } from './GroupedItemsDisplay';
+import { Title } from './Title';
+import { NoItemsDisplay } from './NoItemsDisplay';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -37,16 +36,18 @@ export const List = () => {
   );
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
-  const sidebarItemsDispatch = useSidebarItemsDispatch();
+  const updateSidebarItems = useUpdateSidebarItems();
 
-  // update the sidebar active item count any time the items change.
-  useEffect(() => {
-    sidebarItemsDispatch({
-      type: sidebarItemsActions.update,
-      id: list.id,
-      itemCount: items.filter((x) => !x.completed).length,
-    });
-  }, [items, list.id, sidebarItemsDispatch]);
+  // create a wrapper around the listItemsDispatch that
+  // will also update the sidebar items, this will keep the
+  // sidebar item count in sync anytime our items change.
+  const listItemsDispatchWrapper = useCallback(
+    (args) => {
+      listItemsDispatch(args);
+      updateSidebarItems();
+    },
+    [listItemsDispatch, updateSidebarItems]
+  );
 
   // reset internal state whenever a new list route is navigated to.
   useEffect(() => {
@@ -66,7 +67,7 @@ export const List = () => {
 
   return (
     <ListItemsContext.Provider value={items}>
-      <ListItemsDispatchContext.Provider value={listItemsDispatch}>
+      <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
         {/* Render reverse so flipped Items don't render on top. */}
         <div className="flex flex-col-reverse gap-2 mb-5">
           <GroupedItemsDisplay
@@ -74,6 +75,13 @@ export const List = () => {
             sortingKey={activeSort.itemKey}
             sortingDirection={activeSort.direction}
             onItemSelected={setSelectedItem}
+            noItemsDisplay={
+              <NoItemsDisplay
+                icon={faCat}
+                heading="List Is Empty!"
+                subHeading="Add some Items to get started."
+              />
+            }
           />
 
           <AddItem listId={list.id} />

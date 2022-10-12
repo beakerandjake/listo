@@ -38,7 +38,7 @@ const fadeFlippedElementOut = (el, index, removeElement) => {
  * @param {array} props.items - The items to render.
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
  */
-export const Items = ({ items, onItemSelected }) => {
+export const Items = ({ items = [], onItemSelected = () => {} }) => {
   return (
     <Flipper flipKey={items.map((x) => x.id).join('')}>
       <div className="w-full flex flex-col gap-2">
@@ -52,10 +52,7 @@ export const Items = ({ items, onItemSelected }) => {
           >
             {/* Wrap in DIV so don't have to forward Flipped props to ListItem */}
             <div>
-              <Item
-                item={x}
-                onClick={() => onItemSelected(x)}
-              />
+              <Item item={x} onClick={() => onItemSelected(x)} />
             </div>
           </Flipped>
         ))}
