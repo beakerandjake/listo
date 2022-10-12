@@ -15,11 +15,11 @@ import { CollapsibleSection } from './CollapsibleSection';
  * Shows items across all lists which are due soon.
  * @param {object} props
  * @param {object[]} props.items - The items which are due today.
- * @param {function} props.onItemChange - Callback invoked when the user changes an item.
+ * @param {function} props.onItemCompleted - Callback invoked when the user changes an items completed status.
  */
 export const ItemsDueToday = ({
   items: initialItems = [],
-  onItemChange = () => {},
+  onItemCompleted = () => {},
 }) => {
   const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
   const sidebarItemsDispatch = useUpdateSidebarItems();
@@ -31,9 +31,9 @@ export const ItemsDueToday = ({
     (arg) => {
       listItemsDispatch(arg);
       sidebarItemsDispatch();
-      onItemChange();
+      onItemCompleted();
     },
-    [listItemsDispatch, sidebarItemsDispatch, onItemChange]
+    [listItemsDispatch, sidebarItemsDispatch, onItemCompleted]
   );
 
   // calculate the number of active items any time the items change.
