@@ -4,6 +4,7 @@ import { faChevronDown } from '@fortawesome/pro-regular-svg-icons';
 import cx from 'classnames';
 import { Badge } from 'components/Badge';
 import { Fade } from 'components/Transition';
+import { SectionHeader } from './SectionHeader';
 
 /**
  * Header for a collapsible section.
@@ -22,21 +23,17 @@ const CollapsibleSectionHeader = ({
   onClick,
 }) => {
   return (
-    <div
-      className="border-b border-gray-200 pb-5 flex items-center justify-between cursor-pointer select-none"
+    <SectionHeader
+      title={title}
+      badge={<Badge variant={badgeVariant}>{badgeCount}</Badge>}
+      addOns={
+        <FontAwesomeIcon
+          icon={faChevronDown}
+          className={cx('transition-transform', { 'rotate-180': open })}
+        />
+      }
       onClick={onClick}
-    >
-      <div className="flex gap-2">
-        <h3 className="mr-2 text-lg font-medium leading-6 text-gray-900">
-          {title}
-        </h3>
-        <Badge variant={badgeVariant}>{badgeCount}</Badge>
-      </div>
-      <FontAwesomeIcon
-        icon={faChevronDown}
-        className={cx('transition-transform', { 'rotate-180': open })}
-      />
-    </div>
+    />
   );
 };
 
