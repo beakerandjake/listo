@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { Await, useLoaderData } from 'react-router-dom';
-import { dashboardApi } from 'api';
+import { statsApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { OverdueItems } from './OverdueItems';
@@ -19,7 +19,7 @@ export const Dashboard = () => {
 
   // query api for the latest item count statistics.
   const updateItemCounts = () => {
-    dashboardApi
+    statsApi
       .getItemCounts()
       .then((result) => setItemCounts(result))
       .catch(handleError);

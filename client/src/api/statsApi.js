@@ -1,6 +1,6 @@
 import { ApiError } from 'api';
 
-const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/dashboard`;
+const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/stats`;
 
 /**
  * Returns the item count stats.
