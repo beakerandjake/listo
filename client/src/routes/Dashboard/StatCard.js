@@ -25,16 +25,33 @@ const VARIANTS = {
   },
 };
 
+const SIZES = {
+  default: {
+    description: 'text-3xl',
+  },
+  sm: {
+    description: 'text-xl',
+  },
+};
+
 /**
  * A card which renders a single stat.
  * @param {object} props
  * @param {string} props.name - The name of the stat.
  * @param {string} props.stat - The stat to display.
  * @param {IconDefinition} props.icon - Optional icon to display.
- * @param {string} props.variant - The color variant.
+ * @param {'default'|'danger'|'primary'|'secondary'} props.variant - The color variant.
+ * @param {'default'|'sm'} props.size - The size variant.
  */
-export const StatCard = ({ name, stat, icon, variant = 'default' }) => {
-  const classNames = VARIANTS[variant] || VARIANTS.default;
+export const StatCard = ({
+  name,
+  stat,
+  icon,
+  variant = 'default',
+  size = 'default',
+}) => {
+  const variants = VARIANTS[variant] || VARIANTS.default;
+  const sizes = SIZES[size] || SIZES.default;
 
   return (
     <div
@@ -45,16 +62,17 @@ export const StatCard = ({ name, stat, icon, variant = 'default' }) => {
       )}
     >
       <div>
-        <dt className={cx('truncate text-sm font-medium', classNames.name)}>
+        <dt className={cx('truncate text-sm font-medium', variants.name)}>
           {name}
         </dt>
         <dd
           className={cx(
-            'mt-1 text-3xl font-semibold tracking-tight',
-            classNames.stat
+            'mt-1 font-semibold tracking-tight',
+            variants.stat,
+            sizes.description
           )}
         >
-          <SwitchTransition switchKey={stat} as={FadeQuick}>
+          <SwitchTransition switchKey={stat || ''} as={FadeQuick}>
             <span>{stat === null || stat === undefined ? '-' : stat}</span>
           </SwitchTransition>
         </dd>
@@ -62,7 +80,7 @@ export const StatCard = ({ name, stat, icon, variant = 'default' }) => {
       {icon && (
         <FontAwesomeIcon
           icon={icon}
-          className={cx('text-2xl sm:text-3xl', classNames.icon)}
+          className={cx('text-2xl sm:text-3xl', variants.icon)}
         />
       )}
     </div>
