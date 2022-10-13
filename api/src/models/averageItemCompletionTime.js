@@ -8,11 +8,11 @@ import { parseResponseModel } from './applyJoiSchema.js';
  *    averageItemCompletionTime:
  *      type: object
  *      properties:
- *        avgTimeToCompleteInMs:
+ *        timeInMs:
  *          type: number
  */
 const schema = joi.object({
-  timeToCompleteInMs: joi.number().required(),
+  timeInMs: joi.number().required(),
 });
 
 /**
