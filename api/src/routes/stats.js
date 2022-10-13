@@ -1,5 +1,5 @@
 import express from 'express';
-import { getItemCounts } from '../useCases/stats/index.js';
+import { getItemCounts, getAverageItemCompletionTime } from '../useCases/stats/index.js';
 
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.get('/item-counts', (req, res) => {
 
 /**
  * @openapi
- * /api/stats/item-counts:
+ * /api/stats/avg-completion-time:
  *    get:
  *      tags: [Stats]
  *      summary: Get Average Item Completion Time
@@ -45,7 +45,7 @@ router.get('/item-counts', (req, res) => {
  *          description: Unexpected Error.
  */
 router.get('/avg-completion-time', (req, res) => {
-  const results = getItemCounts();
+  const results = getAverageItemCompletionTime();
   res.send(results);
 });
 
