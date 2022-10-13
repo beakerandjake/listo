@@ -36,9 +36,24 @@ const getItemCounts = () => {
 
 /**
  * Returns average amount of time to complete an item across all lists.
- * @returns {object}
+ * @returns {number} - The average completion time in number of days.
  */
-export const getAverageItemCompletionTime = () => ({ timeToCompleteInMs: 4000 });
+export const getAverageItemCompletionTime = () => {
+  logger.verbose('querying for average completion time');
+
+  const result = getDb()
+    .prepare(`
+      SELECT AVG(JULIANDAY(completedDate) - JULIANDAY(createdDate))
+      FROM items
+      WHERE completedDate IS NOT NULL;
+    `)
+    .pluck()
+    .get();
+
+  logger.verbose('query for average completion time got: %s', result);
+
+  return result;
+};
 
 export default {
   getItemCounts,
