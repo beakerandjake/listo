@@ -311,6 +311,7 @@ const getOverdueItems = (dueDate) => {
         deletedDate IS NULL AND 
         completedDate IS NULL AND
         dueDate IS NOT NULL AND dueDate < ?
+      ORDER BY dueDate ASC
     `)
     .all(dueDate);
 
