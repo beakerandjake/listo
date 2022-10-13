@@ -10,10 +10,12 @@ import { parseRequestModel } from './applyJoiSchema.js';
  *      enum:
  *        - overdue
  *        - due-today
+ *        - next-seven-days
  */
 export const filters = {
   overdue: 'overdue',
   dueToday: 'due-today',
+  nextSevenDays: 'next-seven-days',
 };
 
 const schema = joi.string()

@@ -1,5 +1,5 @@
 import { useCallback, useReducer } from 'react';
-import { faCalendarExclamation } from '@fortawesome/pro-regular-svg-icons';
+import { faCalendarWeek } from '@fortawesome/pro-regular-svg-icons';
 import {
   listItemsActions,
   ListItemsContext,
@@ -12,11 +12,11 @@ import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
 import { CollapsibleSection } from './CollapsibleSection';
 
 /**
- * Shows items across all lists which are due soon.
+ * Shows items across all lists which are due in the next seven days.
  * @param {object} props
  * @param {function} props.onItemChange - Callback invoked when the user changes an item.
  */
-export const OverdueItems = ({
+export const ItemsDueNextSevenDays = ({
   items: initialItems,
   onItemCompleted = () => {},
 }) => {
@@ -42,13 +42,13 @@ export const OverdueItems = ({
   );
 
   return (
-    <CollapsibleSection badgeCount={items.length} title="Overdue">
+    <CollapsibleSection badgeCount={items.length} title="Next Seven Days">
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
           {items.length < 1 ? (
             <NoItemsDisplay
-              icon={faCalendarExclamation}
-              heading="No Overdue Items!"
+              icon={faCalendarWeek}
+              heading="No Items Due This Week!"
             />
           ) : (
             <Items items={items} />

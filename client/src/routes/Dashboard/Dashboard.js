@@ -7,6 +7,7 @@ import { ItemCounts } from './ItemCounts';
 import { OverdueItems } from './OverdueItems';
 import { CollapsibleSectionSkeleton } from './CollapsibleSectionSkeleton';
 import { ItemsDueToday } from './ItemsDueToday';
+import { ItemsDueNextSevenDays } from './ItemsDueNextSevenDays';
 
 export const Dashboard = () => {
   const handleError = useErrorHandler();
@@ -49,6 +50,17 @@ export const Dashboard = () => {
           <Await resolve={loaderData.overdueItems}>
             {(items) => (
               <OverdueItems
+                items={items}
+                onItemCompleted={() => updateItemCounts()}
+              />
+            )}
+          </Await>
+        </Suspense>
+        {/* Next Seven Days */}
+        <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
+          <Await resolve={loaderData.itemsDueNextSevenDays}>
+            {(items) => (
+              <ItemsDueNextSevenDays
                 items={items}
                 onItemCompleted={() => updateItemCounts()}
               />

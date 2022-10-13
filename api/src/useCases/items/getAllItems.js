@@ -1,4 +1,6 @@
-import { startOfToday, endOfToday } from 'date-fns';
+import {
+  startOfToday, endOfToday, startOfTomorrow, addWeeks,
+} from 'date-fns';
 import { logger } from '../../logger.js';
 import { getItemsFilter, itemModel } from '../../models/index.js';
 import { itemRepository } from '../../repositories/index.js';
@@ -25,6 +27,13 @@ export const getAllItems = (filter) => {
       result = itemRepository.getItemsByDueDateRange(
         startOfToday().toISOString(),
         endOfToday().toISOString(),
+      );
+      break;
+    case filters.nextSevenDays:
+      result = itemRepository.getItemsByDueDateRange(
+        startOfTomorrow().toISOString(),
+        addWeeks(startOfTomorrow(), 1).toISOString(),
+        true,
       );
       break;
     default:

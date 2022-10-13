@@ -152,6 +152,22 @@ const getOverdueItems = async () => {
   return await response.json();
 };
 
+/**
+ * Returns all of the items due in the next seven days.
+ * @returns {Promise<object>}
+ **/
+const getItemsDueNextSevenDays = async () => {
+  const response = await fetch(
+    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'next-seven-days' }))
+  );
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
 const api = {
   getItems,
   addItem,
@@ -161,6 +177,7 @@ const api = {
   bulkEditItems,
   getItemsDueToday,
   getOverdueItems,
+  getItemsDueNextSevenDays,
 };
 
 export default api;
