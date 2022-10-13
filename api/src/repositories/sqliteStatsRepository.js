@@ -34,6 +34,13 @@ const getItemCounts = () => {
   return result;
 };
 
+/**
+ * Returns average amount of time to complete an item across all lists.
+ * @returns {object}
+ */
+export const getAverageItemCompletionTime = () => ({ timeToCompleteInMs: 4000 });
+
 export default {
   getItemCounts,
+  getAverageItemCompletionTime,
 };
