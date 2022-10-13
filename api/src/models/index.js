@@ -6,6 +6,7 @@ import { deleteItemsModel } from './deleteItems.js';
 import { editItemModel } from './editItem.js';
 import { editItemsModel } from './editItems.js';
 import { getItemsFilter } from './getItemsFilter.js';
+import { averageItemCompletionTime } from './averageItemCompletionTime.js';
 
 export {
   createListRequestModel,
@@ -19,4 +20,5 @@ export {
   editItemModel,
   editItemsModel,
   getItemsFilter,
+  averageItemCompletionTime,
 };
