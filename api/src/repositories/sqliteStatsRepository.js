@@ -45,7 +45,7 @@ export const getAverageItemCompletionTime = () => {
     .prepare(`
       SELECT AVG(JULIANDAY(completedDate) - JULIANDAY(createdDate))
       FROM items
-      WHERE completedDate IS NOT NULL;
+      WHERE completedDate IS NOT NULL AND deletedDate IS NULL;
     `)
     .pluck()
     .get();
