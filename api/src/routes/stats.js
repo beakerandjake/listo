@@ -1,13 +1,13 @@
 import express from 'express';
-import { getItemCounts } from '../useCases/dashboard/index.js';
+import { getItemCounts } from '../useCases/stats/index.js';
 
 const router = express.Router();
 
 /**
  * @openapi
- * /api/dashboard/item-counts:
+ * /api/stats/item-counts:
  *    get:
- *      tags: [Dashboard]
+ *      tags: [Stats]
  *      summary: Get Item Counts
  *      description: Stats about the counts of the Items in all Lists.
  *      produces:
