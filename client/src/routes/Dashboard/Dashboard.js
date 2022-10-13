@@ -8,6 +8,8 @@ import { OverdueItems } from './OverdueItems';
 import { CollapsibleSectionSkeleton } from './CollapsibleSectionSkeleton';
 import { ItemsDueToday } from './ItemsDueToday';
 import { ItemsDueNextSevenDays } from './ItemsDueNextSevenDays';
+import { AverageItemCompletionTime } from './AverageItemCompletionTime';
+import { SectionHeader } from './SectionHeader';
 
 export const Dashboard = () => {
   const handleError = useErrorHandler();
@@ -34,39 +36,45 @@ export const Dashboard = () => {
       <div className="flex-1 flex flex-col gap-7">
         {/* Item Counts */}
         <ItemCounts {...itemCounts} />
-        {/* Items Due Today */}
-        <Suspense fallback={<CollapsibleSectionSkeleton />}>
-          <Await resolve={loaderData.itemsDueToday}>
-            {(items) => (
-              <ItemsDueToday
-                items={items}
-                onItemCompleted={() => updateItemCounts()}
-              />
-            )}
-          </Await>
-        </Suspense>
-        {/* Overdue Items */}
-        <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
-          <Await resolve={loaderData.overdueItems}>
-            {(items) => (
-              <OverdueItems
-                items={items}
-                onItemCompleted={() => updateItemCounts()}
-              />
-            )}
-          </Await>
-        </Suspense>
-        {/* Next Seven Days */}
-        <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
-          <Await resolve={loaderData.itemsDueNextSevenDays}>
-            {(items) => (
-              <ItemsDueNextSevenDays
-                items={items}
-                onItemCompleted={() => updateItemCounts()}
-              />
-            )}
-          </Await>
-        </Suspense>
+        <div className="grid grid-cols-1 gap-7 xl:grid-cols-3">
+          {/* Items Due Today */}
+          <Suspense fallback={<CollapsibleSectionSkeleton />}>
+            <Await resolve={loaderData.itemsDueToday}>
+              {(items) => (
+                <ItemsDueToday
+                  items={items}
+                  onItemCompleted={() => updateItemCounts()}
+                />
+              )}
+            </Await>
+          </Suspense>
+          {/* Overdue Items */}
+          <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
+            <Await resolve={loaderData.overdueItems}>
+              {(items) => (
+                <OverdueItems
+                  items={items}
+                  onItemCompleted={() => updateItemCounts()}
+                />
+              )}
+            </Await>
+          </Suspense>
+          {/* Next Seven Days */}
+          <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
+            <Await resolve={loaderData.itemsDueNextSevenDays}>
+              {(items) => (
+                <ItemsDueNextSevenDays
+                  items={items}
+                  onItemCompleted={() => updateItemCounts()}
+                />
+              )}
+            </Await>
+          </Suspense>
+        </div>
+
+        {/* Historical Data */}
+        <SectionHeader title="Statistics" />
+        <AverageItemCompletionTime />
       </div>
     </>
   );
