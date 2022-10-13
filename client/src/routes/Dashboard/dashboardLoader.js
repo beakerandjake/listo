@@ -9,7 +9,8 @@ import { defer } from 'react-router-dom';
  */
 export const dashboardLoader = async () => {
   const itemsDueToday = itemApi.getItemsDueToday();
+  const itemsDueNextSevenDays = itemApi.getItemsDueNextSevenDays();
   const overdueItems = itemApi.getOverdueItems();
 
-  return defer({ itemsDueToday, overdueItems });
+  return defer({ itemsDueToday, itemsDueNextSevenDays, overdueItems });
 };
