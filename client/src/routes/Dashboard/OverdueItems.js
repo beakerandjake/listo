@@ -1,5 +1,5 @@
 import { useCallback, useReducer } from 'react';
-import { faFaceParty } from '@fortawesome/pro-regular-svg-icons';
+import { faCalendarExclamation } from '@fortawesome/pro-regular-svg-icons';
 import {
   listItemsActions,
   ListItemsContext,
@@ -46,7 +46,10 @@ export const OverdueItems = ({
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
           {items.length < 1 ? (
-            <NoItemsDisplay icon={faFaceParty} heading="No Overdue Items!" />
+            <NoItemsDisplay
+              icon={faCalendarExclamation}
+              heading="No Overdue Items!"
+            />
           ) : (
             <Items items={items} />
           )}
