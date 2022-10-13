@@ -273,22 +273,29 @@ export const editItems = (listId, edits) => {
  * Returns all of the active, non-deleted items which have a due date between the specified range.
  * @param {string} startDate - ISO8601 formatted date string of the earliest due date (inclusive).
  * @param {string} endDate - ISO8601 formatted date string of the latest due date (exclusive).
+ * @param {boolean} onlyActive - If true returns only items which haven't been completed.
  * @returns {object[]}
  */
-const getItemsByDueDateRange = (startDate, endDate) => {
-  logger.verbose('querying for all items due between: %s and %s', startDate, endDate);
+const getItemsByDueDateRange = (startDate, endDate, onlyActive = false) => {
+  logger.verbose('querying for %s items due between: %s and %s', onlyActive ? 'active' : 'all', startDate, endDate);
+
+  const activeFilter = onlyActive
+    ? 'AND completedDate IS NULL'
+    : '';
 
   const result = getDb()
     .prepare(`
       SELECT ${getItemFieldsForSelectStatement()}
       FROM items
       WHERE 
-        deletedDate IS NULL AND dueDate BETWEEN ? AND ?
+        deletedDate IS NULL AND 
+        dueDate BETWEEN ? AND ?
+        ${activeFilter}
       ORDER BY dueDate ASC
     `)
     .all(startDate, endDate);
 
-  logger.verbose('queried %d item(s) due between: %s and %s', result.length, startDate, endDate);
+  logger.verbose('queried %d %s item(s) due between: %s and %s', result.length, onlyActive ? 'active' : 'all', startDate, endDate);
 
   return result;
 };
