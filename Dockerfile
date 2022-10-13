@@ -18,7 +18,7 @@ COPY package*.json ./
 # install packages for the client workspace.
 RUN npm ci --workspace=client
 # replace the root package.json with the client specific one and delete the client subdirectory
-RUN mv ./client/package.json ./package.json && rmdir -rf./client
+RUN mv ./client/package.json ./package.json && rm -rf./client
 
 # copy app contents, taking advantage of layers for things less likely to change. 
 COPY ./client/*.config.js ./client/.env ./client/jsconfig.json ./
@@ -42,7 +42,7 @@ COPY package*.json ./
 # install packages for the api workspace.
 RUN npm ci --workspace=api --omit=dev
 # replace the root package.json with the api specific one and delete the api subdirectory
-RUN mv ./api/package.json ./package.json && rmdir -rf ./api
+RUN mv ./api/package.json ./package.json && rm -rf ./api
 
 # ensure db directory exists and permissions are set properly.
 RUN mkdir /var/lib/listo && chown node /var/lib/listo
