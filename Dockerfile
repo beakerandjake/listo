@@ -18,7 +18,7 @@ COPY package*.json ./
 # install packages for the client workspace.
 RUN npm ci --workspace=client
 # replace the root package.json with the client specific one and delete the client subdirectory
-RUN mv ./client/package.json ./package.json && rm -rf./client
+RUN mv ./client/package.json ./package.json && rm -rf ./client
 
 # copy app contents, taking advantage of layers for things less likely to change. 
 COPY ./client/*.config.js ./client/.env ./client/jsconfig.json ./
