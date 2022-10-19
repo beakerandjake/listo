@@ -27,7 +27,7 @@ export const CollapsibleCard = ({
       {/* Header */}
       <CardHeader onClick={toggle} className="cursor-pointer select-none">
         <div className="flex items-center justify-between">
-          <div>{header}</div>
+          {header}
           <FontAwesomeIcon
             icon={faChevronDown}
             className={cx('transition-transform', { 'rotate-180': open })}
