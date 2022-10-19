@@ -10,8 +10,6 @@ import { ItemsDueToday } from './ItemsDueToday';
 import { ItemsDueNextSevenDays } from './ItemsDueNextSevenDays';
 import { AverageItemCompletionTime } from './AverageItemCompletionTime';
 import { SectionHeader } from './SectionHeader';
-import { Card, CardContent, CardHeading } from 'components/Card';
-import { CardHeader } from 'components/Card/CardHeader';
 
 export const Dashboard = () => {
   const handleError = useErrorHandler();
@@ -77,15 +75,6 @@ export const Dashboard = () => {
         {/* Historical Data */}
         <SectionHeader title="Statistics" />
         <AverageItemCompletionTime />
-
-        <Card>
-          <CardHeader>
-            <CardHeading>Cool World!</CardHeading>
-          </CardHeader>
-          <CardContent>
-            COOL CARD!
-          </CardContent>
-        </Card>
       </div>
     </>
   );
