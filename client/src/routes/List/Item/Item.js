@@ -34,10 +34,9 @@ export const Item = ({ item, onClick }) => {
   return (
     <Card
       className="hover:bg-slate-100 cursor-pointer select-none min-h-[50px]"
-      contentClassName="!py-2 !px-3"
       onClick={() => onClick(item.id)}
     >
-      <div className="flex items-center">
+      <div className="flex items-center py-2 px-3">
         <ItemCompletedCheckbox
           checked={item.completed}
           onChange={(completed) => editItem({ completed })}
