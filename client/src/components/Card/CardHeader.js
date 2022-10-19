@@ -1,17 +1,21 @@
 import cx from 'classnames';
 
 /**
- * Simple header element used in a Cards Header section.
+ * Header section for a Card.
  * @param {object} props
- * @param {ReactElement} props.children - Content of the header.
- * @param {string} props.className - Addition styles to apply to the root of the card.
+ * @param {string} props.className - Addition styles to apply.
+ * @param {ReactNode} props.children - The content of the header.
  */
-export const CardHeader = ({ children, className }) => {
+export const CardHeader = ({ className, children, ...props }) => {
   return (
-    <h3
-      className={cx('text-lg font-medium leading-6 text-gray-900', className)}
+    <div
+      {...props}
+      className={cx(
+        'border-b border-gray-200 bg-white px-4 py-5 sm:px-6',
+        className
+      )}
     >
       {children}
-    </h3>
+    </div>
   );
 };
