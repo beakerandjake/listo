@@ -9,7 +9,7 @@ import { CardHeading, CollapsibleCard } from 'components/Card';
  * @param {ReactNode} props.emptyDisplay - Component to render if itemCount is less than one.
  * @param {ReactNode} props.children - Component to render if itemCount is greater than zero.
  */
-export const ItemsCard = ({
+export const ItemCard = ({
   title,
   itemCount: count,
   emptyDisplay,
@@ -24,7 +24,7 @@ export const ItemsCard = ({
         </div>
       }
     >
-      {count < 1 ? { emptyDisplay } : { children }}
+      {count < 1 ? emptyDisplay : children}
     </CollapsibleCard>
   );
 };
