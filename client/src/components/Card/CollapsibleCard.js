@@ -25,7 +25,7 @@ export const CollapsibleCard = ({
   return (
     <Card {...props}>
       {/* Header */}
-      <CardHeader onClick={toggle}>
+      <CardHeader onClick={toggle} className="cursor-pointer select-none">
         <div className="flex items-center justify-between">
           <div>{header}</div>
           <FontAwesomeIcon
