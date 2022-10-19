@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
+import { Card } from 'components/Card';
 import { FadeQuick, SwitchTransition } from 'components/Transition';
 
 const VARIANTS = {
@@ -54,35 +55,33 @@ export const StatCard = ({
   const sizes = SIZES[size] || SIZES.default;
 
   return (
-    <div
-      className={cx(
-        'flex items-center justify-between overflow-hidden p-4 sm:p-6',
-        'bg-white border border-gray-300 rounded-lg shadow',
-        'cursor-default select-none max-w-sm'
-      )}
-    >
-      <div>
-        <dt className={cx('truncate text-sm font-medium', variants.name)}>
-          {name}
-        </dt>
-        <dd
-          className={cx(
-            'mt-1 font-semibold tracking-tight',
-            variants.stat,
-            sizes.description
-          )}
-        >
-          <SwitchTransition switchKey={stat || ''} as={FadeQuick}>
-            <span>{stat === null || stat === undefined ? '-' : stat}</span>
-          </SwitchTransition>
-        </dd>
+    <Card className="cursor-default select-none max-w-sm">
+      <div className="flex items-center justify-between">
+        {/* Content */}
+        <div>
+          <dt className={cx('truncate text-sm font-medium', variants.name)}>
+            {name}
+          </dt>
+          <dd
+            className={cx(
+              'mt-1 font-semibold tracking-tight',
+              variants.stat,
+              sizes.description
+            )}
+          >
+            <SwitchTransition switchKey={stat || ''} as={FadeQuick}>
+              <span>{stat === null || stat === undefined ? '-' : stat}</span>
+            </SwitchTransition>
+          </dd>
+        </div>
+        {/* Icon */}
+        {icon && (
+          <FontAwesomeIcon
+            icon={icon}
+            className={cx('text-2xl sm:text-3xl', variants.icon)}
+          />
+        )}
       </div>
-      {icon && (
-        <FontAwesomeIcon
-          icon={icon}
-          className={cx('text-2xl sm:text-3xl', variants.icon)}
-        />
-      )}
-    </div>
+    </Card>
   );
 };
