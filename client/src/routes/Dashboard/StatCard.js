@@ -58,7 +58,7 @@ export const StatCard = ({
       className={cx(
         'flex items-center justify-between overflow-hidden p-4 sm:p-6',
         'bg-white border border-gray-300 rounded-lg shadow',
-        'cursor-default select-none'
+        'cursor-default select-none max-w-sm'
       )}
     >
       <div>
