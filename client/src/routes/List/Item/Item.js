@@ -34,8 +34,7 @@ export const Item = ({ item, onClick }) => {
   return (
     <Card
       className="hover:bg-slate-100 cursor-pointer select-none min-h-[50px]"
-      size="custom"
-      contentClassName="py-2 px-3"
+      contentClassName="!py-2 !px-3"
       onClick={() => onClick(item.id)}
     >
       <div className="flex items-center">
