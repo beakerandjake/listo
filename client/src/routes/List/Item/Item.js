@@ -7,7 +7,7 @@ import {
   listItemsActions,
   useListItemsDispatch,
 } from 'context/ListItemsContext';
-import { ItemCompletedCheckbox } from './ItemCompletedCheckbox';
+import { ItemCompletedCheckbox } from 'components/Item';
 import { ItemNameLabel } from './ItemNameLabel';
 import { ItemStatusBar } from './ItemStatusBar';
 
