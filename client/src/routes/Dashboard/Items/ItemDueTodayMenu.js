@@ -1,22 +1,11 @@
-import { Link } from 'react-router-dom';
 import { format, nextMonday, startOfDay, startOfTomorrow } from 'date-fns';
 import {
   faChevronRight,
   faChevronsRight,
-  faLink,
 } from '@fortawesome/pro-regular-svg-icons';
 import { useEditListItem } from 'context/ListItemsContext';
-import {
-  EllipsisMenuTrigger,
-  MenuHeader,
-  MenuItem,
-  MenuItemLabel,
-  MenuSeparator,
-  MenuTitle,
-  ResponsiveMenu,
-  ScrollableMenuContent,
-  StatefulMenu,
-} from 'components/Menu';
+import { MenuItem, MenuItemLabel, MenuSeparator } from 'components/Menu';
+import { ItemMenu } from './ItemMenu';
 
 /**
  * Menu for performing actions on an Item that is due today.
@@ -40,38 +29,20 @@ export const ItemDueTodayMenu = ({ item }) => {
   ];
 
   return (
-    <StatefulMenu>
-      {({ open, setOpen }) => (
-        <ResponsiveMenu
-          open={open}
-          onClose={() => setOpen(false)}
-          trigger={<EllipsisMenuTrigger onClick={() => setOpen(!open)} />}
-          desktopPlacement="bottom-start"
-          className="ml-auto"
+    <ItemMenu item={item}>
+      {dueDates.map((x) => (
+        <MenuItem
+          icon={x.icon}
+          label={x.label}
+          key={x.label}
+          onClick={() => editItem(item.id, { dueDate: x.date })}
         >
-          <MenuHeader className="flex items-center justify-center">
-            <MenuTitle>Item Actions</MenuTitle>
-          </MenuHeader>
-          <ScrollableMenuContent>
-            {dueDates.map((x) => (
-              <MenuItem
-                icon={x.icon}
-                label={x.label}
-                key={x.label}
-                onClick={() => editItem(item.id, { dueDate: x.date })}
-              >
-                <MenuItemLabel className="text-gray-400 font-semibold">
-                  {format(x.date, 'E')}
-                </MenuItemLabel>
-              </MenuItem>
-            ))}
-            <MenuSeparator />
-            <Link to={`lists/${item.listId}`}>
-              <MenuItem icon={faLink} label="Go to List" />
-            </Link>
-          </ScrollableMenuContent>
-        </ResponsiveMenu>
-      )}
-    </StatefulMenu>
+          <MenuItemLabel className="text-gray-400 font-semibold">
+            {format(x.date, 'E')}
+          </MenuItemLabel>
+        </MenuItem>
+      ))}
+      <MenuSeparator />
+    </ItemMenu>
   );
 };
