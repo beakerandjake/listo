@@ -6,8 +6,7 @@ import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { OverdueItems } from './OverdueItems';
 import { CollapsibleSectionSkeleton } from './CollapsibleSectionSkeleton';
-import { ItemsDueToday } from './ItemsDueToday';
-import { ItemsDueNextSevenDays } from './ItemsDueNextSevenDays';
+import { ItemsDueTodayCard } from './Items';
 import { AverageItemCompletionTime } from './AverageItemCompletionTime';
 import { SectionHeader } from './SectionHeader';
 
@@ -41,29 +40,7 @@ export const Dashboard = () => {
           <Suspense fallback={<CollapsibleSectionSkeleton />}>
             <Await resolve={loaderData.itemsDueToday}>
               {(items) => (
-                <ItemsDueToday
-                  items={items}
-                  onItemCompleted={() => updateItemCounts()}
-                />
-              )}
-            </Await>
-          </Suspense>
-          {/* Overdue Items */}
-          <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
-            <Await resolve={loaderData.overdueItems}>
-              {(items) => (
-                <OverdueItems
-                  items={items}
-                  onItemCompleted={() => updateItemCounts()}
-                />
-              )}
-            </Await>
-          </Suspense>
-          {/* Next Seven Days */}
-          <Suspense fallback={<CollapsibleSectionSkeleton collapsed={true} />}>
-            <Await resolve={loaderData.itemsDueNextSevenDays}>
-              {(items) => (
-                <ItemsDueNextSevenDays
+                <ItemsDueTodayCard
                   items={items}
                   onItemCompleted={() => updateItemCounts()}
                 />
