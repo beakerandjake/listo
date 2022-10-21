@@ -27,6 +27,7 @@ export const getAllItems = (filter) => {
       result = itemRepository.getItemsByDueDateRange(
         startOfToday().toISOString(),
         endOfToday().toISOString(),
+        true,
       );
       break;
     case filters.nextSevenDays:
