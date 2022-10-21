@@ -35,10 +35,10 @@ export const Dashboard = () => {
   return (
     <>
       <PageHeader name="Dashboard" />
-      <div className="flex-1 flex flex-col gap-7">
+      <div className="flex-1 flex flex-col gap5">
         {/* Item Counts */}
         <ItemCounts {...itemCounts} />
-        <div className="grid grid-cols-1 gap-7 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 xl:grid-cols-3">
           {/* Items Due Today */}
           <Suspense fallback={<CollapsibleSectionSkeleton />}>
             <Await resolve={loaderData.itemsDueToday}>
@@ -72,11 +72,13 @@ export const Dashboard = () => {
               )}
             </Await>
           </Suspense>
-        </div>
 
-        {/* Historical Data */}
-        <SectionHeader title="Statistics" />
-        <AverageItemCompletionTime />
+          <div>
+            {/* Historical Data */}
+            <SectionHeader title="Statistics" />
+            <AverageItemCompletionTime />
+          </div>
+        </div>
       </div>
     </>
   );
