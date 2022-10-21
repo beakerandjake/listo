@@ -4,11 +4,14 @@ import { Await, useLoaderData } from 'react-router-dom';
 import { statsApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
-import { OverdueItems } from './OverdueItems';
 import { CollapsibleSectionSkeleton } from './CollapsibleSectionSkeleton';
-import { ItemsDueTodayCard, ItemsDueNextSevenDaysCard } from './Items';
 import { AverageItemCompletionTime } from './AverageItemCompletionTime';
 import { SectionHeader } from './SectionHeader';
+import {
+  ItemsCardDueToday,
+  ItemsCardDueNextSevenDays,
+  ItemsCardOverdue,
+} from './Items';
 
 export const Dashboard = () => {
   const handleError = useErrorHandler();
@@ -40,7 +43,7 @@ export const Dashboard = () => {
           <Suspense fallback={<CollapsibleSectionSkeleton />}>
             <Await resolve={loaderData.itemsDueToday}>
               {(items) => (
-                <ItemsDueTodayCard
+                <ItemsCardDueToday
                   items={items}
                   onItemCompleted={() => updateItemCounts()}
                 />
@@ -49,9 +52,20 @@ export const Dashboard = () => {
           </Suspense>
           {/* Items Due Today */}
           <Suspense fallback={<CollapsibleSectionSkeleton />}>
+            <Await resolve={loaderData.overdueItems}>
+              {(items) => (
+                <ItemsCardOverdue
+                  items={items}
+                  onItemCompleted={() => updateItemCounts()}
+                />
+              )}
+            </Await>
+          </Suspense>
+          {/* Overdue Items */}
+          <Suspense fallback={<CollapsibleSectionSkeleton />}>
             <Await resolve={loaderData.itemsDueNextSevenDays}>
               {(items) => (
-                <ItemsDueNextSevenDaysCard
+                <ItemsCardDueNextSevenDays
                   items={items}
                   onItemCompleted={() => updateItemCounts()}
                 />

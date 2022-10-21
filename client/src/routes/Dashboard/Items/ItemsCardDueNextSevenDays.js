@@ -7,7 +7,7 @@ import { ItemDueNextSevenDays } from './ItemDueNextSevenDays';
  * Shows items across all lists which are due in the next seven days.
  * @param {object} props - Pass through props to the ItemsCard.
  */
-export const ItemsDueNextSevenDaysCard = (props) => {
+export const ItemsCardDueNextSevenDays = (props) => {
   return (
     <ItemsCard
       {...props}

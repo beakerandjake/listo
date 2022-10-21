@@ -7,7 +7,7 @@ import { ItemDueToday } from './ItemDueToday';
  * Shows items across all lists which are due today.
  * @param {object} props - Pass through props to the ItemsCard.
  */
-export const ItemsDueTodayCard = (props) => {
+export const ItemsCardDueToday = (props) => {
   return (
     <ItemsCard
       {...props}
