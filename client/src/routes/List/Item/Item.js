@@ -47,7 +47,6 @@ export const Item = ({ item, onClick }) => {
             <ItemNameLabel
               completed={item.completed}
               name={item.name}
-              className="text-sm md:text-base"
             />
             {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
           </div>

@@ -81,7 +81,8 @@ export function EditItemDrawer({ item, onClosed }) {
               <ItemNameLabel
                 completed={item.completed}
                 name={item.name}
-                className="text-2xl font-medium text-gray-900 cursor-pointer select-none"
+                size="lg"
+                className="font-medium text-gray-900 cursor-pointer select-none"
                 onClick={() => editItem({ completed: !item.completed })}
               />
             </div>
