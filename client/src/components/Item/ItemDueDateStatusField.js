@@ -9,15 +9,11 @@ import { ItemStatusField } from './ItemStatusField';
  * @param {boolean} props.completed - Has the Item been completed?
  * @param {string} props.dueDate - The due date of the Item.
  */
-export const ItemDueDateStatusField = ({ completed, dueDate }) => {
-  if (!dueDate) {
-    return null;
-  }
-
+export const ItemDueDateStatusField = ({ completed, dueDate, addPrefix }) => {
   return (
     <ItemStatusField
       icon={faCalendarCheck}
-      text={formatDueDate(dueDate)}
+      text={formatDueDate(dueDate, addPrefix)}
       className={cx({
         'text-indigo-700': !completed && isDueToday(dueDate),
         'text-red-800': !completed && isOverdue(dueDate),
