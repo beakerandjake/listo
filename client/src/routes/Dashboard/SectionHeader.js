@@ -13,7 +13,7 @@ export const SectionHeader = ({ title, badge, addOns, className, ...props }) => 
     <div
       {...props}
       className={cx(
-        'border-b border-gray-200 pb-5 flex items-center justify-between cursor-pointer select-none',
+        'border-b border-gray-200 pb-5 mb-5 flex items-center justify-between cursor-pointer select-none',
         className
       )}
     >
