@@ -14,11 +14,10 @@ import {
   MenuTitle,
   ScrollableMenuContent,
 } from 'components/Menu';
+import { ItemNameLabel, ItemCompletedCheckbox } from 'components/Item';
 import {
-  ItemCompletedCheckbox,
   ItemDueDateMenu,
   ItemFormattedDateLabel,
-  ItemNameLabel,
   ItemQuantityMenu,
 } from 'routes/List/Item';
 import { DeleteItem } from './DeleteItem';

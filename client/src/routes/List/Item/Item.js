@@ -7,9 +7,8 @@ import {
   listItemsActions,
   useListItemsDispatch,
 } from 'context/ListItemsContext';
-import { ItemCompletedCheckbox } from 'components/Item';
-import { ItemNameLabel } from './ItemNameLabel';
-import { ItemStatusBar } from './ItemStatusBar';
+import { ItemCompletedCheckbox, ItemNameLabel } from 'components/Item';
+ import { ItemStatusBar } from './ItemStatusBar';
 
 /**
  * Represents an item in a list. Displayed in a ListItemContainer.
