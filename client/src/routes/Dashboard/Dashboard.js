@@ -6,7 +6,7 @@ import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { OverdueItems } from './OverdueItems';
 import { CollapsibleSectionSkeleton } from './CollapsibleSectionSkeleton';
-import { ItemsDueTodayCard } from './Items';
+import { ItemsDueTodayCard, ItemsDueNextSevenDaysCard } from './Items';
 import { AverageItemCompletionTime } from './AverageItemCompletionTime';
 import { SectionHeader } from './SectionHeader';
 
@@ -41,6 +41,17 @@ export const Dashboard = () => {
             <Await resolve={loaderData.itemsDueToday}>
               {(items) => (
                 <ItemsDueTodayCard
+                  items={items}
+                  onItemCompleted={() => updateItemCounts()}
+                />
+              )}
+            </Await>
+          </Suspense>
+          {/* Items Due Today */}
+          <Suspense fallback={<CollapsibleSectionSkeleton />}>
+            <Await resolve={loaderData.itemsDueNextSevenDays}>
+              {(items) => (
+                <ItemsDueNextSevenDaysCard
                   items={items}
                   onItemCompleted={() => updateItemCounts()}
                 />
