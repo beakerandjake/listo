@@ -2,6 +2,7 @@ import { faCalendarExclamation } from '@fortawesome/pro-regular-svg-icons';
 import { ItemsCard } from './ItemsCard';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { ItemDueToday } from './ItemDueToday';
+import { ItemOverdue } from './ItemOverdue';
 
 /**
  * Shows items across all lists which are overdue.
@@ -20,7 +21,7 @@ export const ItemsCardOverdue = (props) => {
       }
     >
       {({ items }) =>
-        items.map((item) => <ItemDueToday key={item.id} item={item} />)
+        items.map((item) => <ItemOverdue key={item.id} item={item} />)
       }
     </ItemsCard>
   );
