@@ -1,7 +1,7 @@
 import { faCalendarWeek } from '@fortawesome/pro-regular-svg-icons';
 import { ItemsCard } from './ItemsCard';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
-import { ItemDueToday } from './ItemDueToday';
+import { ItemDueNextSevenDays } from './ItemDueNextSevenDays';
 
 /**
  * Shows items across all lists which are due in the next seven days.
@@ -22,7 +22,7 @@ export const ItemsDueNextSevenDaysCard = (props) => {
       }
     >
       {({ items }) =>
-        items.map((item) => <ItemDueToday key={item.id} item={item} />)
+        items.map((item) => <ItemDueNextSevenDays key={item.id} item={item} />)
       }
     </ItemsCard>
   );
