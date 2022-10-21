@@ -6,10 +6,10 @@ import {
   ListItemsDispatchContext,
   listItemsReducer,
 } from 'context/ListItemsContext';
+import { ItemCard } from './ItemCard';
 import { Items } from 'routes/List/Items';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
-import { CollapsibleSection } from './CollapsibleSection';
 
 /**
  * Shows items across all lists which are due in the next seven days.
@@ -42,19 +42,21 @@ export const ItemsDueNextSevenDays = ({
   );
 
   return (
-    <CollapsibleSection badgeCount={items.length} title="Next Seven Days">
+    <ItemCard
+      itemCount={items.length}
+      title="Next Seven Days"
+      emptyDisplay={
+        <NoItemsDisplay
+          icon={faCalendarWeek}
+          heading="No Items Due This Week"
+        />
+      }
+    >
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
-          {items.length < 1 ? (
-            <NoItemsDisplay
-              icon={faCalendarWeek}
-              heading="No Items Due This Week!"
-            />
-          ) : (
-            <Items items={items} />
-          )}
+          <Items items={items} />
         </ListItemsDispatchContext.Provider>
       </ListItemsContext.Provider>
-    </CollapsibleSection>
+    </ItemCard>
   );
 };

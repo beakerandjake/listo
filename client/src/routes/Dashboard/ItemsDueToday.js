@@ -10,6 +10,7 @@ import { GroupedItemsDisplay } from 'routes/List/GroupedItemsDisplay';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { itemSortingFields, sortingDirections } from 'services/sorting';
 import { CollapsibleSection } from './CollapsibleSection';
+import { ItemCard } from './ItemCard';
 
 /**
  * Shows items across all lists which are due soon.
@@ -43,7 +44,13 @@ export const ItemsDueToday = ({
   );
 
   return (
-    <CollapsibleSection badgeCount={activeCount} title="Due Today">
+    <ItemCard
+      itemCount={activeCount}
+      title="Due Today"
+      emptyDisplay={
+        <NoItemsDisplay icon={faCalendarDay} heading="No Items Due Today!" />
+      }
+    >
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
           <GroupedItemsDisplay
@@ -59,6 +66,6 @@ export const ItemsDueToday = ({
           />
         </ListItemsDispatchContext.Provider>
       </ListItemsContext.Provider>
-    </CollapsibleSection>
+    </ItemCard>
   );
 };

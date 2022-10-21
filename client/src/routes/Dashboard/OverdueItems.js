@@ -9,7 +9,7 @@ import {
 import { Items } from 'routes/List/Items';
 import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { useUpdateSidebarItems } from 'context/SidebarItemsContext';
-import { CollapsibleSection } from './CollapsibleSection';
+import { ItemCard } from './ItemCard';
 
 /**
  * Shows items across all lists which are due soon.
@@ -42,19 +42,21 @@ export const OverdueItems = ({
   );
 
   return (
-    <CollapsibleSection badgeCount={items.length} title="Overdue">
+    <ItemCard
+      itemCount={items.length}
+      title="Overdue"
+      emptyDisplay={
+        <NoItemsDisplay
+          icon={faCalendarExclamation}
+          heading="No Overdue Items!"
+        />
+      }
+    >
       <ListItemsContext.Provider value={items}>
         <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
-          {items.length < 1 ? (
-            <NoItemsDisplay
-              icon={faCalendarExclamation}
-              heading="No Overdue Items!"
-            />
-          ) : (
-            <Items items={items} />
-          )}
+          <Items items={items} />
         </ListItemsDispatchContext.Provider>
       </ListItemsContext.Provider>
-    </CollapsibleSection>
+    </ItemCard>
   );
 };
