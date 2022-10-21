@@ -5,9 +5,7 @@ import { ItemDueNextSevenDays } from './ItemDueNextSevenDays';
 
 /**
  * Shows items across all lists which are due in the next seven days.
- * @param {object} props
- * @param {object[]} props.items - The items which are due today.
- * @param {function} props.onItemCompleted - Callback invoked when the user changes an items completed status.
+ * @param {object} props - Pass through props to the ItemsCard.
  */
 export const ItemsDueNextSevenDaysCard = (props) => {
   return (

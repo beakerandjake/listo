@@ -4,10 +4,8 @@ import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { ItemDueToday } from './ItemDueToday';
 
 /**
- * Shows items across all lists which are due soon.
- * @param {object} props
- * @param {object[]} props.items - The items which are due today.
- * @param {function} props.onItemCompleted - Callback invoked when the user changes an items completed status.
+ * Shows items across all lists which are due today.
+ * @param {object} props - Pass through props to the ItemsCard.
  */
 export const ItemsDueTodayCard = (props) => {
   return (
