@@ -60,7 +60,7 @@ export const Item = ({ item, onClick }) => {
                 completed={item.completed}
               />
             )}
-            {!!item.note && <ItemHasNoteStatusField note={item.note} />}
+            {!!item.note && <ItemHasNoteStatusField/>}
           </ItemStatusBar>
         </div>
       </ItemContent>
