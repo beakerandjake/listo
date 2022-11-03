@@ -157,7 +157,6 @@ export function ItemDueDateMenu({
             icon={icon}
             label={text}
             onClick={() => setDueDateAndCloseMenu(date)}
-            onMouseEnter={() => setSubMenuOpen(false)}
           >
             <MenuItemLabel className="text-gray-400 font-semibold">
               {format(date, 'E')}
@@ -206,7 +205,6 @@ export function ItemDueDateMenu({
             label="Remove Due Date"
             variant="danger"
             onClick={() => setDueDateAndCloseMenu(null)}
-            onMouseEnter={() => setSubMenuOpen(false)}
           />
         </span>
       </ScrollableMenuContent>
