@@ -7,8 +7,14 @@ import {
   listItemsActions,
   useListItemsDispatch,
 } from 'context/ListItemsContext';
-import { ItemCompletedCheckbox, ItemNameLabel } from 'components/Item';
- import { ItemStatusBar } from './ItemStatusBar';
+import {
+  ItemCompletedCheckbox,
+  ItemContent,
+  ItemDueDateStatusField,
+  ItemHasNoteStatusField,
+  ItemNameLabel,
+  ItemStatusBar,
+} from 'components/Item';
 
 /**
  * Represents an item in a list. Displayed in a ListItemContainer.
@@ -32,10 +38,10 @@ export const Item = ({ item, onClick }) => {
 
   return (
     <Card
-      className="hover:bg-slate-100 cursor-pointer select-none min-h-[50px]"
+      className="hover:bg-slate-100 cursor-pointer select-none"
       onClick={() => onClick(item.id)}
     >
-      <div className="flex items-center py-2 px-3">
+      <ItemContent>
         <ItemCompletedCheckbox
           checked={item.completed}
           onChange={(completed) => editItem({ completed })}
@@ -44,15 +50,18 @@ export const Item = ({ item, onClick }) => {
           className={cx({ 'opacity-50': item.completed }, 'pl-3 flex flex-col')}
         >
           <div className="w-full flex items-center gap-2">
-            <ItemNameLabel
-              completed={item.completed}
-              name={item.name}
-            />
+            <ItemNameLabel completed={item.completed} name={item.name} />
             {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
           </div>
-          <ItemStatusBar {...item} />
+          <ItemStatusBar>
+            <ItemDueDateStatusField
+              dueDate={item.dueDate}
+              completed={item.completed}
+            />
+            {!!item.note && <ItemHasNoteStatusField note={item.note} />}
+          </ItemStatusBar>
         </div>
-      </div>
+      </ItemContent>
     </Card>
   );
 };
