@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { faPartyHorn, faList } from '@fortawesome/pro-light-svg-icons';
 import { Badge } from 'components/Badge';
 import { Pill, PillGroup } from 'components/PillGroup';
-import { Items } from './Items';
 import { NoItemsDisplay } from './NoItemsDisplay';
 import { sortItems } from 'services/sorting';
+import { FlippedList } from 'components/FlippedList';
+import { Item } from './Item';
 
 /**
  * Pill which represents a group of the list items.
@@ -103,10 +104,11 @@ export const GroupedItemsDisplay = ({
         ))}
       </PillGroup>
 
-      <Items
-        items={itemGroups[activeGroupIndex].items}
-        onItemSelected={onItemSelected}
-      />
+      <FlippedList className="flex flex-col gap-2">
+        {itemGroups[activeGroupIndex].items.map((x) => (
+          <Item key={x.id} item={x} onClick={() => onItemSelected(x)} />
+        ))}
+      </FlippedList>
 
       {/* Show the groups empty display if it has no items. */}
       {activeGroup.items.length <= 0 && activeGroup.emptyDisplay}
