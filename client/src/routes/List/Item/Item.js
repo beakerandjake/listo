@@ -54,10 +54,12 @@ export const Item = ({ item, onClick }) => {
             {item.quantity > 1 && <Badge>{item.quantity}</Badge>}
           </div>
           <ItemStatusBar>
-            <ItemDueDateStatusField
-              dueDate={item.dueDate}
-              completed={item.completed}
-            />
+            {!!item.dueDate && (
+              <ItemDueDateStatusField
+                dueDate={item.dueDate}
+                completed={item.completed}
+              />
+            )}
             {!!item.note && <ItemHasNoteStatusField note={item.note} />}
           </ItemStatusBar>
         </div>
