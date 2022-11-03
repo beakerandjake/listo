@@ -25,7 +25,7 @@ export function Calendar({ value, onChange }) {
 
   return (
     <ReactCalendar
-      calendarType="ISO 8601"
+      calendarType="US"
       value={parsedDate}
       onChange={onChange}
       formatShortWeekday={(locale, date) => format(date, 'E')}
