@@ -48,15 +48,15 @@ export const ResponsiveLayout = ({ children }) => {
   return (
     <div className="flex flex-col-reverse">
       {/* Main Content */}
-      <div className="md:ml-64 flex flex-col flex-1">
-        <main className="flex-1 flex flex-col p-3 sm:p-6 md:p-8">
-         {children}
+      <div className="md:ml-64 lg:ml-80">
+        <main className="p-3 container max-w-7xl mx-auto sm:px-6 lg:px-8 lg:py-6">
+          {children}
         </main>
       </div>
 
       {/* Static Sidebar on Desktop. */}
       <MediaQuery minWidth={MOBILE_BREAKPOINT}>
-        <div className="fixed inset-y-0 flex flex-col w-64">
+        <div className="fixed inset-y-0 flex flex-col md:w-64 lg:w-80">
           <Sidebar />
         </div>
       </MediaQuery>

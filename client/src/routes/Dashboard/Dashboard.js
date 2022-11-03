@@ -38,7 +38,7 @@ export const Dashboard = () => {
       <div className="mt-5 flex-1 flex flex-col gap-5">
         {/* Item Counts */}
         <ItemCounts {...itemCounts} />
-        <div className="grid grid-cols-1 gap-3 xl:grid-cols-3">
+        <div className="flex flex-col gap-5">
           {/* Items Due Today */}
           <Suspense fallback={<ItemsCardSkeleton />}>
             <Await resolve={loaderData.itemsDueToday}>
