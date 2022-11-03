@@ -15,21 +15,27 @@ const ItemStatusFieldDivider = () => {
  * @returns
  */
 export const ItemStatusBar = ({ children }) => {
-  return (
-    <div className="flex items-center gap-2">
-      {React.Children.map(children, (child, index) => {
-        // Add a divider between every valid child
-        if (index > 0 && isValidElement(child)) {
-          return (
-            <>
-              <ItemStatusFieldDivider />
-              {child}
-            </>
-          );
-        }
+  let validCount = 0;
 
-        return child;
-      })}
-    </div>
-  );
+  const separatedChildren = React.Children.map(children, (child) => {
+    const isValidChild = isValidElement(child);
+
+    if (isValidChild) {
+      validCount += 1;
+    }
+
+    // Add a divider between every valid child
+    if (validCount > 1 && isValidChild) {
+      return (
+        <>
+          <ItemStatusFieldDivider />
+          {child}
+        </>
+      );
+    }
+
+    return child;
+  });
+
+  return <div className="flex items-center gap-2">{separatedChildren}</div>;
 };
