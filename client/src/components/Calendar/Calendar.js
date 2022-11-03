@@ -1,9 +1,10 @@
+import { useMemo } from 'react';
+import { format, isValid, parseISO } from 'date-fns';
 import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format } from 'date-fns';
 import ReactCalendar from 'react-calendar';
 
 import './Calendar.css';
@@ -15,10 +16,17 @@ import './Calendar.css';
  * @param {Function} props.onChange - The callback invoked when the user selects a Date.
  */
 export function Calendar({ value, onChange }) {
+  // ReactCalendar expects a Date, ensure we convert
+  // string values to Dates.
+  const parsedDate = useMemo(() => {
+    const parsed = parseISO(value);
+    return isValid(parsed) ? parsed : null;
+  }, [value]);
+
   return (
     <ReactCalendar
-      calendarType="US"
-      value={value}
+      calendarType="ISO 8601"
+      value={parsedDate}
       onChange={onChange}
       formatShortWeekday={(locale, date) => format(date, 'E')}
       prevLabel={<FontAwesomeIcon icon={faChevronLeft} />}
