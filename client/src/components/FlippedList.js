@@ -1,5 +1,5 @@
+import React from 'react';
 import { Flipper, Flipped, spring } from 'react-flip-toolkit';
-import { Item } from './Item';
 
 // Callback invoked by react-flip-toolkit, transitions the opacity from 0 to 1 while a Flipped Element is appearing.
 const fadeFlippedElementIn = (el, index) =>
@@ -33,30 +33,35 @@ const fadeFlippedElementOut = (el, index, removeElement) => {
 };
 
 /**
- * Renders the items of a list, applies transition effects whenever the order of the items change.
+ * Renders a changes to list of React Components using the FLIP technique,
+ * applies transition effects whenever items change.
  * @param {Object} props
  * @param {array} props.items - The items to render.
  * @param {function} props.onItemSelected - Callback invoked when the user clicks on an item.
  */
-export const Items = ({ items = [], onItemSelected = () => {} }) => {
+export const FlippedList = ({ children, ...props }) => {
+  const flippedChildren = React.Children.toArray(children);
+
+  if (!flippedChildren.every((x) => x.key)) {
+    throw new Error(
+      'Each child of the <FlippedList> must have a Key property specified'
+    );
+  }
+
   return (
-    <Flipper flipKey={items.map((x) => x.id).join('')}>
-      <div className="w-full flex flex-col gap-2">
-        {items.map((x) => (
-          <Flipped
-            key={x.id}
-            flipId={x.id}
-            spring="stiff"
-            onAppear={fadeFlippedElementIn}
-            onExit={fadeFlippedElementOut}
-          >
-            {/* Wrap in DIV so don't have to forward Flipped props to ListItem */}
-            <div>
-              <Item item={x} onClick={() => onItemSelected(x)} />
-            </div>
-          </Flipped>
-        ))}
-      </div>
+    <Flipper {...props} flipKey={flippedChildren.map((x) => x.key).join('')}>
+      {flippedChildren.map((x) => (
+        <Flipped
+          key={x.key}
+          flipId={x.key}
+          spring="stiff"
+          onAppear={fadeFlippedElementIn}
+          onExit={fadeFlippedElementOut}
+        >
+          {/* Wrap in DIV so don't have to forward Flipped props to each child */}
+          <div>{x}</div>
+        </Flipped>
+      ))}
     </Flipper>
   );
 };

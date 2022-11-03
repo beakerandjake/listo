@@ -276,26 +276,22 @@ export const editItems = (listId, edits) => {
  * @param {boolean} onlyActive - If true returns only items which haven't been completed.
  * @returns {object[]}
  */
-const getItemsByDueDateRange = (startDate, endDate, onlyActive = false) => {
-  logger.verbose('querying for %s items due between: %s and %s', onlyActive ? 'active' : 'all', startDate, endDate);
-
-  const activeFilter = onlyActive
-    ? 'AND completedDate IS NULL'
-    : '';
+const getItemsByDueDateRange = (startDate, endDate) => {
+  logger.verbose('querying for active items due between: %s and %s', startDate, endDate);
 
   const result = getDb()
     .prepare(`
       SELECT ${getItemFieldsForSelectStatement()}
       FROM items
       WHERE 
-        deletedDate IS NULL AND 
-        dueDate BETWEEN ? AND ?
-        ${activeFilter}
+        deletedDate IS NULL 
+        AND dueDate BETWEEN ? AND ?
+        AND completedDate IS NULL
       ORDER BY dueDate ASC
     `)
     .all(startDate, endDate);
 
-  logger.verbose('queried %d %s item(s) due between: %s and %s', result.length, onlyActive ? 'active' : 'all', startDate, endDate);
+  logger.verbose('queried %d item(s) due between: %s and %s', result.length, startDate, endDate);
 
   return result;
 };

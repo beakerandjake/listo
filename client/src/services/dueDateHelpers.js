@@ -11,7 +11,7 @@ import {
  * Returns a friendly string representation of the due date.
  * @param {Date|string} date - The due date (either a Date object or an ISO date string)
  */
-export function formatDueDate(date) {
+export function formatDueDate(date, addPrefix = true) {
   const parsed = isDate(date) ? date : parseISO(date);
 
   if (!isValid(parsed)) {
@@ -31,7 +31,13 @@ export function formatDueDate(date) {
     toReturn = formatDistanceToNowStrict(parsed, { addSuffix: true });
   }
 
-  return (isPast(parsed) ? 'Overdue, ' : 'Due ') + toReturn;
+  let prefix = '';
+
+  if (addPrefix) {
+    prefix = isPast(parsed) ? 'Overdue, ' : 'Due ';
+  }
+
+  return prefix + toReturn;
 }
 
 /**

@@ -1,4 +1,6 @@
-import { createContext, useContext } from 'react';
+import { itemApi } from 'api';
+import { createContext, useCallback, useContext } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 
 /**
  * Defines all of the actions supported by the reducer.
@@ -46,3 +48,26 @@ export const useListItemsDispatch = () => useContext(ListItemsDispatchContext);
  * Context which provides access to the List items.
  */
 export const useListItems = () => useContext(ListItemsContext);
+
+/**
+ * Wrapper around useListItemsDispatch.
+ * Calls the API to apply the changes to an item, 
+ * When API changes are returned an 'edit' will be dispatched
+ * to update the List Item with the edited value.
+ */
+export const useEditListItem = () => {
+  const dispatch = useListItemsDispatch();
+  const handleError = useErrorHandler();
+
+  return useCallback(
+    (id, changes) => {
+      itemApi
+        .editItem(id, changes)
+        .then((result) =>
+          dispatch({ type: listItemsActions.edit, item: result })
+        )
+        .catch(handleError);
+    },
+    [dispatch, handleError]
+  );
+};

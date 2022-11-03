@@ -2,11 +2,10 @@ import { DelayedRender } from 'components/DelayedRender';
 import { Fade } from 'components/Transition';
 
 /**
- * Skeleton placeholder for a collapsible section
+ * Skeleton placeholder for an ItemsCard
  * @param {object} props
- * @param {boolean} props.collapsed - Should the skeleton mimic a collapsed or expanded section?
  */
-export const CollapsibleSectionSkeleton = ({ collapsed }) => {
+export const ItemsCardSkeleton = () => {
   return (
     <DelayedRender>
       <Fade in appear>

@@ -43,6 +43,7 @@ export function ItemCompletedCheckbox({ checked, onChange }) {
       onClick={onClick}
       onKeyDown={onKeyDown}
       tabIndex={0}
+      title={checked ? 'Set Item Active' : 'Set Item Completed'}
     >
       <FontAwesomeIcon
         icon={icon}

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
-import { Card } from 'components/Card';
+import { Card, CardContent } from 'components/Card';
 import { FadeQuick, SwitchTransition } from 'components/Transition';
 
 const VARIANTS = {
@@ -56,7 +56,7 @@ export const StatCard = ({
 
   return (
     <Card className="cursor-default select-none max-w-sm">
-      <div className="flex items-center justify-between">
+      <CardContent className="flex items-center justify-between">
         {/* Content */}
         <div>
           <dt className={cx('truncate text-sm font-medium', variants.name)}>
@@ -81,7 +81,7 @@ export const StatCard = ({
             className={cx('text-2xl sm:text-3xl', variants.icon)}
           />
         )}
-      </div>
+      </CardContent>
     </Card>
   );
 };
