@@ -6,6 +6,6 @@ import { ItemStatusField } from './ItemStatusField';
  * @param {Object} props
  * @param {string} props.note - The note of the item.
  */
-export const ItemHasNoteStatusField = ({ note }) => {
+export const ItemHasNoteStatusField = () => {
   return <ItemStatusField icon={faComment} text="Note" />;
 };
