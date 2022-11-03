@@ -285,7 +285,7 @@ const getItemsByDueDateRange = (startDate, endDate) => {
       FROM items
       WHERE 
         deletedDate IS NULL 
-        AND dueDate BETWEEN ? AND ?
+        AND dateTime(dueDate) BETWEEN dateTime(?) AND dateTime(?)
         AND completedDate IS NULL
       ORDER BY dueDate ASC
     `)
