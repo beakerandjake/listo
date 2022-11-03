@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/pro-regular-svg-icons';
+import { itemValidationConstants } from '../Item';
 
 /**
  * Input field which allows the user to set the name of the Item.
@@ -23,6 +24,7 @@ export const AddItemToolbarInput = ({ value, onChange, onSubmit }) => {
         placeholder="Add Item"
         autoComplete="off"
         enterKeyHint="done"
+        maxLength={itemValidationConstants.maxNameLength}
       />
     </div>
   );

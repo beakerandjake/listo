@@ -18,6 +18,6 @@
     }
   },
   "validation": {
-    "inputCharactersRegex": "^[\\w\\-_\\s.,\\(\\)!@#$&*]+$"
+    "inputCharactersRegex": "^[\\w\\s\\d~!@#$%^&*()-=?.,;'\\/\\\\]+$"
   }
 }
