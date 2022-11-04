@@ -1,7 +1,7 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { Await, useLoaderData } from 'react-router-dom';
-import { statsApi } from 'api';
+import { itemApi, statsApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { AverageItemCompletionTime } from './AverageItemCompletionTime';
@@ -12,7 +12,6 @@ import {
   ItemsCardOverdue,
   ItemsCardSkeleton,
 } from './Items';
-import { StatCard } from './StatCard';
 import { StatCardSkeleton } from './StatCardSkeleton';
 
 export const Dashboard = () => {
@@ -23,26 +22,32 @@ export const Dashboard = () => {
   // the user edits items, handle this portion outside of the loader.
   const [itemCounts, setItemCounts] = useState(null);
   const [averageCompletionTime, setAverageCompletionTime] = useState(null);
+  const [overdueItems, setOverdueItems] = useState(null);
 
-  const updateItemCounts = useCallback(() => {
+  const getItemCounts = useCallback(() => {
     statsApi
       .getItemCounts()
       .then((result) => setItemCounts(result))
       .catch(handleError);
   }, [handleError]);
 
-  const updateAverageCompletionTime = useCallback(() => {
+  const getAverageCompletionTime = useCallback(() => {
     statsApi
       .getAverageItemCompletionTime()
       .then(({ timeInMs }) => setAverageCompletionTime(timeInMs))
       .catch(handleError);
   }, [handleError]);
 
-  // load all data once on mount.
+  // load data on mount.
   useEffect(() => {
-    updateItemCounts();
-    updateAverageCompletionTime();
-  }, [updateItemCounts, updateAverageCompletionTime]);
+    getItemCounts();
+    getAverageCompletionTime();
+
+    itemApi
+      .getOverdueItems()
+      .then((result) => setOverdueItems(result))
+      .catch(handleError);
+  }, [getItemCounts, getAverageCompletionTime, handleError]);
 
   return (
     <>
@@ -57,29 +62,27 @@ export const Dashboard = () => {
               {(items) => (
                 <ItemsCardDueToday
                   items={items}
-                  onItemCompleted={() => updateItemCounts()}
-                />
-              )}
-            </Await>
-          </Suspense>
-          {/* Items Due Today */}
-          <Suspense fallback={<ItemsCardSkeleton />}>
-            <Await resolve={loaderData.overdueItems}>
-              {(items) => (
-                <ItemsCardOverdue
-                  items={items}
-                  onItemCompleted={() => updateItemCounts()}
+                  onItemCompleted={() => getItemCounts()}
                 />
               )}
             </Await>
           </Suspense>
           {/* Overdue Items */}
+          {overdueItems === null ? (
+            <ItemsCardSkeleton />
+          ) : (
+            <ItemsCardOverdue
+              items={overdueItems}
+              onItemCompleted={() => getItemCounts()}
+            />
+          )}
+          {/* Items due next seven days */}
           <Suspense fallback={<ItemsCardSkeleton />}>
             <Await resolve={loaderData.itemsDueNextSevenDays}>
               {(items) => (
                 <ItemsCardDueNextSevenDays
                   items={items}
-                  onItemCompleted={() => updateItemCounts()}
+                  onItemCompleted={() => getItemCounts()}
                 />
               )}
             </Await>
