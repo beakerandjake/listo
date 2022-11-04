@@ -24,6 +24,7 @@ export const Dashboard = () => {
   const [averageCompletionTime, setAverageCompletionTime] = useState(null);
   const [overdueItems, setOverdueItems] = useState(null);
   const [itemsDueToday, setItemsDueToday] = useState(null);
+  const [itemsDueNextSevenDays, setItemsDueNextSevenDays] = useState(null);
 
   const getItemCounts = useCallback(() => {
     statsApi
@@ -39,10 +40,18 @@ export const Dashboard = () => {
       .catch(handleError);
   }, [handleError]);
 
+  const getItemsDueNextSevenDays = useCallback(() => {
+    itemApi
+      .getItemsDueNextSevenDays()
+      .then((result) => setItemsDueNextSevenDays(result))
+      .catch(handleError);
+  }, [handleError]);
+
   // load data on mount.
   useEffect(() => {
     getItemCounts();
     getAverageCompletionTime();
+    getItemsDueNextSevenDays();
 
     itemApi
       .getOverdueItems()
@@ -53,7 +62,12 @@ export const Dashboard = () => {
       .getItemsDueToday()
       .then((result) => setItemsDueToday(result))
       .catch(handleError);
-  }, [getItemCounts, getAverageCompletionTime, handleError]);
+  }, [
+    getItemCounts,
+    getAverageCompletionTime,
+    getItemsDueNextSevenDays,
+    handleError,
+  ]);
 
   return (
     <>
@@ -81,16 +95,14 @@ export const Dashboard = () => {
             />
           )}
           {/* Items due next seven days */}
-          <Suspense fallback={<ItemsCardSkeleton />}>
-            <Await resolve={loaderData.itemsDueNextSevenDays}>
-              {(items) => (
-                <ItemsCardDueNextSevenDays
-                  items={items}
-                  onItemCompleted={() => getItemCounts()}
-                />
-              )}
-            </Await>
-          </Suspense>
+          {itemsDueNextSevenDays === null ? (
+            <ItemsCardSkeleton />
+          ) : (
+            <ItemsCardDueNextSevenDays
+              items={itemsDueNextSevenDays}
+              onItemCompleted={() => getItemCounts()}
+            />
+          )}
         </div>
         {/* Historical Data */}
         <div>
