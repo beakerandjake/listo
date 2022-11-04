@@ -23,6 +23,7 @@ export const Dashboard = () => {
   const [itemCounts, setItemCounts] = useState(null);
   const [averageCompletionTime, setAverageCompletionTime] = useState(null);
   const [overdueItems, setOverdueItems] = useState(null);
+  const [itemsDueToday, setItemsDueToday] = useState(null);
 
   const getItemCounts = useCallback(() => {
     statsApi
@@ -47,6 +48,11 @@ export const Dashboard = () => {
       .getOverdueItems()
       .then((result) => setOverdueItems(result))
       .catch(handleError);
+
+    itemApi
+      .getItemsDueToday()
+      .then((result) => setItemsDueToday(result))
+      .catch(handleError);
   }, [getItemCounts, getAverageCompletionTime, handleError]);
 
   return (
@@ -57,16 +63,14 @@ export const Dashboard = () => {
         <ItemCounts {...itemCounts} />
         <div className="flex flex-col gap-5">
           {/* Items Due Today */}
-          <Suspense fallback={<ItemsCardSkeleton />}>
-            <Await resolve={loaderData.itemsDueToday}>
-              {(items) => (
-                <ItemsCardDueToday
-                  items={items}
-                  onItemCompleted={() => getItemCounts()}
-                />
-              )}
-            </Await>
-          </Suspense>
+          {itemsDueToday === null ? (
+            <ItemsCardSkeleton />
+          ) : (
+            <ItemsCardDueToday
+              items={itemsDueToday}
+              onItemCompleted={() => getItemCounts()}
+            />
+          )}
           {/* Overdue Items */}
           {overdueItems === null ? (
             <ItemsCardSkeleton />
