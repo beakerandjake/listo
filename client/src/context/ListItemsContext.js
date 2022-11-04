@@ -51,7 +51,7 @@ export const useListItems = () => useContext(ListItemsContext);
 
 /**
  * Wrapper around useListItemsDispatch.
- * Calls the API to apply the changes to an item, 
+ * Calls the API to apply the changes to an item,
  * When API changes are returned an 'edit' will be dispatched
  * to update the List Item with the edited value.
  */
@@ -60,14 +60,13 @@ export const useEditListItem = () => {
   const handleError = useErrorHandler();
 
   return useCallback(
-    (id, changes) => {
+    (id, changes) =>
       itemApi
         .editItem(id, changes)
         .then((result) =>
           dispatch({ type: listItemsActions.edit, item: result })
         )
-        .catch(handleError);
-    },
+        .catch(handleError),
     [dispatch, handleError]
   );
 };
