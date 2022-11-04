@@ -20,6 +20,7 @@ export const ItemsCard = ({
   items: initialItems = [],
   title,
   emptyDisplay,
+  onItemCompleted,
   children,
 }) => {
   const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
@@ -33,7 +34,8 @@ export const ItemsCard = ({
     }
 
     listItemsDispatch({ type: listItemsActions.delete, id: arg.item.id });
-  }, []);
+    onItemCompleted();
+  }, [onItemCompleted]);
 
   return (
     <Card>

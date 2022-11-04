@@ -13,7 +13,7 @@ export const AverageItemCompletionTime = ({ timeInMs = 0 }) => {
     () =>
       timeInMs <= 0
         ? 'N/A'
-        : humanize(timeInMs, { delimiter: ' and ', largest: 2 }),
+        : humanize(timeInMs, { delimiter: ' and ', largest: 2, round: true }),
     [timeInMs]
   );
 

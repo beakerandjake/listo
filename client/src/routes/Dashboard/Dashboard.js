@@ -13,6 +13,9 @@ import {
   ItemsCardSkeleton,
 } from './Items';
 
+/**
+ * Home page of the application, displays useful statistics and summaries.
+ */
 export const Dashboard = () => {
   const [itemCounts, setItemCounts] = useState(null);
   const [averageCompletionTime, setAverageCompletionTime] = useState(null);
@@ -41,6 +44,14 @@ export const Dashboard = () => {
       .then((result) => setItemsDueNextSevenDays(result))
       .catch(handleError);
   }, [handleError]);
+
+  /**
+   * Updates the Statistics, usually in reaction to items in the dashboard being marked as completed.
+   */
+  const updateStatistics = useCallback(() => {
+    getItemCounts();
+    getAverageCompletionTime();
+  }, [getItemCounts, getAverageCompletionTime]);
 
   // load data on mount.
   useEffect(() => {
@@ -77,7 +88,7 @@ export const Dashboard = () => {
           ) : (
             <ItemsCardDueToday
               items={itemsDueToday}
-              onItemCompleted={() => getItemCounts()}
+              onItemCompleted={updateStatistics}
             />
           )}
           {/* Overdue Items */}
@@ -86,7 +97,7 @@ export const Dashboard = () => {
           ) : (
             <ItemsCardOverdue
               items={overdueItems}
-              onItemCompleted={() => getItemCounts()}
+              onItemCompleted={updateStatistics}
             />
           )}
           {/* Items due next seven days */}
@@ -95,7 +106,7 @@ export const Dashboard = () => {
           ) : (
             <ItemsCardDueNextSevenDays
               items={itemsDueNextSevenDays}
-              onItemCompleted={() => getItemCounts()}
+              onItemCompleted={updateStatistics}
             />
           )}
         </div>
