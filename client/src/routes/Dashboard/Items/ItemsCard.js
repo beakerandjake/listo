@@ -6,7 +6,7 @@ import {
   ListItemsDispatchContext,
   listItemsReducer,
 } from 'context/ListItemsContext';
-import { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 
 /**
  * Card used to display a list of items.
@@ -23,19 +23,27 @@ export const ItemsCard = ({
   onItemCompleted,
   children,
 }) => {
-  const [items, listItemsDispatch] = useReducer(listItemsReducer, initialItems);
+  const [items, listItemsDispatch] = useReducer(listItemsReducer, []);
 
   // The only events that we expect to be dispatched will result in the
   // item being removed from the list. So swallow the original dispatch
   // and instead dispatch a delete event instead.
-  const dispatchWrapper = useCallback((arg) => {
-    if (arg.type !== listItemsActions.edit) {
-      throw new Error('unsupported action');
-    }
+  const dispatchWrapper = useCallback(
+    (arg) => {
+      if (arg.type !== listItemsActions.edit) {
+        throw new Error('unsupported action');
+      }
 
-    listItemsDispatch({ type: listItemsActions.delete, id: arg.item.id });
-    onItemCompleted();
-  }, [onItemCompleted]);
+      listItemsDispatch({ type: listItemsActions.delete, id: arg.item.id });
+      onItemCompleted();
+    },
+    [onItemCompleted]
+  );
+
+  // any time the initial items change, replace our items with the initial values.
+  useEffect(() => {
+    listItemsDispatch({ type: listItemsActions.replace, items: initialItems });
+  }, [initialItems]);
 
   return (
     <Card>
