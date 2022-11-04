@@ -10,9 +10,10 @@ import { ItemMenu } from './ItemMenu';
 /**
  * Menu for performing actions on an Item that is due today.
  * @param {object} props
- * @param {object[]} props.item - The item this menu is for.
+ * @param {object} props.item - The item this menu is for.
+ * @param {function} props.onDueDatePostponed - Function invoked when the user postpones the due date of an item.
  */
-export const ItemDueTodayMenu = ({ item }) => {
+export const ItemDueTodayMenu = ({ item, onDueDatePostponed }) => {
   const editItem = useEditListItem();
 
   const dueDates = [
@@ -35,7 +36,11 @@ export const ItemDueTodayMenu = ({ item }) => {
           icon={x.icon}
           label={x.label}
           key={x.label}
-          onClick={() => editItem(item.id, { dueDate: x.date })}
+          onClick={() =>
+            editItem(item.id, { dueDate: x.date }).then(() => {
+              onDueDatePostponed();
+            })
+          }
         >
           <MenuItemLabel className="text-gray-400 font-semibold">
             {format(x.date, 'E')}

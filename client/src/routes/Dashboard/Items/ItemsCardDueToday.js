@@ -6,8 +6,9 @@ import { ItemDueToday } from './ItemDueToday';
 /**
  * Shows items across all lists which are due today.
  * @param {object} props - Pass through props to the ItemsCard.
+ * @param {function} props.onItemDueDatePostponed - Function invoked when the user postpones the due date of an item.
  */
-export const ItemsCardDueToday = (props) => {
+export const ItemsCardDueToday = ({ onItemDueDatePostponed, ...props }) => {
   return (
     <ItemsCard
       {...props}
@@ -17,7 +18,13 @@ export const ItemsCardDueToday = (props) => {
       }
     >
       {({ items }) =>
-        items.map((item) => <ItemDueToday key={item.id} item={item} />)
+        items.map((item) => (
+          <ItemDueToday
+            key={item.id}
+            item={item}
+            onDueDatePostponed={onItemDueDatePostponed}
+          />
+        ))
       }
     </ItemsCard>
   );

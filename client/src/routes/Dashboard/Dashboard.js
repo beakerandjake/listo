@@ -89,6 +89,7 @@ export const Dashboard = () => {
             <ItemsCardDueToday
               items={itemsDueToday}
               onItemCompleted={updateStatistics}
+              onItemDueDatePostponed={getItemsDueNextSevenDays}
             />
           )}
           {/* Overdue Items */}
