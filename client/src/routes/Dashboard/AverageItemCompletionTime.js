@@ -19,7 +19,11 @@ export const AverageItemCompletionTime = () => {
     statsApi
       .getAverageItemCompletionTime()
       .then(({ timeInMs }) =>
-        setStat(humanize(timeInMs, { delimiter: ' and ', largest: 2 }))
+        setStat(
+          timeInMs <= 0
+            ? 'N/A'
+            : humanize(timeInMs, { delimiter: ' and ', largest: 2 })
+        )
       )
       .catch(handleError);
   };
