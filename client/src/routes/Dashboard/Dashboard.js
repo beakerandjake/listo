@@ -12,6 +12,8 @@ import {
   ItemsCardOverdue,
   ItemsCardSkeleton,
 } from './Items';
+import { StatCard } from './StatCard';
+import { StatCardSkeleton } from './StatCardSkeleton';
 
 export const Dashboard = () => {
   const handleError = useErrorHandler();
@@ -86,7 +88,12 @@ export const Dashboard = () => {
         {/* Historical Data */}
         <div>
           <SectionHeader title="Statistics" />
-          <AverageItemCompletionTime timeInMs={averageCompletionTime} />
+          {/* Average Completion Time */}
+          {averageCompletionTime === null ? (
+            <StatCardSkeleton />
+          ) : (
+            <AverageItemCompletionTime timeInMs={averageCompletionTime} />
+          )}
         </div>
       </div>
     </>

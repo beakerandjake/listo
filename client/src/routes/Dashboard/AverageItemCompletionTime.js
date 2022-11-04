@@ -1,7 +1,7 @@
+import { useMemo } from 'react';
+import humanize from 'humanize-duration';
 import { faClock } from '@fortawesome/pro-regular-svg-icons';
 import { StatCard } from './StatCard';
-import humanize from 'humanize-duration';
-import { useMemo } from 'react';
 
 /**
  * Stat card which renders the average Item completion time.
@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 export const AverageItemCompletionTime = ({ timeInMs = 0 }) => {
   const valueToDisplay = useMemo(
     () =>
-      !timeInMs || timeInMs <= 0
+      timeInMs <= 0
         ? 'N/A'
         : humanize(timeInMs, { delimiter: ' and ', largest: 2 }),
     [timeInMs]
