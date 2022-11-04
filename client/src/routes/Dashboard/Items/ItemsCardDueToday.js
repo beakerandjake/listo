@@ -1,6 +1,4 @@
-import { faCalendarDay } from '@fortawesome/pro-regular-svg-icons';
 import { ItemsCard } from './ItemsCard';
-import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
 import { ItemDueToday } from './ItemDueToday';
 
 /**
@@ -13,9 +11,7 @@ export const ItemsCardDueToday = ({ onItemDueDatePostponed, ...props }) => {
     <ItemsCard
       {...props}
       title="Due Today"
-      emptyDisplay={
-        <NoItemsDisplay icon={faCalendarDay} heading="No Items Due Today!" />
-      }
+      emptyDisplayMessage="Nothing Due Today"
     >
       {({ items }) =>
         items.map((item) => (
