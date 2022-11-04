@@ -1,30 +1,25 @@
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
-import { Await, useLoaderData } from 'react-router-dom';
 import { itemApi, statsApi } from 'api';
 import { PageHeader } from 'components/PageHeader';
 import { ItemCounts } from './ItemCounts';
 import { AverageItemCompletionTime } from './AverageItemCompletionTime';
 import { SectionHeader } from './SectionHeader';
+import { StatCardSkeleton } from './StatCardSkeleton';
 import {
   ItemsCardDueToday,
   ItemsCardDueNextSevenDays,
   ItemsCardOverdue,
   ItemsCardSkeleton,
 } from './Items';
-import { StatCardSkeleton } from './StatCardSkeleton';
 
 export const Dashboard = () => {
-  const handleError = useErrorHandler();
-  const loaderData = useLoaderData();
-
-  // because the item count stats are reloaded whenever
-  // the user edits items, handle this portion outside of the loader.
   const [itemCounts, setItemCounts] = useState(null);
   const [averageCompletionTime, setAverageCompletionTime] = useState(null);
   const [overdueItems, setOverdueItems] = useState(null);
   const [itemsDueToday, setItemsDueToday] = useState(null);
   const [itemsDueNextSevenDays, setItemsDueNextSevenDays] = useState(null);
+  const handleError = useErrorHandler();
 
   const getItemCounts = useCallback(() => {
     statsApi
