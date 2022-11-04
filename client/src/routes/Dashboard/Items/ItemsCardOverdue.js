@@ -1,7 +1,4 @@
-import { faCalendarExclamation } from '@fortawesome/pro-regular-svg-icons';
 import { ItemsCard } from './ItemsCard';
-import { NoItemsDisplay } from 'routes/List/NoItemsDisplay';
-import { ItemDueToday } from './ItemDueToday';
 import { ItemOverdue } from './ItemOverdue';
 
 /**
@@ -10,16 +7,7 @@ import { ItemOverdue } from './ItemOverdue';
  */
 export const ItemsCardOverdue = (props) => {
   return (
-    <ItemsCard
-      {...props}
-      title="Overdue"
-      emptyDisplay={
-        <NoItemsDisplay
-          icon={faCalendarExclamation}
-          heading="No Overdue Items!"
-        />
-      }
-    >
+    <ItemsCard {...props} title="Overdue" emptyDisplayMessage="Nothing Overdue">
       {({ items }) =>
         items.map((item) => <ItemOverdue key={item.id} item={item} />)
       }

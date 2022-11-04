@@ -1,39 +1,26 @@
-import { faClock } from '@fortawesome/pro-regular-svg-icons';
-import { useEffect, useState } from 'react';
-import { StatCard } from './StatCard';
+import { useMemo } from 'react';
 import humanize from 'humanize-duration';
-import { useErrorHandler } from 'react-error-boundary';
-import { statsApi } from 'api';
+import { faClock } from '@fortawesome/pro-regular-svg-icons';
+import { StatCard } from './StatCard';
 
 /**
  * Stat card which renders the average Item completion time.
+ * @param {object} props
+ * @param {number} props.timeInMs - The average completion time in milliseconds.
  */
-export const AverageItemCompletionTime = () => {
-  const [stat, setStat] = useState();
-  const handleError = useErrorHandler();
-
-  /**
-   * Query the API for the data.
-   */
-  const loadData = () => {
-    statsApi
-      .getAverageItemCompletionTime()
-      .then(({ timeInMs }) =>
-        setStat(
-          timeInMs <= 0
-            ? 'N/A'
-            : humanize(timeInMs, { delimiter: ' and ', largest: 2 })
-        )
-      )
-      .catch(handleError);
-  };
-
-  useEffect(loadData, [handleError]);
+export const AverageItemCompletionTime = ({ timeInMs = 0 }) => {
+  const valueToDisplay = useMemo(
+    () =>
+      timeInMs <= 0
+        ? 'N/A'
+        : humanize(timeInMs, { delimiter: ' and ', largest: 2, round: true }),
+    [timeInMs]
+  );
 
   return (
     <StatCard
       name="Average Completion Time"
-      stat={stat}
+      stat={valueToDisplay}
       variant="primary"
       size="sm"
       icon={faClock}
