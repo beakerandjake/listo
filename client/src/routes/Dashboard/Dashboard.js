@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { Await, useLoaderData } from 'react-router-dom';
 import { statsApi } from 'api';
@@ -20,17 +20,27 @@ export const Dashboard = () => {
   // because the item count stats are reloaded whenever
   // the user edits items, handle this portion outside of the loader.
   const [itemCounts, setItemCounts] = useState(null);
+  const [averageCompletionTime, setAverageCompletionTime] = useState(null);
 
-  // query api for the latest item count statistics.
-  const updateItemCounts = () => {
+  const updateItemCounts = useCallback(() => {
     statsApi
       .getItemCounts()
       .then((result) => setItemCounts(result))
       .catch(handleError);
-  };
+  }, [handleError]);
 
-  // get item counts on page load.
-  useEffect(updateItemCounts, [handleError]);
+  const updateAverageCompletionTime = useCallback(() => {
+    statsApi
+      .getAverageItemCompletionTime()
+      .then(({ timeInMs }) => setAverageCompletionTime(timeInMs))
+      .catch(handleError);
+  }, [handleError]);
+
+  // load all data once on mount.
+  useEffect(() => {
+    updateItemCounts();
+    updateAverageCompletionTime();
+  }, [updateItemCounts, updateAverageCompletionTime]);
 
   return (
     <>
@@ -76,7 +86,7 @@ export const Dashboard = () => {
         {/* Historical Data */}
         <div>
           <SectionHeader title="Statistics" />
-          <AverageItemCompletionTime />
+          <AverageItemCompletionTime timeInMs={averageCompletionTime} />
         </div>
       </div>
     </>
