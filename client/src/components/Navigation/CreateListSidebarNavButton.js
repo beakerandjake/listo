@@ -3,7 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CreateListDrawer } from 'components/CreateList/CreateListDrawer';
 import { useState } from 'react';
 
-export const CreateListSidebarNavButton = ({}) => {
+/**
+ * Button which opens the Create List Drawer.
+ */
+export const CreateListSidebarNavButton = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -15,7 +18,6 @@ export const CreateListSidebarNavButton = ({}) => {
         <h3 className="text-md font-medium">Create New List</h3>
         <FontAwesomeIcon icon={faPlusCircle} />
       </button>
-
       <CreateListDrawer open={open} onClose={() => setOpen(false)} />
     </>
   );
