@@ -1,5 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { NavLogo } from 'components/Navigation/NavLogo';
-import { useSidebarItems } from 'context/SidebarItemsContext';
+import {
+  useSidebarItems,
+  useUpdateSidebarItems,
+} from 'context/SidebarItemsContext';
 import { CreateListSidebarNavButton } from './CreateListSidebarNavButton';
 import { SidebarNav } from './SidebarNav';
 
@@ -8,6 +12,14 @@ import { SidebarNav } from './SidebarNav';
  */
 export function Sidebar() {
   const lists = useSidebarItems();
+  const updateSidebarItems = useUpdateSidebarItems();
+  const navigate = useNavigate();
+
+  const onListCreated = (newList) => {
+    console.log('on list created!', newList);
+    navigate(`lists/${newList.id}`);
+    updateSidebarItems();
+  };
 
   return (
     <div className="flex flex-col flex-grow border-r border-gray-200 bg-white overflow-y-auto">
@@ -20,7 +32,7 @@ export function Sidebar() {
           {lists?.length > 0 && <SidebarNav lists={lists} />}
         </nav>
         <div className="flex flex-shrink-0 border-t border-gray-200 py-4 px-4">
-          <CreateListSidebarNavButton />
+          <CreateListSidebarNavButton onListCreated={onListCreated} />
         </div>
       </div>
     </div>
