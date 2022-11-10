@@ -12,7 +12,6 @@ import {
   faBookmark,
   faBook,
   faCode,
-  faBurgerSoda,
   faGamepad,
   faDumbbell,
   faPersonWalking,
@@ -24,6 +23,7 @@ import {
   faMoneyBill,
   faTree,
   faComputer,
+  faUtensils,
 } from '@fortawesome/pro-regular-svg-icons';
 
 const ICONS = [
@@ -40,7 +40,7 @@ const ICONS = [
   faBookmark,
   faBook,
   faCode,
-  faBurgerSoda,
+  faUtensils,
   faGamepad,
   faDumbbell,
   faPersonWalking,
