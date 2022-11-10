@@ -6,7 +6,7 @@ import { useState } from 'react';
 /**
  * Button which opens the Create List Drawer.
  */
-export const CreateListSidebarNavButton = () => {
+export const CreateListSidebarNavButton = ({ onListCreated }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -18,7 +18,14 @@ export const CreateListSidebarNavButton = () => {
         <h3 className="text-md font-medium">Create New List</h3>
         <FontAwesomeIcon icon={faPlusCircle} />
       </button>
-      <CreateListDrawer open={open} onClose={() => setOpen(false)} />
+      <CreateListDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        onListCreated={newList => {
+          setOpen(false);
+          onListCreated(newList);
+        }}
+      />
     </>
   );
 };
