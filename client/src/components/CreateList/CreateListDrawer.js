@@ -13,13 +13,14 @@ import { SelectListIcon } from './SelectListIcon';
 import { icons } from 'services/iconLibrary';
 import { useErrorHandler } from 'react-error-boundary';
 import { listApi } from 'api';
+import { TitleInput } from './TitleInput';
 
 const DEFAULT_MODEL = {
   name: '',
   icon: icons[0],
 };
 
-const validationConstants = {
+const VALIDATION_CONSTANTS = {
   nameMaxLength: 50,
   nameMinLength: 3,
 };
@@ -27,8 +28,8 @@ const validationConstants = {
 const validateModel = (name, icon) => {
   if (
     !name ||
-    name.length < validationConstants.nameMinLength ||
-    name.length > validationConstants.nameMaxLength
+    name.length < VALIDATION_CONSTANTS.nameMinLength ||
+    name.length > VALIDATION_CONSTANTS.nameMaxLength
   ) {
     return false;
   }
@@ -40,6 +41,13 @@ const validateModel = (name, icon) => {
   return true;
 };
 
+/**
+ * Drawer which allows the user to create a new list.
+ * @param {Object} props
+ * @param {boolean} props.open - Is the drawer opened or closed?
+ * @param {function} props.onClose - Callback invoked when the drawer is to be closed.
+ * @param {function} props.onListCreated - Callback invoked when the list is successfully created.
+ */
 export const CreateListDrawer = ({
   open = false,
   onClose = () => {},
@@ -50,7 +58,7 @@ export const CreateListDrawer = ({
   const isValid = useMemo(() => validateModel(name, icon), [name, icon]);
   const handleError = useErrorHandler();
 
-  // Reset back to default values whenever the drawer closes.
+  // reset back to default values whenever the drawer closes.
   useEffect(() => {
     if (!open) {
       setName(DEFAULT_MODEL.name);
@@ -67,7 +75,15 @@ export const CreateListDrawer = ({
     listApi
       .createList({ name, iconName: icon.iconName })
       .then(onListCreated)
-      .catch(handleError);
+      .catch((error) => {
+        // handle name conflict.
+        if (error.statusCode === 409) {
+          console.log('handle conflict todo!');
+          return;
+        }
+
+        handleError(error);
+      });
   };
 
   return (
@@ -87,26 +103,7 @@ export const CreateListDrawer = ({
         <MenuTitle>Create New List</MenuTitle>
       </MenuHeader>
       <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-8 bg-gray-50">
-        {/* List Name */}
-        <div>
-          <label className="block text-md font-medium text-gray-700">
-            Title
-          </label>
-          <div className="mt-1">
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              className="block w-full rounded-md border-gray-300 shadow-sm keyboard-only-focus-ring sm:text-sm"
-              autoComplete="off"
-              enterKeyHint="done"
-              minLength={validationConstants.nameMinLength}
-              maxLength={validationConstants.nameMaxLength}
-              autoFocus={true}
-            />
-          </div>
-        </div>
-        {/* List Icon */}
+        <TitleInput value={name} onChange={setName} />
         <SelectListIcon value={icon} onChange={setIcon} icons={icons} />
       </ScrollableMenuContent>
       <MenuFooter className="flex items-center gap-2 flex-shrink-0 justify-end">
@@ -125,3 +122,5 @@ export const CreateListDrawer = ({
     </Drawer>
   );
 };
+
+export const listValidationConstants = { ...VALIDATION_CONSTANTS };
