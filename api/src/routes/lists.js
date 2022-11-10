@@ -53,13 +53,13 @@ router.get('/', (req, res) => {
  *        content:
  *          application/json:
  *            schema:
- *              $ref: "#/components/schemas/createListRequestModel"
+ *              $ref: "#/components/schemas/createListModel"
  *      responses:
  *        200:
  *          content:
  *            application/json:
  *                schema:
- *                  $ref: "#/components/schemas/createListModel"
+ *                  $ref: "#/components/schemas/listModel"
  *        409:
  *          description: Conflict. A list with that name already exists.
  *        5XX:
