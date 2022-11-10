@@ -1,14 +1,16 @@
+import { useEffect, useMemo, useState } from 'react';
+import { faArrowLeft } from '@fortawesome/pro-regular-svg-icons';
 import { Button } from 'components/Button';
 import { Drawer } from 'components/Drawer';
+import { IconButton } from 'components/IconButton';
 import {
   MenuFooter,
   MenuHeader,
   MenuTitle,
   ScrollableMenuContent,
 } from 'components/Menu';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { icons } from 'services/iconLibrary';
 import { SelectListIcon } from './SelectListIcon';
+import { icons } from 'services/iconLibrary';
 
 const DEFAULT_MODEL = {
   name: '',
@@ -57,7 +59,8 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
       size="full"
       contentClassName="max-w-md"
     >
-      <MenuHeader className="!p-4">
+      <MenuHeader className="!p-4 flex items-center gap-3">
+        <IconButton icon={faArrowLeft} onClick={() => onClose()} />
         <MenuTitle>Create New List</MenuTitle>
       </MenuHeader>
       <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-8 bg-gray-50">
@@ -76,6 +79,7 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
               enterKeyHint="done"
               minLength={validationConstants.nameMinLength}
               maxLength={validationConstants.nameMaxLength}
+              autoFocus={true}
             />
           </div>
         </div>
@@ -83,8 +87,10 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
         <SelectListIcon value={icon} onChange={setIcon} icons={icons} />
       </ScrollableMenuContent>
       <MenuFooter className="flex items-center gap-2 flex-shrink-0 justify-end">
-        <Button onClick={onClose}>Cancel</Button>
-        <Button variant="success" disabled={!isValid}>
+        <Button onClick={onClose} size="lg">
+          Cancel
+        </Button>
+        <Button variant="success" size="lg" disabled={!isValid}>
           Create
         </Button>
       </MenuFooter>
