@@ -59,7 +59,7 @@ const existsWithName = (name) => {
       SELECT EXISTS(
         SELECT 1 
         FROM lists 
-        WHERE name = ? AND deletedDate IS NULL
+        WHERE WHERE LOWER(LOWER(name)) LIKE LOWER(TRIM(?)) AND deletedDate IS NULL
       );
     `)
     .pluck()
