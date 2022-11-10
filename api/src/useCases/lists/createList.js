@@ -20,7 +20,7 @@ export const createList = ({ name, iconName }) => {
   const newListId = listRepository.createList(requestModel);
   const newList = listRepository.getList(newListId);
 
-  logger.info('created list: %d', newList);
+  logger.info('created list: %s', newList);
 
   return listModel(newList);
 };
