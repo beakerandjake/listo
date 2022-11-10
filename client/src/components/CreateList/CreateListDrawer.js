@@ -60,7 +60,11 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
       contentClassName="max-w-md"
     >
       <MenuHeader className="!p-4 flex items-center gap-3">
-        <IconButton icon={faArrowLeft} onClick={() => onClose()} />
+        <IconButton
+          icon={faArrowLeft}
+          title="Cancel"
+          onClick={() => onClose()}
+        />
         <MenuTitle>Create New List</MenuTitle>
       </MenuHeader>
       <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-8 bg-gray-50">
