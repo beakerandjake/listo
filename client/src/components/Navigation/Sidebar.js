@@ -15,10 +15,10 @@ export function Sidebar() {
   const updateSidebarItems = useUpdateSidebarItems();
   const navigate = useNavigate();
 
+  // when a new list is created, update our items, and then navigate to that page.
   const onListCreated = (newList) => {
-    console.log('on list created!', newList);
-    navigate(`lists/${newList.id}`);
     updateSidebarItems();
+    navigate(`lists/${newList.id}`);
   };
 
   return (
