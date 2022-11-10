@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { faArrowLeft } from '@fortawesome/pro-regular-svg-icons';
 import { Button } from 'components/Button';
 import { Drawer } from 'components/Drawer';
@@ -11,6 +11,8 @@ import {
 } from 'components/Menu';
 import { SelectListIcon } from './SelectListIcon';
 import { icons } from 'services/iconLibrary';
+import { useErrorHandler } from 'react-error-boundary';
+import { listApi } from 'api';
 
 const DEFAULT_MODEL = {
   name: '',
@@ -42,6 +44,7 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
   const [name, setName] = useState(DEFAULT_MODEL.name);
   const [icon, setIcon] = useState(DEFAULT_MODEL.icon);
   const isValid = useMemo(() => validateModel(name, icon), [name, icon]);
+  const handleError = useErrorHandler();
 
   // Reset back to default values whenever the drawer closes.
   useEffect(() => {
@@ -50,6 +53,18 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
       setIcon(DEFAULT_MODEL.icon);
     }
   }, [open]);
+
+  // post a new list to the api.
+  const createList = () => {
+    if (!isValid) {
+      return;
+    }
+
+    listApi
+      .createList({ name, iconName: icon.iconName })
+      .then((result) => console.log('list created!', result))
+      .catch(handleError);
+  };
 
   return (
     <Drawer
@@ -94,7 +109,12 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
         <Button onClick={onClose} size="lg">
           Cancel
         </Button>
-        <Button variant="success" size="lg" disabled={!isValid}>
+        <Button
+          variant="success"
+          size="lg"
+          disabled={!isValid}
+          onClick={createList}
+        >
           Create
         </Button>
       </MenuFooter>
