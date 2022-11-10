@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { faArrowLeft } from '@fortawesome/pro-regular-svg-icons';
 import { Button } from 'components/Button';
 import { Drawer } from 'components/Drawer';
@@ -40,7 +40,11 @@ const validateModel = (name, icon) => {
   return true;
 };
 
-export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
+export const CreateListDrawer = ({
+  open = false,
+  onClose = () => {},
+  onListCreated = () => {},
+}) => {
   const [name, setName] = useState(DEFAULT_MODEL.name);
   const [icon, setIcon] = useState(DEFAULT_MODEL.icon);
   const isValid = useMemo(() => validateModel(name, icon), [name, icon]);
@@ -62,7 +66,7 @@ export const CreateListDrawer = ({ open = false, onClose = () => {} }) => {
 
     listApi
       .createList({ name, iconName: icon.iconName })
-      .then((result) => console.log('list created!', result))
+      .then(onListCreated)
       .catch(handleError);
   };
 
