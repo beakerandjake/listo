@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { faArrowLeft } from '@fortawesome/pro-regular-svg-icons';
+import { useErrorHandler } from 'react-error-boundary';
+import { listApi } from 'api';
+import { icons } from 'services/iconLibrary';
+import { validateListModel } from './validateListModel';
+import { ListIconSelector } from './ListIconSelector';
+import { ListTitleInput } from './ListTitleInput';
 import { Button } from 'components/Button';
 import { Drawer } from 'components/Drawer';
 import { IconButton } from 'components/IconButton';
@@ -9,13 +15,8 @@ import {
   MenuTitle,
   ScrollableMenuContent,
 } from 'components/Menu';
-import { SelectListIcon } from './SelectListIcon';
-import { icons } from 'services/iconLibrary';
-import { useErrorHandler } from 'react-error-boundary';
-import { listApi } from 'api';
-import { ListTitleInput } from './ListTitleInput';
-import { validateListModel } from './validateListModel';
 
+// default values for the list fields when the drawer is first opened.
 const DEFAULT_MODEL = {
   name: '',
   icon: icons[0],
@@ -99,7 +100,7 @@ export const CreateListDrawer = ({
           }}
           onEnter={() => canCreateList && createList()}
         />
-        <SelectListIcon value={icon} onChange={setIcon} icons={icons} />
+        <ListIconSelector value={icon} onChange={setIcon} icons={icons} />
       </ScrollableMenuContent>
       <MenuFooter className="flex items-center gap-2 flex-shrink-0 justify-end">
         <Button onClick={onClose} size="lg">

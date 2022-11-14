@@ -9,7 +9,7 @@ import cx from 'classnames';
  * @param {function} props.onChange - Callback invoked when the value is changed.
  * @param {IconDefinition[]} props.icons - The available icons to select.
  */
-export const SelectListIcon = ({
+export const ListIconSelector = ({
   value = null,
   onChange = () => {},
   icons = [],
