@@ -22,18 +22,19 @@ export function Sidebar() {
   };
 
   return (
-    <div className="flex flex-col flex-grow border-r border-gray-200 bg-white overflow-y-auto">
-      <div className="flex-shrink-0 flex  justify-center items-center px-4 py-4 space-y-5">
-        <NavLogo />
-      </div>
-      <div className="flex-grow flex flex-col">
-        <nav className="flex-1 bg-white space-y-1">
-          {/* When no lists exit, only render a nav item for the "create list" page. */}
+    <div className="absolute inset-0 border-r border-gray-200 bg-white">
+      {/* Scrollable Area */}
+      <div className="h-[calc(100%-3.5rem)] overflow-y-auto">
+        <div className="flex items-center justify-center p-4">
+          <NavLogo />
+        </div>
+        <nav className="flex flex-col space-y-1">
           {lists?.length > 0 && <SidebarNav lists={lists} />}
         </nav>
-        <div className="flex flex-shrink-0 border-t border-gray-200 py-4 px-4">
-          <CreateListSidebarNavButton onListCreated={onListCreated} />
-        </div>
+      </div>
+      {/* Fixed Create List Button */}
+      <div className="absolute bottom-0 h-14 inset-x-0 border-t border-gray-200 flex items-center px-4 ">
+        <CreateListSidebarNavButton onListCreated={onListCreated} />
       </div>
     </div>
   );
