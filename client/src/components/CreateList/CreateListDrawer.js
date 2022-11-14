@@ -55,8 +55,13 @@ export const CreateListDrawer = ({
 }) => {
   const [name, setName] = useState(DEFAULT_MODEL.name);
   const [icon, setIcon] = useState(DEFAULT_MODEL.icon);
-  const isValid = useMemo(() => validateModel(name, icon), [name, icon]);
+  const [creationError, setCreationError] = useState(null);
   const handleError = useErrorHandler();
+
+  const isValid = useMemo(
+    () => !creationError && validateModel(name, icon),
+    [creationError, name, icon]
+  );
 
   // reset back to default values whenever the drawer closes.
   useEffect(() => {
@@ -78,7 +83,7 @@ export const CreateListDrawer = ({
       .catch((error) => {
         // handle name conflict.
         if (error.statusCode === 409) {
-          console.log('handle conflict todo!');
+          setCreationError('A List with that name already exists.');
           return;
         }
 
@@ -103,7 +108,14 @@ export const CreateListDrawer = ({
         <MenuTitle>Create New List</MenuTitle>
       </MenuHeader>
       <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-8 bg-gray-50">
-        <TitleInput value={name} onChange={setName} />
+        <TitleInput
+          value={name}
+          onChange={(value) => {
+            setCreationError(null);
+            setName(value);
+          }}
+          error={creationError}
+        />
         <SelectListIcon value={icon} onChange={setIcon} icons={icons} />
       </ScrollableMenuContent>
       <MenuFooter className="flex items-center gap-2 flex-shrink-0 justify-end">
