@@ -13,7 +13,7 @@ import { SelectListIcon } from './SelectListIcon';
 import { icons } from 'services/iconLibrary';
 import { useErrorHandler } from 'react-error-boundary';
 import { listApi } from 'api';
-import { TitleInput } from './TitleInput';
+import { ListTitleInput } from './ListTitleInput';
 
 const DEFAULT_MODEL = {
   name: '',
@@ -109,13 +109,14 @@ export const CreateListDrawer = ({
         <MenuTitle>Create New List</MenuTitle>
       </MenuHeader>
       <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-8 bg-gray-50">
-        <TitleInput
+        <ListTitleInput
           value={name}
+          error={creationError}
           onChange={(value) => {
             setCreationError(null);
             setName(value);
           }}
-          error={creationError}
+          onEnter={() => canCreateList && createList()}
         />
         <SelectListIcon value={icon} onChange={setIcon} icons={icons} />
       </ScrollableMenuContent>
