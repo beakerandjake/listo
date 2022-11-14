@@ -31,9 +31,32 @@ const getList = async (id) => {
   return await response.json();
 };
 
+/**
+ * Creates a new list
+ * @param {object} list - The list to create.
+ * @returns {Promise<object>}
+ **/
+const createList = async (list) => {
+  const response = await fetch(baseUrl, {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(list),
+  });
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
 const api = {
   getLists,
   getList,
+  createList,
 };
 
 export default api;

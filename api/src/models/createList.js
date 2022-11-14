@@ -1,12 +1,12 @@
 import joi from 'joi';
 import config from 'config';
-import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
+import { parseRequestModel } from './applyJoiSchema.js';
 
 /**
  * @openapi
  * components:
  *  schemas:
- *    createListRequestModel:
+ *    createListModel:
  *      type: object
  *      properties:
  *        name:
@@ -14,7 +14,7 @@ import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
  *        iconName:
  *          type: string
  */
-const requestSchema = joi.object({
+const schema = joi.object({
   name: joi.string()
     .trim()
     .min(3)
@@ -35,25 +35,4 @@ const requestSchema = joi.object({
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const createListRequestModel = (data) => parseRequestModel(data, requestSchema, 'createListRequestModel');
-
-/**
- * @openapi
- * components:
- *  schemas:
- *    createListModel:
- *      type: object
- *      properties:
- *        id:
- *          type: number
- */
-const responseSchema = joi.object({
-  id: joi.number().required(),
-});
-
-/**
-   * Parses and validates a model from the data.
-   * @param {object} data - The data to parse into the model.
-   * @returns {object}
-   */
-export const createListModel = (data) => parseResponseModel(data, responseSchema, 'createListModel');
+export const createListModel = (data) => parseRequestModel(data, schema, 'createListModel');

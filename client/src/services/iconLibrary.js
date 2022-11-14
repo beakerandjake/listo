@@ -8,9 +8,25 @@ import {
   faPlus,
   faShoppingCart,
   faStore,
-} from '@fortawesome/pro-light-svg-icons';
+  faCat,
+  faBookmark,
+  faBook,
+  faCode,
+  faGamepad,
+  faDumbbell,
+  faPersonWalking,
+  faHeart,
+  faCalendar,
+  faCar,
+  faHeadphones,
+  faPrint,
+  faMoneyBill,
+  faTree,
+  faComputer,
+  faUtensils,
+} from '@fortawesome/pro-regular-svg-icons';
 
-const icons = [
+const ICONS = [
   faCheck,
   faDollar,
   faHome,
@@ -20,10 +36,28 @@ const icons = [
   faPlane,
   faPlus,
   faGift,
+  faCat,
+  faBookmark,
+  faBook,
+  faCode,
+  faUtensils,
+  faGamepad,
+  faDumbbell,
+  faPersonWalking,
+  faHeart,
+  faCalendar,
+  faCar,
+  faHeadphones,
+  faPrint,
+  faMoneyBill,
+  faTree,
+  faComputer,
 ];
 
 const fallbackIcon = faCheck;
 
 export function getIcon(iconName) {
-  return icons.find((x) => x.iconName === iconName) || fallbackIcon;
+  return ICONS.find((x) => x.iconName === iconName) || fallbackIcon;
 }
+
+export const icons = [...ICONS];
