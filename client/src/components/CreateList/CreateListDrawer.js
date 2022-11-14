@@ -58,7 +58,7 @@ export const CreateListDrawer = ({
   const [creationError, setCreationError] = useState(null);
   const handleError = useErrorHandler();
 
-  const isValid = useMemo(
+  const canCreateList = useMemo(
     () => !creationError && validateModel(name, icon),
     [creationError, name, icon]
   );
@@ -68,12 +68,13 @@ export const CreateListDrawer = ({
     if (!open) {
       setName(DEFAULT_MODEL.name);
       setIcon(DEFAULT_MODEL.icon);
+      setCreationError(null);
     }
   }, [open]);
 
   // post a new list to the api.
   const createList = () => {
-    if (!isValid) {
+    if (!canCreateList) {
       return;
     }
 
@@ -125,7 +126,7 @@ export const CreateListDrawer = ({
         <Button
           variant="success"
           size="lg"
-          disabled={!isValid}
+          disabled={!canCreateList}
           onClick={createList}
         >
           Create
