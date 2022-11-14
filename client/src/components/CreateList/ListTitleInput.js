@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import { faExclamationCircle } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { listValidationConstants } from './CreateListDrawer';
+import { listValidationConstants } from './validateListModel';
 
 /**
  * Input field for the title of the list.

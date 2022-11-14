@@ -14,31 +14,11 @@ import { icons } from 'services/iconLibrary';
 import { useErrorHandler } from 'react-error-boundary';
 import { listApi } from 'api';
 import { ListTitleInput } from './ListTitleInput';
+import { validateListModel } from './validateListModel';
 
 const DEFAULT_MODEL = {
   name: '',
   icon: icons[0],
-};
-
-const VALIDATION_CONSTANTS = {
-  nameMaxLength: 50,
-  nameMinLength: 3,
-};
-
-const validateModel = (name, icon) => {
-  if (
-    !name ||
-    name.length < VALIDATION_CONSTANTS.nameMinLength ||
-    name.length > VALIDATION_CONSTANTS.nameMaxLength
-  ) {
-    return false;
-  }
-
-  if (!icon?.iconName) {
-    return false;
-  }
-
-  return true;
 };
 
 /**
@@ -58,8 +38,9 @@ export const CreateListDrawer = ({
   const [creationError, setCreationError] = useState(null);
   const handleError = useErrorHandler();
 
+  // flag to indicate if the list is in a valid state to be posted.
   const canCreateList = useMemo(
-    () => !creationError && validateModel(name, icon),
+    () => !creationError && validateListModel(name, icon),
     [creationError, name, icon]
   );
 
@@ -136,5 +117,3 @@ export const CreateListDrawer = ({
     </Drawer>
   );
 };
-
-export const listValidationConstants = { ...VALIDATION_CONSTANTS };
