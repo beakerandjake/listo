@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { icons } from 'services/iconLibrary';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RadioGroup } from '@headlessui/react';
 import cx from 'classnames';
@@ -5,17 +7,17 @@ import cx from 'classnames';
 /**
  * Displays available icons and allows the user to select one.
  * @param {Object} props - The props.
- * @param {object} props.value - The selected icon.
- * @param {function} props.onChange - Callback invoked when the value is changed.
- * @param {IconDefinition[]} props.icons - The available icons to select.
+ * @param {object} props.iconName - The icon name.
+ * @param {function} props.onChange - Callback invoked when the icon name is changed.
  */
-export const ListIconSelector = ({
-  value = null,
-  onChange = () => {},
-  icons = [],
-}) => {
+export const ListIconSelector = ({ iconName = null, onChange = () => {} }) => {
+  const selectedIcon = useMemo(
+    () => icons.find((x) => x.iconName === iconName) || icons[0],
+    [iconName]
+  );
+
   return (
-    <RadioGroup value={value} onChange={onChange}>
+    <RadioGroup value={selectedIcon} onChange={(x) => onChange(x.iconName)}>
       <RadioGroup.Label className="block text-md font-medium text-gray-700">
         Icon
       </RadioGroup.Label>
