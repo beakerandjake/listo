@@ -17,6 +17,7 @@ import {
 import { SetAllItemsCompleted } from './SetAllItemsCompleted';
 import { DeleteCompletedItems } from './DeleteCompletedItems';
 import { DeleteAllItems } from './DeleteAllItems';
+import { EditList } from './EditList';
 
 /**
  * Dropdown menu which contains list wide actions.
@@ -64,9 +65,7 @@ export function ActionsDropdown({ listId }) {
         <DeleteCompletedItems listId={listId} onClick={closeMenu} />
         <DeleteAllItems listId={listId} onClick={closeMenu} />
         <MenuSeparator />
-        <Link to="edit">
-          <MenuItem icon={faGear} label="Settings" />
-        </Link>
+        <EditList />
       </ScrollableMenuContent>
     </ResponsiveMenu>
   );
