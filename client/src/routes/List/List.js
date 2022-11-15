@@ -17,6 +17,12 @@ import { SortItemsDropdown } from './SortItemsDropdown';
 import { GroupedItemsDisplay } from './GroupedItemsDisplay';
 import { Title } from './Title';
 import { NoItemsDisplay } from './NoItemsDisplay';
+import {
+  listActions,
+  ListContext,
+  ListDispatchContext,
+  listReducer,
+} from 'context/ListContext';
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
@@ -29,10 +35,13 @@ const defaultSorting = {
  */
 export const List = () => {
   const loaderData = useLoaderData();
-  const [list, setList] = useState(loaderData.list);
   const [items, listItemsDispatch] = useReducer(
     listItemsReducer,
     loaderData.items
+  );
+  const [listFromContext, listDispatch] = useReducer(
+    listReducer,
+    loaderData.list
   );
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeSort, setActiveSort] = useState(defaultSorting);
@@ -57,7 +66,7 @@ export const List = () => {
       type: listItemsActions.replace,
       items: loaderData.items,
     });
-    setList(loaderData.list);
+    listDispatch({ type: listActions.replace, value: loaderData.list });
   }, [loaderData]);
 
   // update the selected item any time items change
@@ -66,53 +75,57 @@ export const List = () => {
   }, [items]);
 
   return (
-    <ListItemsContext.Provider value={items}>
-      <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
-        {/* Render reverse so flipped Items don't render on top. */}
-        <div className="flex flex-col-reverse gap-2 mb-5">
-          <GroupedItemsDisplay
-            items={items}
-            sortingKey={activeSort.itemKey}
-            sortingDirection={activeSort.direction}
-            onItemSelected={setSelectedItem}
-            noItemsDisplay={
-              <NoItemsDisplay
-                icon={faCat}
-                heading="List Is Empty!"
-                subHeading="Add some Items to get started."
+    <ListContext.Provider value={listFromContext}>
+      <ListDispatchContext.Provider value={listDispatch}>
+        <ListItemsContext.Provider value={items}>
+          <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
+            {/* Render reverse so flipped Items don't render on top. */}
+            <div className="flex flex-col-reverse gap-2 mb-5">
+              <GroupedItemsDisplay
+                items={items}
+                sortingKey={activeSort.itemKey}
+                sortingDirection={activeSort.direction}
+                onItemSelected={setSelectedItem}
+                noItemsDisplay={
+                  <NoItemsDisplay
+                    icon={faCat}
+                    heading="List Is Empty!"
+                    subHeading="Add some Items to get started."
+                  />
+                }
               />
-            }
-          />
 
-          <AddItem listId={list.id} />
+              <AddItem listId={listFromContext.id} />
 
-          {/* Header Section */}
-          <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
-            <div className="flex items-center gap-3">
-              <Title
-                icon={getIcon(loaderData.list.iconName)}
-                name={loaderData.list.name}
-              />
-              <ActionsDropdown listId={list.id} />
+              {/* Header Section */}
+              <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
+                <div className="flex items-center gap-3">
+                  <Title
+                    icon={getIcon(loaderData.list.iconName)}
+                    name={loaderData.list.name}
+                  />
+                  <ActionsDropdown listId={listFromContext.id} />
+                </div>
+                {/* Only render sorting dropdown if items exist. */}
+                {items.length > 0 && (
+                  <SortItemsDropdown
+                    activeSort={activeSort}
+                    onChange={setActiveSort}
+                  />
+                )}
+              </div>
             </div>
-            {/* Only render sorting dropdown if items exist. */}
-            {items.length > 0 && (
-              <SortItemsDropdown
-                activeSort={activeSort}
-                onChange={setActiveSort}
+
+            {/* Render drawer when an item is selected */}
+            {selectedItem && (
+              <EditItemDrawer
+                item={selectedItem}
+                onClosed={() => setSelectedItem(null)}
               />
             )}
-          </div>
-        </div>
-
-        {/* Render drawer when an item is selected */}
-        {selectedItem && (
-          <EditItemDrawer
-            item={selectedItem}
-            onClosed={() => setSelectedItem(null)}
-          />
-        )}
-      </ListItemsDispatchContext.Provider>
-    </ListItemsContext.Provider>
+          </ListItemsDispatchContext.Provider>
+        </ListItemsContext.Provider>
+      </ListDispatchContext.Provider>
+    </ListContext.Provider>
   );
 };
