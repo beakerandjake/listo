@@ -19,7 +19,7 @@ import {
 // default values for the list fields when the drawer is first opened.
 const DEFAULT_MODEL = {
   name: '',
-  icon: icons[0],
+  iconName: icons[0]?.iconName,
 };
 
 /**
@@ -35,21 +35,21 @@ export const CreateListDrawer = ({
   onListCreated = () => {},
 }) => {
   const [name, setName] = useState(DEFAULT_MODEL.name);
-  const [icon, setIcon] = useState(DEFAULT_MODEL.icon);
+  const [iconName, setIconName] = useState(DEFAULT_MODEL.iconName);
   const [creationError, setCreationError] = useState(null);
   const handleError = useErrorHandler();
 
   // flag to indicate if the list is in a valid state to be posted.
   const canCreateList = useMemo(
-    () => !creationError && validateListModel(name, icon),
-    [creationError, name, icon]
+    () => !creationError && validateListModel(name, iconName),
+    [creationError, name, iconName]
   );
 
   // reset back to default values whenever the drawer closes.
   useEffect(() => {
     if (!open) {
       setName(DEFAULT_MODEL.name);
-      setIcon(DEFAULT_MODEL.icon);
+      setIconName(DEFAULT_MODEL.iconName);
       setCreationError(null);
     }
   }, [open]);
@@ -61,7 +61,7 @@ export const CreateListDrawer = ({
     }
 
     listApi
-      .createList({ name, iconName: icon.iconName })
+      .createList({ name, iconName })
       .then(onListCreated)
       .catch((error) => {
         // handle name conflict.
@@ -100,7 +100,7 @@ export const CreateListDrawer = ({
           }}
           onEnter={() => canCreateList && createList()}
         />
-        <ListIconSelector value={icon} onChange={setIcon} icons={icons} />
+        <ListIconSelector iconName={iconName} onChange={setIconName} />
       </ScrollableMenuContent>
       <MenuFooter className="flex items-center gap-2 flex-shrink-0 justify-end">
         <Button onClick={onClose} size="lg">

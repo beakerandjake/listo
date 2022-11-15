@@ -1,3 +1,5 @@
+import { icons } from 'services/iconLibrary';
+
 const VALIDATION_CONSTANTS = {
   nameMaxLength: 50,
   nameMinLength: 3,
@@ -5,11 +7,11 @@ const VALIDATION_CONSTANTS = {
 
 /**
  * Validates the fields of a list to see if it can be posted to the API for creation.
- * @param {*} name
- * @param {*} icon
+ * @param {string} name
+ * @param {string} icon
  * @returns
  */
-export const validateListModel = (name, icon) => {
+export const validateListModel = (name, iconName) => {
   if (
     !name ||
     name.length < VALIDATION_CONSTANTS.nameMinLength ||
@@ -18,7 +20,7 @@ export const validateListModel = (name, icon) => {
     return false;
   }
 
-  if (!icon?.iconName) {
+  if (!icons.some((x) => x.iconName === iconName)) {
     return false;
   }
 
