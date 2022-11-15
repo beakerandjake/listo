@@ -15,25 +15,27 @@ import { validateListModel } from './validateListModel';
 import { ListIconSelector } from './ListIconSelector';
 
 export const EditListDrawer = ({ open, onClose }) => {
-  const originalListValue = useList();
+  const list = useList();
   const dispatch = useListDispatch();
-  const [name, setName] = useState(originalListValue.name);
-  const [iconName, setIconName] = useState(originalListValue.iconName);
-  // const [model, setModel] = useState(originalListValue);
+  const [name, setName] = useState(list.name);
+  const [iconName, setIconName] = useState(list.iconName);
 
   const canSave = useMemo(() => {
     // If no changes have been made, nothing to edit.
-    if (
-      name === originalListValue.name &&
-      iconName === originalListValue.iconName
-    ) {
+    if (name === list.name && iconName === list.iconName) {
       return false;
     }
 
     return validateListModel(name, iconName);
-  }, [name, iconName, originalListValue]);
+  }, [name, iconName, list]);
 
-  console.log('original', originalListValue, 'iconName', iconName);
+  const saveChanges = () => {
+    if (!canSave) {
+      return;
+    }
+
+    console.log('saving changes!');
+  };
 
   return (
     <Drawer
@@ -59,25 +61,9 @@ export const EditListDrawer = ({ open, onClose }) => {
             // setCreationError(null);
             setName(value);
           }}
-          // onEnter={() => canCreateList && createList()}
+          onEnter={() => canSave && saveChanges()}
         />
-        <ListIconSelector
-          iconName={iconName}
-          onChange={(value) => {
-            console.log('icon change', value);
-            setIconName(value);
-          }}
-        />
-        {/* <ListTitleInput
-          value={name}
-          error={creationError}
-          onChange={(value) => {
-            setCreationError(null);
-            setName(value);
-          }}
-          onEnter={() => canCreateList && createList()}
-        />
-        <ListIconSelector value={icon} onChange={setIcon} icons={icons} /> */}
+        <ListIconSelector iconName={iconName} onChange={setIconName} />
       </ScrollableMenuContent>
       <MenuFooter className="flex items-center gap-2 flex-shrink-0 justify-end">
         <Button onClick={onClose} size="lg">
@@ -87,7 +73,7 @@ export const EditListDrawer = ({ open, onClose }) => {
           variant="success"
           size="lg"
           disabled={!canSave}
-          // onClick={createList}
+          onClick={saveChanges}
         >
           Save
         </Button>
