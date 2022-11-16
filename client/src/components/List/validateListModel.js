@@ -12,15 +12,17 @@ const VALIDATION_CONSTANTS = {
  * @returns
  */
 export const validateListModel = (name, iconName) => {
+  const trimmedName = name?.trim();
+
   if (
-    !name ||
-    name.length < VALIDATION_CONSTANTS.nameMinLength ||
-    name.length > VALIDATION_CONSTANTS.nameMaxLength
+    !trimmedName ||
+    trimmedName.length < VALIDATION_CONSTANTS.nameMinLength ||
+    trimmedName.length > VALIDATION_CONSTANTS.nameMaxLength
   ) {
     return false;
   }
 
-  if (!icons.some((x) => x.iconName === iconName)) {
+  if (!iconName) {
     return false;
   }
 
