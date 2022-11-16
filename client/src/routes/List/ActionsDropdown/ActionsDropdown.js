@@ -61,7 +61,7 @@ export function ActionsDropdown({ listId }) {
         <DeleteAllItems listId={listId} onClick={closeMenu} />
         <MenuSeparator />
         <EditList />
-        <DeleteList />
+        <DeleteList listId={listId} />
       </ScrollableMenuContent>
     </ResponsiveMenu>
   );
