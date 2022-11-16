@@ -146,6 +146,45 @@ const deleteList = (id) => {
   return deleteTransition();
 };
 
+/**
+ * Applies changes to a list.
+ * @param {number} id - The id of the list to edit.
+ * @param {object} changes - The changes to apply
+ * @param {string} changes.name - The new name of the list.
+ * @param {string} changes.iconName - The new iconName of the list.
+ * @returns {boolean}
+ */
+const editList = (id, changes) => {
+  logger.verbose('updating list: %s with changes: %s', id, changes);
+
+  const columnUpdates = [];
+
+  if (changes?.name) {
+    columnUpdates.push('name=@name');
+  }
+
+  if (changes?.iconName) {
+    columnUpdates.push('iconName=@iconName');
+  }
+
+  // require at least one column to be updated.
+  if (columnUpdates.length === 0) {
+    throw new Error('Could edit list, no changes provided');
+  }
+
+  const { changes: changeCount } = getDb()
+    .prepare(`
+      UPDATE lists
+      SET ${columnUpdates.join(', ')}
+      WHERE id=@id AND deletedDate IS NULL;
+    `)
+    .run({ name: changes.name, iconName: changes.iconName, id });
+
+  logger.verbose('updated %d lists(s)', changeCount);
+
+  return changeCount === 1;
+};
+
 export default {
   getList,
   getLists,
@@ -153,4 +192,5 @@ export default {
   existsWithId,
   createList,
   deleteList,
+  editList,
 };

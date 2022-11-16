@@ -6,7 +6,7 @@ import { listIconNameSchema, listNameSchema } from './list.js';
  * @openapi
  * components:
  *  schemas:
- *    createListModel:
+ *    editListModel:
  *      type: object
  *      properties:
  *        name:
@@ -15,13 +15,15 @@ import { listIconNameSchema, listNameSchema } from './list.js';
  *          $ref: "#components/schemas/listIconName"
  */
 const schema = joi.object({
-  name: listNameSchema.required(),
-  iconName: listIconNameSchema.required(),
-});
+  name: listNameSchema,
+  iconName: listIconNameSchema,
+})
+  .label('edits')
+  .or('name', 'iconName'); // Require at least one item property to be present.
 
 /**
  * Parses and validates a model from the data.
  * @param {object} data - The data to parse into the model.
  * @returns {object}
  */
-export const createListModel = (data) => parseRequestModel(data, schema, 'createListModel');
+export const editListModel = (data) => parseRequestModel(data, schema, 'editListModel');

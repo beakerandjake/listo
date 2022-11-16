@@ -10,6 +10,7 @@ import {
   getAllLists,
   deleteList,
   getList,
+  editList,
 } from '../useCases/lists/index.js';
 
 const router = express.Router();
@@ -97,6 +98,44 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   const result = getList(id);
+  res.send(result);
+});
+
+/**
+* @openapi
+* /api/lists/{listId}:
+*    patch:
+*      tags: [Lists]
+*      summary: Edit List
+*      description: Edit one or more fields of the List.
+*      parameters:
+*        - name: listId
+*          in: path
+*          required: true
+*          schema:
+*            $ref: "#/components/schemas/listIdModel"
+*      requestBody:
+*        required: true
+*        content:
+*          application/json:
+*            schema:
+*              $ref: "#components/schemas/editListModel"
+*      responses:
+*        200:
+*          content:
+*            application/json:
+*              schema:
+*                $ref: "#/components/schemas/listModel"
+*        404:
+*          description: List was not found.
+*        409:
+*          description: Conflict. A list with that name already exists.
+*        5XX:
+*          description: Unexpected Error.
+*/
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const result = editList(id, req.body);
   res.send(result);
 });
 

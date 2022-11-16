@@ -53,10 +53,33 @@ const createList = async (list) => {
   return await response.json();
 };
 
+/**
+ * Edit the specified list.
+ * @param {object} list - The list to create.
+ * @returns {Promise<object>}
+ **/
+const editList = async (id, changes) => {
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: 'PATCH',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(changes),
+  });
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+
+  return await response.json();
+};
+
 const api = {
   getLists,
   getList,
   createList,
+  editList,
 };
 
 export default api;

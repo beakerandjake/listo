@@ -1,6 +1,6 @@
 import { faPlusCircle } from '@fortawesome/pro-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { CreateListDrawer } from 'components/CreateList/CreateListDrawer';
+import { CreateListDrawer } from 'components/List/CreateListDrawer';
 import { useState } from 'react';
 
 /**
