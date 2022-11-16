@@ -113,7 +113,7 @@ router.get('/:id', (req, res) => {
 *          in: path
 *          required: true
 *          schema:
-*            $ref: "#/components/schemas/listId"
+*            $ref: "#/components/schemas/listIdModel"
 *      requestBody:
 *        required: true
 *        content:
