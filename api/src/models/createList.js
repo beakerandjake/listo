@@ -1,6 +1,6 @@
 import joi from 'joi';
-import config from 'config';
 import { parseRequestModel } from './applyJoiSchema.js';
+import { listIconNameSchema, listNameSchema } from './list.js';
 
 /**
  * @openapi
@@ -10,24 +10,13 @@ import { parseRequestModel } from './applyJoiSchema.js';
  *      type: object
  *      properties:
  *        name:
- *          type: string
+ *          $ref: "#components/schemas/listName"
  *        iconName:
- *          type: string
+ *          $ref: "#components/schemas/listIconName"
  */
 const schema = joi.object({
-  name: joi.string()
-    .trim()
-    .min(3)
-    .max(50)
-    .pattern(new RegExp(config.get('validation.inputCharactersRegex')))
-    .required(),
-
-  iconName: joi.string()
-    .trim()
-    .min(3)
-    .max(100)
-    .pattern(/^[\w-]+$/)
-    .required(),
+  name: listNameSchema.required(),
+  iconName: listIconNameSchema.required(),
 });
 
 /**
