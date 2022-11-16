@@ -27,6 +27,8 @@ export const initialize = () => {
       createdDate TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
       deletedDate TEXT     
     );
+    
+    CREATE INDEX IF NOT EXISTS idx_list_deletedDate on lists(deletedDate);
 
     CREATE TABLE IF NOT EXISTS items (
         id INTEGER PRIMARY KEY,
@@ -40,6 +42,9 @@ export const initialize = () => {
         deletedDate TEXT,
         FOREIGN KEY(listId) REFERENCES lists(id)
     );
+
+    CREATE INDEX IF NOT EXISTS idx_item_deletedDate on items(deletedDate);
+    CREATE INDEX IF NOT EXISTS idx_item_listId on items(listId);
   `);
 
   logger.debug('database initialized');
