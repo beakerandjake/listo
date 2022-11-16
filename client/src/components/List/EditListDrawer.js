@@ -14,6 +14,7 @@ import {
 import { validateListModel } from './validateListModel';
 import { ListIconSelector } from './ListIconSelector';
 import { listApi } from 'api';
+import { useErrorHandler } from 'react-error-boundary';
 
 /**
  * Returns an object which can be passed to the api containing all of the changes.
@@ -36,6 +37,13 @@ const getChangesObject = (originalList, newName, newIconName) => {
   return toReturn;
 };
 
+/**
+ * Drawer which allows the user to edit an existing list.
+ * @param {Object} props
+ * @param {boolean} props.open - Is the drawer opened or closed?
+ * @param {function} props.onClose - Callback invoked when the drawer is to be closed.
+ * @param {function} props.onEdit - Callback invoked when the list has been successfully edited.
+ */
 export const EditListDrawer = ({
   open = false,
   onClose = () => {},
@@ -45,24 +53,31 @@ export const EditListDrawer = ({
   const dispatch = useListDispatch();
   const [name, setName] = useState(list.name);
   const [iconName, setIconName] = useState(list.iconName);
+  const [editError, setEditError] = useState(null);
+  const handleError = useErrorHandler();
 
   // reset internal state when the drawer is closed.
   useEffect(() => {
     if (!open) {
       setName(list.name);
       setIconName(list.iconName);
+      setEditError(false);
     }
   }, [open, list]);
 
   // is the current state a valid one that can be saved?
   const canSave = useMemo(() => {
+    if (editError) {
+      return false;
+    }
+
     // If no changes have been made, nothing to edit.
     if (name === list.name && iconName === list.iconName) {
       return false;
     }
 
     return validateListModel(name, iconName);
-  }, [name, iconName, list]);
+  }, [editError, name, iconName, list]);
 
   // hit the api and save the changes to the list.
   const saveChanges = () => {
@@ -77,7 +92,12 @@ export const EditListDrawer = ({
         onEdit();
       })
       .catch((error) => {
-        console.log('error', error);
+        if (error.statusCode === 409) {
+          setEditError('A List with that name already exists.');
+          return;
+        }
+
+        handleError(error);
       });
   };
 
@@ -100,9 +120,9 @@ export const EditListDrawer = ({
       <ScrollableMenuContent className="flex flex-col py-6 px-4 sm:px-6 gap-8 bg-gray-50">
         <ListTitleInput
           value={name}
-          // error={creationError}
+          error={editError}
           onChange={(value) => {
-            // setCreationError(null);
+            setEditError(null);
             setName(value);
           }}
           onEnter={() => canSave && saveChanges()}
