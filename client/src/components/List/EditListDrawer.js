@@ -36,7 +36,11 @@ const getChangesObject = (originalList, newName, newIconName) => {
   return toReturn;
 };
 
-export const EditListDrawer = ({ open, onClose }) => {
+export const EditListDrawer = ({
+  open = false,
+  onClose = () => {},
+  onEdit = () => {},
+}) => {
   const list = useList();
   const dispatch = useListDispatch();
   const [name, setName] = useState(list.name);
@@ -70,6 +74,7 @@ export const EditListDrawer = ({ open, onClose }) => {
       .editList(list.id, getChangesObject(list, name, iconName))
       .then((result) => {
         dispatch({ type: listActions.replace, value: result });
+        onEdit();
       })
       .catch((error) => {
         console.log('error', error);
