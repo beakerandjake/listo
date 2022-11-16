@@ -39,7 +39,7 @@ export const List = () => {
     listItemsReducer,
     loaderData.items
   );
-  const [listFromContext, listDispatch] = useReducer(
+  const [list, listDispatch] = useReducer(
     listReducer,
     loaderData.list
   );
@@ -75,7 +75,7 @@ export const List = () => {
   }, [items]);
 
   return (
-    <ListContext.Provider value={listFromContext}>
+    <ListContext.Provider value={list}>
       <ListDispatchContext.Provider value={listDispatch}>
         <ListItemsContext.Provider value={items}>
           <ListItemsDispatchContext.Provider value={listItemsDispatchWrapper}>
@@ -95,16 +95,16 @@ export const List = () => {
                 }
               />
 
-              <AddItem listId={listFromContext.id} />
+              <AddItem listId={list.id} />
 
               {/* Header Section */}
               <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
                 <div className="flex items-center gap-3">
                   <Title
-                    iconName={listFromContext.iconName}
-                    name={listFromContext.name}
+                    iconName={list.iconName}
+                    name={list.name}
                   />
-                  <ActionsDropdown listId={listFromContext.id} />
+                  <ActionsDropdown listId={list.id} />
                 </div>
                 {/* Only render sorting dropdown if items exist. */}
                 {items.length > 0 && (
