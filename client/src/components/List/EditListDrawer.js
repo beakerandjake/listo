@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { faArrowLeft, faLeaf } from '@fortawesome/pro-regular-svg-icons';
 import { useList, useListDispatch } from 'context/ListContext';
 import { ListTitleInput } from './ListTitleInput';
@@ -20,6 +20,15 @@ export const EditListDrawer = ({ open, onClose }) => {
   const [name, setName] = useState(list.name);
   const [iconName, setIconName] = useState(list.iconName);
 
+  // reset internal state when the drawer is closed.
+  useEffect(() => {
+    if (!open) {
+      setName(list.name);
+      setIconName(list.iconName);
+    }
+  }, [open, list]);
+
+  // is the current state a valid one that can be saved?
   const canSave = useMemo(() => {
     // If no changes have been made, nothing to edit.
     if (name === list.name && iconName === list.iconName) {
@@ -29,6 +38,7 @@ export const EditListDrawer = ({ open, onClose }) => {
     return validateListModel(name, iconName);
   }, [name, iconName, list]);
 
+  // hit the api and save the changes to the list.
   const saveChanges = () => {
     if (!canSave) {
       return;
