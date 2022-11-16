@@ -1,11 +1,11 @@
-import { faTrashCheck } from '@fortawesome/pro-regular-svg-icons';
+import { faTrashCanList } from '@fortawesome/pro-regular-svg-icons';
 import { itemApi } from 'api';
 import { ConfirmDialog } from 'components/ConfirmDialog';
 import { MenuItem } from 'components/Menu';
 import {
   listItemsActions,
   useListItems,
-  useListItemsDispatch,
+  useListItemsDispatch
 } from 'context/ListItemsContext';
 import { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
@@ -42,7 +42,7 @@ export const DeleteAllItems = ({ listId, onClick }) => {
   return (
     <>
       <MenuItem
-        icon={faTrashCheck}
+        icon={faTrashCanList}
         variant="danger"
         label="Delete All Items"
         disabled={disabled}
