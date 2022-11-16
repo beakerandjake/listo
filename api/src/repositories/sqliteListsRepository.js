@@ -146,6 +146,8 @@ const deleteList = (id) => {
   return deleteTransition();
 };
 
+const editList = () => true;
+
 export default {
   getList,
   getLists,
@@ -153,4 +155,5 @@ export default {
   existsWithId,
   createList,
   deleteList,
+  editList,
 };

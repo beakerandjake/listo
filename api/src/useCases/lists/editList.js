@@ -1,7 +1,7 @@
-import { ConflictError } from '../../errors/index.js';
+import { ConflictError, NotFoundError } from '../../errors/index.js';
 import { logger } from '../../logger.js';
 import {
-  createListModel, editListModel, listIdModel, listModel,
+  editListModel, listIdModel, listModel,
 } from '../../models/index.js';
 import { listRepository } from '../../repositories/index.js';
 
@@ -17,16 +17,18 @@ export const editList = (id, changes) => {
   const listId = listIdModel(id);
   const changesModel = editListModel(changes);
 
+  // if the user is editing the name, ensure it's not a conflict.
   if (changes.name && listRepository.existsWithName(changesModel.name)) {
     throw new ConflictError('A list with that name already exists');
   }
 
-  //   const newListId = listRepository.createList(requestModel);
-  //   const newList = listRepository.getList(newListId);
+  const success = listRepository.editList(listId, changesModel);
 
-  //   logger.info('edited list: %s', itemId);
+  if (!success) {
+    throw new NotFoundError(`Could not find a List with id: ${listId}`);
+  }
 
-  //   return listModel(newList);
+  logger.info('edited list: %s', listId);
 
-  return {};
+  return listModel(listRepository.getList(listId));
 };
