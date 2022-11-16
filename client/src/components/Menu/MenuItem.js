@@ -31,7 +31,6 @@ const MenuItemIcon = ({ icon, variant }) => {
     <FontAwesomeIcon
       icon={icon}
       className={cx(variantStyle, RESPONSIVE_TEXT_STYLES, 'text-base')}
-      fixedWidth
     />
   );
 };

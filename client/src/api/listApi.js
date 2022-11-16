@@ -75,11 +75,26 @@ const editList = async (id, changes) => {
   return await response.json();
 };
 
+/**
+ * Deletes a list.
+ * @param {number} id - The list to delete.
+ **/
+const deleteList = async (id) => {
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new ApiError(response.statusText, response.status);
+  }
+};
+
 const api = {
   getLists,
   getList,
   createList,
   editList,
+  deleteList,
 };
 
 export default api;
