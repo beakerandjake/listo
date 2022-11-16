@@ -1,6 +1,8 @@
 import { ConflictError } from '../../errors/index.js';
 import { logger } from '../../logger.js';
-import { createListModel, listModel } from '../../models/index.js';
+import {
+  createListModel, editListModel, listIdModel, listModel,
+} from '../../models/index.js';
 import { listRepository } from '../../repositories/index.js';
 
 /**
@@ -12,11 +14,12 @@ import { listRepository } from '../../repositories/index.js';
 export const editList = (id, changes) => {
   logger.info('editing list: %s with changes: %s', id, changes);
 
-  //   const requestModel = createListModel({ name, iconName });
+  const listId = listIdModel(id);
+  const changesModel = editListModel(changes);
 
-  //   if (listRepository.existsWithName(requestModel.name)) {
-  //     throw new ConflictError('A list with that name already exists');
-  //   }
+  if (changes.name && listRepository.existsWithName(changesModel.name)) {
+    throw new ConflictError('A list with that name already exists');
+  }
 
   //   const newListId = listRepository.createList(requestModel);
   //   const newList = listRepository.getList(newListId);
