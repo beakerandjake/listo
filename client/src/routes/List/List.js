@@ -101,8 +101,8 @@ export const List = () => {
               <div className="flex flex-1 flex-wrap items-center justify-between gap-3 mb-1 sm:mb-3">
                 <div className="flex items-center gap-3">
                   <Title
-                    icon={getIcon(loaderData.list.iconName)}
-                    name={loaderData.list.name}
+                    iconName={listFromContext.iconName}
+                    name={listFromContext.name}
                   />
                   <ActionsDropdown listId={listFromContext.id} />
                 </div>
