@@ -1,14 +1,8 @@
 import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  faCheck,
-  faGear,
-  faRotateLeft,
-} from '@fortawesome/pro-regular-svg-icons';
+import { faCheck, faRotateLeft } from '@fortawesome/pro-regular-svg-icons';
 import {
   EllipsisMenuTrigger,
   MenuHeader,
-  MenuItem,
   MenuSeparator,
   MenuTitle,
   ResponsiveMenu,
@@ -18,6 +12,7 @@ import { SetAllItemsCompleted } from './SetAllItemsCompleted';
 import { DeleteCompletedItems } from './DeleteCompletedItems';
 import { DeleteAllItems } from './DeleteAllItems';
 import { EditList } from './EditList';
+import { DeleteList } from './DeleteList';
 
 /**
  * Dropdown menu which contains list wide actions.
@@ -66,6 +61,7 @@ export function ActionsDropdown({ listId }) {
         <DeleteAllItems listId={listId} onClick={closeMenu} />
         <MenuSeparator />
         <EditList />
+        <DeleteList />
       </ScrollableMenuContent>
     </ResponsiveMenu>
   );
