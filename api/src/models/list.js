@@ -1,4 +1,5 @@
 import joi from 'joi';
+import config from 'config';
 import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 
 /**
@@ -12,6 +13,36 @@ import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 export const listIdSchema = joi.number()
   .min(0)
   .label('listId');
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    listName:
+ *      type: string
+ *      minimum: 2
+ *      maximum: 50
+ */
+export const listNameSchema = joi.string()
+  .trim()
+  .min(3)
+  .max(50)
+  .pattern(new RegExp(config.get('validation.inputCharactersRegex')));
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    listIconName:
+ *      type: string
+ *      minimum: 3
+ *      maximum: 50
+ */
+export const listIconNameSchema = joi.string()
+  .trim()
+  .min(3)
+  .max(50)
+  .pattern(new RegExp(config.get('validation.inputCharactersRegex')));
 
 /**
  * Parses and validates a model from the data.
