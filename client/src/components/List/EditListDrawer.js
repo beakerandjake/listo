@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { faArrowLeft, faLeaf } from '@fortawesome/pro-regular-svg-icons';
-import { useList, useListDispatch } from 'context/ListContext';
+import { listActions, useList, useListDispatch } from 'context/ListContext';
 import { ListTitleInput } from './ListTitleInput';
 import { Button } from 'components/Button';
 import { Drawer } from 'components/Drawer';
@@ -13,6 +13,28 @@ import {
 } from 'components/Menu';
 import { validateListModel } from './validateListModel';
 import { ListIconSelector } from './ListIconSelector';
+import { listApi } from 'api';
+
+/**
+ * Returns an object which can be passed to the api containing all of the changes.
+ * @param {object} originalList - The original list model.
+ * @param {string} newName - The new name value.
+ * @param {string} newIconName - The new iconName value.
+ * @returns {object}
+ */
+const getChangesObject = (originalList, newName, newIconName) => {
+  const toReturn = {};
+
+  if (originalList.name !== newName) {
+    toReturn.name = newName;
+  }
+
+  if (originalList.iconName !== newIconName) {
+    toReturn.iconName = newIconName;
+  }
+
+  return toReturn;
+};
 
 export const EditListDrawer = ({ open, onClose }) => {
   const list = useList();
@@ -44,7 +66,14 @@ export const EditListDrawer = ({ open, onClose }) => {
       return;
     }
 
-    console.log('saving changes!');
+    listApi
+      .editList(list.id, getChangesObject(list, name, iconName))
+      .then((result) => {
+        dispatch({ type: listActions.replace, value: result });
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
   return (
