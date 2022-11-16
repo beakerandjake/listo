@@ -15,8 +15,8 @@ import { listIconNameSchema, listNameSchema } from './list.js';
  *          $ref: "#components/schemas/listIconName"
  */
 const schema = joi.object({
-  name: listNameSchema.required(),
-  iconName: listIconNameSchema.required(),
+  name: listNameSchema,
+  iconName: listIconNameSchema,
 })
   .label('edits')
   .or('name', 'iconName'); // Require at least one item property to be present.
