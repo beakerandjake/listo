@@ -20,6 +20,14 @@ export const listItemsActions = {
 export const listItemsReducer = (state, action) => {
   switch (action.type) {
     case listItemsActions.add:
+      // if an item with that id already exists, update that item instead.
+      if (state.find((x) => x.id === action.item.id)) {
+        return listItemsReducer(state, {
+          type: listItemsActions.edit,
+          item: action.item,
+        });
+      }
+
       return [...state, action.item];
     case listItemsActions.edit:
       return state.map((x) => (x.id === action.item.id ? action.item : x));

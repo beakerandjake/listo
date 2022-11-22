@@ -1,9 +1,9 @@
 import express from 'express';
 import {
-  createItem,
   deleteItems,
   getAllItemsInList,
   editItems,
+  createOrUpdateItem,
 } from '../useCases/items/index.js';
 import {
   createList,
@@ -172,7 +172,7 @@ router.delete('/:id', (req, res) => {
  *    post:
  *      tags: [Items]
  *      summary: Add Item to List.
- *      description: Add a new Item to the list.
+ *      description: Add a new Item to the list, if an item already exists with similar name, the quantity of the existing item is updated instead.
  *      parameters:
  *        - name: listId
  *          in: path
@@ -202,7 +202,7 @@ router.delete('/:id', (req, res) => {
  */
 router.post('/:id/items', (req, res) => {
   const { id } = req.params;
-  const result = createItem(id, req.body);
+  const result = createOrUpdateItem(id, req.body);
   res.send(result);
 });
 
