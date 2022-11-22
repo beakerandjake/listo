@@ -99,7 +99,7 @@ const findByName = (listId, name) => {
         FROM items 
         WHERE listId = ? AND name = ? COLLATE NOCASE AND deletedDate IS NULL;
     `)
-    .get(listId, name);
+    .get(listId, name) || {};
 
   logger.verbose('got item with name: %s', !!id);
 
