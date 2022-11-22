@@ -93,7 +93,7 @@ const existsWithId = (id) => {
 const findByName = (listId, name) => {
   logger.verbose('querying if item exists with name: %s', name);
 
-  const id = getDb()
+  const { id } = getDb()
     .prepare(`
         SELECT id
         FROM items 
@@ -364,7 +364,7 @@ const incrementQuantity = (id, amount = 1) => {
       SET quantity = quantity + ?
       WHERE id = ? AND deletedDate IS NULL
     `)
-    .run(id, amount);
+    .run(amount, id);
 
   logger.verbose('incremented quantity of %d item(s)', changes);
 
@@ -376,9 +376,13 @@ export default {
   getAllItems,
   getItem,
   deleteItem,
-  findByName,
+  deleteCompleted,
+  deleteActive,
+  deleteAll,
+  existsWithId,
   editItem,
   editItems,
+  findByName,
   getItemsByDueDateRange,
   getOverdueItems,
   incrementQuantity,
