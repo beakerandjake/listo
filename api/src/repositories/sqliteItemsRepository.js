@@ -85,6 +85,28 @@ const existsWithId = (id) => {
 };
 
 /**
+ * Does an item with the given name exist?
+ * @param {number} listId - The id of the list whose items will be searched.
+ * @param {string} name - The name of the item to search for.
+ * @returns {number} The id of the matching item (if exists)
+ */
+const findByName = (listId, name) => {
+  logger.verbose('querying if item exists with name: %s', name);
+
+  const id = getDb()
+    .prepare(`
+        SELECT id
+        FROM items 
+        WHERE listId = ? AND name = ? COLLATE NOCASE AND deletedDate IS NULL;
+    `)
+    .get(listId, name);
+
+  logger.verbose('got item with name: %s', !!id);
+
+  return id;
+};
+
+/**
  * Returns all of the items in the list.
  * @param {number} listId - The id of the list.
  * @returns {array}
@@ -323,17 +345,41 @@ const getOverdueItems = (dueDate) => {
   return result;
 };
 
+/**
+ * Increments the quantity of an item by the specified amount.
+ * @param {number} id - The id of the item.
+ * @param {number} amount - The amount to increment the quantity by.
+ * @returns {number} The amount of items edited
+ */
+const incrementQuantity = (id, amount = 1) => {
+  logger.verbose('incrementing quantity of item: %s by: %s', id, amount);
+
+  if (amount <= 0) {
+    throw new Error('Increment amount must be a positive number.');
+  }
+
+  const { changes } = getDb()
+    .prepare(`
+      UPDATE items
+      SET quantity = quantity + ?
+      WHERE id = ? AND deletedDate IS NULL
+    `)
+    .run(id, amount);
+
+  logger.verbose('incremented quantity of %d item(s)', changes);
+
+  return changes;
+};
+
 export default {
   createItem,
   getAllItems,
   getItem,
   deleteItem,
-  deleteCompleted,
-  deleteActive,
-  deleteAll,
-  existsWithId,
+  findByName,
   editItem,
   editItems,
   getItemsByDueDateRange,
   getOverdueItems,
+  incrementQuantity,
 };
