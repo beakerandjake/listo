@@ -12,6 +12,8 @@ import {
   ItemsCardOverdue,
   ItemsCardSkeleton,
 } from './Items';
+import { EmptyState } from './EmptyState';
+import { useSidebarItems } from 'context/SidebarItemsContext';
 
 /**
  * Home page of the application, displays useful statistics and summaries.
@@ -22,6 +24,7 @@ export const Dashboard = () => {
   const [overdueItems, setOverdueItems] = useState(null);
   const [itemsDueToday, setItemsDueToday] = useState(null);
   const [itemsDueNextSevenDays, setItemsDueNextSevenDays] = useState(null);
+  const sidebarItems = useSidebarItems();
   const handleError = useErrorHandler();
 
   const getItemCounts = useCallback(() => {
@@ -74,6 +77,18 @@ export const Dashboard = () => {
     getItemsDueNextSevenDays,
     handleError,
   ]);
+
+  // If there are no lists, show the empty state.
+  if (!sidebarItems?.length) {
+    return (
+      <>
+        <PageHeader name="Dashboard" />
+        <div className="mt-5 flex-1 flex flex-col gap-5">
+          <EmptyState />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
