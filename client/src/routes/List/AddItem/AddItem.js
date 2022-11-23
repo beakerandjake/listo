@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import MediaQuery from 'react-responsive';
+import { startOfDay } from 'date-fns';
 import { mobileBreakpoint } from 'components/ResponsiveLayout';
 import { itemValidationConstants } from 'routes/List/Item';
 import { AddItemDrawer } from './AddItemDrawer';
@@ -57,7 +58,7 @@ const formatItem = (item) => {
   const sanitized = {
     name: item.name.trim(),
     note: item.note?.trim() || null,
-    dueDate: item.dueDate?.toISOString() || null,
+    dueDate: item.dueDate ? startOfDay(item.dueDate).toISOString() : null,
   };
 
   return { ...item, ...sanitized };
