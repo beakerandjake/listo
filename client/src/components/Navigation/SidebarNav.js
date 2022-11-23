@@ -10,7 +10,6 @@ import { Badge } from 'components/Badge';
 export function SidebarNav({ lists }) {
   return (
     <nav className="flex-1">
-      <SidebarNavItem key="home" to="" text="Dashboard" iconName="house" end />
       <SidebarHeader name="Lists" />
       {lists.map((list) => (
         <SidebarNavItem

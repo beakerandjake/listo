@@ -6,6 +6,7 @@ import {
 } from 'context/SidebarItemsContext';
 import { CreateListSidebarNavButton } from './CreateListSidebarNavButton';
 import { SidebarNav } from './SidebarNav';
+import { SidebarNavItem } from './SidebarNavItem';
 
 /**
  * Sidebar which allows the user to navigate between pages and lists.
@@ -29,6 +30,14 @@ export function Sidebar() {
           <NavLogo />
         </div>
         <nav className="flex flex-col space-y-1">
+          <SidebarNavItem
+            key="home"
+            to=""
+            text="Dashboard"
+            iconName="house"
+            end
+          />
+
           {lists?.length > 0 && <SidebarNav lists={lists} />}
         </nav>
       </div>
