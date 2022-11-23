@@ -90,18 +90,21 @@ const existsWithId = (id) => {
  * @param {string} name - The name of the item to search for.
  * @returns {number} The id of the matching item (if exists)
  */
-const findByName = (listId, name) => {
-  logger.verbose('querying if item exists with name: %s', name);
+const findActiveItemByName = (listId, name) => {
+  logger.verbose('querying list: %s for active item with name: %s', listId, name);
 
   const { id } = getDb()
     .prepare(`
         SELECT id
         FROM items 
-        WHERE listId = ? AND name = ? COLLATE NOCASE AND deletedDate IS NULL;
+        WHERE listId = ? 
+              AND name = ? COLLATE NOCASE 
+              AND completedDate IS NULL 
+              AND deletedDate IS NULL;
     `)
     .get(listId, name) || {};
 
-  logger.verbose('got item with name: %s', !!id);
+  logger.verbose('queried item with name: %s', !!id);
 
   return id;
 };
@@ -382,7 +385,7 @@ export default {
   existsWithId,
   editItem,
   editItems,
-  findByName,
+  findActiveItemByName,
   getItemsByDueDateRange,
   getOverdueItems,
   incrementQuantity,
