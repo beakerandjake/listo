@@ -50,7 +50,7 @@ export const createOrUpdateItem = (listId, item) => {
   }
 
   // see if an item already exists in this list with this name
-  let itemId = itemRepository.findByName(addModel.listId, addModel.name);
+  let itemId = itemRepository.findActiveItemByName(addModel.listId, addModel.name);
 
   if (itemId) {
     incrementItemQuantity(itemId);
