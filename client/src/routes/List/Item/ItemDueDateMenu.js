@@ -1,5 +1,11 @@
 import { cloneElement, forwardRef, useRef, useState } from 'react';
-import { format, nextMonday, startOfToday, startOfTomorrow } from 'date-fns';
+import {
+  format,
+  nextMonday,
+  startOfDay,
+  startOfToday,
+  startOfTomorrow,
+} from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
@@ -82,7 +88,7 @@ export function ItemDueDateMenu({
     {
       text: 'Next Week',
       icon: faCalendarWeek,
-      date: nextMonday(new Date()),
+      date: startOfDay(nextMonday(new Date())),
     },
   ];
 
