@@ -59,7 +59,7 @@ const MOCK_DATA = [
   },
 ];
 
-export const mockData = MOCK_DATA.map((list) => ({
+export const lists = MOCK_DATA.map((list) => ({
   id: list.id,
   name: list.name,
   iconName: list.iconName,
@@ -67,3 +67,4 @@ export const mockData = MOCK_DATA.map((list) => ({
     createItem(item, list.id, index, list.hasQuantity, list.hasDueDate)
   ),
 }));
+

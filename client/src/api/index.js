@@ -1,7 +1,8 @@
 import realListApi from './listApi';
-import itemApi from './itemApi';
+import realItemApi from './itemApi';
 import statsApi from './statsApi';
-import mockApi from './mock';
+import { getLists } from './mock/mockListApi';
+import { getItems } from './mock/mockItemApi';
 
 // TODO swap based on config
 
@@ -12,6 +13,7 @@ class ApiError extends Error {
   }
 }
 
-const listApi = { ...realListApi, getLists: mockApi.getLists };
+const listApi = { ...realListApi, getLists };
+const itemApi = { ...realItemApi, getItems };
 
 export { listApi, itemApi, statsApi, ApiError };
