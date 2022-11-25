@@ -17,7 +17,7 @@ const createItem = (item, listId, itemIndex, hasQuantity, hasDueDate) => {
   const completed = hasDueDate && !!completedDate ? true : Math.random() < 0.2;
 
   return {
-    id: listId + itemIndex,
+    id: listId * 10000 + itemIndex,
     listId,
     quantity: hasQuantity ? Math.floor(Math.random() * 4) + 1 : 1,
     createdDate: createdDate.toISOString(),
@@ -134,9 +134,7 @@ const MOCK_DATA = [
       { name: 'Spanish flash cards' },
     ],
   },
-];
-
-export const mockData = MOCK_DATA.map((list) => ({
+].map((list) => ({
   id: list.id,
   name: list.name,
   iconName: list.iconName,
@@ -144,3 +142,10 @@ export const mockData = MOCK_DATA.map((list) => ({
     createItem(item, list.id, index, list.hasQuantity, list.hasDueDate)
   ),
 }));
+
+export const getMockData = () => MOCK_DATA;
+
+export const getList = (listId) =>
+  MOCK_DATA.find((x) => x.id.toString() === listId?.toString());
+
+console.log('ids', MOCK_DATA.map((x) => x.items.map((x) => x.id)).flat());

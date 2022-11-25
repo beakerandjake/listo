@@ -1,12 +1,12 @@
 import { ApiError } from 'api';
-import { mockData } from './mockDataStore';
+import { getMockData, getList } from './mockDataStore';
 /**
  * Loads all of the items in a list.
  * @param {number} listId - The id of the list to load items for.
  * @returns {Promise<object[]>}
  **/
 export const getItems = async (listId) => {
-  const list = mockData.find((x) => x.id.toString() === listId?.toString());
+  const list = getList(listId);
 
   if (!list) {
     throw new ApiError('Could not find list with that Id.', 404);
@@ -22,7 +22,7 @@ export const getItems = async (listId) => {
  * @returns {Promise<object>}
  **/
 const addItem = async (listId, item) => {
-  const list = mockData.find((x) => x.id.toString() === listId?.toString());
+  const list = getList(listId);
 
   if (!list) {
     throw new ApiError('Could not find list with that Id.', 404);
@@ -47,10 +47,20 @@ const addItem = async (listId, item) => {
   };
 };
 
+/**
+ * Deletes an item from the list.
+ * @param {number} itemId - The id of the item.
+ **/
+const deleteItem = async (itemId) => {
+  getMockData().forEach((list) => {
+    list.items = list.items.filter((item) => item.id !== itemId);
+  });
+};
+
 const api = {
   getItems,
   addItem,
-  //   deleteItem,
+  deleteItem,
   //   editItem,
   //   bulkDeleteItems,
   //   bulkEditItems,

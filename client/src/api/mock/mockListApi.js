@@ -1,9 +1,8 @@
 import { ApiError } from 'api';
-import { mockData } from './mockDataStore';
+import { getMockData, getList as getMockList } from './mockDataStore';
 
 const getLists = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 0));
-  const toReturn = mockData.map((x) => ({
+  const toReturn = getMockData().map((x) => ({
     name: x.name,
     id: x.id,
     iconName: x.iconName,
@@ -13,7 +12,7 @@ const getLists = async () => {
 };
 
 const getList = async (listId) => {
-  const list = mockData.find((x) => x.id.toString() === listId?.toString());
+  const list = getMockList(listId);
 
   if (!list) {
     throw new ApiError('Could not find list with that Id.', 404);
