@@ -6,9 +6,10 @@ import { mockData } from './mockDataStore';
  * @returns {Promise<object[]>}
  **/
 export const getItems = async (listId) => {
-  const list = mockData.find((x) => x.id === listId);
+  const list = mockData.find((x) => x.id.toString() === listId?.toString());
 
   if (!list) {
+    console.log('coundt find list', listId);
     throw new ApiError('Could not find list with that Id.', 404);
   }
 
