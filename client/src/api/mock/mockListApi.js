@@ -1,7 +1,7 @@
 import { ApiError } from 'api';
 import { mockData } from './mockDataStore';
 
-export const getLists = async () => {
+const getLists = async () => {
   await new Promise((resolve) => setTimeout(resolve, 0));
   const toReturn = mockData.map((x) => ({
     name: x.name,
@@ -12,7 +12,7 @@ export const getLists = async () => {
   return toReturn;
 };
 
-export const getList = async (listId) => {
+const getList = async (listId) => {
   const list = mockData.find((x) => x.id.toString() === listId?.toString());
 
   if (!list) {
@@ -26,3 +26,10 @@ export const getList = async (listId) => {
     count: list.items.filter((x) => !x.completed).length,
   };
 };
+
+const api = {
+  getLists,
+  getList,
+};
+
+export default api;
