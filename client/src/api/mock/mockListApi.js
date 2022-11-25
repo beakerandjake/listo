@@ -1,6 +1,8 @@
 import { lists } from './mockDataStore';
 
-export async function getLists() {
+console.log('mock lists', lists);
+
+async function getLists() {
   await new Promise((resolve) => setTimeout(resolve, 0));
   const toReturn = lists.map((x) => ({
     name: x.name,
@@ -10,3 +12,9 @@ export async function getLists() {
   }));
   return toReturn;
 }
+
+const api = {
+  getLists,
+};
+
+export default api;

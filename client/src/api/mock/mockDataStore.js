@@ -1,151 +1,69 @@
-export const lists = [
+import { add, startOfDay, sub } from 'date-fns';
+
+const randomDate = (startDate, endDate) => {
+  return startOfDay(
+    new Date(
+      startDate.getTime() +
+        Math.random() * (endDate.getTime() - startDate.getTime())
+    )
+  );
+};
+
+const createItem = (item, listId, itemIndex, hasQuantity, hasDueDate) => {
+  const createdDate = randomDate(sub(new Date(), { months: 1 }), new Date());
+  const dueDate = randomDate(
+    sub(createdDate, { weeks: 1 }),
+    add(createdDate, { months: 1 })
+  );
+  const completedDate =
+    Math.random() <= 0.3 ? randomDate(createdDate, dueDate) : null;
+
+  return {
+    id: listId + itemIndex,
+    listId,
+    quantity: hasQuantity ? Math.floor(Math.random() * 15) + 1 : 1,
+    createdDate: createdDate.toISOString(),
+    dueDate: hasDueDate ? dueDate.toISOString() : null,
+    completedDate:
+      hasDueDate && completedDate ? completedDate.toISOString() : null,
+    completed: !!completedDate,
+    ...item,
+  };
+};
+
+const MOCK_DATA = [
   {
     id: 1,
-    name: 'Grocery',
-    iconName: 'cart-shopping',
-    hasQuantity: true,
-    hasDueDate: false,
+    name: 'Todo',
+    iconName: 'check',
+    hasDueDate: true,
+    hasQuantity: false,
     items: [
-      {
-        id: 1,
-        name: 'Bananas',
-        quantity: 1,
-        completed: true,
-        createdDate: new Date(2022, 6, 15).toISOString(),
-      },
-      {
-        id: 2,
-        name: 'Apples',
-        quantity: 4,
-        completed: true,
-        createdDate: new Date(2022, 5, 22).toISOString(),
-      },
-      {
-        id: 3,
-        name: 'Oranges',
-        quantity: 5,
-        completed: false,
-        createdDate: new Date(2022, 6, 29).toISOString(),
-      },
-      {
-        id: 4,
-        name: 'Pears',
-        quantity: 2,
-        completed: false,
-        createdDate: new Date(2022, 6, 3).toISOString(),
-      },
-      {
-        id: 5,
-        name: 'Bread Flour',
-        quantity: 3,
-        completed: false,
-        createdDate: new Date(2022, 1, 11).toISOString(),
-      },
-      {
-        id: 6,
-        name: 'Scrubbing Bubbles Bathroom Cleaner',
-        quantity: 1,
-        completed: false,
-        createdDate: new Date(2022, 6, 15).toISOString(),
-        dueDate: new Date(2022, 8, 15).toISOString(),
-        note: 'one cool note!',
-      },
-      {
-        id: 7,
-        name: 'Grapes',
-        quantity: 1,
-        completed: true,
-        createdDate: new Date(2022, 6, 15).toISOString(),
-      },
-      {
-        id: 8,
-        name: 'Blueberries',
-        quantity: 4,
-        completed: true,
-        createdDate: new Date(2022, 5, 22).toISOString(),
-      },
-      {
-        id: 9,
-        name: 'Water',
-        quantity: 5,
-        completed: false,
-        createdDate: new Date(2022, 6, 29).toISOString(),
-      },
-      {
-        id: 10,
-        name: 'Limes',
-        quantity: 2,
-        completed: false,
-        createdDate: new Date(2022, 6, 3).toISOString(),
-      },
-      {
-        id: 11,
-        name: 'Lemons',
-        quantity: 3,
-        completed: false,
-        createdDate: new Date(2022, 1, 11).toISOString(),
-      },
+      { name: 'Pick up Groceries' },
+      { name: 'Mail Birthday Card' },
+      { name: 'Doctors Appointment' },
+      { name: 'Car Oil Change' },
+      { name: 'Clean out fridge' },
+      { name: 'Laundry' },
+      { name: 'Return Library Books' },
+      { name: 'Cancel Subscription' },
     ],
   },
   {
     id: 2,
-    name: 'Todo',
-    iconName: 'list-check',
-    hasQuantity: false,
-    hasDueDate: true,
-    items: [
-      {
-        id: 1,
-        name: 'Get Groceries',
-        quantity: 1,
-        completed: true,
-        createdDate: new Date(2022, 1, 11).toISOString(),
-      },
-      {
-        id: 2,
-        name: 'Pay Car Insurance',
-        quantity: 1,
-        completed: false,
-        dueDate: new Date(2022, 6, 15).toISOString(),
-        createdDate: new Date(2022, 1, 11).toISOString(),
-      },
-      {
-        id: 3,
-        name: 'Pull Weeds',
-        quantity: 1,
-        completed: false,
-        dueDate: new Date(2022, 8, 15).toISOString(),
-        createdDate: new Date(2022, 1, 11).toISOString(),
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Trips',
-    iconName: 'plane',
-    hasQuantity: false,
+    name: 'Grocery',
+    iconName: 'cart-shopping',
     hasDueDate: false,
-    items: [
-      {
-        id: 1,
-        name: 'Grand Canyon',
-        quantity: 1,
-        completed: false,
-        createdDate: new Date(2022, 2, 14).toISOString(),
-      },
-      {
-        id: 2,
-        name: 'Death Valley',
-        quantity: 1,
-        completed: false,
-        createdDate: new Date(2022, 3, 6).toISOString(),
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Purchases',
-    iconName: 'dollar-sign',
-    items: [],
+    hasQuantity: true,
+    items: [{ name: 'Apples' }, { name: 'Bananas' }],
   },
 ];
+
+export const lists = MOCK_DATA.map((list) => ({
+  id: list.id,
+  name: list.name,
+  iconName: list.iconName,
+  items: list.items.map((item, index) =>
+    createItem(item, list.id, index, list.hasQuantity, list.hasDueDate)
+  ),
+}));
