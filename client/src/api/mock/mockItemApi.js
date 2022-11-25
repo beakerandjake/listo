@@ -57,11 +57,45 @@ const deleteItem = async (itemId) => {
   });
 };
 
+/**
+ * Edits an item.
+ * @param {number} itemId - The id of the list.
+ * @param {object} changes - The edits to apply to an item.
+ * @returns {Promise<object>}
+ **/
+const editItem = async (itemId, changes) => {
+  let editedItem = null;
+  const mockData = getMockData();
+
+  for (let index = 0; index < mockData.length; index++) {
+    const list = mockData[index];
+    const itemIndex = list.items.findIndex((x) => x.id === itemId);
+
+    if (itemIndex === -1) {
+      continue;
+    }
+
+    editedItem = {
+      ...list.items[itemIndex],
+      ...changes,
+      completedDate: changes.completed ? new Date().toISOString() : null,
+    };
+
+    list.items[itemIndex] = editedItem;
+  }
+
+  if (!editedItem) {
+    throw new ApiError('Could not find item with Id', 404);
+  }
+
+  return editedItem;
+};
+
 const api = {
   getItems,
   addItem,
   deleteItem,
-  //   editItem,
+  editItem,
   //   bulkDeleteItems,
   //   bulkEditItems,
   //   getItemsDueToday,
