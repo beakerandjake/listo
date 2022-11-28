@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Todo",
+    "iconName": "check"
+  },
+  {
+    "id": 2,
+    "name": "Grocery",
+    "iconName": "cart-shopping"
+  },
+  {
+    "id": 3,
+    "name": "Trips",
+    "iconName": "plane"
+  },
+  {
+    "id": 4,
+    "name": "Purchases",
+    "iconName": "dollar"
+  }
+]

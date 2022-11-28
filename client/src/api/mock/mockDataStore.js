@@ -1,5 +1,13 @@
 import { add, startOfDay, sub } from 'date-fns';
+import lists from './lists.json';
+import items from './items.json';
 
+/**
+ * Returns a random date between the start and end dates.
+ * @param {Date} startDate
+ * @param {Date} endDate
+ * @returns {Date}
+ */
 const randomDate = (startDate, endDate) => {
   return startOfDay(
     new Date(
@@ -9,7 +17,21 @@ const randomDate = (startDate, endDate) => {
   );
 };
 
-const createItem = (item, listId, itemIndex, hasQuantity, hasDueDate) => {
+/**
+ * Given an item template object, will return an item with random date values
+ * relative to the current date. This keeps the static, mock data "current" instead
+ * of using hard coded dates which will eventually all be in the past.
+ * @param {Object}
+ * @returns {Object}
+ */
+const createItem = ({
+  id,
+  listId,
+  name,
+  note,
+  hasDueDate = false,
+  hasQuantity = false,
+}) => {
   const createdDate = randomDate(sub(new Date(), { months: 1 }), new Date());
   const dueDate = randomDate(createdDate, add(new Date(), { weeks: 2 }));
   const completedDate =
@@ -17,142 +39,34 @@ const createItem = (item, listId, itemIndex, hasQuantity, hasDueDate) => {
   const completed = hasDueDate && !!completedDate ? true : Math.random() < 0.2;
 
   return {
-    id: listId * 10000 + itemIndex,
+    id,
     listId,
+    name,
+    note,
     quantity: hasQuantity ? Math.floor(Math.random() * 4) + 1 : 1,
     createdDate: createdDate.toISOString(),
     dueDate: hasDueDate ? dueDate.toISOString() : null,
     completedDate:
       hasDueDate && completedDate ? completedDate.toISOString() : null,
     completed: completed,
-    ...item,
   };
 };
 
-const MOCK_DATA = [
-  {
-    id: 1,
-    name: 'Todo',
-    iconName: 'check',
-    hasDueDate: true,
-    hasQuantity: false,
-    items: [
-      { name: 'Pick up groceries' },
-      { name: 'Mail birthday card' },
-      { name: 'Doctors appointment', note: 'Bring insurance card' },
-      { name: 'Car oil change', note: "Don't forget coupon" },
-      { name: 'Clean out fridge' },
-      { name: 'Laundry' },
-      { name: 'Return Library books' },
-      { name: 'Cancel subscription' },
-      { name: 'Pick weeds' },
-      { name: 'Call Grandma' },
-      { name: 'Vacuum' },
-      { name: 'Brush cat' },
-      { name: 'Dust out computer' },
-      { name: 'Clean bathroom' },
-      { name: 'Wash sheets' },
-      { name: 'Leafblower backyard' },
-      { name: 'Fill bird feeder' },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Grocery',
-    iconName: 'cart-shopping',
-    hasDueDate: false,
-    hasQuantity: true,
-    items: [
-      { name: 'Apples' },
-      { name: 'Bananas' },
-      { name: 'Coffee' },
-      { name: 'Creamer' },
-      { name: 'Celery' },
-      { name: 'Oranges' },
-      { name: 'Milk' },
-      { name: 'Salad' },
-      { name: 'Cucumber' },
-      { name: 'Tomato' },
-      { name: 'Avocado' },
-      { name: 'Bread' },
-      { name: 'Bagel' },
-      { name: 'Garlic' },
-      { name: 'Frozen peas' },
-      { name: 'Frozen corn' },
-      { name: 'Canned garbanzo beans' },
-      { name: 'Penne pasta', note: 'Whole Grain' },
-      { name: 'Crackers' },
-      { name: 'Cookies', note: 'Chocolate chip' },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Trips',
-    iconName: 'plane',
-    hasDueDate: false,
-    hasQuantity: false,
-    items: [
-      {
-        name: 'Joshua Tree National Park',
-        note: 'Stay at Jumbo Rocks Campground',
-      },
-      { name: 'Chichen Itza' },
-      { name: 'Grand Canyon National Park', note: 'Hike to Shoshone Point' },
-      { name: 'Canyon de Chelly' },
-      { name: 'Monument Valley' },
-      { name: 'Organ Pipe Cactus National Monument' },
-      { name: 'Saguaro National Park' },
-      { name: 'Petrified Forest National Park', note: 'Check out Blue Mesa' },
-      { name: 'Sunset Crater' },
-      { name: 'Yellowstone National Park' },
-      { name: 'Yosemite National Park' },
-      { name: 'Sequoia National Park' },
-      {
-        name: 'Death Valley National Park',
-        note: 'Must see Artists Pallet Scenic Drive',
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Purchases',
-    iconName: 'dollar',
-    hasDueDate: false,
-    hasQuantity: false,
-    items: [
-      {
-        name: 'New Dishwasher',
-        note: 'KitchenAid 44dBA w/ third rack',
-      },
-      { name: 'New lightbulb for kitchen' },
-      { name: '4k UHD blu ray player' },
-      { name: 'Container for bird seed' },
-      { name: 'Door mat' },
-      { name: 'Cover for patio furniture' },
-      { name: 'Cat tower' },
-      { name: 'Water filter' },
-      { name: 'Spanish flash cards' },
-    ],
-  },
-].map((list) => ({
-  id: list.id,
-  name: list.name,
-  iconName: list.iconName,
-  items: list.items.map((item, index) =>
-    createItem(item, list.id, index, list.hasQuantity, list.hasDueDate)
-  ),
-}));
-
-console.log('mock data', MOCK_DATA);
-
 export const getMockData = () => {
-  return MOCK_DATA;
+  return [];
 };
 
 export const getList = (listId) => {
-  return MOCK_DATA.find((x) => x.id.toString() === listId?.toString());
+  return null;
 };
 
-export const addItem = (listId, item) => {
-  
-};
+let LISTS = [...lists];
+let ITEMS = items.map((item, index) => createItem({ ...item, id: index }));
+
+console.log('items', ITEMS);
+
+export const getLists = () => [...LISTS];
+export const getItems = () => [...ITEMS];
+
+export const setLists = (lists) => (LISTS = [...lists]);
+export const setItems = (items) => (ITEMS = [...items]);

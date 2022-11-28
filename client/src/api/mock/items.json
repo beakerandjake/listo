@@ -1,0 +1,284 @@
+[
+  {
+    "listId": 1,
+    "name": "Pick up groceries",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Mail birthday card",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Doctors appointment",
+    "note": "Bring insurance card",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Car oil change",
+    "note": "Don't forget coupon",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Clean out fridge",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Laundry",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Return Library books",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Cancel subscription",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Pick weeds",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Call Grandma",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Vacuum",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Brush cat",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Dust out computer",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Clean bathroom",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Wash sheets",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Leafblower backyard",
+    "hasDueDate": true
+  },
+  {
+    "listId": 1,
+    "name": "Fill bird feeder",
+    "hasDueDate": true
+  },
+  {
+    "listId": 2,
+    "name": "Apples",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Bananas",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Coffee",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Creamer",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Celery",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Oranges",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Milk",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Salad",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Cucumber",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Tomato",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Avocado",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Bread",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Bagel",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Garlic",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Frozen peas",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Frozen corn",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Canned garbanzo beans",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Penne pasta",
+    "note": "Whole Grain",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Crackers",
+    "hasQuantity": true
+  },
+  {
+    "listId": 2,
+    "name": "Cookies",
+    "note": "Chocolate chip",
+    "hasQuantity": true
+  },
+  {
+    "listId": 3,
+    "name": "Joshua Tree National Park",
+    "note": "Stay at Jumbo Rocks Campground"
+  },
+  {
+    "listId": 3,
+    "name": "Chichen Itza"
+  },
+  {
+    "listId": 3,
+    "name": "Grand Canyon National Park",
+    "note": "Hike to Shoshone Point"
+  },
+  {
+    "listId": 3,
+    "name": "Canyon de Chelly"
+  },
+  {
+    "listId": 3,
+    "name": "Monument Valley"
+  },
+  {
+    "listId": 3,
+    "name": "Organ Pipe Cactus National Monument"
+  },
+  {
+    "listId": 3,
+    "name": "Saguaro National Park"
+  },
+  {
+    "listId": 3,
+    "name": "Petrified Forest National Park",
+    "note": "Check out Blue Mesa"
+  },
+  {
+    "listId": 3,
+    "name": "Sunset Crater"
+  },
+  {
+    "listId": 3,
+    "name": "Yellowstone National Park"
+  },
+  {
+    "listId": 3,
+    "name": "Yosemite National Park"
+  },
+  {
+    "listId": 3,
+    "name": "Sequoia National Park"
+  },
+  {
+    "listId": 3,
+    "name": "Death Valley National Park",
+    "note": "Must see Artists Pallet Scenic Drive"
+  },
+  {
+    "listId": 4,
+    "name": "New Dishwasher",
+    "note": "KitchenAid 44dBA w/ third rack"
+  },
+  {
+    "listId": 4,
+    "name": "New lightbulb for kitchen"
+  },
+  {
+    "listId": 4,
+    "name": "4k UHD blu ray player"
+  },
+  {
+    "listId": 4,
+    "name": "Container for bird seed"
+  },
+  {
+    "listId": 4,
+    "name": "Door mat"
+  },
+  {
+    "listId": 4,
+    "name": "Cover for patio furniture"
+  },
+  {
+    "listId": 4,
+    "name": "Cat tower"
+  },
+  {
+    "listId": 4,
+    "name": "Water filter"
+  },
+  {
+    "listId": 4,
+    "name": "Spanish flash cards"
+  }
+]
