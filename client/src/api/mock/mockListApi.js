@@ -1,5 +1,5 @@
 import { ApiError } from 'api';
-import { mockLists, mockItems } from './mockDataStore';
+import { mockLists, mockItems, setMockLists } from './mockDataStore';
 
 /**
  * Counts the number of items in the given list.
@@ -34,9 +34,27 @@ const getList = async (listId) => {
   return { ...list, count: itemCount(list.id) };
 };
 
+/**
+ * Creates a new list
+ * @param {object} list - The list to create.
+ * @returns {Promise<object>}
+ **/
+const createList = async ({ name, iconName }) => {
+  const newList = {
+    id: Math.max(...mockLists().map((x) => x.id)) + 1,
+    name,
+    iconName,
+  };
+
+  setMockLists([...mockLists(), newList]);
+
+  return { ...newList, count: 0 };
+};
+
 const api = {
   getLists,
   getList,
+  createList,
 };
 
 export default api;
