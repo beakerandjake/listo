@@ -1,4 +1,4 @@
-import { add, startOfDay, sub } from 'date-fns';
+import { add, startOfDay, startOfToday, startOfTomorrow, sub } from 'date-fns';
 import lists from './lists.json';
 import items from './items.json';
 
@@ -18,6 +18,27 @@ const randomDate = (startDate, endDate) => {
 };
 
 /**
+ * Returns a random due date which distributes between overdue, due today and due in the future.
+ * @returns {Date}
+ */
+const randomDueDate = () => {
+  const roll = Math.random();
+
+  // 20% chance of being overdue
+  if (roll < 0.2) {
+    return randomDate(sub(startOfToday(), { weeks: 2 }), startOfToday());
+  }
+
+  // 40% chance of being due today
+  if (roll < 0.6) {
+    return startOfToday();
+  }
+
+  // 40% chance of being due in the future.
+  return randomDate(startOfTomorrow(), add(startOfTomorrow(), { weeks: 2 }));
+};
+
+/**
  * Given an item template object, will return an item with random date values
  * relative to the current date. This keeps the static, mock data "current" instead
  * of using hard coded dates which will eventually all be in the past.
@@ -33,22 +54,20 @@ const createItem = ({
   hasQuantity = false,
 }) => {
   const createdDate = randomDate(sub(new Date(), { months: 1 }), new Date());
-  const dueDate = randomDate(createdDate, add(new Date(), { weeks: 2 }));
-  const completedDate =
-    Math.random() <= 0.3 ? randomDate(createdDate, dueDate) : null;
-  const completed = hasDueDate && !!completedDate ? true : Math.random() < 0.2;
+  const completed = Math.random() < 0.2;
 
   return {
     id,
     listId,
     name,
     note,
+    completed,
     quantity: hasQuantity ? Math.floor(Math.random() * 4) + 1 : 1,
     createdDate: createdDate.toISOString(),
-    dueDate: hasDueDate ? dueDate.toISOString() : null,
-    completedDate:
-      hasDueDate && completedDate ? completedDate.toISOString() : null,
-    completed: completed,
+    dueDate: hasDueDate ? randomDueDate().toISOString() : null,
+    completedDate: completed
+      ? randomDate(createdDate, new Date()).toISOString()
+      : null,
   };
 };
 
