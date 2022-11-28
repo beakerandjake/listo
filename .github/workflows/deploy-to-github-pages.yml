@@ -27,6 +27,11 @@ jobs:
         with:
           node-version: 16.x
           
+      - name: Configure Font Awesome Secrets
+        run: |
+          npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+          npm config set "//npm.fontawesome.com/:_authToken" ${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }}
+          
       - name: Install NPM Packages
-        run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }} npm ci --workspace=client
+        run: npm ci --workspace=client
         
