@@ -1,5 +1,11 @@
 import { ApiError } from 'api';
-import { isPast, isToday, parseISO } from 'date-fns';
+import {
+  add,
+  endOfDay,
+  isToday,
+  parseISO,
+  startOfTomorrow,
+} from 'date-fns';
 import { isOverdue } from 'services/dueDateHelpers';
 import { mockLists, mockItems, setMockItems } from './mockDataStore';
 
@@ -155,6 +161,23 @@ const getItemsDueToday = async () =>
 const getOverdueItems = async () =>
   mockItems().filter((x) => !x.completed && x.dueDate && isOverdue(x.dueDate));
 
+/**
+ * Returns all of the items due in the next seven days.
+ * @returns {Promise<object>}
+ **/
+const getItemsDueNextSevenDays = async () =>
+  mockItems().filter((x) => {
+    if (x.completed || !x.dueDate) {
+      return false;
+    }
+
+    const parsed = parseISO(x.dueDate);
+    const startDate = startOfTomorrow();
+    const endDate = endOfDay(add(startDate, { days: 6 }));
+
+    return parsed >= startDate && parsed <= endDate;
+  });
+
 const api = {
   getItems,
   addItem,
@@ -164,7 +187,7 @@ const api = {
   bulkEditItems,
   getItemsDueToday,
   getOverdueItems,
-  //   getItemsDueNextSevenDays,
+  getItemsDueNextSevenDays,
 };
 
 export default api;
