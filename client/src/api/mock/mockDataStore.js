@@ -65,8 +65,8 @@ let ITEMS = items.map((item, index) => createItem({ ...item, id: index }));
 
 console.log('items', ITEMS);
 
-export const getLists = () => [...LISTS];
-export const getItems = () => [...ITEMS];
+export const mockLists = () => LISTS;
+export const mockItems = () => ITEMS;
 
-export const setLists = (lists) => (LISTS = [...lists]);
-export const setItems = (items) => (ITEMS = [...items]);
+export const setMockLists = (lists) => (LISTS = lists);
+export const setMockItems = (items) => (ITEMS = items);

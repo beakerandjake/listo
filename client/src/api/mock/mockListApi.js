@@ -1,29 +1,37 @@
 import { ApiError } from 'api';
-import { getMockData, getList as getMockList } from './mockDataStore';
+import { mockLists, mockItems } from './mockDataStore';
 
-const getLists = async () => {
-  const toReturn = getMockData().map((x) => ({
-    name: x.name,
-    id: x.id,
-    iconName: x.iconName,
-    itemCount: x.items.filter((x) => !x.completed).length,
+/**
+ * Counts the number of items in the given list.
+ * @param {number} listId
+ * @returns {number}
+ */
+const itemCount = (listId) =>
+  mockItems().filter((x) => x.listId === listId && !x.completed).length;
+
+/**
+ * Loads all of the lists.
+ * @returns {Promise<object[]>}
+ **/
+const getLists = async () =>
+  mockLists().map((list) => ({
+    ...list,
+    itemCount: itemCount(list.id),
   }));
-  return toReturn;
-};
 
+/**
+ * Loads the list.
+ * @param {number} id - The id of the list to load.
+ * @returns {Promise<object>}
+ **/
 const getList = async (listId) => {
-  const list = getMockList(listId);
+  const list = mockLists().find((x) => x.id === parseInt(listId));
 
   if (!list) {
     throw new ApiError('Could not find list with that Id.', 404);
   }
 
-  return {
-    id: list.id,
-    name: list.name,
-    iconName: list.iconName,
-    count: list.items.filter((x) => !x.completed).length,
-  };
+  return { ...list, count: itemCount(list.id) };
 };
 
 const api = {
