@@ -49,7 +49,7 @@ const addItem = async (listId, item) => {
   // otherwise, add the new item to the items array
 
   const newItem = {
-    id: Math.max(...mockItems().map((x) => x.id)) + 1,
+    id: Math.max(...mockItems().map((x) => x.id), 0) + 1,
     listId: listId,
     createDate: new Date().toISOString(),
     completed: false,

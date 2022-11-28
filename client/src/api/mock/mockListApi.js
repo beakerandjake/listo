@@ -41,7 +41,7 @@ const getList = async (listId) => {
  **/
 const createList = async ({ name, iconName }) => {
   const newList = {
-    id: Math.max(...mockLists().map((x) => x.id)) + 1,
+    id: Math.max(...mockLists().map((x) => x.id), 0) + 1,
     name,
     iconName,
   };
@@ -72,11 +72,26 @@ const editList = async (id, changes) => {
   return getList(existingList.id);
 };
 
+/**
+ * Deletes a list.
+ * @param {number} id - The list to delete.
+ **/
+const deleteList = async (id) => {
+  const originalCount = mockLists().length;
+
+  setMockLists(mockLists().filter((x) => x.id !== parseInt(id)));
+
+  if (mockLists().length === originalCount) {
+    throw new ApiError('Could not find list with that Id.', 404);
+  }
+};
+
 const api = {
   getLists,
   getList,
   createList,
   editList,
+  deleteList,
 };
 
 export default api;
