@@ -52,18 +52,8 @@ const createItem = ({
   };
 };
 
-export const getMockData = () => {
-  return [];
-};
-
-export const getList = (listId) => {
-  return null;
-};
-
 let LISTS = [...lists];
 let ITEMS = items.map((item, index) => createItem({ ...item, id: index }));
-
-console.log('items', ITEMS);
 
 export const mockLists = () => LISTS;
 export const mockItems = () => ITEMS;
