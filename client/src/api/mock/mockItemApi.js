@@ -1,5 +1,5 @@
 import { ApiError } from 'api';
-import { getList, mockLists, mockItems, setMockItems } from './mockDataStore';
+import { mockLists, mockItems, setMockItems } from './mockDataStore';
 
 /**
  * Does a list exists with the given id?
@@ -100,11 +100,23 @@ const editItem = async (itemId, changes) => {
  **/
 const bulkDeleteItems = async (listId, filter) => {
   if (!filter) {
-    setMockItems([]);
+    setMockItems(mockItems().filter((x) => x.listId !== parseInt(listId)));
   } else if (filter === 'completed') {
-    setMockItems(mockItems().filter((x) => !x.completedDate));
+    setMockItems(
+      mockItems().filter(
+        (x) =>
+          x.listId !== parseInt(listId) ||
+          (x.listId === parseInt(listId) && !x.completed)
+      )
+    );
   } else if (filter === 'active') {
-    setMockItems(mockItems().filter((x) => !!x.completedDate));
+    setMockItems(
+      mockItems().filter(
+        (x) =>
+          x.listId !== parseInt(listId) ||
+          (x.listId === parseInt(listId) && x.completed)
+      )
+    );
   } else {
     throw new ApiError('Unknown filter', 400);
   }
