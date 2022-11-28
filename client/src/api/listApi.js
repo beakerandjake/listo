@@ -55,7 +55,7 @@ const createList = async (list) => {
 
 /**
  * Edit the specified list.
- * @param {object} list - The list to create.
+ * @param {object} list - The list to edit.
  * @returns {Promise<object>}
  **/
 const editList = async (id, changes) => {
