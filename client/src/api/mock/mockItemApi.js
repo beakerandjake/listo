@@ -1,4 +1,5 @@
 import { ApiError } from 'api';
+import { isToday, parseISO } from 'date-fns';
 import { mockLists, mockItems, setMockItems } from './mockDataStore';
 
 /**
@@ -139,6 +140,13 @@ const bulkEditItems = async (listId, changes) => {
   );
 };
 
+/**
+ * Returns all of the items due today across all lists.
+ * @returns {Promise<object>}
+ **/
+const getItemsDueToday = async () =>
+  mockItems().filter((x) => !x.completed && isToday(parseISO(x.dueDate)));
+
 const api = {
   getItems,
   addItem,
@@ -146,7 +154,7 @@ const api = {
   editItem,
   bulkDeleteItems,
   bulkEditItems,
-  //   getItemsDueToday,
+  getItemsDueToday,
   //   getOverdueItems,
   //   getItemsDueNextSevenDays,
 };
