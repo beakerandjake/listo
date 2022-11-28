@@ -51,10 +51,32 @@ const createList = async ({ name, iconName }) => {
   return { ...newList, count: 0 };
 };
 
+/**
+ * Edit the specified list.
+ * @param {object} list - The list to edit.
+ * @returns {Promise<object>}
+ **/
+const editList = async (id, changes) => {
+  const existingList = mockLists().find((x) => x.id === parseInt(id));
+
+  if (!existingList) {
+    throw new ApiError('Could not find list with that Id.', 404);
+  }
+
+  const editedList = { ...existingList, ...changes };
+
+  setMockLists(
+    mockLists().map((x) => (x.id === existingList.id ? editedList : x))
+  );
+
+  return getList(existingList.id);
+};
+
 const api = {
   getLists,
   getList,
   createList,
+  editList,
 };
 
 export default api;
