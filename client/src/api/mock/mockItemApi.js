@@ -110,13 +110,30 @@ const bulkDeleteItems = async (listId, filter) => {
   }
 };
 
+/**
+ * Edits many items from the list.
+ * @param {number} listId - The id of the list.
+ * @param {object} changes - Edits to apply to all items in the list.
+ **/
+const bulkEditItems = async (listId, changes) => {
+  if (!listExists(listId)) {
+    throw new ApiError('Could not find list with that Id.', 404);
+  }
+
+  setMockItems(
+    mockItems().map((item) =>
+      item.listId === parseInt(listId) ? { ...item, ...changes } : item
+    )
+  );
+};
+
 const api = {
   getItems,
   addItem,
   deleteItem,
   editItem,
   bulkDeleteItems,
-  //   bulkEditItems,
+  bulkEditItems,
   //   getItemsDueToday,
   //   getOverdueItems,
   //   getItemsDueNextSevenDays,
