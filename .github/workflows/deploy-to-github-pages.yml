@@ -43,3 +43,6 @@ jobs:
         with:
           name: github-pages
           path: ./client/build
+
+      - name: Upload Build Artifact to GitHub Pages
+        uses: actions/upload-pages-artifact@v1.0.5
