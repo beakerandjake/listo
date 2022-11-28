@@ -26,7 +26,7 @@ import {
 
 // Defines the default field to sort a list on.
 const defaultSorting = {
-  itemKey: itemSortingFields.created,
+  itemKey: itemSortingFields.dueDate,
   direction: sortingDirections.asc,
 };
 

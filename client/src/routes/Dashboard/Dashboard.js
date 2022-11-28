@@ -13,7 +13,10 @@ import {
   ItemsCardSkeleton,
 } from './Items';
 import { EmptyState } from './EmptyState';
-import { useSidebarItems } from 'context/SidebarItemsContext';
+import {
+  useSidebarItems,
+  useUpdateSidebarItems,
+} from 'context/SidebarItemsContext';
 
 /**
  * Home page of the application, displays useful statistics and summaries.
@@ -25,6 +28,7 @@ export const Dashboard = () => {
   const [itemsDueToday, setItemsDueToday] = useState(null);
   const [itemsDueNextSevenDays, setItemsDueNextSevenDays] = useState(null);
   const sidebarItems = useSidebarItems();
+  const updateSidebarItems = useUpdateSidebarItems();
   const handleError = useErrorHandler();
 
   const getItemCounts = useCallback(() => {
@@ -49,12 +53,13 @@ export const Dashboard = () => {
   }, [handleError]);
 
   /**
-   * Updates the Statistics, usually in reaction to items in the dashboard being marked as completed.
+   * Update various data when an item is marked as completed
    */
-  const updateStatistics = useCallback(() => {
+  const onItemCompleted = useCallback(() => {
     getItemCounts();
     getAverageCompletionTime();
-  }, [getItemCounts, getAverageCompletionTime]);
+    updateSidebarItems();
+  }, [getItemCounts, getAverageCompletionTime, updateSidebarItems]);
 
   // load data on mount.
   useEffect(() => {
@@ -103,7 +108,7 @@ export const Dashboard = () => {
           ) : (
             <ItemsCardDueToday
               items={itemsDueToday}
-              onItemCompleted={updateStatistics}
+              onItemCompleted={onItemCompleted}
               onItemDueDatePostponed={getItemsDueNextSevenDays}
             />
           )}
@@ -113,7 +118,7 @@ export const Dashboard = () => {
           ) : (
             <ItemsCardOverdue
               items={overdueItems}
-              onItemCompleted={updateStatistics}
+              onItemCompleted={onItemCompleted}
             />
           )}
           {/* Items due next seven days */}
@@ -122,7 +127,7 @@ export const Dashboard = () => {
           ) : (
             <ItemsCardDueNextSevenDays
               items={itemsDueNextSevenDays}
-              onItemCompleted={updateStatistics}
+              onItemCompleted={onItemCompleted}
             />
           )}
         </div>
