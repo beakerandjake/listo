@@ -38,3 +38,8 @@ jobs:
       - name: Build React App
         run: CI='' npm run build:client
         
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: github-pages
+          path: ./build
