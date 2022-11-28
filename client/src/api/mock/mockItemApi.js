@@ -1,3 +1,4 @@
+import { faLocationQuestion } from '@fortawesome/pro-regular-svg-icons';
 import { ApiError } from 'api';
 import { getMockData, getList } from './mockDataStore';
 /**
@@ -38,13 +39,17 @@ const addItem = async (listId, item) => {
     return existingItem;
   }
 
-  return {
+  const newItem = {
     id: Math.max(...list.items.map((x) => x.id)) + 1,
     listId: listId,
     createDate: new Date().toISOString(),
     completed: false,
     ...item,
   };
+
+  list.items.push(newItem);
+
+  return newItem;
 };
 
 /**
@@ -82,6 +87,8 @@ const editItem = async (itemId, changes) => {
     };
 
     list.items[itemIndex] = editedItem;
+
+    break;
   }
 
   if (!editedItem) {
@@ -91,12 +98,31 @@ const editItem = async (itemId, changes) => {
   return editedItem;
 };
 
+/**
+ * Deletes many items from the list.
+ * @param {number} listId - The id of the list.
+ * @param {string} filter - Optional filtering to change which items get deleted.
+ **/
+const bulkDeleteItems = async (listId, filter) => {
+  const list = getList(listId);
+
+  if (!filter) {
+    list.items = [];
+  } else if (filter === 'completed') {
+    list.items = list.items.filter((x) => !x.completedDate);
+  } else if (filter === 'active') {
+    list.items = list.items.filter((x) => !!x.completedDate);
+  } else {
+    throw new ApiError('Unknown filter', 400);
+  }
+};
+
 const api = {
   getItems,
   addItem,
   deleteItem,
   editItem,
-  //   bulkDeleteItems,
+  bulkDeleteItems,
   //   bulkEditItems,
   //   getItemsDueToday,
   //   getOverdueItems,

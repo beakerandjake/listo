@@ -143,9 +143,16 @@ const MOCK_DATA = [
   ),
 }));
 
-export const getMockData = () => MOCK_DATA;
+console.log('mock data', MOCK_DATA);
 
-export const getList = (listId) =>
-  MOCK_DATA.find((x) => x.id.toString() === listId?.toString());
+export const getMockData = () => {
+  return MOCK_DATA;
+};
 
-console.log('ids', MOCK_DATA.map((x) => x.items.map((x) => x.id)).flat());
+export const getList = (listId) => {
+  return MOCK_DATA.find((x) => x.id.toString() === listId?.toString());
+};
+
+export const addItem = (listId, item) => {
+  
+};
