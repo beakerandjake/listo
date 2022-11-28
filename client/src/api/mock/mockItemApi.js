@@ -1,11 +1,5 @@
 import { ApiError } from 'api';
-import {
-  add,
-  endOfDay,
-  isToday,
-  parseISO,
-  startOfTomorrow,
-} from 'date-fns';
+import { add, endOfDay, isToday, parseISO, startOfTomorrow } from 'date-fns';
 import { isOverdue } from 'services/dueDateHelpers';
 import { mockLists, mockItems, setMockItems } from './mockDataStore';
 
@@ -159,24 +153,28 @@ const getItemsDueToday = async () =>
  * @returns {Promise<object>}
  **/
 const getOverdueItems = async () =>
-  mockItems().filter((x) => !x.completed && x.dueDate && isOverdue(x.dueDate));
+  mockItems()
+    .filter((x) => !x.completed && x.dueDate && isOverdue(x.dueDate))
+    .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 
 /**
  * Returns all of the items due in the next seven days.
  * @returns {Promise<object>}
  **/
 const getItemsDueNextSevenDays = async () =>
-  mockItems().filter((x) => {
-    if (x.completed || !x.dueDate) {
-      return false;
-    }
+  mockItems()
+    .filter((x) => {
+      if (x.completed || !x.dueDate) {
+        return false;
+      }
 
-    const parsed = parseISO(x.dueDate);
-    const startDate = startOfTomorrow();
-    const endDate = endOfDay(add(startDate, { days: 6 }));
+      const parsed = parseISO(x.dueDate);
+      const startDate = startOfTomorrow();
+      const endDate = endOfDay(add(startDate, { days: 7 }));
 
-    return parsed >= startDate && parsed <= endDate;
-  });
+      return parsed >= startDate && parsed <= endDate;
+    })
+    .sort((a, b) => a.dueDate.localeCompare(b.dueDate));
 
 const api = {
   getItems,
