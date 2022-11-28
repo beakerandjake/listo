@@ -35,3 +35,6 @@ jobs:
       - name: Install NPM Packages
         run: npm ci --workspace=client
         
+      - name: Build React App
+        run: npm run build:client
+        
