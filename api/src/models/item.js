@@ -1,5 +1,8 @@
 import joi from 'joi';
 import config from 'config';
+import {
+  isValid, parseISO, startOfDay,
+} from 'date-fns';
 import { parseRequestModel, parseResponseModel } from './applyJoiSchema.js';
 
 /**
@@ -40,7 +43,17 @@ export const itemNoteSchema = joi.string()
  */
 export const itemDueDateSchema = joi.string()
   .allow('', null)
-  .isoDate();
+  .isoDate()
+  .custom((value, helpers) => {
+    const date = parseISO(value);
+
+    if (!isValid(date)) {
+      return helpers.message('Value was not a Date');
+    }
+
+    // ensure due date is always at the start of the day.
+    return startOfDay(date).toISOString();
+  });
 
 /**
  * @openapi
