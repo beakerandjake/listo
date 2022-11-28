@@ -28,5 +28,5 @@ jobs:
           node-version: 16.x
           
       - name: Install NPM Packages
-        run: FONT_AWESOME_NPM_AUTH_TOKEN=${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }} npm ci
+        run: FONTAWESOME_NPM_AUTH_TOKEN=${{ secrets.FONT_AWESOME_NPM_AUTH_TOKEN }} npm ci --workspace=client
         
