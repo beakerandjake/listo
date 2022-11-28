@@ -1,19 +1,25 @@
-import { faLocationQuestion } from '@fortawesome/pro-regular-svg-icons';
 import { ApiError } from 'api';
-import { getMockData, getList } from './mockDataStore';
+import { getList, mockLists, mockItems, setMockItems } from './mockDataStore';
+
+/**
+ * Does a list exists with the given id?
+ * @param {Number} listId
+ * @returns {Boolean}
+ */
+const listExists = (listId) =>
+  mockLists().some((x) => x.id === parseInt(listId));
+
 /**
  * Loads all of the items in a list.
  * @param {number} listId - The id of the list to load items for.
  * @returns {Promise<object[]>}
  **/
-export const getItems = async (listId) => {
-  const list = getList(listId);
-
-  if (!list) {
+const getItems = async (listId) => {
+  if (!listExists(listId)) {
     throw new ApiError('Could not find list with that Id.', 404);
   }
 
-  return list.items;
+  return mockItems().filter((x) => x.listId === parseInt(listId));
 };
 
 /**
@@ -23,31 +29,34 @@ export const getItems = async (listId) => {
  * @returns {Promise<object>}
  **/
 const addItem = async (listId, item) => {
-  const list = getList(listId);
-
-  if (!list) {
+  if (!listExists(listId)) {
     throw new ApiError('Could not find list with that Id.', 404);
   }
 
-  const existingItem = list.items.find(
-    (x) => x.name.toLowerCase() === item.name.trim().toLowerCase()
+  // see if list already has an active item with the same name.
+  const existingItem = mockItems().find(
+    (x) =>
+      x.listId === parseInt(listId) &&
+      x.completed === false &&
+      x.name.toLowerCase() === item.name.trim().toLowerCase()
   );
 
-  // if item already exists, update the quantity.
+  // if item already exists, increment the quantity instead of adding duplicate.
   if (existingItem) {
-    existingItem.quantity += 1;
-    return existingItem;
+    return editItem(existingItem.id, { quantity: existingItem.quantity + 1 });
   }
 
+  // otherwise, add the new item to the items array
+
   const newItem = {
-    id: Math.max(...list.items.map((x) => x.id)) + 1,
+    id: Math.max(...mockItems().map((x) => x.id)) + 1,
     listId: listId,
     createDate: new Date().toISOString(),
     completed: false,
     ...item,
   };
 
-  list.items.push(newItem);
+  setMockItems([...mockItems(), newItem]);
 
   return newItem;
 };
@@ -57,9 +66,7 @@ const addItem = async (listId, item) => {
  * @param {number} itemId - The id of the item.
  **/
 const deleteItem = async (itemId) => {
-  getMockData().forEach((list) => {
-    list.items = list.items.filter((item) => item.id !== itemId);
-  });
+  setMockItems(mockItems().filter((x) => x.id !== itemId));
 };
 
 /**
@@ -69,33 +76,21 @@ const deleteItem = async (itemId) => {
  * @returns {Promise<object>}
  **/
 const editItem = async (itemId, changes) => {
-  let editedItem = null;
-  const mockData = getMockData();
+  const itemToEdit = mockItems().find((x) => x.id === itemId);
 
-  for (let index = 0; index < mockData.length; index++) {
-    const list = mockData[index];
-    const itemIndex = list.items.findIndex((x) => x.id === itemId);
-
-    if (itemIndex === -1) {
-      continue;
-    }
-
-    editedItem = {
-      ...list.items[itemIndex],
-      ...changes,
-      completedDate: changes.completed ? new Date().toISOString() : null,
-    };
-
-    list.items[itemIndex] = editedItem;
-
-    break;
+  if (!itemToEdit) {
+    throw new ApiError('Could not find item with that Id.', 404);
   }
 
-  if (!editedItem) {
-    throw new ApiError('Could not find item with Id', 404);
-  }
+  const newItem = {
+    ...itemToEdit,
+    ...changes,
+    completedDate: changes.completed ? new Date().toISOString() : null,
+  };
 
-  return editedItem;
+  setMockItems(mockItems().map((x) => (x.id === newItem.id ? newItem : x)));
+
+  return newItem;
 };
 
 /**
@@ -104,14 +99,12 @@ const editItem = async (itemId, changes) => {
  * @param {string} filter - Optional filtering to change which items get deleted.
  **/
 const bulkDeleteItems = async (listId, filter) => {
-  const list = getList(listId);
-
   if (!filter) {
-    list.items = [];
+    setMockItems([]);
   } else if (filter === 'completed') {
-    list.items = list.items.filter((x) => !x.completedDate);
+    setMockItems(mockItems().filter((x) => !x.completedDate));
   } else if (filter === 'active') {
-    list.items = list.items.filter((x) => !!x.completedDate);
+    setMockItems(mockItems().filter((x) => !!x.completedDate));
   } else {
     throw new ApiError('Unknown filter', 400);
   }
