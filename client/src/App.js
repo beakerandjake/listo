@@ -11,38 +11,39 @@ import { LoadingSpinner } from 'components/LoadingSpinner';
 import { Root, routeId as rootRouteId } from 'routes/Root';
 
 const ROUTES = [
-  [
-    {
-      path: '/',
-      id: rootRouteId,
-      element: <Root />,
-      loader: async () => await listApi.getLists(),
-      children: [
-        {
-          index: true,
-          element: <Dashboard />,
-        },
-        {
-          path: 'lists/:listId',
-          element: <List />,
-          loader: listLoader,
-          errorElement: <NotFound />,
-        },
-        {
-          path: '*',
-          element: <NotFound />,
-        },
-      ],
-      errorElement: <Error />,
-    },
-  ],
+  {
+    path: '/',
+    id: rootRouteId,
+    element: <Root />,
+    loader: async () => await listApi.getLists(),
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: 'lists/:listId',
+        element: <List />,
+        loader: listLoader,
+        errorElement: <NotFound />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+    ],
+    errorElement: <Error />,
+  },
 ];
 
 // Some hosting providers don't support browser router, when deploying to
 // choose router based on current configuration to support for these providers.
-const router = process.env.REACT_APP_USE_HASH_ROUTER
-  ? createHashRouter(ROUTES)
-  : createBrowserRouter(ROUTES);
+const router =
+  process.env.REACT_APP_ROUTER_OVERRIDE === 'hash'
+    ? createHashRouter(ROUTES)
+    : createBrowserRouter(ROUTES);
+
+console.log('env', process.env.REACT_APP_USE_HASH_ROUTER);
 
 function App() {
   return (
