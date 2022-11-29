@@ -38,8 +38,10 @@ jobs:
       - name: Build React App
         run: npm run build:client
         env: 
-          CI: ''
-          PUBLIC_URL: 'https://beakerandjake.github.io/listo'
+          CI: false
+          PUBLIC_URL: https://beakerandjake.github.io/listo
+          REACT_APP_ROUTER_OVERRIDE: hash
+          REACT_APP_API_IMPLEMENTATION: mock
             
 
       - name: Upload Artifact to GitHub Pages
