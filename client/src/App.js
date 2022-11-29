@@ -1,12 +1,16 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createHashRouter,
+  RouterProvider,
+} from 'react-router-dom';
 import { listApi } from './api';
 import { Dashboard, Error, List, NotFound } from 'routes';
 import { listLoader } from 'routes/List';
 import { LoadingSpinner } from 'components/LoadingSpinner';
 import { Root, routeId as rootRouteId } from 'routes/Root';
 
-const router = createBrowserRouter([
+const ROUTES = [
   {
     path: '/',
     id: rootRouteId,
@@ -30,7 +34,16 @@ const router = createBrowserRouter([
     ],
     errorElement: <Error />,
   },
-]);
+];
+
+// Some hosting providers don't support browser router, when deploying to
+// choose router based on current configuration to support for these providers.
+const router =
+  process.env.REACT_APP_ROUTER_OVERRIDE === 'hash'
+    ? createHashRouter(ROUTES)
+    : createBrowserRouter(ROUTES);
+
+console.log('env', process.env.REACT_APP_USE_HASH_ROUTER);
 
 function App() {
   return (

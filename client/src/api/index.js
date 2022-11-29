@@ -13,12 +13,12 @@ class ApiError extends Error {
 }
 
 // If bundle size becomes an issue could figure out a way to conditionally require
-// The correct API based on the config, but for not a simple switch will be fine. 
+// The correct API based on the config, but for not a simple switch will be fine.
 
-const listApi = process.env.REACT_APP_USE_MOCK_API ? mockListApi : realListApi;
-const itemApi = process.env.REACT_APP_USE_MOCK_API ? mockItemApi : realItemApi;
-const statsApi = process.env.REACT_APP_USE_MOCK_API
-  ? mockStatsApi
-  : realStatsApi;
+const useMockApi = process.env.REACT_APP_API_IMPLEMENTATION === 'mock';
+
+const listApi = useMockApi ? mockListApi : realListApi;
+const itemApi = useMockApi ? mockItemApi : realItemApi;
+const statsApi = useMockApi ? mockStatsApi : realStatsApi;
 
 export { listApi, itemApi, statsApi, ApiError };
