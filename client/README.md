@@ -1,95 +1,53 @@
-# Getting Started with Create React App
+# listo client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Written in React, uses tailwindcss for styling and react-router for routing.
 
-## Available Scripts
+## Development
 
-In the project directory, you can run:
+### Installing Packages
 
-### `npm start`
+listo uses npm workspaces, so the packages should be installed from the root package.json. Refer to the main README file for installing packages
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**See main README for information regarding Font Awesome Pro**
 
 
+### Run Locally
 
+There are two options for running the client locally.
 
-### Running on Host Machine
+#### Run the Client and the API
 
-Stop the current image.
+This is the default way to run locally. From the root of the project run: 
 
 ```
-docker ps
-docker stop <contianer>
-docker rm <container>
+npm run dev
 ```
 
-Pull the latest image 
+#### Run the Client without the API
+
+To run just the client, you must tell the client to use its mock api (see configuration for more information). Run the following command from the root of the project.
+```
+REACT_APP_API_IMPLEMENTATION=mock npm run dev:client
+```
+
+## Build 
+
+Run the following command from the root of the project.
 
 ```
-docker pull beakerandjake/listo-frontend
+npm run build:client
 ```
 
-Run the container
+The production build will be saved at `./client/build/`
 
-```
-docker run --restart unless-stopped -p 4000:80 -d beakerandjake/listo-frontend
-```
+
+## Configuration
+
+Configuration is done via environment variables as defined in the create-react-app [documentation](https://create-react-app.dev/docs/adding-custom-environment-variables/)
+
+### Settings of Note
+| Name      | Description |
+| ----------- | ----------- |
+| REACT_APP_API_ENDPOINT      | The base url of the API. When running in development the API is hosted on a different port. If this value is not set the Client will assume the API is hosted at the same location as the Client (this is true when deployed in production).     | 
+| REACT_APP_API_IMPLEMENTATION   | Supported values null or `mock`. If the value is set to `mock`, the mock api will be used. Otherwise the Client will query the api. The mock api exists to support the static github pages demo site of listo, and to aid local development.     |
+| REACT_APP_ROUTER_OVERRIDE | Supported values: null or `hash`. If the value is set to `hash`, react-router will use the [hash router](https://reactrouter.com/en/6.4.3/router-components/hash-router). Otherwise react-router will use the default of [browser router](https://reactrouter.com/en/6.4.3/router-components/browser-router). This setting exists to support the static github pages demo site. |
