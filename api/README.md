@@ -5,10 +5,10 @@ Written in Express.JS, uses SQLite for the Database and Winston for logging.
 ## Development
 
 ### Installing Packages
-listo uses npm workspaces, so the packages should be installed from the root package.json. Refer to the [main README](https://github.com/beakerandjake/listo/#install-packages) file for installing packages
+listo uses npm workspaces, so the packages should be installed from the root package.json. Refer to the main README file for [installing packages](https://github.com/beakerandjake/listo#install-packages)
 
 ### Run Locally
-Refer to main README for running the Client and the API together. 
+Refer to main README for [running the Client and the API together](https://github.com/beakerandjake/listo#run-locally). 
 
 To only run the API, run the following command from the root of the project
 ```
@@ -16,7 +16,7 @@ npm run dev:api
 ```
 
 This will:
-* Run the app via nodemon at http://localhost:3001 (see [configuration](https://github.com/beakerandjake/listo/blob/api/README.md#configuration) for information on how to change the port).
+* Run the app via nodemon at http://localhost:3001 (see [configuration](https://github.com/beakerandjake/listo/tree/main/api#configuration) for information on how to change the port).
 * Create an `items.db` file at the root of the api project if one does not already exist. 
 
 ## Documentation
