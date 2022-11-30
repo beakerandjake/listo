@@ -6,9 +6,9 @@ Written in React, uses tailwindcss for styling and react-router for routing.
 
 ### Installing Packages
 
-listo uses npm workspaces, so the packages should be installed from the root package.json. Refer to the main README file for installing packages
+listo uses npm workspaces, so the packages should be installed from the root package.json. Refer to the main README file for [installing packages](https://github.com/beakerandjake/listo#install-packages)
 
-**See main README for information regarding Font Awesome Pro**
+**[See main README for information regarding Font Awesome Pro](https://github.com/beakerandjake/listo#important-note-about-font-awesome-pro)**
 
 
 ### Run Locally
@@ -25,7 +25,7 @@ npm run dev
 
 #### Run the Client without the API
 
-To run just the client, you must tell the client to use its mock api (see configuration for more information). Run the following command from the root of the project.
+To run just the client, you must tell the client to use its mock api (see [configuration](https://github.com/beakerandjake/listo/tree/main/client#configuration) for more information). Run the following command from the root of the project.
 ```
 REACT_APP_API_IMPLEMENTATION=mock npm run dev:client
 ```
