@@ -1,7 +1,7 @@
 import { ApiError } from 'api';
+import { getApiBaseUrl } from './getApiBaseUrl';
 
-const apiBaseUrl = process.env.REACT_APP_API_ENDPOINT;
-
+const apiBaseUrl = getApiBaseUrl();
 const itemsBaseUrl = `${apiBaseUrl}/items`;
 const urlForItem = (itemId) => `${itemsBaseUrl}/${itemId}`;
 const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;

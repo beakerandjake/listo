@@ -1,6 +1,7 @@
 import { ApiError } from 'api';
+import { getApiBaseUrl } from './getApiBaseUrl';
 
-const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/lists`;
+const baseUrl = `${getApiBaseUrl()}/lists`;
 
 /**
  * Loads all of the lists.
