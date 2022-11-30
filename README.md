@@ -39,7 +39,7 @@ If you have not configured npm with a Font Awesome Pro subscription you will get
 
 If you want to develop locally without a subscription, you will need to update the client to use the free packages instead of the pro packages. This will also require you to change some specific icons in use which are pro only icons.
 
-### Running
+### Run Locally
 To run the API and the Client, run this command at the root of the project
 ```
 npm run dev
@@ -53,7 +53,7 @@ Publishing listo to [docker hub](https://hub.docker.com/r/beakerandjake/listo) i
 
 The action pulls the latest code from the main branch, then uses docker buildx to build the image for the amd64 and arm64 platforms, then publishes that image to the docker hub.
 
-## Deploying
+## Deployment
 
 Pull the latest image from the docker hub
 ```
