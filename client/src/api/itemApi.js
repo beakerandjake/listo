@@ -1,7 +1,6 @@
 import { ApiError } from 'api';
-import { getApiBaseUrl } from './getApiBaseUrl';
+import { apiBaseUrl } from './apiConfig';
 
-const apiBaseUrl = getApiBaseUrl();
 const itemsBaseUrl = `${apiBaseUrl}/items`;
 const urlForItem = (itemId) => `${itemsBaseUrl}/${itemId}`;
 const listItemsUrl = (listId) => `${apiBaseUrl}/lists/${listId}/items`;

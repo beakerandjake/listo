@@ -1,7 +1,7 @@
 import { ApiError } from 'api';
-import { getApiBaseUrl } from './getApiBaseUrl';
+import { apiBaseUrl } from './apiConfig';
 
-const baseUrl = `${getApiBaseUrl()}/stats`;
+const baseUrl = `${apiBaseUrl}/stats`;
 
 /**
  * Returns the item count stats.

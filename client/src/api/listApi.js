@@ -1,7 +1,7 @@
 import { ApiError } from 'api';
-import { getApiBaseUrl } from './getApiBaseUrl';
+import { apiBaseUrl } from './apiConfig';
 
-const baseUrl = `${getApiBaseUrl()}/lists`;
+const baseUrl = `${apiBaseUrl}/lists`;
 
 /**
  * Loads all of the lists.
