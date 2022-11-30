@@ -2,7 +2,6 @@
 
 ![listo-preview](https://user-images.githubusercontent.com/1727349/204873759-09b2cbb5-84b3-42f8-bf84-26a390183b2d.png)
 
-![Docker Image Version (latest by date)](https://img.shields.io/docker/v/beakerandjake/listo?label=dockerhub&logo=docker&link=https://hub.docker.com/beakerandjake/listo)
 ![Docker Pulls](https://img.shields.io/docker/pulls/beakerandjake/listo?logo=docker)
 ![Docker Image Size with architecture (latest by date/latest semver)](https://img.shields.io/docker/image-size/beakerandjake/listo?logo=docker)
 ---
@@ -23,7 +22,7 @@ Written with React, tailwindcss, Express, Node, SQLite and Docker.
 * Fully Responsive
 * Dashboard Statistics
 * Dashboard overview of due Items
-* Easy Deployment via Docker
+* Easy Deployment via [Docker](https://hub.docker.com/r/beakerandjake/listo)
 
 ## Development
 
@@ -50,7 +49,7 @@ By default the client runs at http://localhost:3000 and the API at http://localh
 
 ## Build
 
-Publishing listo to [docker hub](https://hub.docker.com/repository/docker/beakerandjake/listo) is done via a [Github Action](https://github.com/beakerandjake/listo/actions/workflows/docker-publish.yml)
+Publishing listo to [docker hub](https://hub.docker.com/r/beakerandjake/listo) is done via a [Github Action](https://github.com/beakerandjake/listo/actions/workflows/docker-publish.yml)
 
 The action pulls the latest code from the main branch, then uses docker buildx to build the image for the amd64 and arm64 platforms, then publishes that image to the docker hub.
 
