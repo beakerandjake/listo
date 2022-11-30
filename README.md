@@ -7,7 +7,7 @@
 
 ---
 
-listo is a todo list app created to help me stay organized and not forget things! 
+[listo](https://beakerandjake.github.io/listo) is a todo list app created to help me stay organized and not forget things! 
 
 I use listo daily and it's currently running on my home network, served from a rasperry pi.
 
