@@ -1,10 +1,15 @@
 ## listo API
 
-Written in Express.JS, uses SQLite for the Database and Winston for logging.
+Written in Express.JS, uses SQLite for the Database and Winston for logging. 
 
-## Swagger Documentation
+## Local Development
+
+
+## Documentation
 
 API is fully documented in Swagger, when running locally the Swagger doc can be found at http://localhost:3001/api/docs
+
+![Screenshot 2022-11-30 at 13-47-57 listo api](https://user-images.githubusercontent.com/1727349/204904907-f7f45d75-d99e-42e0-ad2c-44729b0e46fb.png)
 
 
 
