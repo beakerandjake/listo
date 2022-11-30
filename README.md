@@ -13,3 +13,4 @@ I use listo daily and it's currently running on my home network, served from my 
 
 Written with React, tailwindcss, Express, Node, SQLite and Docker. 
 
+![listo-preview](https://user-images.githubusercontent.com/1727349/204873759-09b2cbb5-84b3-42f8-bf84-26a390183b2d.png)
