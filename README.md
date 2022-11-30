@@ -2,7 +2,7 @@
 
 ![listo-preview](https://user-images.githubusercontent.com/1727349/204873759-09b2cbb5-84b3-42f8-bf84-26a390183b2d.png)
 
-![Docker Image Version (latest by date)](https://img.shields.io/docker/v/beakerandjake/listo?label=dockerhub&logo=docker)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/beakerandjake/listo?label=dockerhub&logo=docker&link=https://hub.docker.com/beakerandjake/listo)
 ![Docker Pulls](https://img.shields.io/docker/pulls/beakerandjake/listo?logo=docker)
 ![Docker Image Size with architecture (latest by date/latest semver)](https://img.shields.io/docker/image-size/beakerandjake/listo?logo=docker)
 ---
