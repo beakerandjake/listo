@@ -24,3 +24,25 @@ Written with React, tailwindcss, Express, Node, SQLite and Docker.
 * Dashboard Statistics
 * Dashboard overview of due Items
 * Easy Deployment via Docker
+
+## Development
+
+### Install Packages
+listo uses npm workspaces, to install packages for the Client and the API projects, run this command at the root of the project.
+```
+npm install 
+```
+
+### Important Note about Font Awesome Pro
+This project uses icons which are part of the Font Awesome pro subscription. If you have a pro subscription you must [configure access in NPM](https://fontawesome.com/docs/web/setup/packages#configure-access)
+
+If you do not have a Font Awesome Pro subscription you will get a 401 unauthorized during the `npm install` command. 
+
+If you want to develop locally without a subscription, you will need to update the client to use the free packages instead of the pro packages. This will also require you to change some specific icons in use which are pro only icons.
+
+### Running
+To run the API and the Client, run this command at the root of the project
+```
+npm run dev
+```
+
