@@ -48,6 +48,6 @@ Configuration is done via environment variables as defined in the create-react-a
 ### Settings of Note
 | Name      | Description |
 | ----------- | ----------- |
-| REACT_APP_API_ENDPOINT      | The base url of the API. When running in development the API is hosted on a different portREACT_APP_API_ENDPOINT. If this value is not set the Client will assume the API is hosted at the same location as the Client (this is true when deployed in production).     | 
+| REACT_APP_API_ENDPOINT      | The base url of the API. When running in development the API is hosted on a different port. If this value is not set the Client will assume the API is hosted at the same location as the Client (this is true when deployed in production).     | 
 | REACT_APP_API_IMPLEMENTATION   | Supported values null or `mock`. If the value is set to `mock`, the mock api will be used. Otherwise the Client will query the api. The mock api exists to support the static github pages demo site of listo, and to aid local development.     |
 | REACT_APP_ROUTER_OVERRIDE | Supported values: null or `hash`. If the value is set to `hash`, react-router will use the [hash router](https://reactrouter.com/en/6.4.3/router-components/hash-router). Otherwise react-router will use the default of [browser router](https://reactrouter.com/en/6.4.3/router-components/browser-router). This setting exists to support the static github pages demo site. |
