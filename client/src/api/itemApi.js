@@ -1,6 +1,5 @@
 import { ApiError } from 'api';
-
-const apiBaseUrl = process.env.REACT_APP_API_ENDPOINT;
+import { apiBaseUrl } from './apiConfig';
 
 const itemsBaseUrl = `${apiBaseUrl}/items`;
 const urlForItem = (itemId) => `${itemsBaseUrl}/${itemId}`;

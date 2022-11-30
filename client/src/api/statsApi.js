@@ -1,6 +1,7 @@
 import { ApiError } from 'api';
+import { apiBaseUrl } from './apiConfig';
 
-const baseUrl = `${process.env.REACT_APP_API_ENDPOINT}/stats`;
+const baseUrl = `${apiBaseUrl}/stats`;
 
 /**
  * Returns the item count stats.
