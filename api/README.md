@@ -1,4 +1,15 @@
-## helpful commands 
+## listo API
+
+Written in Express.JS, uses SQLite for the Database and Winston for logging.
+
+## Swagger Documentation
+
+API is fully documented in Swagger, when running locally the Swagger doc can be found at http://localhost:3001/api/docs
+
+
+
+---
+
 curl localhost:3000/api/items
 
 curl -X DELETE localhost:3000/api/items/1
@@ -16,17 +27,14 @@ docker buildx build --platform linux/amd64,linux/arm64 -t beakerandjake/listo --
 
 docker run -v listo:/var/lib/listo/ -p 3000:3000 -it beakerandjake/listo
 
-
 sudo docker run --restart unless-stopped -v listo:/var/lib/listo/ -p 4000:3000 -d beakerandjake/listo
 
 docker exec -it CONTAINER_ID bash
 
 SQLITE_LOCATION=./items.db PORT=4000 npm run dev
 
-
 FIND Process using port: sudo lsof -n -i :3000 | grep LISTEN
 KILL Process: sudo kill -9 PID
-
 
 ### Running on Host Machine
 
@@ -38,7 +46,7 @@ docker stop <contianer>
 docker rm <container>
 ```
 
-Pull the latest image 
+Pull the latest image
 
 ```
 docker pull beakerandjake/listo
