@@ -37,7 +37,7 @@ export const ItemDueTodayMenu = ({ item, onDueDatePostponed }) => {
           label={x.label}
           key={x.label}
           onClick={() =>
-            editItem(item.id, { dueDate: x.date }).then(() => {
+            editItem(item.id, { dueDate: x.date.toISOString() }).then(() => {
               onDueDatePostponed();
             })
           }
