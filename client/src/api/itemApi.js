@@ -1,3 +1,9 @@
+import {
+  add,
+  endOfToday,
+  startOfToday,
+  startOfTomorrow,
+} from 'date-fns';
 import { ApiError } from 'api';
 import { apiBaseUrl } from './apiConfig';
 
@@ -125,7 +131,13 @@ const bulkEditItems = async (listId, changes) => {
  **/
 const getItemsDueToday = async () => {
   const response = await fetch(
-    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'due-today' }))
+    itemsBaseUrl.concat(
+      '?',
+      new URLSearchParams({
+        dueBefore: endOfToday().toISOString(),
+        dueAfter: startOfToday().toISOString(),
+      })
+    )
   );
 
   if (!response.ok) {
@@ -141,7 +153,12 @@ const getItemsDueToday = async () => {
  **/
 const getOverdueItems = async () => {
   const response = await fetch(
-    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'overdue' }))
+    itemsBaseUrl.concat(
+      '?',
+      new URLSearchParams({
+        dueBefore: startOfToday().toISOString(),
+      })
+    )
   );
 
   if (!response.ok) {
@@ -157,7 +174,13 @@ const getOverdueItems = async () => {
  **/
 const getItemsDueNextSevenDays = async () => {
   const response = await fetch(
-    itemsBaseUrl.concat('?', new URLSearchParams({ filter: 'next-seven-days' }))
+    itemsBaseUrl.concat(
+      '?',
+      new URLSearchParams({
+        dueBefore: add(startOfTomorrow(), { weeks: 1 }).toISOString(),
+        dueAfter: startOfTomorrow().toISOString(),
+      })
+    )
   );
 
   if (!response.ok) {
