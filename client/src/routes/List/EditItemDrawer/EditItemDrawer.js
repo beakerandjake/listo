@@ -102,7 +102,9 @@ export function EditItemDrawer({ item, onClosed }) {
             />
             <ItemDueDateMenu
               dueDate={item.dueDate}
-              onChange={(value) => editItem({ dueDate: value })}
+              onChange={(value) =>
+                editItem({ dueDate: value?.toISOString() || null })
+              }
               desktopPlacement="bottom"
             />
             <DebounceInput
