@@ -168,9 +168,9 @@ const getItemsDueNextSevenDays = async () =>
         return false;
       }
 
-      const parsed = parseISO(x.dueDate);
-      const startDate = startOfTomorrow();
-      const endDate = endOfDay(add(startDate, { days: 7 }));
+      const parsed = x.dueDate;
+      const startDate = startOfTomorrow().toISOString();
+      const endDate = add(startOfTomorrow(), { weeks: 1 }).toISOString();
 
       return parsed >= startDate && parsed <= endDate;
     })
