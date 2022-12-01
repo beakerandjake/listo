@@ -2,6 +2,8 @@
 
 Written in React, uses tailwindcss for styling and react-router for routing.
 
+Test are written for Jest
+
 ## Development
 
 ### Installing Packages
