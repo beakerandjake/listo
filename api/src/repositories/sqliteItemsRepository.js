@@ -297,7 +297,7 @@ export const editItems = (listId, edits) => {
 /**
  * Returns all of the active, non-deleted items which have a due date between the specified range.
  * @param {string} startDate - ISO8601 formatted date string of the earliest due date (inclusive).
- * @param {string} endDate - ISO8601 formatted date string of the latest due date (exclusive).
+ * @param {string} endDate - ISO8601 formatted date string of the latest due date (inclusive).
  * @param {boolean} onlyActive - If true returns only items which haven't been completed.
  * @returns {object[]}
  */

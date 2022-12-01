@@ -43,8 +43,6 @@ const router =
     ? createHashRouter(ROUTES)
     : createBrowserRouter(ROUTES);
 
-console.log('env', process.env.REACT_APP_USE_HASH_ROUTER);
-
 function App() {
   return (
     <RouterProvider

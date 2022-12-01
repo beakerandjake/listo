@@ -6,21 +6,24 @@ import { parseRequestModel } from './applyJoiSchema.js';
  * components:
  *  schemas:
  *    getItemsFilter:
- *      type: string
- *      enum:
- *        - overdue
- *        - due-today
- *        - next-seven-days
+ *      type: object
+ *      properties:
+ *        dueBefore:
+ *          type: string
+ *          format: date-time
+ *        dueAfter:
+ *          type: string
+ *          format: date-time
  */
-export const filters = {
-  overdue: 'overdue',
-  dueToday: 'due-today',
-  nextSevenDays: 'next-seven-days',
-};
-
-const schema = joi.string()
-  .valid(...Object.values(filters))
-  .required()
-  .label('filter');
+const schema = joi
+  .object({
+    dueBefore: joi.string()
+      .allow('', null)
+      .isoDate(),
+    dueAfter: joi.string()
+      .allow('', null)
+      .isoDate(),
+  })
+  .or('dueBefore', 'dueAfter'); // Require at least one item property to be present.
 
 export const getItemsFilter = (data) => parseRequestModel(data, schema, 'getItemsFilter');
