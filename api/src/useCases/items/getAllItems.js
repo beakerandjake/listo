@@ -1,6 +1,3 @@
-import {
-  startOfToday, endOfToday, startOfTomorrow, addWeeks,
-} from 'date-fns';
 import { logger } from '../../logger.js';
 import { getItemsFilter, itemModel } from '../../models/index.js';
 import { itemRepository } from '../../repositories/index.js';
@@ -15,37 +12,18 @@ export const getAllItems = (filter) => {
 
   const filterModel = getItemsFilter(filter);
 
-  logger.info('filter model: %s', filter);
+  let result;
 
-  // let result;
+  if (filterModel.dueBefore && !filterModel.dueAfter) {
+    result = itemRepository.getOverdueItems(filterModel.dueBefore);
+  } else if (filterModel.dueBefore && filterModel.dueAfter) {
+    result = itemRepository.getItemsByDueDateRange(filterModel.dueAfter, filterModel.dueBefore);
+  } else {
+    // specifying only dueAfter is currently not implemented.
+    throw new ApplicationError('Filtering only by "dueAfter" is not supported');
+  }
 
-  // switch (filterModel) {
-  //   case filters.overdue:
-  //     result = itemRepository.getOverdueItems(
-  //       startOfToday().toISOString(),
-  //     );
-  //     break;
-  //   case filters.dueToday:
-  //     result = itemRepository.getItemsByDueDateRange(
-  //       startOfToday().toISOString(),
-  //       endOfToday().toISOString(),
-  //       true,
-  //     );
-  //     break;
-  //   case filters.nextSevenDays:
-  //     result = itemRepository.getItemsByDueDateRange(
-  //       startOfTomorrow().toISOString(),
-  //       addWeeks(startOfTomorrow(), 1).toISOString(),
-  //       true,
-  //     );
-  //     break;
-  //   default:
-  //     throw new ApplicationError(`getAllItems got unimplemented filter: ${filter}`);
-  // }
+  logger.info('got: %d item(s) according to filter: %s', result.length, filter);
 
-  // logger.info('got: %d item(s) according to filter: %s', result.length, filter);
-
-  // return result.map(itemModel);
-
-  return [];
+  return result.map(itemModel);
 };
