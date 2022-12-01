@@ -95,8 +95,7 @@ router.patch('/:id', (req, res) => {
  *          description: Unexpected Error.
  */
 router.get('/', (req, res) => {
-  const { filter } = req.query;
-  const results = getAllItems(filter);
+  const results = getAllItems(req.query);
   res.send(results);
 });
 
